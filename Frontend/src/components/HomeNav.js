@@ -2,7 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const SNavElement = styled.div``;
+const SNavElement = styled.div`
+  /* padding-left: 40px; */
+  padding: 36px;
+  a {
+    text-decoration: none;
+    color: white;
+    font-size: 24px;
+  }
+`;
 
 function HomeNav() {
   return (
