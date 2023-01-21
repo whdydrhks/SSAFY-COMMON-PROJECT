@@ -10,9 +10,13 @@ const SNav = styled.div`
   margin-top: 24px;
 `;
 const SNavApp = styled.div`
-  margin-left: 40px;
-  padding: 0 32px;
-  font-size: 40px;
+  a {
+    margin-left: 40px;
+    padding: 0 32px;
+    font-size: 40px;
+    text-decoration: none;
+    color: black;
+  }
 `;
 const SNavForm = styled.div`
   display: flex;
@@ -30,7 +34,9 @@ const SNavElement = styled.div`
 function Nav() {
   return (
     <SNav>
-      <SNavApp>반가워</SNavApp>
+      <SNavApp>
+        <Link to="/home">반가워</Link>
+      </SNavApp>
       <SNavForm>
         <SNavElement>
           <Link to="/about">소개</Link>
