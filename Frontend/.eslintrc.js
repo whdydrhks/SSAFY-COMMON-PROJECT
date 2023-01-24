@@ -9,11 +9,12 @@ module.exports = {
   extends: ['airbnb', 'prettier', 'eslint:recommended'],
   rules: {
     'react/jsx-filename-extension': [
-      'error',
+      2,
       {
         extensions: ['.js', '.jsx'],
       },
     ],
     'no-console': 0,
+    'import/no-extraneous-dependencies': 0,
   },
 };
