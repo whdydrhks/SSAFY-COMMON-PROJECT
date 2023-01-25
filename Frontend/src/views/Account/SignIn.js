@@ -24,10 +24,6 @@ const SSocialLoginBtn = styled.img`
   height: 60px;
 `;
 
-const STextField = styled(TextField)`
-  width: 90px;
-`;
-
 function SignIn() {
   return (
     <>
@@ -48,18 +44,18 @@ function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <STextField
+          <TextField
             margin="normal"
-            label="Email Address"
+            label="이메일"
             required
             name="email"
             fullWidth
             autoComplete="email"
             autoFocus
           />
-          <STextField
+          <TextField
             margin="normal"
-            label="Password"
+            label="비밀번호"
             required
             name="password"
             fullWidth
