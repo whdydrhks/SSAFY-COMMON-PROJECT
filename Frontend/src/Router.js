@@ -5,7 +5,8 @@ import Home from './views/Home';
 import About from './views/About';
 import Live from './views/Live';
 import News from './views/News';
-import Adoption from './views/Adoption';
+import Adoption from './views/adoption/Adoption';
+import CreateAdoption from './views/adoption/CreateAdoption';
 import Community from './views/Community';
 import Donation from './views/Donation';
 import SignIn from './views/SignIn';
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: '/adoption',
     element: <Adoption />,
+  },
+  {
+    path: '/adoption/create',
+    element: <CreateAdoption />,
   },
   {
     path: '/community',
