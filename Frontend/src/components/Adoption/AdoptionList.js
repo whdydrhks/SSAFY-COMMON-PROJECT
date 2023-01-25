@@ -1,7 +1,6 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
 import { adoptionListState } from '../../state/adoptionList';
-import 
 
 function AdoptionList() {
   const adoptionList = useRecoilValue(adoptionListState);
