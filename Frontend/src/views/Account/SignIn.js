@@ -4,13 +4,13 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
-  Link,
   Grid,
   Typography,
   Avatar,
   Box,
   Container,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import styled from 'styled-components';
 import Header from '../../components/common/Header';
@@ -80,10 +80,10 @@ function SignIn() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="d">비밀번호 찾기</Link>
+              <Link to="/findUserInfo">아이디 / 비밀번호 찾기</Link>
             </Grid>
             <Grid item>
-              <Link href="d">회원가입</Link>
+              <Link to="/signUp">회원가입</Link>
             </Grid>
           </Grid>
         </Box>
