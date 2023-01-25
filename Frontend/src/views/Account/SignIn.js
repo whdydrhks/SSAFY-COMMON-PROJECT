@@ -4,13 +4,13 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
-  Link,
   Grid,
   Typography,
   Avatar,
   Box,
   Container,
 } from '@mui/material';
+import { Link } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import styled from 'styled-components';
 import Header from '../../components/common/Header';
@@ -22,10 +22,6 @@ import KakaoLogin from '../../assets/login/kakao_login_large_narrow.png';
 const SSocialLoginBtn = styled.img`
   width: 250px;
   height: 60px;
-`;
-
-const STextField = styled(TextField)`
-  width: 90px;
 `;
 
 function SignIn() {
@@ -48,18 +44,18 @@ function SignIn() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <STextField
+          <TextField
             margin="normal"
-            label="Email Address"
+            label="이메일"
             required
             name="email"
             fullWidth
             autoComplete="email"
             autoFocus
           />
-          <STextField
+          <TextField
             margin="normal"
-            label="Password"
+            label="비밀번호"
             required
             name="password"
             fullWidth
@@ -80,10 +76,10 @@ function SignIn() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="d">비밀번호 찾기</Link>
+              <Link to="/findUserInfo">아이디 / 비밀번호 찾기</Link>
             </Grid>
             <Grid item>
-              <Link href="d">회원가입</Link>
+              <Link to="/signUp">회원가입</Link>
             </Grid>
           </Grid>
         </Box>

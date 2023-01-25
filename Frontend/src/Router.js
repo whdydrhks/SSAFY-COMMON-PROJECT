@@ -11,6 +11,7 @@ import Community from './views/Community/Community';
 import Donation from './views/Donation/Donation';
 import SignIn from './views/Account/SignIn';
 import SignUp from './views/Account/SignUp';
+import FindUserInfo from './views/Account/FindUserInfo';
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
   {
     path: '/signUp',
     element: <SignUp />,
+  },
+  {
+    path: '/findUserInfo',
+    element: <FindUserInfo />,
   },
 ]);
 
