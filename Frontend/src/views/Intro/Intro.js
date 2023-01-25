@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import introImg from '../assets/img/intro.jpg';
-import logo from '../assets/logo/logo_black.svg';
+import introImg from '../../assets/img/intro.jpg';
+import logo from '../../assets/logo/logo_black.svg';
 
 const SIntro = styled.div`
   background-image: url(${introImg});

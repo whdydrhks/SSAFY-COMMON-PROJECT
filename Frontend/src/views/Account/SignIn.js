@@ -13,11 +13,11 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import styled from 'styled-components';
-import Header from '../components/Header';
-import Nav from '../components/Nav';
-import GoogleLogin from '../assets/login/btn_google_signin_light_normal_web@2x.png';
-import NaverLogin from '../assets/login/btnG_official.png';
-import KakaoLogin from '../assets/login/kakao_login_large_narrow.png';
+import Header from '../../components/common/Header';
+import Nav from '../../components/common/Nav';
+import GoogleLogin from '../../assets/login/btn_google_signin_light_normal_web@2x.png';
+import NaverLogin from '../../assets/login/btnG_official.png';
+import KakaoLogin from '../../assets/login/kakao_login_large_narrow.png';
 
 const SSocialLoginBtn = styled.img`
   width: 250px;

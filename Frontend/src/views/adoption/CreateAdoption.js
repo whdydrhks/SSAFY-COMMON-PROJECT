@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
-import Header from '../../components/Header';
-import Nav from '../../components/Nav';
+import Header from '../../components/common/Header';
+import Nav from '../../components/common/Nav';
 import CatSelect from '../../components/Adoption/CatSelect';
 import DogSelect from '../../components/Adoption/DogSelect';
 import adoptionListState from '../../state/adoptionList';

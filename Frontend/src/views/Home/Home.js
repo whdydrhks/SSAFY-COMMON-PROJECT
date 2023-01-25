@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import HomeHeader from '../components/HomeHeader';
-import HomeNav from '../components/HomeNav';
-import homeImg from '../assets/img/home.jpg';
+import HomeHeader from '../../components/common/HomeHeader';
+import HomeNav from '../../components/common/HomeNav';
+import homeImg from '../../assets/img/home.jpg';
 
 const SHome = styled.div`
   background-image: url(${homeImg});

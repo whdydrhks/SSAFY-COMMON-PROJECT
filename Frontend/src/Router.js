@@ -1,16 +1,16 @@
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import Intro from './views/Intro';
-import Home from './views/Home';
-import About from './views/About';
-import Live from './views/Live';
-import News from './views/News';
-import Adoption from './views/adoption/Adoption';
-import CreateAdoption from './views/adoption/CreateAdoption';
-import Community from './views/Community';
-import Donation from './views/Donation';
-import SignIn from './views/SignIn';
-import SignUp from './views/SignUp';
+import Intro from './views/Intro/Intro';
+import Home from './views/Home/Home';
+import About from './views/About/About';
+import Live from './views/Live/Live';
+import News from './views/News/News';
+import Adoption from './views/Adoption/Adoption';
+import CreateAdoption from './views/Adoption/CreateAdoption';
+import Community from './views/Community/Community';
+import Donation from './views/Donation/Donation';
+import SignIn from './views/Account/SignIn';
+import SignUp from './views/Account/SignUp';
 
 const router = createBrowserRouter([
   {
