@@ -6,7 +6,7 @@ import CatSelect from '../../components/Adoption/CatSelect';
 import DogSelect from '../../components/Adoption/DogSelect';
 import { adoptionListState } from '../../state/recoilState';
 
-let id = 0;
+let id = 3;
 const getId = () => {
   id += 1;
   return id;
@@ -21,6 +21,7 @@ function CreateAdoption() {
   const [age, setAge] = useState(0);
   const [ageType, setAgeType] = useState('세');
   const [sex, setSex] = useState('남');
+  const [text, setText] = useState('');
   const temp = useRecoilValue(adoptionListState);
 
   useEffect(() => {
@@ -56,6 +57,10 @@ function CreateAdoption() {
     setSex(e.target.value);
   };
 
+  const handleTextarea = e => {
+    setText(e.target.value);
+  };
+
   const addAdoptionAnimal = () => {
     setAdoptionList(oldAdoptionList => [
       ...oldAdoptionList,
@@ -64,10 +69,11 @@ function CreateAdoption() {
         image: animalImage,
         species: selectedSpecies,
         breed,
-        weight,
-        age,
+        weight: parseFloat(weight),
+        age: parseInt(age, 10),
         ageType,
         sex,
+        text,
       },
     ]);
   };
@@ -79,12 +85,14 @@ function CreateAdoption() {
       <hr />
 
       {/* 사진 입력 폼 */}
-      <input
-        type="file"
-        accept="image/*"
-        value={animalImage}
-        onChange={handleAnimalImage}
-      />
+      <form>
+        <input
+          type="file"
+          accept="img/*"
+          value={animalImage || ''}
+          onChange={handleAnimalImage}
+        />
+      </form>
 
       {/* 종류 입력 폼 */}
       <span>종류</span>
@@ -145,6 +153,18 @@ function CreateAdoption() {
         <option value="여">여</option>
         <option value="unknown">Unknown</option>
       </select>
+
+      {/* 특징 입력 폼 */}
+      <span>특징</span>
+      <div>
+        <textarea
+          placeholder="여기에 특징을 입력해 주세요."
+          onChange={handleTextarea}
+          cols="50"
+          rows="5"
+        />
+      </div>
+
       <button onClick={addAdoptionAnimal} type="button">
         동물 등록
       </button>
