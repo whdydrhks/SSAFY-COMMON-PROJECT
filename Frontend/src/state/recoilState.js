@@ -5,4 +5,9 @@ const adoptionListState = atom({
   default: [],
 });
 
-export default adoptionListState;
+const temp = atom({
+  key: 'temp',
+  default: '',
+});
+
+export { adoptionListState, temp };
