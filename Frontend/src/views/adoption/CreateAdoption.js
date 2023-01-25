@@ -4,7 +4,7 @@ import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 import CatSelect from '../../components/Adoption/CatSelect';
 import DogSelect from '../../components/Adoption/DogSelect';
-import adoptionListState from '../../state/adoptionList';
+import { adoptionListState } from '../../state/recoilState';
 
 let id = 0;
 const getId = () => {
