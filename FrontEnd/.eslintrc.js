@@ -14,5 +14,6 @@ module.exports = {
         extensions: ['.js', '.jsx'],
       },
     ],
+    'import/no-extraneous-dependencies': 0,
   },
 };

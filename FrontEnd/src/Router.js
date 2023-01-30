@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Live from './pages/Live/Live';
 import Review from './pages/Review/Review';
 import Animal from './pages/Animal/Animal';
+import AnimalDetail from './pages/Animal/AnimalDetail';
 import AnimalCreateHost from './pages/Animal/AnimalCreateHost';
 import Schedule from './pages/Schedule/Schedule';
 import Login from './pages/Account/Login';
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
   {
     path: '/animal',
     element: <Animal />,
+  },
+  {
+    path: '/animal/:animalId',
+    element: <AnimalDetail />,
   },
   {
     path: '/animal/create',
