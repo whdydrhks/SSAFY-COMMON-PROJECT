@@ -7,6 +7,7 @@ import Animal from './pages/Animal/Animal';
 import Schedule from './pages/Schedule/Schedule';
 import Login from './pages/Account/Login';
 import SignUp from './pages/Account/SignUp';
+import Alarm from './pages/Alarm';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
   {
     path: '/signup',
     element: <SignUp />,
+  },
+  {
+    path: '/alarm/:id',
+    element: <Alarm />,
   },
 ]);
 

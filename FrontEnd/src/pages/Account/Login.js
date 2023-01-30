@@ -12,11 +12,13 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Header from '../../components/Header';
 import Nav from '../../components/Nav';
 
 function Login() {
   return (
     <>
+      <Header />
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
