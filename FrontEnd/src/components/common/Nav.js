@@ -25,34 +25,43 @@ const SBottomNav = styled(BottomNavigation)`
 `;
 
 function Nav() {
-  const [value, setValue] = React.useState(0);
   return (
     <SBox>
-      <SBottomNav
-        showLabels
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-      >
-        <Link to="/">
-          <BottomNavigationAction label="Home" icon={<HomeIcon />} />
-        </Link>
-        <Link to="/live">
-          <BottomNavigationAction label="라이브" icon={<VideocamIcon />} />
-        </Link>
-        <Link to="/animal">
-          <BottomNavigationAction label="관심동물" icon={<PetsIcon />} />
-        </Link>
-        <Link to="/schedule">
-          <BottomNavigationAction
-            label="예약일정"
-            icon={<CalendarTodayIcon />}
-          />
-        </Link>
-        <Link to="/login">
-          <BottomNavigationAction label="사용자" icon={<PersonIcon />} />
-        </Link>
+      <SBottomNav showLabels>
+        <BottomNavigationAction
+          label="Home"
+          icon={<HomeIcon />}
+          component={Link}
+          to="/"
+        />
+
+        <BottomNavigationAction
+          label="라이브"
+          icon={<VideocamIcon />}
+          component={Link}
+          to="/live"
+        />
+
+        <BottomNavigationAction
+          label="관심동물"
+          icon={<PetsIcon />}
+          component={Link}
+          to="/animal"
+        />
+
+        <BottomNavigationAction
+          label="예약일정"
+          icon={<CalendarTodayIcon />}
+          component={Link}
+          to="/schedule"
+        />
+
+        <BottomNavigationAction
+          label="사용자"
+          icon={<PersonIcon />}
+          component={Link}
+          to="/login"
+        />
       </SBottomNav>
     </SBox>
   );

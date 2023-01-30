@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '../../components/Header';
-import Nav from '../../components/Nav';
+import Header from '../../components/common/Header';
+import Nav from '../../components/common/Nav';
 
 function Review() {
   return (

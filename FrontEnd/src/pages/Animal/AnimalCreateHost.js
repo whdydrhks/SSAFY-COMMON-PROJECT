@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { animalListState, animalNumber } from '../../recoilState';
-import Nav from '../../components/Nav';
-import Header from '../../components/Header';
+import Nav from '../../components/common/Nav';
+import Header from '../../components/common/Header';
 
 function AnimalCreateHost() {
   let id = useRecoilValue(animalNumber);

@@ -12,8 +12,8 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Header from '../../components/Header';
-import Nav from '../../components/Nav';
+import Header from '../../components/common/Header';
+import Nav from '../../components/common/Nav';
 
 function Login() {
   return (
