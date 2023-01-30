@@ -40,3 +40,5 @@ out/
 *.yml
 !**/application.yml
 
+### log ###
+*.log
