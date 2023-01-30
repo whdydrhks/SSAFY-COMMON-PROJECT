@@ -5,7 +5,8 @@ import Live from './pages/Live/Live';
 import Review from './pages/Review/Review';
 import Animal from './pages/Animal/Animal';
 import Schedule from './pages/Schedule/Schedule';
-import Account from './pages/Account/Account';
+import Login from './pages/Account/Login';
+import SignUp from './pages/Account/SignUp';
 
 const router = createBrowserRouter([
   {
@@ -29,8 +30,12 @@ const router = createBrowserRouter([
     element: <Schedule />,
   },
   {
-    path: '/account',
-    element: <Account />,
+    path: '/login',
+    element: <Login />,
+  },
+  {
+    path: '/signup',
+    element: <SignUp />,
   },
 ]);
 
