@@ -9,6 +9,10 @@ import AnimalDetail from './pages/Animal/AnimalDetail';
 import Schedule from './pages/Schedule/Schedule';
 import Login from './pages/Account/Login';
 import SignUp from './pages/Account/SignUp';
+import FindPassword from './pages/Account/FindPassword';
+import CheckPassword from './pages/Account/CheckPassword';
+import ModifyPassword from './pages/Account/ModifyPassword';
+import MyPage from './pages/Account/MyPage';
 import Alarm from './pages/Alarm';
 
 const router = createBrowserRouter([
@@ -47,6 +51,26 @@ const router = createBrowserRouter([
   {
     path: '/signup',
     element: <SignUp />,
+  },
+  {
+    path: '/findpassword',
+    element: <FindPassword />,
+  },
+  {
+    path: '/checkpassword/:id',
+    element: <CheckPassword />,
+  },
+  {
+    path: '/modifypassword/:id',
+    element: <ModifyPassword />,
+  },
+  {
+    path: '/signup',
+    element: <SignUp />,
+  },
+  {
+    path: '/mypage/:id',
+    element: <MyPage />,
   },
   {
     path: '/alarm/:id',

@@ -66,10 +66,10 @@ function Login() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link to="/findPassword">비밀번호 찾기</Link>
+              <Link to="/findpassword">비밀번호 찾기</Link>
             </Grid>
             <Grid item>
-              <Link to="/signUp">회원가입</Link>
+              <Link to="/signup">회원가입</Link>
             </Grid>
           </Grid>
         </Box>
