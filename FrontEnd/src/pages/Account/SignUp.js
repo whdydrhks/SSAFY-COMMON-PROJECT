@@ -189,7 +189,7 @@ function SignUp() {
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
+                label="이용 약관에 동의합니다."
               />
             </Grid>
           </Grid>
@@ -203,8 +203,8 @@ function SignUp() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link to="/signIn" variant="body2">
-                Already have an account? Sign in
+              <Link to="/login" variant="body2">
+                로그인
               </Link>
             </Grid>
           </Grid>
