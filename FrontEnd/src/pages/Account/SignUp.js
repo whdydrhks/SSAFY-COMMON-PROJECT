@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
   Avatar,
   Box,
@@ -10,8 +11,8 @@ import {
   Typography,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Header from '../../components/Header';
 import Nav from '../../components/Nav';
 
 function SignUp() {
@@ -74,6 +75,7 @@ function SignUp() {
 
   return (
     <>
+      <Header />
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
