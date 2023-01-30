@@ -12,8 +12,8 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Link } from 'react-router-dom';
-import Header from '../../components/Header';
-import Nav from '../../components/Nav';
+import Header from '../../components/common/Header';
+import Nav from '../../components/common/Nav';
 
 function SignUp() {
   const [email, setEmail] = useState('');
