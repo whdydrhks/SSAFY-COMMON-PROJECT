@@ -1,0 +1,17 @@
+server:
+  servlet:
+    encoding:
+      enabled: true
+      force: true
+      charset: UTF-8
+    context-path: /
+  address: localhost
+  port: 9999
+
+spring:
+  profiles:
+    active: dev
+
+  autoconfigure:
+    exclude: 
+      org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration
