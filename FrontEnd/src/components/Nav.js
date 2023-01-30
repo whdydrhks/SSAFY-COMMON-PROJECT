@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
@@ -34,11 +35,24 @@ function Nav() {
           setValue(newValue);
         }}
       >
-        <BottomNavigationAction label="Home" icon={<HomeIcon />} />
-        <BottomNavigationAction label="라이브" icon={<VideocamIcon />} />
-        <BottomNavigationAction label="관심동물" icon={<PetsIcon />} />
-        <BottomNavigationAction label="예약일정" icon={<CalendarTodayIcon />} />
-        <BottomNavigationAction label="사용자" icon={<PersonIcon />} />
+        <Link to="/">
+          <BottomNavigationAction label="Home" icon={<HomeIcon />} />
+        </Link>
+        <Link to="/live">
+          <BottomNavigationAction label="라이브" icon={<VideocamIcon />} />
+        </Link>
+        <Link to="/animal">
+          <BottomNavigationAction label="관심동물" icon={<PetsIcon />} />
+        </Link>
+        <Link to="/schedule">
+          <BottomNavigationAction
+            label="예약일정"
+            icon={<CalendarTodayIcon />}
+          />
+        </Link>
+        <Link to="/login">
+          <BottomNavigationAction label="사용자" icon={<PersonIcon />} />
+        </Link>
       </SBottomNav>
     </SBox>
   );
