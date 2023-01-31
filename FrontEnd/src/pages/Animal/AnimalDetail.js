@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 
@@ -21,6 +21,7 @@ function AnimalDetail() {
       <div>중성화 여부 : {animal.neuter}</div>
       <div>특징 : {animal.note}</div>
 
+      <Link to={`/animal/update/${animal.animalId}`}>수정하기</Link>
       <Nav />
     </>
   );

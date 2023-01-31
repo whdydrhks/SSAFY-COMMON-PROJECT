@@ -30,6 +30,7 @@ function AnimalCreateHost() {
   const neuterList = ['T', 'F'];
   const [neuter, setNeuter] = useState('T');
   const [note, setNote] = useState('');
+  const [img, setImg] = useState('');
 
   const handleManageNumber = e => {
     setManageNumber(e);
@@ -63,10 +64,16 @@ function AnimalCreateHost() {
     setNote(e);
   };
 
+  const handleImage = e => {
+    console.log(e.target.files);
+    setImg(e.target.files);
+  };
+
   const addAnimal = () => {
     setAnimalList(oldAnimalList => [
       ...oldAnimalList,
       {
+        expired: 'F',
         animalId: getId(),
         shelterId: 0,
         name,
@@ -78,7 +85,7 @@ function AnimalCreateHost() {
         weight: parseFloat(weight),
         neuter,
         note,
-        expired: 'F',
+        img,
       },
     ]);
   };
@@ -157,6 +164,17 @@ function AnimalCreateHost() {
       <div>
         <span>특징</span>
         <textarea onChange={handleNote} />
+      </div>
+
+      <div>
+        <span>사진</span>
+        <input
+          type="file"
+          name="file"
+          accept="image/*"
+          onClick={handleImage}
+          multiple="multiple"
+        />
       </div>
 
       <Link to="/animal">
