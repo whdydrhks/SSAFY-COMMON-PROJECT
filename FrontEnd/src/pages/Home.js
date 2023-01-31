@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import '../styles/slick.css';
 import '../styles/slick-theme.css';
@@ -48,8 +49,14 @@ function Home() {
     <>
       <Header />
       <LiveCarousel />
+      <hr />
+      <hr />
+      <hr />
+      <hr />
+      <Link to="/live">더보기</Link>
       <SLine />
       <SReviewContainer>리뷰컨테이너~</SReviewContainer>
+      <Link to="/review">더보기</Link>
       <Nav />
     </>
   );
