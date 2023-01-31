@@ -18,7 +18,7 @@ function AnimalList() {
     <div>
       {animalList.map(animalItem => (
         <SLink
-          to={`/animal/${animalItem.animalid}`}
+          to={`/animal/${animalItem.animalId}`}
           key={animalItem.animalId}
           state={{ animal: animalItem }}
         >

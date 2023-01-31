@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function AnimalItem({ item }) {
-  console.log(item);
   return (
     <div>
       <p>관리번호 : {item.manageNumber}</p>
