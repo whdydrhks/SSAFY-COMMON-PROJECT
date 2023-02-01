@@ -14,16 +14,18 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useSetRecoilState } from 'recoil';
+import { decode } from 'jsonwebtoken';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 import API_URL from '../../api/api';
-import { authStateAtom } from '../../recoilState';
+import { authStateAtom, userAtom } from '../../recoilState';
+import { getCookie } from './cookie';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const setAuthState = useSetRecoilState(authStateAtom);
-  // const setUser = useSetRecoilState(userAtom);
+  const setUser = useSetRecoilState(userAtom);
   const onChangeUserEmail = event => {
     setEmail(event.target.value);
   };
@@ -45,8 +47,22 @@ function Login() {
       .then(res => {
         console.log(res);
         if (res.data.msg === 'success') {
-          document.cookie = `access_token=${res.headers.authorization}`;
           setAuthState(true);
+          const accessToken = getCookie('accessToken');
+          const decodedToken = decode(accessToken);
+          const { role } = decodedToken.role;
+          const { nickname } = decodedToken.nickname;
+          axios.get(`${API_URL}/${nickname}`).then(info => {
+            const { name, phoneNumber, profileImg } = info.data.name;
+            setUser({
+              role,
+              email,
+              name,
+              nickname,
+              phoneNumber,
+              profileImg,
+            });
+          });
           // jwt 디코딩 후 닉네임, role 저장
           // 유저 닉네임으로 axios하여 유저의 모든 정보 갖고온 후 아톰에 저장
           // axios.get(`${API_URL}/`);
