@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   TextField,
   Button,
@@ -11,11 +11,38 @@ import {
   Container,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
+import API_URL from '../../api/api';
 
 function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const onChangeUserEmail = event => {
+    setEmail(event.target.value);
+  };
+  const onChangeUserPassword = event => {
+    setPassword(event.target.value);
+  };
+  const handleLogin = () => {
+    console.log(email);
+    console.log(password);
+    axios
+      .post(`${API_URL}/user/login`, {
+        email,
+        password,
+      })
+      .then(res => {
+        if (res === 'fail') {
+          alert('로그인 실패');
+        } else {
+          alert('로그인 성공');
+        }
+      });
+  };
+
   return (
     <>
       <Header />
@@ -42,6 +69,8 @@ function Login() {
             fullWidth
             autoComplete="email"
             autoFocus
+            value={email}
+            onChange={onChangeUserEmail}
           />
           <TextField
             margin="normal"
@@ -51,6 +80,8 @@ function Login() {
             fullWidth
             type="password"
             autoComplete="current-password"
+            value={password}
+            onChange={onChangeUserPassword}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -61,6 +92,7 @@ function Login() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            onClick={handleLogin}
           >
             로그인
           </Button>
