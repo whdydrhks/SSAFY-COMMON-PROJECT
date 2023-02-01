@@ -11,7 +11,7 @@ function AnimalEdit() {
   const animalIdForUpdate = useParams();
   const temp = useRecoilValue(animalListState);
   const animal = temp[animalIdForUpdate.animalId];
-  console.log(animal);
+  //   console.log(animal);
   const [expired, setExpired] = useState(animal.expired);
   const [manageNumber, setManageNumber] = useState(animal.manageNumber);
   const [name, setName] = useState(animal.name);

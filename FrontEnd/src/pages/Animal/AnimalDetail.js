@@ -5,6 +5,7 @@ import Nav from '../../components/common/Nav';
 
 function AnimalDetail() {
   const location = useLocation();
+  console.log(location.state);
   const { animal } = location.state;
 
   return (

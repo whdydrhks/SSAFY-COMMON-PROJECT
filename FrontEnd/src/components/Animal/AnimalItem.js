@@ -1,9 +1,15 @@
 import React from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import '../../styles/cafe24.css';
+
+const SDetail = styled.div`
+  font-family: 'cafe24';
+`;
 
 function AnimalItem({ item }) {
   return (
-    <div>
+    <SDetail>
       <p>관리번호 : {item.manageNumber}</p>
       <p>이름 : {item.name}</p>
       <p>나이 : {item.age}</p>
@@ -13,7 +19,7 @@ function AnimalItem({ item }) {
       <p>중성화 여부 : {item.neuter}</p>
       <p>특징 : {item.note}</p>
       <hr />
-    </div>
+    </SDetail>
   );
 }
 
