@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useSetRecoilState } from 'recoil';
-import { decode } from 'jsonwebtoken';
+import jwtDecode from 'jwt-decode';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 import API_URL from '../../api/api';
@@ -48,8 +48,8 @@ function Login() {
         console.log(res);
         if (res.data.msg === 'success') {
           setAuthState(true);
-          const accessToken = getCookie('accessToken');
-          const decodedToken = decode(accessToken);
+          const accessToken = getCookie('access_token');
+          const decodedToken = jwtDecode(accessToken);
           const { role } = decodedToken.role;
           const { nickname } = decodedToken.nickname;
           axios.get(`${API_URL}/${nickname}`).then(info => {
