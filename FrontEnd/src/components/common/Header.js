@@ -6,6 +6,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
+import { authStateAtom } from '../../recoilState';
 
 const SAppBar = styled(AppBar)`
   position: fixed;
@@ -17,6 +19,12 @@ const SAppBar = styled(AppBar)`
 `;
 
 function Header() {
+  const authState = useRecoilValue(authStateAtom);
+
+  const handleLogout = () => {
+    // 모든 쿠키 삭제 후 authState false로 때리기
+  };
+
   return (
     <Box>
       <SAppBar>
@@ -27,6 +35,11 @@ function Header() {
           <Button color="inherit">
             <Link to="/alarm">Alarm</Link>
           </Button>
+          {!authState ? null : (
+            <Button color="inherit" onClick={handleLogout}>
+              로그아웃
+            </Button>
+          )}
         </Toolbar>
       </SAppBar>
     </Box>

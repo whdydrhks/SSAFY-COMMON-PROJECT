@@ -1,12 +1,19 @@
 import { atom } from 'recoil';
 
+const authStateAtom = atom({
+  key: 'authStateAtom',
+  default: false,
+});
+
 const userAtom = atom({
   key: 'userAtom',
   default: {
+    role: '',
     email: '',
     name: '',
     nickname: '',
     phoneNumber: '',
+    profileImg: '',
   },
 });
 
@@ -49,4 +56,4 @@ const animalNumber = atom({
   default: 1,
 });
 
-export { userAtom, animalListState, animalNumber };
+export { authStateAtom, userAtom, animalListState, animalNumber };

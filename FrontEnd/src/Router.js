@@ -58,11 +58,11 @@ const router = createBrowserRouter([
     element: <FindPassword />,
   },
   {
-    path: '/checkpassword/:id',
+    path: '/checkpassword/:nickname',
     element: <CheckPassword />,
   },
   {
-    path: '/modifypassword/:id',
+    path: '/modifypassword/:nickname',
     element: <ModifyPassword />,
   },
   {
@@ -70,7 +70,7 @@ const router = createBrowserRouter([
     element: <SignUp />,
   },
   {
-    path: '/mypage/:id',
+    path: '/mypage/:nickname',
     element: <MyPage />,
   },
   {

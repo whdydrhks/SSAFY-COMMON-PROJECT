@@ -9,6 +9,8 @@ import VideocamIcon from '@mui/icons-material/Videocam';
 import PetsIcon from '@mui/icons-material/Pets';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import PersonIcon from '@mui/icons-material/Person';
+import { useRecoilValue } from 'recoil';
+import { authStateAtom, userAtom } from '../../recoilState';
 
 const SBox = styled(Box)`
   position: fixed;
@@ -25,6 +27,9 @@ const SBottomNav = styled(BottomNavigation)`
 `;
 
 function Nav() {
+  const authState = useRecoilValue(authStateAtom);
+  const user = useRecoilValue(userAtom);
+
   return (
     <SBox>
       <SBottomNav showLabels>
@@ -55,13 +60,21 @@ function Nav() {
           component={Link}
           to="/schedule"
         />
-
-        <BottomNavigationAction
-          label="사용자"
-          icon={<PersonIcon />}
-          component={Link}
-          to="/login"
-        />
+        {!authState ? (
+          <BottomNavigationAction
+            label="사용자"
+            icon={<PersonIcon />}
+            component={Link}
+            to="/login"
+          />
+        ) : (
+          <BottomNavigationAction
+            label="마이페이지"
+            icon={<PersonIcon />}
+            component={Link}
+            to={`mypage/${user.nickname}`}
+          />
+        )}
       </SBottomNav>
     </SBox>
   );

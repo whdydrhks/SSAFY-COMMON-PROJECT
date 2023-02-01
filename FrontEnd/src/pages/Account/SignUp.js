@@ -40,8 +40,9 @@ function SignUp() {
         phoneNumber,
       })
       .then(res => {
-        if (res === 'success') {
-          alert('회원가입 성공');
+        console.log(res);
+        if (res.data.msg === 'success') {
+          // 로그인으로 이동시키기
         } else {
           alert('회원가입실패');
         }

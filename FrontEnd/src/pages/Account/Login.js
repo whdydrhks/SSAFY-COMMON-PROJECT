@@ -13,13 +13,17 @@ import {
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { useSetRecoilState } from 'recoil';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 import API_URL from '../../api/api';
+import { authStateAtom } from '../../recoilState';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const setAuthState = useSetRecoilState(authStateAtom);
+  // const setUser = useSetRecoilState(userAtom);
   const onChangeUserEmail = event => {
     setEmail(event.target.value);
   };
@@ -30,15 +34,25 @@ function Login() {
     console.log(email);
     console.log(password);
     axios
-      .post(`${API_URL}/user/login`, {
-        email,
-        password,
-      })
+      .post(
+        `${API_URL}/user/login`,
+        {
+          email,
+          password,
+        },
+        { withCredentials: true },
+      )
       .then(res => {
-        if (res === 'fail') {
-          alert('로그인 실패');
+        console.log(res);
+        if (res.data.msg === 'success') {
+          document.cookie = `access_token=${res.headers.authorization}`;
+          setAuthState(true);
+          // jwt 디코딩 후 닉네임, role 저장
+          // 유저 닉네임으로 axios하여 유저의 모든 정보 갖고온 후 아톰에 저장
+          // axios.get(`${API_URL}/`);
+          // home으로 이동시키기
         } else {
-          alert('로그인 성공');
+          alert('아이디와 비밀번호를 확인해주세요.');
         }
       });
   };
