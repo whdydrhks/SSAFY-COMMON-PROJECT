@@ -12,6 +12,8 @@ import {
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import API_URL from '../../api/api';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 
@@ -27,6 +29,25 @@ function SignUp() {
   // const [chkPasswordError, setChkPasswordError] = useState(false);
   // const [nicknameError, setNicknameError] = useState(false);
   // const [phoneNumberError, setPhoneNumberError] = useState(false);
+
+  const handleSignUp = () => {
+    axios
+      .post(`${API_URL}/user`, {
+        email,
+        password,
+        name,
+        nickname,
+        phoneNumber,
+      })
+      .then(res => {
+        console.log(res);
+        if (res.data.msg === 'success') {
+          // 로그인으로 이동시키기
+        } else {
+          alert('회원가입실패');
+        }
+      });
+  };
 
   const checkEmail = () => {
     const regExEmail =
@@ -198,6 +219,7 @@ function SignUp() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            onClick={handleSignUp}
           >
             Sign Up
           </Button>

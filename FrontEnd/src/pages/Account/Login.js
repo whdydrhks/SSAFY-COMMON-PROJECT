@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   TextField,
   Button,
@@ -11,11 +11,52 @@ import {
   Container,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { useSetRecoilState } from 'recoil';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
+import API_URL from '../../api/api';
+import { authStateAtom } from '../../recoilState';
 
 function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const setAuthState = useSetRecoilState(authStateAtom);
+  // const setUser = useSetRecoilState(userAtom);
+  const onChangeUserEmail = event => {
+    setEmail(event.target.value);
+  };
+  const onChangeUserPassword = event => {
+    setPassword(event.target.value);
+  };
+  const handleLogin = () => {
+    console.log(email);
+    console.log(password);
+    axios
+      .post(
+        `${API_URL}/user/login`,
+        {
+          email,
+          password,
+        },
+        { withCredentials: true },
+      )
+      .then(res => {
+        console.log(res);
+        if (res.data.msg === 'success') {
+          document.cookie = `access_token=${res.headers.authorization}`;
+          setAuthState(true);
+          // jwt 디코딩 후 닉네임, role 저장
+          // 유저 닉네임으로 axios하여 유저의 모든 정보 갖고온 후 아톰에 저장
+          // axios.get(`${API_URL}/`);
+          // home으로 이동시키기
+        } else {
+          alert('아이디와 비밀번호를 확인해주세요.');
+        }
+      });
+  };
+
   return (
     <>
       <Header />
@@ -42,6 +83,8 @@ function Login() {
             fullWidth
             autoComplete="email"
             autoFocus
+            value={email}
+            onChange={onChangeUserEmail}
           />
           <TextField
             margin="normal"
@@ -51,6 +94,8 @@ function Login() {
             fullWidth
             type="password"
             autoComplete="current-password"
+            value={password}
+            onChange={onChangeUserPassword}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -61,6 +106,7 @@ function Login() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            onClick={handleLogin}
           >
             로그인
           </Button>
