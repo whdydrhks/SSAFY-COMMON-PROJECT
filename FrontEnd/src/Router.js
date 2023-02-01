@@ -5,6 +5,7 @@ import Live from './pages/Live/Live';
 import Review from './pages/Review/Review';
 import Animal from './pages/Animal/Animal';
 import AnimalCreateHost from './pages/Animal/AnimalCreateHost';
+import AnimalUpdateHost from './pages/Animal/AnimalUpdateHost';
 import AnimalDetail from './pages/Animal/AnimalDetail';
 import Schedule from './pages/Schedule/Schedule';
 import Login from './pages/Account/Login';
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: '/animal/create',
     element: <AnimalCreateHost />,
+  },
+  {
+    path: 'animal/update/:animalId',
+    element: <AnimalUpdateHost />,
   },
   {
     path: '/schedule',
