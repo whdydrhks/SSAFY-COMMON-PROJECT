@@ -35,10 +35,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-### application-dev.yml ###
-*.yml
-!**/application.yml
-
-### log ###
-*.log

@@ -1,5 +1,6 @@
 package com.ssafy.backend.global.common.entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -10,7 +11,11 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 /*
  * [순수 JPA를 이용한 BaseEntity 클래스 설계]
@@ -51,13 +56,19 @@ import lombok.Getter;
  */
 @EntityListeners(AuditingEntityListener.class)
 @Getter
+@SuperBuilder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 @MappedSuperclass
-public abstract class BaseTimeEntity {
+public abstract class BaseTimeEntity implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@CreatedDate
-	@Column(updatable = false)
-	private LocalDateTime created_date;
+	@Column(name = "created_date", updatable = false)
+	private LocalDateTime createdDate;
 
 	@LastModifiedDate
-	private LocalDateTime updated_date;
+	@Column(name = "updated_date")
+	private LocalDateTime updatedDate;
 }
