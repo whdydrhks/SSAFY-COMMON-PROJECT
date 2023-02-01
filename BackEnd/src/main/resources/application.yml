@@ -12,6 +12,6 @@ spring:
   profiles:
     active: dev
 
-  autoconfigure:
-    exclude: 
-      org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration
+#  autoconfigure:
+#    exclude: 
+#      org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration
