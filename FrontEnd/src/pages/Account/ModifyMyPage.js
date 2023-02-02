@@ -3,16 +3,14 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import EmailIcon from '@mui/icons-material/Email';
 import PersonIcon from '@mui/icons-material/Person';
 import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
-import Divider from '@mui/material/Divider';
+import Input from '@mui/material/Input';
 import { useRecoilValue } from 'recoil';
-
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 import { userAtom } from '../../recoilState';
@@ -35,7 +33,7 @@ const SLinkList = styled.div`
   }
 `;
 
-function MyPage() {
+function ModifyMyPage() {
   const user = useRecoilValue(userAtom);
 
   return (
@@ -49,41 +47,38 @@ function MyPage() {
               <EmailIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary="EMAIL" secondary={user.email} />
+          <Input placeholder={user.email} disabled />
         </ListItem>
-        <Divider variant="inset" component="li" />
         <ListItem>
           <ListItemAvatar>
             <Avatar>
               <PersonIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary="이름" secondary={user.name} />
+          <Input placeholder={user.name} />
         </ListItem>
-        <Divider variant="inset" component="li" />
         <ListItem>
           <ListItemAvatar>
             <Avatar>
               <SentimentSatisfiedAltIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary="닉네임" secondary={user.nickname} />
+          <Input placeholder={user.nickname} />
         </ListItem>
-        <Divider variant="inset" component="li" />
         <ListItem>
           <ListItemAvatar>
             <Avatar>
               <SmartphoneIcon />
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary="핸드폰" secondary={user.phoneNumber} />
+          <Input placeholder="핸드폰 번호 입력" />
         </ListItem>
       </List>
       <SLinkList>
         <Link to="/checkpassword" variant="body2">
           비밀번호변경
         </Link>
-        <Link to="/modifymypage" variant="body2">
+        <Link to="/mypage" variant="body2">
           회원정보수정
         </Link>
       </SLinkList>
@@ -92,4 +87,4 @@ function MyPage() {
   );
 }
 
-export default MyPage;
+export default ModifyMyPage;
