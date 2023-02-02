@@ -2,6 +2,7 @@ package com.ssafy.backend.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -41,6 +42,7 @@ public class SecurityConfig {
 			.authenticationEntryPoint(customAuthenticationEntryPoint)
 			.and()
 			.authorizeRequests()
+			.antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
 			.antMatchers("/api/v1/user/login").permitAll()
 			.antMatchers("/api/v1/user").permitAll()
 			.antMatchers("/test/user").hasRole("USER")
