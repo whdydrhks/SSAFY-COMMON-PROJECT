@@ -34,7 +34,7 @@ public class UserInfoDto {
 			.nickname(user.getNickname())
 			.profileImage(user.getProfileImage())
 			.createdDate(user.getCreatedDate())
-			.updatedDate(user.getCreatedDate())
+			.updatedDate(user.getUpdatedDate())
 			.build();
 	}
 
@@ -46,7 +46,7 @@ public class UserInfoDto {
 			.nickname(this.nickname)
 			.profileImage(this.profileImage)
 			.createdDate(this.createdDate)
-			.updatedDate(this.createdDate)
+			.updatedDate(this.updatedDate)
 			.build();
 	}
 }

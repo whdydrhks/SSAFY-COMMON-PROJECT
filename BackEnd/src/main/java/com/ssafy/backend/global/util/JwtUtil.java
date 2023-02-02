@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -158,19 +159,32 @@ public class JwtUtil {
 	}
 
 	public String doCreateToken(String tokenType, HashMap<String, String> payload, long expireTime) {
+		// JWT Header Setting
+		Map<String, Object> headers = new HashMap<>();
+		headers.put("alg", "HS512");
+		headers.put("typ", "JWT");
+
+		// JWT Payload Setting
 		Claims claims = Jwts.claims();
+		claims.setIssuer(ISSUER); // 토큰 발행자
+		claims.setSubject(tokenType); // 토큰 타입을 토큰 제목으로
 		claims.putAll(payload);
 
+		// JWT Build
 		String jwt = Jwts.builder()
+			.setHeader(headers) // header
 			.setClaims(claims) // claims
-			.setIssuer(ISSUER) // 토큰 발행자
-			.setSubject(tokenType) // 토큰 타입
 			.setIssuedAt(new Date(System.currentTimeMillis())) // 생성 시간
 			.setExpiration(new Date(System.currentTimeMillis() + expireTime)) // 만료시간
 			.signWith(getSigningKey(SECRET_KEY), SignatureAlgorithm.HS512) // 사용할 암호화 알고리즘과 signature에 들어갈 secret key 세팅
 			.compact();
 
 		return jwt;
+	}
+
+	public void updateRefreshToken(String userEmail, String token) {
+		deleteRefreshToken(userEmail);
+		redisUtil.setDataExpire(userEmail, token, REFRESH_TOKEN_VALIDATION_SECOND * 1000L);
 	}
 
 	public void deleteRefreshToken(String userEmail) {

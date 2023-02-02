@@ -9,10 +9,10 @@ const userAtom = atom({
   key: 'userAtom',
   default: {
     role: '',
-    email: '',
-    name: '',
-    nickname: '',
-    phoneNumber: '',
+    email: 'kwnoyng@gmail.com',
+    name: '권오영',
+    nickname: '권오영',
+    phoneNumber: '010-1234-1234',
     profileImg: '',
   },
 });

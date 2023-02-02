@@ -14,6 +14,7 @@ import FindPassword from './pages/Account/FindPassword';
 import CheckPassword from './pages/Account/CheckPassword';
 import ModifyPassword from './pages/Account/ModifyPassword';
 import MyPage from './pages/Account/MyPage';
+import ModifyMyPage from './pages/Account/ModifyMyPage';
 import Alarm from './pages/Alarm';
 import CreateRoomHost from './pages/VideoChat/CreateRoomHost';
 
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
   {
     path: '/mypage/:nickname',
     element: <MyPage />,
+  },
+  {
+    path: '/modifymypage/:nickname',
+    element: <ModifyMyPage />,
   },
   {
     path: '/alarm/:id',

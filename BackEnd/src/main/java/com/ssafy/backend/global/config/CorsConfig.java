@@ -12,10 +12,11 @@ public class CorsConfig {
 	public CorsFilter corsFilter() {
 		CorsConfiguration config = new CorsConfiguration();
 		config.setAllowCredentials(true);
-		//		config.addAllowedOrigin("*");
+		// config.addAllowedOrigin("*");
 		config.addAllowedOriginPattern("*");
 		config.addAllowedHeader("*");
 		config.addAllowedMethod("*");
+		config.addExposedHeader("Authorization"); //
 		config.setMaxAge(3600L);
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
