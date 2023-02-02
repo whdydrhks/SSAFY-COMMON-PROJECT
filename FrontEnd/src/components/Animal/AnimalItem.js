@@ -10,14 +10,14 @@ const SDetail = styled.div`
 function AnimalItem({ item }) {
   return (
     <SDetail>
-      <p>관리번호 : {item.manageNumber}</p>
-      <p>이름 : {item.name}</p>
-      <p>나이 : {item.age}</p>
-      <p>품종 : {item.breed}</p>
-      <p>성별 : {item.gender}</p>
-      <p>체중 : {item.weight}</p>
-      <p>중성화 여부 : {item.neuter}</p>
-      <p>특징 : {item.note}</p>
+      <div>관리번호 : {item.manageNumber}</div>
+      <div>이름 : {item.name}</div>
+      <div>나이 : {item.age}</div>
+      <div>품종 : {item.breed}</div>
+      <div>성별 : {item.gender}</div>
+      <div>체중 : {item.weight}</div>
+      <div>중성화 여부 : {item.neuter}</div>
+      <div>특징 : {item.note}</div>
       <hr />
     </SDetail>
   );
