@@ -50,7 +50,8 @@ public class SwaggerConfig {
 
 	// swagger에서 jwt 토큰값 넣기위한 설정
 	private ApiKey apiKey() {
-		return new ApiKey("JWT", "Authorization", "header");
+		return new ApiKey("JWT", "Authorization", "header"); // <type> : JWT
+		// return new ApiKey("Bearer", "Authorization", "header"); // <type> : Bearer
 	}
 
 	private SecurityContext securityContext() {

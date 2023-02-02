@@ -1,7 +1,5 @@
 package com.ssafy.backend.domain.member.model.request;
 
-import java.time.LocalDateTime;
-
 import com.ssafy.backend.domain.member.entity.UserEntity;
 
 import lombok.AccessLevel;
@@ -24,17 +22,12 @@ public class UserUpdateDto {
 	private String phoneNumber;
 	private String nickname;
 
-	private LocalDateTime createdDate;
-	private LocalDateTime updatedDate;
-
 	public static UserUpdateDto of(UserEntity user) {
 		return UserUpdateDto.builder()
 			.password(user.getPassword())
 			.name(user.getName())
 			.phoneNumber(user.getPhoneNumber())
 			.nickname(user.getNickname())
-			.createdDate(user.getCreatedDate())
-			.updatedDate(user.getCreatedDate())
 			.build();
 	}
 
@@ -44,8 +37,6 @@ public class UserUpdateDto {
 			.name(this.name)
 			.phoneNumber(this.phoneNumber)
 			.nickname(this.nickname)
-			.createdDate(this.createdDate)
-			.updatedDate(this.createdDate)
 			.build();
 	}
 }

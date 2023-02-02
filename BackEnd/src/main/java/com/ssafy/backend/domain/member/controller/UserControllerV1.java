@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.backend.domain.member.entity.UserEntity;
 import com.ssafy.backend.domain.member.model.request.UserLoginDto;
 import com.ssafy.backend.domain.member.model.request.UserSignupDto;
+import com.ssafy.backend.domain.member.model.request.UserUpdateDto;
 import com.ssafy.backend.domain.member.model.response.UserInfoDto;
 import com.ssafy.backend.domain.member.service.UserService;
 import com.ssafy.backend.global.util.Constants;
@@ -59,7 +60,9 @@ public class UserControllerV1 {
 	 */
 	@PostMapping("/login")
 	@ApiOperation(value = "일반 로그인")
-	public ResponseEntity<?> login(@RequestBody UserLoginDto loginDto, HttpServletRequest httpServletRequest,
+	public ResponseEntity<?> login(
+		@RequestBody UserLoginDto loginDto,
+		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) throws IllegalAccessException {
 		Map<String, Object> resultMap = new HashMap<>();
 		//	HttpHeaders headers = new HttpHeaders();
@@ -85,7 +88,8 @@ public class UserControllerV1 {
 	// 미완성
 	@PostMapping("/logout")
 	@ApiOperation(value = "로그아웃")
-	public ResponseEntity<?> logout(HttpServletRequest httpServletRequest,
+	public ResponseEntity<?> logout(
+		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) throws IllegalAccessException {
 		Map<String, Object> resultMap = new HashMap<>();
 		//	HttpStatus status = HttpStatus.OK;
@@ -135,19 +139,84 @@ public class UserControllerV1 {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.OK;
 
-		if (userService.join(signupDto) != null) {
+		Long registerUserId = userService.join(signupDto);
+
+		if (registerUserId != null) {
+			status = HttpStatus.OK;
 			resultMap.put("msg", Constants.SUCCESS);
+			resultMap.put("registerUserId", registerUserId);
 		} else {
-			resultMap.put("msg", Constants.FAIL);
 			status = HttpStatus.BAD_REQUEST;
+			resultMap.put("msg", Constants.FAIL);
 		}
 
 		return ResponseEntity.status(status).body(resultMap);
 	}
 
-	@DeleteMapping
-	@ApiOperation(value = "회원 탈퇴")
-	public ResponseEntity<?> deleteAll(HttpServletRequest httpServletRequest) {
+	@GetMapping("/{nickname}")
+	@ApiOperation(value = "사용자 정보 조회")
+	public ResponseEntity<?> getInfoUser(
+		@PathVariable(name = "nickname") String nickname,
+		HttpServletRequest httpServletRequest) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.OK;
+
+		try {
+			UserInfoDto infoDto = userService.getInfoByNickname(nickname);
+
+			status = HttpStatus.OK;
+			resultMap.put("msg", Constants.SUCCESS);
+			resultMap.put("userInfo", infoDto);
+		} catch (IllegalAccessException e) {
+			log.debug("user/info error: {}", e);
+
+			status = HttpStatus.BAD_REQUEST;
+			resultMap.clear();
+			resultMap.put("msg", Constants.FAIL);
+		}
+
+		return ResponseEntity.status(status).body(resultMap);
+	}
+
+	@PutMapping("/{nickname}")
+	@ApiOperation(value = "사용자 정보 수정")
+	public ResponseEntity<?> updateUser(
+		@PathVariable(name = "nickname") String nickname,
+		@RequestBody UserUpdateDto updateDto,
+		HttpServletRequest httpServletRequest) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.OK;
+
+		String accessToken = getAuthToken(httpServletRequest);
+		String userNickname = jwtUtil.getUserNickname(accessToken);
+
+		try {
+			if (!nickname.equals(userNickname)) {
+				throw new IllegalAccessException();
+			}
+
+			Long updatedUserId = userService.update(userNickname, updateDto);
+
+			status = HttpStatus.CREATED;
+			resultMap.put("msg", Constants.SUCCESS);
+			resultMap.put("updatedUserId", updatedUserId);
+
+		} catch (IllegalAccessException e) {
+			log.debug("user/info error: {}", e);
+
+			status = HttpStatus.BAD_REQUEST;
+			resultMap.clear();
+			resultMap.put("msg", Constants.FAIL);
+		}
+
+		return ResponseEntity.status(status).body(resultMap);
+	}
+
+	@DeleteMapping("/{nickname}")
+	@ApiOperation(value = "사용자 정보 삭제")
+	public ResponseEntity<?> deleteUser(
+		@PathVariable(name = "nickname") String nickname,
+		HttpServletRequest httpServletRequest) {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.OK;
 
@@ -158,64 +227,30 @@ public class UserControllerV1 {
 			Long deletedUserId = userService.updateExpire(userEmail, true);
 			// Long deletedUserId = userService.delete(userEmail);
 
+			status = HttpStatus.NO_CONTENT;
 			resultMap.put("msg", Constants.SUCCESS);
 			resultMap.put("deletedUserId", deletedUserId);
+
 		} catch (IllegalAccessException e) {
 			log.debug("user/info error: {}", e);
 
-			resultMap.clear();
-			resultMap.put("msg", Constants.FAIL);
-
 			status = HttpStatus.ACCEPTED;
-		}
-
-		return ResponseEntity.status(status).body(resultMap);
-	}
-
-	@GetMapping("/{nickname}")
-	@ApiOperation(value = "사용자 정보 조회")
-	public ResponseEntity<?> getInfoUser(@PathVariable(name = "nickname") String nickname,
-		HttpServletRequest httpServletRequest) {
-		Map<String, Object> resultMap = new HashMap<>();
-		HttpStatus status = HttpStatus.OK;
-
-		try {
-			UserInfoDto infoDto = userService.getInfoByNickname(nickname);
-
-			resultMap.put("msg", Constants.SUCCESS);
-			resultMap.put("userInfo", infoDto);
-		} catch (IllegalAccessException e) {
-
 			resultMap.clear();
 			resultMap.put("msg", Constants.FAIL);
-
-			status = HttpStatus.BAD_REQUEST;
 		}
 
 		return ResponseEntity.status(status).body(resultMap);
-	}
-
-	@PutMapping("/{nickname}")
-	@ApiOperation(value = "사용자 정보 수정")
-	public ResponseEntity<?> updateUser() {
-		return null;
-	}
-
-	@DeleteMapping("/{nickname}")
-	@ApiOperation(value = "사용자 정보 삭제")
-	public ResponseEntity<?> deleteUser() {
-		return null;
 	}
 
 	@GetMapping("/request")
 	@ApiOperation(value = "토큰 테스트")
 	public ResponseEntity<?> request() {
 		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.OK;
 
 		resultMap.put("msg", "respones");
 
-		return ResponseEntity.ok()
-			.body(resultMap);
+		return ResponseEntity.status(status).body(resultMap);
 	}
 
 	/**

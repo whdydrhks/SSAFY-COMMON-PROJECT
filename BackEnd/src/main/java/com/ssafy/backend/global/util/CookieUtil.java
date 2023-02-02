@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CookieUtil {
 
-	@Value("${jwt.validity-second.access}")
+	@Value("${jwt.validity-second.refresh}")
 	private long TOKEN_VALIDATION_SECOND;
 
 	public Cookie createCookie(String cookieName, String value) {

@@ -11,7 +11,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ssafy.backend.global.common.model.Response;
+import com.ssafy.backend.global.common.model.ResponseDto;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,7 +26,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 
 		httpServletResponse.setStatus(200);
 		httpServletResponse.setContentType("application/json;charset=utf-8");
-		Response response = new Response("Authentication Error", "로그인이 되지 않은 사용자입니다.", null);
+		ResponseDto response = new ResponseDto("Authentication Error", "로그인이 되지 않은 사용자입니다.", null);
 		String jsonResponse = objectMapper.writeValueAsString(response);
 		log.info(jsonResponse);
 	}
