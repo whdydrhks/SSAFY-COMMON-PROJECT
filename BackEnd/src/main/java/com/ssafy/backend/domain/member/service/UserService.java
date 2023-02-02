@@ -1,7 +1,5 @@
 package com.ssafy.backend.domain.member.service;
 
-import java.util.Optional;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -76,9 +74,9 @@ public class UserService {
 	 * @throws IllegalAccessException
 	 */
 	@Transactional
-	public Long update(String userEmail, UserUpdateDto updateDto) throws IllegalAccessException {
+	public Long update(String userNickname, UserUpdateDto updateDto) throws IllegalAccessException {
 
-		UserEntity findUser = userRepository.findByEmail(userEmail)
+		UserEntity findUser = userRepository.findByNickname(userNickname)
 			.orElseThrow(() -> new IllegalAccessException("존재하지 않는 회원입니다."));
 
 		UserEntity updateUser = UserEntity.builder()
@@ -90,6 +88,8 @@ public class UserService {
 			.phoneNumber(updateDto.getPhoneNumber())
 			.nickname(updateDto.getNickname())
 			.profileImage(findUser.getProfileImage())
+			.expired(findUser.getExpired())
+			.createdDate(findUser.getCreatedDate())
 			.build();
 
 		return userRepository.save(updateUser).getId();
@@ -117,6 +117,7 @@ public class UserService {
 			.nickname(findUser.getNickname())
 			.profileImage(findUser.getProfileImage())
 			.expired(findUser.getExpired())
+			.createdDate(findUser.getCreatedDate())
 			.build();
 
 		return userRepository.save(updateUser).getId();
@@ -144,6 +145,7 @@ public class UserService {
 			.nickname(findUser.getNickname())
 			.profileImage(findUser.getProfileImage())
 			.expired(expiredFlag ? "T" : "F") // expiredFlag에 따라 변경 true:"T" / false:"F"
+			.createdDate(findUser.getCreatedDate())
 			.build();
 
 		return userRepository.save(updateUser).getId();
@@ -169,7 +171,7 @@ public class UserService {
 	 */
 	@Transactional
 	public UserInfoDto getInfoByEmail(String userEmail) throws IllegalAccessException {
-		UserEntity findUser = userRepository.findByEmail(userEmail)
+		UserEntity findUser = userRepository.findByEmailAndExpiredLike(userEmail, "F")
 			.orElseThrow(() -> new IllegalAccessException("존재하지 않는 회원입니다."));
 
 		return UserInfoDto.of(findUser);
@@ -184,7 +186,7 @@ public class UserService {
 	 */
 	@Transactional
 	public UserInfoDto getInfoByNickname(String userNickname) throws IllegalAccessException {
-		UserEntity findUser = userRepository.findByNickname(userNickname)
+		UserEntity findUser = userRepository.findByNicknameAndExpiredLike(userNickname, "F")
 			.orElseThrow(() -> new IllegalAccessException("존재하지 않는 회원입니다."));
 
 		return UserInfoDto.of(findUser);
@@ -196,10 +198,10 @@ public class UserService {
 	 * @param
 	 * @throws IllegalStateException
 	 */
-	private void validateDuplicateUser(UserEntity user) {
-		Optional<UserEntity> findUser = userRepository.findByEmail(user.getEmail());
-		if (findUser.isPresent()) {
-			throw new IllegalStateException("일치하는 아이디가 이미 존재합니다.");
-		}
+	private void validateDuplicateUser(UserEntity user) throws IllegalStateException {
+		userRepository.findByEmail(user.getEmail())
+			.ifPresent(findUser -> {
+				throw new IllegalStateException("일치하는 아이디가 이미 존재합니다.");
+			});
 	}
 }
