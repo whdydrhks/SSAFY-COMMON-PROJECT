@@ -1,62 +1,31 @@
 /* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable no-unused-vars */
 
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import '../styles/slick.css';
-import '../styles/slick-theme.css';
-import Slider from 'react-slick';
+
 import Header from '../components/common/Header';
 import Nav from '../components/common/Nav';
-
-const SLiveVideo = styled.div`
-  width: 240px;
-  height: 120px;
-  border: 1px solid blue;
-`;
-
-function LiveCarousel() {
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-  };
-  return (
-    <div>
-      <h2> 동영상 캐러셀임</h2>
-      <Slider {...settings}>
-        <SLiveVideo>1</SLiveVideo>
-        <SLiveVideo>2</SLiveVideo>
-        <SLiveVideo>3</SLiveVideo>
-        <SLiveVideo>4</SLiveVideo>
-        <SLiveVideo>5</SLiveVideo>
-        <SLiveVideo>6</SLiveVideo>
-      </Slider>
-    </div>
-  );
-}
+import HomeLiveCarousel from '../components/Home/HomeLiveCarousel';
 
 const SLine = styled.div`
   height: 10px;
-  background-color: grey;
+  background-color: #d9d9d9;
+  opacity: 0.4;
 `;
-const SReviewContainer = styled.div``;
+
+// const SReviewContainer = styled.div``;
 
 function Home() {
   return (
     <>
       <Header />
-      <LiveCarousel />
-      <hr />
-      <hr />
-      <hr />
-      <hr />
-      <Link to="/live">더보기</Link>
+      <HomeLiveCarousel />
+      {/* <SReviewContainer>리뷰컨테이너~</SReviewContainer> */}
+      {/* <br /> */}
       <SLine />
-      <SReviewContainer>리뷰컨테이너~</SReviewContainer>
-      <Link to="/review">더보기</Link>
+      <Link to="/review">리뷰 더 보기</Link>
       <Nav />
     </>
   );
