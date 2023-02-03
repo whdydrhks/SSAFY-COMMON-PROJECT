@@ -257,6 +257,7 @@ function AnimalUpdateHost() {
               </Typography>
               <TextField
                 type="number"
+                value={weight}
                 onChange={handleWeight}
                 placeholder="체중을 입력해 주세요."
                 fullWidth
@@ -289,6 +290,7 @@ function AnimalUpdateHost() {
                 fullWidth
                 placeholder="특징을 입력해 주세요."
                 style={{ marginBottom: 20 }}
+                value={note}
               />
             </Grid>
             <Grid item xs={12}>
