@@ -5,11 +5,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.backend.domain.member.entity.UserEntity;
-import com.ssafy.backend.domain.member.model.request.UserLoginDto;
 import com.ssafy.backend.domain.member.model.request.UserSignupDto;
 import com.ssafy.backend.domain.member.model.request.UserUpdateDto;
 import com.ssafy.backend.domain.member.model.response.UserInfoDto;
 import com.ssafy.backend.domain.member.repository.UserRepository;
+import com.ssafy.backend.global.auth.model.LoginDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -52,7 +52,7 @@ public class UserService {
 	 * @throws IllegalAccessException
 	 */
 	@Transactional
-	public UserEntity login(UserLoginDto loginDto) throws IllegalAccessException {
+	public UserEntity login(LoginDto loginDto) throws IllegalAccessException {
 		UserEntity findUser = userRepository.findByEmail(loginDto.getEmail())
 			.orElseThrow(() -> new IllegalAccessException("존재하지 않는 회원입니다."));
 

@@ -2,6 +2,7 @@ package com.ssafy.backend.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,9 +14,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.ssafy.backend.global.auth.CustomAccessDeniedHandler;
-import com.ssafy.backend.global.auth.CustomAuthenticationEntryPoint;
 import com.ssafy.backend.global.auth.JwtRequestFilter;
+import com.ssafy.backend.global.auth.exception.CustomAccessDeniedHandler;
+import com.ssafy.backend.global.auth.exception.CustomAuthenticationEntryPoint;
+import com.ssafy.backend.global.util.Role;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +25,9 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+	private final String API_VERSION = "/v1";
+	private final String API_PREFIX = "/api" + API_VERSION;
 
 	private final JwtRequestFilter jwtRequestFilter;
 
@@ -41,10 +46,13 @@ public class SecurityConfig {
 			.authenticationEntryPoint(customAuthenticationEntryPoint)
 			.and()
 			.authorizeRequests()
-			.antMatchers("/api/v1/user/login").permitAll()
-			.antMatchers("/api/v1/user").permitAll()
-			.antMatchers("/test/user").hasRole("USER")
-			.antMatchers("/test/admin").hasRole("ADMIN")
+			.antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
+			.antMatchers("/").permitAll() // swagger csrf 엔드포인트 오류를 지우기 위함 1
+			.antMatchers("/csrf").permitAll() // swagger csrf 엔드포인트 오류를 지우기 위함 2
+			.antMatchers(API_PREFIX + "/auth/*").permitAll()
+			.antMatchers(API_PREFIX + "/user").permitAll() // 추후 유저 권한 이상으로 향상 시켜야 할 것
+			.antMatchers("/test/user").hasAnyRole(Role.USER.getHighRoles())
+			.antMatchers("/test/admin").hasAnyRole(Role.ADMIN.getHighRoles())
 			.anyRequest().authenticated();
 
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
@@ -54,8 +62,12 @@ public class SecurityConfig {
 
 	@Bean
 	public WebSecurityCustomizer webSecurityCustomizer() {
-		return (web) -> web.ignoring().antMatchers("/v2/api-docs", "/swagger-resources/**",
-			"/swagger-ui.html", "/webjars/**", "/swagger/**");
+		return (web) -> web.ignoring().antMatchers(
+			"/v2/api-docs",
+			"/swagger-resources/**",
+			"/swagger-ui.html",
+			"/webjars/**",
+			"/swagger/**");
 	}
 
 	@Bean
