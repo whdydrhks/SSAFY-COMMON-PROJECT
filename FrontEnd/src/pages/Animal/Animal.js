@@ -40,7 +40,6 @@ function Animal() {
         </Link>
       </SMain>
       <AnimalCategory />
-      {/* <AnimalList /> */}
       <Nav />
     </>
   );

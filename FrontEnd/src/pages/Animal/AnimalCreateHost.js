@@ -161,7 +161,7 @@ function AnimalCreateHost() {
       new Blob([JSON.stringify(variables)], { type: 'application/json' }),
     );
     axios.post('http://192.168.31.226:3000/animal/create', formData);
-    console.log(variables[0].animalId);
+    // console.log(variables[0].animalId);
     navigate(`/animal/${variables[0].animalId}`);
   };
 
