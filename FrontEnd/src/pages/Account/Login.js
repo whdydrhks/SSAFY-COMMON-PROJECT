@@ -46,27 +46,37 @@ function Login() {
       )
       .then(res => {
         console.log(res);
-        if (res.data.msg === 'success') {
+        if (res.status === 200) {
           setAuthState(true);
-          const accessToken = getCookie('access_token');
+          document.cookie = `accessToken=${res.headers.authorization}`;
+          const accessToken = getCookie('accessToken');
           const decodedToken = jwtDecode(accessToken);
-          const { role } = decodedToken.role;
-          const { nickname } = decodedToken.nickname;
-          axios.get(`${API_URL}/${nickname}`).then(info => {
-            const { name, phoneNumber, profileImg } = info.data.name;
-            setUser({
-              role,
-              email,
-              name,
-              nickname,
-              phoneNumber,
-              profileImg,
+          const role = decodedToken.userRole;
+          const nickname = decodedToken.userNickname;
+          console.log(accessToken);
+          axios
+            .get(
+              `${API_URL}/user/${nickname}`,
+              {
+                headers: {
+                  Authorization: accessToken,
+                },
+              },
+              { withCredentials: true },
+            )
+            .then(info => {
+              console.log(info);
+              const { name, phoneNumber, profileImg } = info.data.userInfo;
+              setUser({
+                role,
+                email,
+                name,
+                nickname,
+                phoneNumber,
+                profileImg,
+              });
             });
-          });
-          // jwt 디코딩 후 닉네임, role 저장
-          // 유저 닉네임으로 axios하여 유저의 모든 정보 갖고온 후 아톰에 저장
-          // axios.get(`${API_URL}/`);
-          // home으로 이동시키기
+          window.location.href = '/';
         } else {
           alert('아이디와 비밀번호를 확인해주세요.');
         }

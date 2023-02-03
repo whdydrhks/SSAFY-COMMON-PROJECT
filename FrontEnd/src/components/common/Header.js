@@ -6,8 +6,9 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { authStateAtom } from '../../recoilState';
+import { removeCookie } from '../../pages/Account/cookie';
 
 const SAppBar = styled(AppBar)`
   position: fixed;
@@ -19,10 +20,12 @@ const SAppBar = styled(AppBar)`
 `;
 
 function Header() {
-  const authState = useRecoilValue(authStateAtom);
+  const [authState, setAuthState] = useRecoilState(authStateAtom);
 
   const handleLogout = () => {
-    // 모든 쿠키 삭제 후 authState false로 때리기
+    removeCookie('accessToken');
+    setAuthState(false);
+    window.location.href('/');
   };
 
   return (
