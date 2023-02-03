@@ -24,11 +24,10 @@ function SignUp() {
   const [name, setName] = useState('');
   const [nickname, setNickname] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  // const [emailError, setEmailError] = useState(false);
-  // const [passwordError, setPasswordError] = useState(false);
-  // const [chkPasswordError, setChkPasswordError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [chkPasswordError, setChkPasswordError] = useState(false);
   // const [nicknameError, setNicknameError] = useState(false);
-  // const [phoneNumberError, setPhoneNumberError] = useState(false);
 
   const handleSignUp = () => {
     axios
@@ -42,7 +41,19 @@ function SignUp() {
       .then(res => {
         console.log(res);
         if (res.data.msg === 'success') {
-          // 로그인으로 이동시키기
+          if (!emailError) {
+            alert('이메일 형식이 잘못되었습니다.');
+            return;
+          }
+          if (!passwordError) {
+            alert('비밀번호 형식이 잘못되었습니다.');
+            return;
+          }
+          if (!chkPasswordError) {
+            alert('비밀번호가 같지 않습니다.');
+            return;
+          }
+          window.location.href = '/login';
         } else {
           alert('회원가입실패');
         }
@@ -52,22 +63,19 @@ function SignUp() {
   const checkEmail = () => {
     const regExEmail =
       /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-    console.log('이메일 유효성 검사 ::', regExEmail.test(email));
+    setEmailError(regExEmail.test(email));
   };
 
   const checkPassword = () => {
     const regExPassword =
       /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
-    console.log('비밀번호 유효성 검사 :: ', regExPassword.test(password));
+    setPasswordError(regExPassword.test(password));
   };
 
   const checkDuplicatePassword = () => {
     if (password === chkPassword) {
-      console.log('비밀번호 같다');
-      return true;
+      setChkPasswordError(true);
     }
-    console.log('비밀번호 다르다');
-    return false;
   };
 
   const handleEmail = event => {

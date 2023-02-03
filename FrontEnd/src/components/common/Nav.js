@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
@@ -9,7 +9,11 @@ import VideocamIcon from '@mui/icons-material/Videocam';
 import PetsIcon from '@mui/icons-material/Pets';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import PersonIcon from '@mui/icons-material/Person';
-import { useRecoilValue } from 'recoil';
+import axios from 'axios';
+import jwtDecode from 'jwt-decode';
+import { useRecoilState } from 'recoil';
+import API_URL from '../../api/api';
+import { getCookie } from '../../pages/Account/cookie';
 import { authStateAtom, userAtom } from '../../recoilState';
 
 const SBox = styled(Box)`
@@ -27,8 +31,40 @@ const SBottomNav = styled(BottomNavigation)`
 `;
 
 function Nav() {
-  const authState = useRecoilValue(authStateAtom);
-  const user = useRecoilValue(userAtom);
+  const [authState, setAuthState] = useRecoilState(authStateAtom);
+  const [user, setUser] = useRecoilState(userAtom);
+
+  useEffect(() => {
+    const accessToken = getCookie('accessToken');
+    if (accessToken) {
+      const decodedToken = jwtDecode(accessToken);
+      const role = decodedToken.userRole;
+      const nickname = decodedToken.userNickname;
+      const email = decodedToken.userEmail;
+      axios
+        .get(
+          `${API_URL}/user/${nickname}`,
+          {
+            headers: {
+              Authorization: accessToken,
+            },
+          },
+          { withCredentials: true },
+        )
+        .then(info => {
+          const { name, phoneNumber, profileImg } = info.data.userInfo;
+          setUser({
+            role,
+            email,
+            name,
+            nickname,
+            phoneNumber,
+            profileImg,
+          });
+        });
+      setAuthState(true);
+    }
+  }, []);
 
   return (
     <SBox>
@@ -72,7 +108,7 @@ function Nav() {
             label="마이페이지"
             icon={<PersonIcon />}
             component={Link}
-            to={`mypage/${user.nickname}`}
+            to={`/mypage/${user.nickname}`}
           />
         )}
       </SBottomNav>
