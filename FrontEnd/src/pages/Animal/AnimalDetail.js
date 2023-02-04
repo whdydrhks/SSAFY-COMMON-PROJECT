@@ -1,4 +1,3 @@
-// import { shadows } from '@mui/system';
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { Button } from '@mui/material';
@@ -7,7 +6,104 @@ import styled from 'styled-components';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
+import ImageCarousel from '../../components/common/ImageCarousel';
 import '../../styles/cafe24.css';
+import {
+  manageNumber,
+  name,
+  breed,
+  gender,
+  note,
+  weight,
+  neuter,
+} from '../../images/index';
+
+const STitle = styled.div`
+  font-family: 'cafe24';
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+`;
+
+const SLine = styled.div`
+  display: flex;
+  margin-bottom: 2rem;
+`;
+
+const SGrayLineBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 35%;
+`;
+
+const SGrayLine = styled.div`
+  height: 1px;
+  background-color: #d9d9d9;
+  opacity: 0.4;
+`;
+
+const SDetailInformation = styled.div`
+  font-family: 'cafe24';
+  font-size: 24;
+  width: 30%;
+  text-align: center;
+`;
+
+const SInformationBox = styled.div`
+  height: 2.5rem;
+  display: flex;
+  justify-content: space-around;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  /* border-radius: 10px; */
+`;
+
+const SInformationImg = styled.img`
+  width: 2rem;
+  height: 2rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.5rem;
+`;
+
+const SInformationText = styled.div`
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'cafe24';
+  font-size: 16px;
+  border: 1px solid #1f2247;
+  border-radius: 40px;
+  padding: 10px;
+`;
+
+const SNoteBox = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  margin-left: 1rem;
+  margin-bottom: 2rem;
+  margin-right: 1rem;
+`;
+
+const SNoteImg = styled.img`
+  width: 2rem;
+  height: 2rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.5rem;
+  /* margin-right: 1rem; */
+`;
+
+const SInformationNote = styled.div`
+  display: inline-block;
+  width: 80%;
+  border: 1px solid #1f2247;
+  border-radius: 10px;
+  padding: 10px;
+  font-family: 'cafe24';
+`;
 
 const SButtonBox = styled.div`
   display: flex;
@@ -59,8 +155,22 @@ function AnimalDetail() {
   const navigate = useNavigate();
   const location = useLocation();
   // console.log(location.state);
+  const key = [manageNumber, name, breed, gender, weight, neuter];
+  const korKey = ['관리 번호', '이름', '품종', '성별', '체중', '중성화 여부'];
   const { animal } = location.state;
-
+  // animal 은 객체임
+  const animalInformation = [
+    { manageNumber: animal.manageNumber },
+    { name: animal.name },
+    { breed: animal.breed },
+    { gender: animal.gender },
+    { weight: animal.weight },
+    { neuter: animal.neuter },
+  ];
+  console.log(animal.note);
+  // animalInformation.map(item =>
+  //   console.log(Object.keys(item)[0], Object.values(item)[0]),
+  // );
   const [isModal, setIsModal] = useState(false);
 
   const handleModal = () => {
@@ -82,15 +192,31 @@ function AnimalDetail() {
     <>
       <Header />
 
-      <div>동물 Detail</div>
-      <div>관리 번호 : {animal.manageNumber}</div>
-      <div>이름 : {animal.name}</div>
-      <div>사진 : {animal.thumbnailImage}</div>
-      <div>품종 : {animal.breed}</div>
-      <div>성별 : {animal.gender}</div>
-      <div>체중 : {animal.weight}</div>
-      <div>중성화 여부 : {animal.neuter}</div>
-      <div>특징 : {animal.note}</div>
+      <STitle>동물 정보</STitle>
+      <ImageCarousel page="AnimalDetail" />
+      <SLine>
+        <SGrayLineBox>
+          <SGrayLine />
+        </SGrayLineBox>
+        <SDetailInformation>상세 정보</SDetailInformation>
+        <SGrayLineBox>
+          <SGrayLine />
+        </SGrayLineBox>
+      </SLine>
+      {animalInformation.map((Item, index) => (
+        <SInformationBox>
+          <SInformationImg src={key[index]} alt={`${Object.keys(Item)}`} />
+          <SInformationText>
+            <div>{korKey[index]}</div>
+            <div>{Object.values(Item)}</div>
+          </SInformationText>
+        </SInformationBox>
+      ))}
+
+      <SNoteBox>
+        <SNoteImg src={note} alt="note.png" />
+        <SInformationNote>{animal.note}</SInformationNote>
+      </SNoteBox>
 
       <SButtonBox>
         <Link
