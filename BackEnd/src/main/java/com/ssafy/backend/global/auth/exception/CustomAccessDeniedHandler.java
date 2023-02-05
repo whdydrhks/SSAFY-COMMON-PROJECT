@@ -10,11 +10,6 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Component
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
@@ -22,12 +17,18 @@ public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 		AccessDeniedException accessDeniedException) throws IOException, ServletException {
 
-		String msg = new ObjectMapper().writeValueAsString("권한이 없는 사용자");
+		//		String msg = new ObjectMapper().writeValueAsString("권한이 없는 사용자");
+		//
+		//		log.info(msg);
+		//		log.info("request URI : " + request.getRequestURL());
+		//		response.getWriter().write(msg);
+		//		response.sendError(HttpServletResponse.SC_FORBIDDEN, msg);
 
-		log.info(msg);
-		log.info("request URI : " + request.getRequestURL());
-		response.getWriter().write(msg);
-		response.sendError(HttpServletResponse.SC_FORBIDDEN, msg);
+		// Security에서 처리하는 객체라 dispatcher servlet이 잡아내지 못한다
+		//		throw new ApiErrorException(ApiStatus.FORBIDDEN);
+
+		// rest api 에러를 컨트롤러 처리하는 곳을 만들어 리다이렉트로 념겨주는 것으로 해결
+		response.sendRedirect("/error/403");
 	}
 
 }

@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.ssafy.backend.global.auth.JwtRequestFilter;
 import com.ssafy.backend.global.auth.exception.CustomAccessDeniedHandler;
 import com.ssafy.backend.global.auth.exception.CustomAuthenticationEntryPoint;
-import com.ssafy.backend.global.util.Role;
+import com.ssafy.backend.global.util.enums.Role;
 
 import lombok.RequiredArgsConstructor;
 
@@ -49,6 +49,7 @@ public class SecurityConfig {
 			.antMatchers(HttpMethod.OPTIONS, "/**/*").permitAll()
 			.antMatchers("/").permitAll() // swagger csrf 엔드포인트 오류를 지우기 위함 1
 			.antMatchers("/csrf").permitAll() // swagger csrf 엔드포인트 오류를 지우기 위함 2
+			.antMatchers("/error/*").permitAll()
 			.antMatchers(API_PREFIX + "/auth/*").permitAll()
 			.antMatchers(API_PREFIX + "/user").permitAll() // 추후 유저 권한 이상으로 향상 시켜야 할 것
 			.antMatchers("/test/user").hasAnyRole(Role.USER.getHighRoles())
