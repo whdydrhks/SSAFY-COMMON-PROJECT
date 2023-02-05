@@ -1,4 +1,4 @@
-package com.ssafy.backend.global.util;
+package com.ssafy.backend.global.util.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
