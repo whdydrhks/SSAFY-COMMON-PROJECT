@@ -23,8 +23,10 @@ public enum ApiStatus {
 	UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "인증 정보가 유효하지 않습니다.", false),
 	NOT_LOGGED_IN(HttpStatus.UNAUTHORIZED, "인증 정보가 없습니다.", false),
 	FORBIDDEN(HttpStatus.FORBIDDEN, "페이지 열람 권한이 없습니다.", false),
-	NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 페이지입니다.", false),
+	PAGE_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 페이지입니다.", false),
+	RESOURCE_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 리소스입니다.", false),
 	CONFLICT(HttpStatus.CONFLICT, "클라이언트의 요청에서 충돌이 감지되었습니다.", false),
+	DUPLICATION(HttpStatus.CONFLICT, "요청 값이 중복되었습니다.", false),
 
 	// Server Error 5xx
 	INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "알 수 없는 에러입니다.", false);

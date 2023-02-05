@@ -26,9 +26,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-	private final String API_VERSION = "/v1";
-	private final String API_PREFIX = "/api" + API_VERSION;
-
 	private final JwtRequestFilter jwtRequestFilter;
 
 	private final CustomAccessDeniedHandler customAccessDeniedHandler;
@@ -50,8 +47,9 @@ public class SecurityConfig {
 			.antMatchers("/").permitAll() // swagger csrf 엔드포인트 오류를 지우기 위함 1
 			.antMatchers("/csrf").permitAll() // swagger csrf 엔드포인트 오류를 지우기 위함 2
 			.antMatchers("/error/*").permitAll()
-			.antMatchers(API_PREFIX + "/auth/*").permitAll()
-			.antMatchers(API_PREFIX + "/user").permitAll() // 추후 유저 권한 이상으로 향상 시켜야 할 것
+			.antMatchers("/api/*/auth/**").permitAll()
+			.antMatchers("/api/*/user/**").permitAll() // 추후 유저 권한 이상으로 향상 시켜야 할 것
+			.antMatchers("/api/*/shelter", "/api/*/shelter/**").permitAll() // 추후 유저 권한 이상으로 향상 시켜야 할 것
 			.antMatchers("/test/user").hasAnyRole(Role.USER.getHighRoles())
 			.antMatchers("/test/admin").hasAnyRole(Role.ADMIN.getHighRoles())
 			.anyRequest().authenticated();
