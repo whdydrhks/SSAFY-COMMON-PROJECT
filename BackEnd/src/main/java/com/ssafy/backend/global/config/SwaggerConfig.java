@@ -6,6 +6,9 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -27,12 +30,26 @@ public class SwaggerConfig {
 	private static final String API_DESCRIPTION = "B209팀 공통 프로젝트 API 명세서";
 
 	@Bean
-	public Docket api() {
+	public Docket allApi() {
+		return buildDocket("_전체_", Predicates.or(
+			PathSelectors.regex("/*.*")));
+	}
+
+	@Bean
+	public Docket shelterApi() {
+		String version = "v1";
+		return buildDocket("보호소 " + version, Predicates.or(
+			PathSelectors.regex("/api/" + version + "/shelter.*")));
+	}
+
+	public Docket buildDocket(String groupName, Predicate<String> predicates) {
 		return new Docket(DocumentationType.SWAGGER_2)
 			.apiInfo(apiInfo()) // API 문서에 대한 설명
 			.securityContexts(Arrays.asList(securityContext())) // swagger에서 jwt 토큰값 넣기위한 설정 1
 			.securitySchemes(Arrays.asList(apiKey())) // swagger에서 jwt 토큰값 넣기위한 설정 2
+			.groupName(groupName)
 			.select()
+			.paths(predicates)
 			.apis(RequestHandlerSelectors.any())
 			.paths(PathSelectors.any())
 			.build();
