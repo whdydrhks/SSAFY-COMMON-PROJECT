@@ -69,10 +69,10 @@ function AnimalCategory() {
       </Box>
 
       <TabPanel value={value} index={0}>
-        <AnimalList />
+        <AnimalList expired="false" />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        입양 완료
+        <AnimalList expired="true" />
       </TabPanel>
     </Box>
   );

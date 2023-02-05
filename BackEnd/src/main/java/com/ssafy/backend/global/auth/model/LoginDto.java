@@ -1,4 +1,7 @@
-package com.ssafy.backend.domain.member.model.request;
+package com.ssafy.backend.global.auth.model;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 import com.ssafy.backend.domain.member.entity.UserEntity;
 
@@ -14,13 +17,16 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class UserLoginDto {
+public class LoginDto {
 
+	@Email
 	private String email;
+
+	@NotNull
 	private String password;
 
-	public static UserLoginDto of(UserEntity user) {
-		return UserLoginDto.builder()
+	public static LoginDto of(UserEntity user) {
+		return LoginDto.builder()
 			.email(user.getEmail())
 			.password(user.getPassword())
 			.build();
