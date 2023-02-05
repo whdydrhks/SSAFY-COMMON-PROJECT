@@ -35,3 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Slf4j ###
+.log
+.log.**.gz
+.log.**.**.gz
