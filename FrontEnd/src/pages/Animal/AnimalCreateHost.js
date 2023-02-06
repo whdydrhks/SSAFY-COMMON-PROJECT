@@ -34,7 +34,7 @@ const SFileUploadButton = styled(Button)`
 `;
 
 const SPreviewCard = styled(Grid)`
-  display: flex
+  display: flex;
   justify-content: center;
 `;
 function AnimalCreateHost() {

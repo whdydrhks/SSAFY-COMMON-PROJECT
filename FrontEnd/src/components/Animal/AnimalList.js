@@ -14,6 +14,7 @@ const SLink = styled(Link)`
 
 function AnimalList(props) {
   const animalList = useRecoilValue(animalListState);
+  // console.log(animalList);
   console.log(props);
 
   // const [temp, setTemp] = useState([])

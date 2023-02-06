@@ -11,13 +11,14 @@ import {
   Typography,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import API_URL from '../../api/api';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 
 function SignUp() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [chkPassword, setChkPassword] = useState('');
@@ -27,9 +28,23 @@ function SignUp() {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [chkPasswordError, setChkPasswordError] = useState(false);
+  const [phoneNumberError, setPhoneNumberError] = useState(false);
+  const [isAgree, setIsAgree] = useState(false);
   // const [nicknameError, setNicknameError] = useState(false);
 
   const handleSignUp = () => {
+    if (
+      !(
+        emailError &&
+        passwordError &&
+        chkPasswordError &&
+        phoneNumberError &&
+        isAgree
+      )
+    ) {
+      alert('정보를 입력해주세요');
+      return;
+    }
     axios
       .post(`${API_URL}/user`, {
         email,
@@ -41,21 +56,9 @@ function SignUp() {
       .then(res => {
         console.log(res);
         if (res.data.msg === 'success') {
-          if (!emailError) {
-            alert('이메일 형식이 잘못되었습니다.');
-            return;
-          }
-          if (!passwordError) {
-            alert('비밀번호 형식이 잘못되었습니다.');
-            return;
-          }
-          if (!chkPasswordError) {
-            alert('비밀번호가 같지 않습니다.');
-            return;
-          }
-          window.location.href = '/login';
+          navigate('/login');
         } else {
-          alert('회원가입실패');
+          alert('회원가입 실패');
         }
       });
   };
@@ -76,6 +79,11 @@ function SignUp() {
     if (password === chkPassword) {
       setChkPasswordError(true);
     }
+  };
+
+  const checkPhoneNumber = () => {
+    const regExPhoneNumber = /^[0-9]+$/;
+    setPhoneNumberError(regExPhoneNumber.test(phoneNumber));
   };
 
   const handleEmail = event => {
@@ -100,6 +108,10 @@ function SignUp() {
 
   const handlePhoneNumber = event => {
     setPhoneNumber(event.target.value);
+  };
+
+  const handleAgreeChk = () => {
+    setIsAgree(!isAgree);
   };
 
   return (
@@ -135,7 +147,32 @@ function SignUp() {
                 onChange={handleEmail}
                 onBlur={checkEmail}
               />
-              <Button type="submit">인증하기</Button>
+              {emailError ? (
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Typography
+                    component="h6"
+                    variant="body1"
+                    style={{ color: 'green' }}
+                  >
+                    이메일 형식이 준수합니다.
+                  </Typography>
+                  <Button type="submit">인증하기</Button>
+                </div>
+              ) : (
+                <Typography
+                  component="h6"
+                  variant="body1"
+                  style={{ color: 'red' }}
+                >
+                  이메일 형식이 잘못되었습니다.
+                </Typography>
+              )}
             </Grid>
             <Grid item xs={12}>
               <Typography component="h6" variant="body2">
@@ -153,6 +190,23 @@ function SignUp() {
                 onChange={handlePassword}
                 onBlur={checkPassword}
               />
+              {passwordError ? (
+                <Typography
+                  component="h6"
+                  variant="body1"
+                  style={{ color: 'green' }}
+                >
+                  비밀번호 양식이 올바릅니다.
+                </Typography>
+              ) : (
+                <Typography
+                  component="h6"
+                  variant="body1"
+                  style={{ color: 'red' }}
+                >
+                  비밀번호 양식을 지켜주세요.
+                </Typography>
+              )}
             </Grid>
             <Grid item xs={12}>
               <Typography component="h6" variant="body2">
@@ -170,6 +224,23 @@ function SignUp() {
                 onChange={handleChkPassword}
                 onBlur={checkDuplicatePassword}
               />
+              {chkPasswordError ? (
+                <Typography
+                  component="h6"
+                  variant="body1"
+                  style={{ color: 'green' }}
+                >
+                  비밀번호 일치합니다.
+                </Typography>
+              ) : (
+                <Typography
+                  component="h6"
+                  variant="body1"
+                  style={{ color: 'red' }}
+                >
+                  비밀번호 일치하지 않습니다.
+                </Typography>
+              )}
             </Grid>
             <Grid item xs={12}>
               <Typography component="h6" variant="body2">
@@ -198,7 +269,10 @@ function SignUp() {
                 value={nickname}
                 onChange={handleNickname}
               />
-              <Button type="submit">중복확인</Button>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <div style={{ color: 'white' }}>?</div>
+                <Button type="submit">중복확인</Button>
+              </div>
             </Grid>
             <Grid item xs={12}>
               <Typography component="h6" variant="body2">
@@ -213,11 +287,35 @@ function SignUp() {
                 placeholder="- 없이 입력해주세요"
                 value={phoneNumber}
                 onChange={handlePhoneNumber}
+                onBlur={checkPhoneNumber}
               />
+              {phoneNumberError && phoneNumber.length >= 10 ? (
+                <Typography
+                  component="h6"
+                  variant="body1"
+                  style={{ color: 'green' }}
+                >
+                  핸드폰 번호가 확인되었습니다.
+                </Typography>
+              ) : (
+                <Typography
+                  component="h6"
+                  variant="body1"
+                  style={{ color: 'red' }}
+                >
+                  숫자만 입력 가능합니다.
+                </Typography>
+              )}
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                control={
+                  <Checkbox
+                    value="allowExtraEmails"
+                    color="primary"
+                    onClick={handleAgreeChk}
+                  />
+                }
                 label="이용 약관에 동의합니다."
               />
             </Grid>

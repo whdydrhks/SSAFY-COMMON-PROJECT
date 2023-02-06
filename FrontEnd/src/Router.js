@@ -17,6 +17,7 @@ import MyPage from './pages/Account/MyPage';
 import ModifyMyPage from './pages/Account/ModifyMyPage';
 import Alarm from './pages/Alarm';
 import CreateRoomHost from './pages/VideoChat/CreateRoomHost';
+import NotFound from './NotFound';
 
 const router = createBrowserRouter([
   {
@@ -90,6 +91,10 @@ const router = createBrowserRouter([
   {
     path: '/videochat',
     element: <CreateRoomHost />,
+  },
+  {
+    path: '/notfound',
+    element: <NotFound />,
   },
 ]);
 

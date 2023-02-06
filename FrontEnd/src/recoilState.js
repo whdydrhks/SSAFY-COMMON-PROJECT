@@ -1,5 +1,7 @@
 import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
 
+const { persistAtom } = recoilPersist();
 const authStateAtom = atom({
   key: 'authStateAtom',
   default: false,
@@ -9,12 +11,14 @@ const userAtom = atom({
   key: 'userAtom',
   default: {
     role: '',
-    email: 'kwnoyng@gmail.com',
-    name: '권오영',
-    nickname: '권오영',
-    phoneNumber: '010-1234-1234',
+    userId: '',
+    email: '',
+    name: '',
+    nickname: '',
+    phoneNumber: '',
     profileImg: '',
   },
+  effects_UNSTABLE: [persistAtom],
 });
 
 const animalListState = atom({
@@ -31,7 +35,7 @@ const animalListState = atom({
       gender: 'M',
       weight: 6.2,
       neuter: 'T',
-      note: '사람을 많이 좋아합니다.',
+      note: '사람을 많이 좋아합니다.사람을 많이 좋아합니다.사람을 많이 좋아합니다.사람을 많이 좋아합니다.사람을 많이 좋아합니다.사람을 많이 좋아합니다.사람을 많이 좋아합니다.사람을 많이 좋아합니다.사람을 많이 좋아합니다.사람을 많이 좋아합니다.',
       expired: 'F',
     },
     {
@@ -91,6 +95,7 @@ const animalListState = atom({
       expired: 'F',
     },
   ],
+  effects_UNSTABLE: [persistAtom],
 });
 
 const animalNumber = atom({
