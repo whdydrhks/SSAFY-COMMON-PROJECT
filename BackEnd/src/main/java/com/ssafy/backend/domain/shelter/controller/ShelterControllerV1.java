@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 @Api(tags = "ShelterController v1")
-@RequestMapping("api/v1/shelter")
+@RequestMapping("/v1/shelter")
 public class ShelterControllerV1 {
 
 	private final ShelterService shelterService;

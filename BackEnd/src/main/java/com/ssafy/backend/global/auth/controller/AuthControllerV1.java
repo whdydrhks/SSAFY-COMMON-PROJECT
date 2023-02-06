@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 @Api(tags = "AuthController v1")
-@RequestMapping("api/v1/auth")
+@RequestMapping("/v1/auth")
 public class AuthControllerV1 {
 
 	private final PasswordEncoder passwordEncoder;

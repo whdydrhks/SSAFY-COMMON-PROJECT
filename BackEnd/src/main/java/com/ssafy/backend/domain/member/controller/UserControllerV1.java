@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 @Api(tags = "UserController v1")
-@RequestMapping("api/v1/user")
+@RequestMapping("/v1/user")
 public class UserControllerV1 {
 
 	private final PasswordEncoder passwordEncoder;
