@@ -35,7 +35,7 @@ const animalListState = atom({
       gender: 'M',
       weight: 6.2,
       neuter: 'T',
-      note: '사람을 많이 좋아합니다.',
+      note: '사람을 많이 좋아합니다.사람을 많이 좋아합니다.사람을 많이 좋아합니다.사람을 많이 좋아합니다.사람을 많이 좋아합니다.사람을 많이 좋아합니다.사람을 많이 좋아합니다.사람을 많이 좋아합니다.사람을 많이 좋아합니다.사람을 많이 좋아합니다.',
       expired: 'F',
     },
     {
@@ -95,6 +95,7 @@ const animalListState = atom({
       expired: 'F',
     },
   ],
+  effects_UNSTABLE: [persistAtom],
 });
 
 const animalNumber = atom({
