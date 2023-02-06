@@ -10,7 +10,7 @@ import {
   Box,
   Container,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useSetRecoilState } from 'recoil';
@@ -22,6 +22,7 @@ import { authStateAtom, userAtom } from '../../recoilState';
 import { getCookie } from './cookie';
 
 function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const setAuthState = useSetRecoilState(authStateAtom);
@@ -37,7 +38,7 @@ function Login() {
     console.log(password);
     axios
       .post(
-        `${API_URL}/user/login`,
+        `${API_URL}/auth/login`,
         {
           email,
           password,
@@ -65,7 +66,7 @@ function Login() {
               { withCredentials: true },
             )
             .then(info => {
-              console.log(info);
+              // console.log(info);
               const { name, phoneNumber, profileImg } = info.data.userInfo;
               setUser({
                 role,
@@ -76,7 +77,7 @@ function Login() {
                 profileImg,
               });
             });
-          window.location.href = '/';
+          navigate('/');
         } else {
           alert('아이디와 비밀번호를 확인해주세요.');
         }

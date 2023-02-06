@@ -64,7 +64,7 @@ function Nav() {
         });
       setAuthState(true);
     }
-  }, []);
+  }, [authState]);
 
   return (
     <SBox>
@@ -105,7 +105,7 @@ function Nav() {
           />
         ) : (
           <BottomNavigationAction
-            label="마이페이지"
+            label="내정보"
             icon={<PersonIcon />}
             component={Link}
             to={`/mypage/${user.nickname}`}
