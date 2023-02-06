@@ -1,5 +1,13 @@
 package com.ssafy.backend.domain.member.service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,7 +17,13 @@ import com.ssafy.backend.domain.member.model.request.UserSignupDto;
 import com.ssafy.backend.domain.member.model.request.UserUpdateDto;
 import com.ssafy.backend.domain.member.model.response.UserInfoDto;
 import com.ssafy.backend.domain.member.repository.UserRepository;
+import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
 import com.ssafy.backend.global.auth.model.LoginDto;
+import com.ssafy.backend.global.common.model.ResponseSuccessDto;
+import com.ssafy.backend.global.error.exception.ApiErrorException;
+import com.ssafy.backend.global.util.JwtUtil;
+import com.ssafy.backend.global.util.ResponseUtil;
+import com.ssafy.backend.global.util.enums.ApiStatus;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,6 +33,9 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
 	private final PasswordEncoder passwordEncoder;
+
+	private final JwtUtil jwtUtil;
+	private final ResponseUtil responseUtil;
 
 	private final UserRepository userRepository;
 
@@ -30,54 +47,83 @@ public class UserService {
 	 * @throws IllegalStateException
 	 */
 	@Transactional
-	public Long join(UserSignupDto signupDto) {
+	public ResponseSuccessDto<?> register(UserSignupDto signupDto) {
 		// 패스워드 암호화
 		signupDto.setPassword(passwordEncoder.encode(signupDto.getPassword()));
 
 		UserEntity joinUser = signupDto.toEntity();
 
-		// 중복검사
-		validateDuplicateUser(joinUser);
-		UserEntity user = userRepository.save(joinUser);
+		// 이메일 중복검사
+		validateDuplicateEmail(joinUser.getEmail());
 
-		System.out.println(user);
-		return user.getId();
+		// 닉네임 중복검사
+		validateDuplicateNickname(joinUser.getNickname());
+
+		Long userId = userRepository.save(joinUser).getId();
+
+		ResponseSuccessDto<Long> resp = responseUtil
+			.buildSuccessResponse(userId);
+
+		return resp;
 	}
 
 	/**
-	 * 일반 로그인을 처리하는 메소드
+	 * 일반 로그인을 처리하는 메소드(auth 작업할 때 아래 있는 메소드로 교체 할 것)
 	 *
 	 * @param
 	 * @return Optional<>
 	 * @throws IllegalAccessException
 	 */
 	@Transactional
-	public UserEntity login(LoginDto loginDto) throws IllegalAccessException {
-		UserEntity findUser = userRepository.findByEmail(loginDto.getEmail())
-			.orElseThrow(() -> new IllegalAccessException("존재하지 않는 회원입니다."));
-
-		// 로그인을 시도한 이메일과 동일한 이메일이 없거나,
-		// 비밀번호가 일치하지 않는다면 빈 Optional객체를 보냄
-		if (!passwordEncoder.matches(loginDto.getPassword(), findUser.getPassword())) {
-			throw new IllegalAccessException("비밀번호가 일치하지 않습니다.");
-		}
-
-		return findUser;
-
+	public UserEntity login(LoginDto loginDto) {
+		return null;
 	}
+
+	//	/**
+	//	 * 일반 로그인을 처리하는 메소드
+	//	 *
+	//	 * @param
+	//	 * @return Optional<>
+	//	 * @throws IllegalAccessException
+	//	 */
+	//	@Transactional
+	//	public ResponseEntity<?> login(LoginDto loginDto) {
+	//		UserEntity findUser = userRepository.findByEmailAndExpiredLike(loginDto.getEmail(), "F")
+	//			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+	//
+	//		// 로그인을 시도한 이메일과 동일한 이메일이 없거나,
+	//		// 비밀번호가 일치하지 않는다면 빈 Optional객체를 보냄
+	//		if (!passwordEncoder.matches(loginDto.getPassword(), findUser.getPassword())) {
+	//			throw new ApiErrorException(ApiStatus.INVALID_PASSWORD);
+	//		}
+	//
+	//		String accessJwt = jwtUtil.createAccessToken(findUser);
+	//		String refreshJwt = jwtUtil.createRefreshToken(findUser);
+	//
+	//		Cookie refreshToken = cookieUtil.createCookie(jwtUtil.REFRESH_TOKEN, refreshJwt);
+	//
+	//		HttpHeaders headers = new HttpHeaders();
+	//		headers.set(HttpHeaders.SET_COOKIE, refreshToken.toString());
+	//		headers.set(HttpHeaders.AUTHORIZATION, accessJwt);
+	//
+	//		return ResponseEntity.ok()
+	//			.headers(headers)
+	//			.body("success");
+	//	}
 
 	/**
 	 * 사용자의 정보를 갱신하는 메소드
 	 *
 	 * @param
 	 * @return 업데이트 된 userId
-	 * @throws IllegalAccessException
 	 */
 	@Transactional
-	public Long update(String userNickname, UserUpdateDto updateDto) throws IllegalAccessException {
+	public ResponseSuccessDto<?> update(
+		String userNickname,
+		UserUpdateDto updateDto,
+		HttpServletRequest request) {
 
-		UserEntity findUser = userRepository.findByNickname(userNickname)
-			.orElseThrow(() -> new IllegalAccessException("존재하지 않는 회원입니다."));
+		UserEntity findUser = validateAccount(userNickname, request);
 
 		UserEntity updateUser = UserEntity.builder()
 			.id(findUser.getId())
@@ -92,7 +138,12 @@ public class UserService {
 			.createdDate(findUser.getCreatedDate())
 			.build();
 
-		return userRepository.save(updateUser).getId();
+		Long userId = userRepository.save(updateUser).getId();
+
+		ResponseSuccessDto<Long> resp = responseUtil
+			.buildSuccessResponse(userId);
+
+		return resp;
 	}
 
 	/**
@@ -100,12 +151,13 @@ public class UserService {
 	 *
 	 * @param
 	 * @return 계정 권한이 업데이트 된 userId
-	 * @throws IllegalAccessException
 	 */
-	public Long updateRole(String userEmail, String roleName) throws IllegalAccessException {
+	public ResponseSuccessDto<?> updateRole(
+		String userNickname,
+		String roleName,
+		HttpServletRequest request) {
 
-		UserEntity findUser = userRepository.findByEmail(userEmail)
-			.orElseThrow(() -> new IllegalAccessException("존재하지 않는 회원입니다."));
+		UserEntity findUser = validateAccount(userNickname, request);
 
 		UserEntity updateUser = UserEntity.builder()
 			.id(findUser.getId())
@@ -120,7 +172,12 @@ public class UserService {
 			.createdDate(findUser.getCreatedDate())
 			.build();
 
-		return userRepository.save(updateUser).getId();
+		Long userId = userRepository.save(updateUser).getId();
+
+		ResponseSuccessDto<Long> resp = responseUtil
+			.buildSuccessResponse(userId);
+
+		return resp;
 	}
 
 	/**
@@ -128,12 +185,13 @@ public class UserService {
 	 *
 	 * @param
 	 * @return 만료 정보가 업데이트 된 userId
-	 * @throws IllegalAccessException
 	 */
-	public Long updateExpire(String userEmail, Boolean expiredFlag) throws IllegalAccessException {
+	public ResponseSuccessDto<?> updateExpire(
+		String userNickname,
+		Boolean expiredFlag,
+		HttpServletRequest request) {
 
-		UserEntity findUser = userRepository.findByEmail(userEmail)
-			.orElseThrow(() -> new IllegalAccessException("존재하지 않는 회원입니다."));
+		UserEntity findUser = validateAccount(userNickname, request);
 
 		UserEntity updateUser = UserEntity.builder()
 			.id(findUser.getId())
@@ -148,7 +206,12 @@ public class UserService {
 			.createdDate(findUser.getCreatedDate())
 			.build();
 
-		return userRepository.save(updateUser).getId();
+		Long userId = userRepository.save(updateUser).getId();
+
+		ResponseSuccessDto<Long> resp = responseUtil
+			.buildSuccessResponse(userId);
+
+		return resp;
 	}
 
 	/**
@@ -158,8 +221,40 @@ public class UserService {
 	 * @return 삭제된 된 userId
 	 */
 	@Transactional
-	public Long delete(String userEmail) {
-		return userRepository.deleteByEmail(userEmail);
+	public ResponseSuccessDto<?> delete(
+		String userNickname,
+		HttpServletRequest request) {
+
+		validateAccount(userNickname, request);
+
+		Long count = userRepository.deleteByEmail(userNickname);
+
+		ResponseSuccessDto<Long> resp = responseUtil
+			.buildSuccessResponse(count);
+
+		return resp;
+	}
+
+	/**
+	 * 사용자 정보를 전부 가져오는 메소드
+	 *
+	 * @param
+	 * @return ResponseSuccessDto&ltList&ltUserInfoDto&gt&gt
+	 */
+	@Transactional
+	public ResponseSuccessDto<?> getInfoAll() {
+
+		List<UserEntity> findUsers = userRepository.findAllByExpiredLike("F");
+
+		List<UserInfoDto> userInfos = findUsers
+			.stream()
+			.map(UserInfoDto::of)
+			.collect(Collectors.toList());
+
+		ResponseSuccessDto<List<ShelterEntity>> resp = responseUtil
+			.buildSuccessResponse(userInfos);
+
+		return resp;
 	}
 
 	/**
@@ -167,14 +262,19 @@ public class UserService {
 	 *
 	 * @param
 	 * @return UserInfoDto
-	 * @throws IllegalAccessException
 	 */
 	@Transactional
-	public UserInfoDto getInfoByEmail(String userEmail) throws IllegalAccessException {
-		UserEntity findUser = userRepository.findByEmailAndExpiredLike(userEmail, "F")
-			.orElseThrow(() -> new IllegalAccessException("존재하지 않는 회원입니다."));
+	public ResponseSuccessDto<?> getInfoByEmail(String userEmail) {
 
-		return UserInfoDto.of(findUser);
+		UserEntity findUser = userRepository.findByEmailAndExpiredLike(userEmail, "F")
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+
+		UserInfoDto infoDto = UserInfoDto.of(findUser);
+
+		ResponseSuccessDto<UserInfoDto> resp = responseUtil
+			.buildSuccessResponse(infoDto);
+
+		return resp;
 	}
 
 	/**
@@ -182,26 +282,137 @@ public class UserService {
 	 *
 	 * @param
 	 * @return UserInfoDto
-	 * @throws IllegalAccessException
 	 */
 	@Transactional
-	public UserInfoDto getInfoByNickname(String userNickname) throws IllegalAccessException {
-		UserEntity findUser = userRepository.findByNicknameAndExpiredLike(userNickname, "F")
-			.orElseThrow(() -> new IllegalAccessException("존재하지 않는 회원입니다."));
+	public ResponseSuccessDto<?> getInfoByNickname(String userNickname) {
 
-		return UserInfoDto.of(findUser);
+		UserEntity findUser = userRepository.findByNicknameAndExpiredLike(userNickname, "F")
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+
+		UserInfoDto infoDto = UserInfoDto.of(findUser);
+
+		ResponseSuccessDto<UserInfoDto> resp = responseUtil
+			.buildSuccessResponse(infoDto);
+
+		return resp;
 	}
 
 	/**
-	 * 유저의 가입 정보가 이미 있는지 확인하는 메소드
+	 * name으로 사용자 정보를 검색하는 메소드
 	 *
 	 * @param
-	 * @throws IllegalStateException
+	 * @return ResponseSuccessDto&ltList&ltUserInfoDto&gt&gt
 	 */
-	private void validateDuplicateUser(UserEntity user) throws IllegalStateException {
-		userRepository.findByEmail(user.getEmail())
-			.ifPresent(findUser -> {
-				throw new IllegalStateException("일치하는 아이디가 이미 존재합니다.");
+	@Transactional
+	public ResponseSuccessDto<?> searchInfoByNickname(String userNickname) {
+
+		List<UserEntity> findUsers = userRepository
+			.findByNicknameContainingIgnoreCaseAndExpiredLike(userNickname, "F");
+
+		List<UserInfoDto> userInfos = findUsers
+			.stream()
+			.map(UserInfoDto::of)
+			.collect(Collectors.toList());
+
+		ResponseSuccessDto<List<ShelterEntity>> resp = responseUtil
+			.buildSuccessResponse(userInfos);
+
+		return resp;
+	}
+
+	/**
+	 * 접근한 사용자 정보를 검증하는 메소드
+	 *
+	 * @param
+	 */
+	private UserEntity validateAccount(String userNickname, HttpServletRequest request) {
+
+		String tokenEmail = getEmailInAuthToken(request);
+
+		UserEntity validateUser = userRepository.findByEmailAndExpiredLike(tokenEmail, "F")
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+
+		if (!validateUser.getNickname().equals(userNickname)) {
+			throw new ApiErrorException(ApiStatus.BAD_REQUEST);
+		}
+
+		return validateUser;
+	}
+
+	/**
+	 * 같은 이메일의 유저 가입 정보가 이미 있는지 확인하는 메소드
+	 *
+	 * @param
+	 */
+	private void validateDuplicateEmail(String email) {
+
+		userRepository.findByEmail(email)
+			.ifPresent(e -> {
+				throw new ApiErrorException(ApiStatus.EMAIL_DUPLICATION);
 			});
+	}
+
+	/**
+	 * 같은 닉네임의 유저 가입 정보가 이미 있는지 확인하는 메소드
+	 *
+	 * @param
+	 */
+	private void validateDuplicateNickname(String nickname) {
+
+		userRepository.findByNickname(nickname)
+			.ifPresent(e -> {
+				throw new ApiErrorException(ApiStatus.NICKNAME_DUPLICATION);
+			});
+	}
+
+	/**
+	 * 헤더의 Authorization 자리에 있는 AccessToken 정보를 가지고온다.
+	 *
+	 * @param
+	 * @return accessToken의 정보
+	 */
+	private String getAuthToken(HttpServletRequest request) {
+
+		return Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION))
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.NOT_LOGGED_IN));
+	}
+
+	/**
+	 * 헤더의 Authorization 자리에 있는 AccessToken의 id 정보를 가지고온다.
+	 *
+	 * @param
+	 * @return String accessToken의 id 정보
+	 */
+	private String getIdInAuthToken(HttpServletRequest request) {
+
+		return jwtUtil.getUserId(getAuthToken(request));
+	}
+
+	/**
+	 * 헤더의 Authorization 자리에 있는 AccessToken의 email 정보를 가지고온다.
+	 *
+	 * @param
+	 * @return String accessToken의 email정보
+	 */
+	private String getEmailInAuthToken(HttpServletRequest request) {
+
+		return jwtUtil.getUserEmail(getAuthToken(request));
+	}
+
+	// 테스트용 더미 데이터 생성용
+	@PostConstruct
+	public void testInitializing() {
+
+		for (int i = 1; i <= 25; i++) {
+			String name = "사용자_" + String.format("%03d", i);
+			UserEntity user = UserEntity.builder()
+				.email("user" + i + "gmail.com")
+				.password(passwordEncoder.encode("user" + i))
+				.name(name)
+				.phoneNumber("010-" + String.format("%04d", i) + "-1234")
+				.nickname("닉네임" + i)
+				.build();
+			userRepository.save(user);
+		}
 	}
 }
