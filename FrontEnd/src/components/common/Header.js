@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -6,9 +6,11 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import styled from 'styled-components';
+import axios from 'axios';
 import { useRecoilState } from 'recoil';
 import { authStateAtom } from '../../recoilState';
 import { removeCookie } from '../../pages/Account/cookie';
+import API_URL from '../../api/api';
 
 const SAppBar = styled(AppBar)`
   position: fixed;
@@ -23,9 +25,14 @@ function Header() {
   const [authState, setAuthState] = useRecoilState(authStateAtom);
 
   const handleLogout = () => {
-    removeCookie('accessToken');
-    setAuthState(false);
-    window.location.href('/');
+    const isLogout = window.confirm('로그아웃 하시겠습니까?');
+    if (isLogout) {
+      axios.post(`${API_URL}/auth/logout`).then(() => {
+        removeCookie('accessToken');
+        setAuthState(false);
+        window.location.href = '/';
+      });
+    }
   };
 
   return (

@@ -15,6 +15,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.ssafy.backend.global.auth.model.PrincipalDetails;
+import com.ssafy.backend.global.auth.service.CustomUserDetailsService;
 import com.ssafy.backend.global.util.CookieUtil;
 import com.ssafy.backend.global.util.JwtUtil;
 import com.ssafy.backend.global.util.RedisUtil;

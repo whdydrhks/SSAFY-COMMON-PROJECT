@@ -2,7 +2,6 @@ import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom } = recoilPersist();
-
 const authStateAtom = atom({
   key: 'authStateAtom',
   default: false,
@@ -12,12 +11,14 @@ const userAtom = atom({
   key: 'userAtom',
   default: {
     role: '',
-    email: 'kwnoyng@gmail.com',
-    name: '권오영',
-    nickname: '권오영',
-    phoneNumber: '010-1234-1234',
+    userId: '',
+    email: '',
+    name: '',
+    nickname: '',
+    phoneNumber: '',
     profileImg: '',
   },
+  effects_UNSTABLE: [persistAtom],
 });
 
 const animalListState = atom({

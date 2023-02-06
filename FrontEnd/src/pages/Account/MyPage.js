@@ -1,5 +1,5 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -12,7 +12,6 @@ import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import Divider from '@mui/material/Divider';
 import { useRecoilValue } from 'recoil';
-
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 import { userAtom } from '../../recoilState';
@@ -36,7 +35,16 @@ const SLinkList = styled.div`
 `;
 
 function MyPage() {
+  const navigate = useNavigate();
+  const params = useParams();
   const user = useRecoilValue(userAtom);
+  useEffect(() => {
+    console.log(params);
+    console.log(user);
+    if (params.nickname !== user.nickname) {
+      navigate('/notfound');
+    }
+  }, []);
 
   return (
     <>
@@ -83,7 +91,7 @@ function MyPage() {
         <Link to="/checkpassword" variant="body2">
           비밀번호변경
         </Link>
-        <Link to="/modifymypage" variant="body2">
+        <Link to={`/modifymypage/${user.nickname}`} variant="body2">
           회원정보수정
         </Link>
       </SLinkList>
