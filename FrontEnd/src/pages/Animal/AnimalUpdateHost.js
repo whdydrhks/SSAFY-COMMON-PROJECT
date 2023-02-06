@@ -1,4 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable no-unused-vars */
+
 import React, { useState } from 'react';
 import {
   Box,
@@ -150,7 +152,7 @@ function AnimalUpdateHost() {
       'data',
       new Blob([JSON.stringify(variables)], { type: 'application/json' }),
     );
-    axios.post('http://192.168.31.226:3000/animal/create', formData);
+    axios.put('http://192.168.31.226:3000/animal/create', formData);
     // console.log(variables[0].animalId);
     navigate(`/animal/${variables[0].animalId}`);
   };
@@ -169,6 +171,7 @@ function AnimalUpdateHost() {
         >
           <form onSubmit={addAnimal}>
             <Grid container spacing={2}>
+              {/* 입양 상태 */}
               <Grid item xs={12}>
                 <Typography component="h6" variant="body2">
                   입양 상태
@@ -183,6 +186,8 @@ function AnimalUpdateHost() {
                   <MenuItem value="T">입양 완료</MenuItem>
                 </TextField>
               </Grid>
+
+              {/* 관리 번호 */}
               <Grid item xs={12}>
                 <Typography component="h6" variant="body2">
                   관리번호
@@ -197,142 +202,160 @@ function AnimalUpdateHost() {
                   value={manageNumber}
                 />
               </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography component="h6" variant="body2">
-                이름
-              </Typography>
-              <TextField
-                type="text"
-                onChange={handleName}
-                fullWidth
-                required
-                style={{ marginBottom: 20 }}
-                value={name}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography component="h6" variant="body2">
-                나이
-              </Typography>
-              <TextField
-                type="text"
-                onChange={handleAge}
-                fullWidth
-                required
-                style={{ marginBottom: 20 }}
-                value={age}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography component="h6" variant="body2">
-                성별
-              </Typography>
-              <TextField
-                select
-                value={gender}
-                onChange={handleGender}
-                style={{ marginBottom: 20 }}
-              >
-                <MenuItem value="M">수컷</MenuItem>
-                <MenuItem value="F">암컷</MenuItem>
-              </TextField>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography component="h6" variant="body2">
-                품종
-              </Typography>
-              <TextField
-                type="text"
-                onChange={handleBreed}
-                fullWidth
-                required
-                style={{ marginBottom: 20 }}
-                value={breed}
-              />
-            </Grid>
-            <Grid>
-              <Typography item xs={12}>
-                체중
-              </Typography>
-              <TextField
-                type="number"
-                value={weight}
-                onChange={handleWeight}
-                placeholder="체중을 입력해 주세요."
-                fullWidth
-                required
-                style={{ marginBottom: 20 }}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography component="h6" variant="body2">
-                중성화 여부
-              </Typography>
-              <TextField
-                select
-                value={neuter}
-                onChange={handleNeuter}
-                style={{ marginBottom: 20 }}
-              >
-                <MenuItem value="T">Y</MenuItem>
-                <MenuItem value="F">N</MenuItem>
-              </TextField>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography component="h6" variant="body2">
-                특징
-              </Typography>
-              <TextField
-                onChange={handleNote}
-                multiline
-                rows={3}
-                fullWidth
-                placeholder="특징을 입력해 주세요."
-                style={{ marginBottom: 20 }}
-                value={note}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography component="h6" variant="body2">
-                사진
-              </Typography>
-              <Box sx={{ flexGrow: 1 }}>
-                <Grid container spacing={2}>
-                  {previews.map((image, imageId) => (
-                    <SPreviewCard item xs={6}>
-                      <img
-                        src={image}
-                        alt={`${image}-${imageId}`}
-                        style={{ width: '10rem' }}
-                      />
-                      <Button
-                        type="button"
-                        onClick={handlePreviewList}
-                        name={`${imageId}`}
-                        variant="contained"
-                        color="error"
-                      >
-                        삭제
-                      </Button>
-                    </SPreviewCard>
-                  ))}
-                </Grid>
-              </Box>
-            </Grid>
-            <Grid item xs={12}>
-              <STemp>
-                <SFileUploadButton variant="contained" component="label">
-                  파일 업로드
-                  <input
-                    type="file"
-                    hidden
-                    onChange={handleImages}
-                    multiple="multiple"
-                    accept="image/*"
-                  />
-                </SFileUploadButton>
-              </STemp>
+
+              {/* 이름 */}
+              <Grid item xs={12}>
+                <Typography component="h6" variant="body2">
+                  이름
+                </Typography>
+                <TextField
+                  type="text"
+                  onChange={handleName}
+                  fullWidth
+                  required
+                  style={{ marginBottom: 20 }}
+                  value={name}
+                />
+              </Grid>
+
+              {/* 나이 */}
+              <Grid item xs={12}>
+                <Typography component="h6" variant="body2">
+                  나이
+                </Typography>
+                <TextField
+                  type="text"
+                  onChange={handleAge}
+                  fullWidth
+                  required
+                  style={{ marginBottom: 20 }}
+                  value={age}
+                />
+              </Grid>
+
+              {/* 성별 */}
+              <Grid item xs={12}>
+                <Typography component="h6" variant="body2">
+                  성별
+                </Typography>
+                <TextField
+                  select
+                  value={gender}
+                  onChange={handleGender}
+                  style={{ marginBottom: 20 }}
+                >
+                  <MenuItem value="M">수컷</MenuItem>
+                  <MenuItem value="F">암컷</MenuItem>
+                </TextField>
+              </Grid>
+
+              {/* 품종 */}
+              <Grid item xs={12}>
+                <Typography component="h6" variant="body2">
+                  품종
+                </Typography>
+                <TextField
+                  type="text"
+                  onChange={handleBreed}
+                  fullWidth
+                  required
+                  style={{ marginBottom: 20 }}
+                  value={breed}
+                />
+              </Grid>
+
+              {/* 체중 */}
+              <Grid item xs={12}>
+                <Typography item xs={12}>
+                  체중
+                </Typography>
+                <TextField
+                  type="number"
+                  value={weight}
+                  onChange={handleWeight}
+                  placeholder="체중을 입력해 주세요."
+                  fullWidth
+                  required
+                  style={{ marginBottom: 20 }}
+                />
+              </Grid>
+
+              {/* 중성화 여부 */}
+              <Grid item xs={12}>
+                <Typography component="h6" variant="body2">
+                  중성화 여부
+                </Typography>
+                <TextField
+                  select
+                  value={neuter}
+                  onChange={handleNeuter}
+                  style={{ marginBottom: 20 }}
+                >
+                  <MenuItem value="T">Y</MenuItem>
+                  <MenuItem value="F">N</MenuItem>
+                </TextField>
+              </Grid>
+
+              {/* 특징 */}
+              <Grid item xs={12}>
+                <Typography component="h6" variant="body2">
+                  특징
+                </Typography>
+                <TextField
+                  onChange={handleNote}
+                  multiline
+                  rows={3}
+                  fullWidth
+                  placeholder="특징을 입력해 주세요."
+                  style={{ marginBottom: 20 }}
+                  value={note}
+                />
+              </Grid>
+
+              {/* 사진 */}
+              <Grid item xs={12}>
+                <Typography component="h6" variant="body2">
+                  사진
+                </Typography>
+                <Box sx={{ flexGrow: 1 }}>
+                  <Grid container spacing={2}>
+                    {previews.map((image, imageId) => (
+                      <SPreviewCard item xs={6}>
+                        <img
+                          src={image}
+                          alt={`${image}-${imageId}`}
+                          style={{ width: '10rem' }}
+                        />
+                        <Button
+                          type="button"
+                          onClick={handlePreviewList}
+                          name={`${imageId}`}
+                          variant="contained"
+                          color="error"
+                        >
+                          삭제
+                        </Button>
+                      </SPreviewCard>
+                    ))}
+                  </Grid>
+                </Box>
+              </Grid>
+
+              {/* 사진 업로드 */}
+              <Grid item xs={12}>
+                <STemp>
+                  <SFileUploadButton variant="contained" component="label">
+                    파일 업로드
+                    <input
+                      type="file"
+                      hidden
+                      onChange={handleImages}
+                      multiple="multiple"
+                      accept="image/*"
+                    />
+                  </SFileUploadButton>
+                </STemp>
+              </Grid>
             </Grid>
 
             <Button type="submit">동물 등록하기</Button>

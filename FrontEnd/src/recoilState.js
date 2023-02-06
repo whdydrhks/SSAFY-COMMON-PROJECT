@@ -1,4 +1,7 @@
 import { atom } from 'recoil';
+import { recoilPersist } from 'recoil-persist';
+
+const { persistAtom } = recoilPersist();
 
 const authStateAtom = atom({
   key: 'authStateAtom',
@@ -91,6 +94,7 @@ const animalListState = atom({
       expired: 'F',
     },
   ],
+  effects_UNSTABLE: [persistAtom],
 });
 
 const animalNumber = atom({
