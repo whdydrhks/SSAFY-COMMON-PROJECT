@@ -1,0 +1,1141 @@
+2023-02-06 15:06:50.215  INFO 22640 --- [restartedMain] com.ssafy.backend.BackendApplication     : Starting BackendApplication using Java 1.8.0_332 on DESKTOP-DOGVPUB with PID 22640 (C:\Users\SSAFY\Desktop\hello_deploy\S08P12B209\BackEnd\build\classes\java\main started by SSAFY in C:\Users\SSAFY\Desktop\hello_deploy\S08P12B209\BackEnd)
+2023-02-06 15:06:50.217  INFO 22640 --- [restartedMain] com.ssafy.backend.BackendApplication     : The following 1 profile is active: "dev"
+2023-02-06 15:06:50.312  INFO 22640 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2023-02-06 15:06:50.312  INFO 22640 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2023-02-06 15:06:51.598  INFO 22640 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2023-02-06 15:06:51.599  INFO 22640 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-02-06 15:06:51.705  INFO 22640 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 97 ms. Found 2 JPA repository interfaces.
+2023-02-06 15:06:51.719  INFO 22640 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2023-02-06 15:06:51.721  INFO 22640 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2023-02-06 15:06:51.751  INFO 22640 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ssafy.backend.domain.member.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-02-06 15:06:51.752  INFO 22640 --- [restartedMain] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.ssafy.backend.domain.shelter.repository.ShelterRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2023-02-06 15:06:51.752  INFO 22640 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 20 ms. Found 0 Redis repository interfaces.
+2023-02-06 15:06:52.603  INFO 22640 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9999 (http)
+2023-02-06 15:06:52.613  INFO 22640 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2023-02-06 15:06:52.613  INFO 22640 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.71]
+2023-02-06 15:06:52.736  INFO 22640 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2023-02-06 15:06:52.736  INFO 22640 --- [restartedMain] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2423 ms
+2023-02-06 15:06:53.134  INFO 22640 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-02-06 15:06:53.215  INFO 22640 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.6.14.Final
+2023-02-06 15:06:53.405  INFO 22640 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2023-02-06 15:06:53.537  INFO 22640 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2023-02-06 15:06:53.889  INFO 22640 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2023-02-06 15:06:53.908  INFO 22640 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+2023-02-06 15:06:54.705 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    
+    alter table oauth 
+       drop 
+       foreign key FK7a23c0j3h2lvkrqjy7hkpx4hi
+2023-02-06 15:06:54.743 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    
+    drop table if exists hibernate_sequence
+2023-02-06 15:06:54.757 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    
+    drop table if exists oauth
+2023-02-06 15:06:54.767 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    
+    drop table if exists shelter
+2023-02-06 15:06:54.784 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    
+    drop table if exists user
+2023-02-06 15:06:54.800 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    
+    create table hibernate_sequence (
+       next_val bigint
+    ) engine=InnoDB
+2023-02-06 15:06:54.818 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    
+    insert into hibernate_sequence values ( 1 )
+2023-02-06 15:06:54.822 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    
+    create table oauth (
+       oauth_id bigint not null,
+        created_date datetime(6) not null,
+        updated_date datetime(6) not null,
+        provider varchar(255),
+        user_id INT UNSIGNED,
+        primary key (oauth_id)
+    ) engine=InnoDB
+2023-02-06 15:06:54.840 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    
+    create table shelter (
+       shelter_id INT UNSIGNED not null,
+        created_date datetime(6) not null,
+        updated_date datetime(6) not null,
+        address varchar(255),
+        expired varchar(1) default 'F' not null,
+        introduce varchar(1000) default '보호소 소개 글' not null,
+        name varchar(50) not null,
+        origin_image varchar(255) default 'default.png' not null,
+        post_code varchar(10) not null,
+        stored_image varchar(255) default 'default.png' not null,
+        tel_number varchar(20) not null,
+        url varchar(255) not null,
+        primary key (shelter_id)
+    ) engine=InnoDB
+2023-02-06 15:06:54.861 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    
+    create table user (
+       user_id INT UNSIGNED not null,
+        created_date datetime(6) not null,
+        updated_date datetime(6) not null,
+        email varchar(255) not null,
+        expired varchar(1) default 'F' not null,
+        name varchar(20) not null,
+        nickname varchar(20) not null,
+        password varchar(255),
+        phone_number varchar(20),
+        profile_img varchar(255) default 'default.png' not null,
+        role varchar(20) default 'USER' not null,
+        primary key (user_id)
+    ) engine=InnoDB
+2023-02-06 15:06:54.879 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    
+    alter table shelter 
+       add constraint UK_j1wklpadfw3gt2iijnttmweeb unique (name)
+2023-02-06 15:06:54.895 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    
+    alter table user 
+       add constraint UK_ob8kqyqqgmefl0aco34akdtpe unique (email)
+2023-02-06 15:06:54.909 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    
+    alter table user 
+       add constraint UK_n4swgcf30j6bmtb4l4cjryuym unique (nickname)
+2023-02-06 15:06:54.920 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    
+    alter table oauth 
+       add constraint FK7a23c0j3h2lvkrqjy7hkpx4hi 
+       foreign key (user_id) 
+       references user (user_id)
+2023-02-06 15:06:54.954  INFO 22640 --- [restartedMain] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-02-06 15:06:55.083  INFO 22640 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-02-06 15:06:55.555 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.579 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.625 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.639 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.640 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.644 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.649 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.649 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.653 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.659 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.659 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.662 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.667 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.668 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.671 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.675 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.676 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.680 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.684 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.685 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.688 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.692 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.693 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.695 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.699 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.700 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.704 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.707 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.709 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.711 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.715 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.716 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.719 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.723 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.724 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.727 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.731 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.732 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.735 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.739 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.740 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.743 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.748 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.749 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.752 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.758 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.759 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.763 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.767 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.768 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.772 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.776 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.777 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.781 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.786 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.787 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.790 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.794 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.796 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.799 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.803 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.804 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.807 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.812 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.813 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.817 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.822 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.822 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.826 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.831 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.832 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.835 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.839 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.840 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.843 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.848 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.849 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.852 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.857 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.858 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.862 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.866 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.867 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.870 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.874 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.875 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.879 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.883 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.884 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.888 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.892 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.893 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.896 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.900 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.901 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.904 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.908 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.909 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.912 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.916 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.916 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.919 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.923 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.923 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.926 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.930 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.931 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.934 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.938 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.938 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.941 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.945 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.946 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.948 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.952 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.953 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.956 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.960 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.961 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.964 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.968 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.969 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.973 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.976 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.977 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.980 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.985 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.985 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.988 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:55.992 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:55.993 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:55.996 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:56.000 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:56.001 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:56.004 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:56.008 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:56.009 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:56.012 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:56.017 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:56.017 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:56.020 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:56.025 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:56.026 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:56.030 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:56.034 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:56.034 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:56.037 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:56.040 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    select
+        next_val as id_val 
+    from
+        hibernate_sequence for update
+            
+2023-02-06 15:06:56.041 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    update
+        hibernate_sequence 
+    set
+        next_val= ? 
+    where
+        next_val=?
+2023-02-06 15:06:56.044 DEBUG 22640 --- [restartedMain] org.hibernate.SQL                        : 
+    insert 
+    into
+        shelter
+        (created_date, updated_date, address, introduce, name, post_code, tel_number, url, shelter_id) 
+    values
+        (?, ?, ?, ?, ?, ?, ?, ?, ?)
+2023-02-06 15:06:56.261  WARN 22640 --- [restartedMain] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-02-06 15:06:56.479  INFO 22640 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@579fcdfe, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@75d0c09e, org.springframework.security.web.context.SecurityContextPersistenceFilter@c16d053, org.springframework.security.web.header.HeaderWriterFilter@33a4bf33, org.springframework.security.web.authentication.logout.LogoutFilter@574c8f24, com.ssafy.backend.global.auth.JwtRequestFilter@10930448, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@4df4b49b, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@df8a1cd, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@72946abd, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@1f37cf91, org.springframework.security.web.session.SessionManagementFilter@2164e3ac, org.springframework.security.web.access.ExceptionTranslationFilter@6c16a8a6, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@51335e22]
+2023-02-06 15:06:56.488  WARN 22640 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/v2/api-docs']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-02-06 15:06:56.489  INFO 22640 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/v2/api-docs']
+2023-02-06 15:06:56.489  WARN 22640 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/swagger-resources/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-02-06 15:06:56.489  INFO 22640 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/swagger-resources/**']
+2023-02-06 15:06:56.489  WARN 22640 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/swagger-ui.html']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-02-06 15:06:56.489  INFO 22640 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/swagger-ui.html']
+2023-02-06 15:06:56.489  WARN 22640 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/webjars/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-02-06 15:06:56.489  INFO 22640 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/webjars/**']
+2023-02-06 15:06:56.489  WARN 22640 --- [restartedMain] o.s.s.c.a.web.builders.WebSecurity       : You are asking Spring Security to ignore Ant [pattern='/swagger/**']. This is not recommended -- please use permitAll via HttpSecurity#authorizeHttpRequests instead.
+2023-02-06 15:06:56.489  INFO 22640 --- [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will not secure Ant [pattern='/swagger/**']
+2023-02-06 15:06:56.509  INFO 22640 --- [restartedMain] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2023-02-06 15:06:56.723  INFO 22640 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2023-02-06 15:06:56.811  WARN 22640 --- [restartedMain] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates, check your Thymeleaf configuration, or set spring.thymeleaf.check-template-location=false)
+2023-02-06 15:06:57.015  INFO 22640 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9999 (http) with context path '/api'
+2023-02-06 15:06:57.017  INFO 22640 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2023-02-06 15:06:57.038  INFO 22640 --- [restartedMain] d.s.w.p.DocumentationPluginsBootstrapper : Found 2 custom documentation plugin(s)
+2023-02-06 15:06:57.084  INFO 22640 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2023-02-06 15:06:57.269  INFO 22640 --- [restartedMain] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2023-02-06 15:06:57.271  INFO 22640 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: deleteShelterUsingDELETE_1
+2023-02-06 15:06:57.272  INFO 22640 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getShelterInfoUsingGET_1
+2023-02-06 15:06:57.273  INFO 22640 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getShelterInfoAllUsingGET_1
+2023-02-06 15:06:57.276  INFO 22640 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: registerShelterUsingPOST_1
+2023-02-06 15:06:57.277  INFO 22640 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: searchShelterUsingGET_1
+2023-02-06 15:06:57.279  INFO 22640 --- [restartedMain] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: updateShelterUsingPUT_1
+2023-02-06 15:06:57.290  INFO 22640 --- [restartedMain] com.ssafy.backend.BackendApplication     : Started BackendApplication in 7.879 seconds (JVM running for 11.148)
+2023-02-06 15:07:04.972  INFO 22640 --- [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-02-06 15:07:04.975  INFO 22640 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2023-02-06 15:07:04.996  INFO 22640 --- [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

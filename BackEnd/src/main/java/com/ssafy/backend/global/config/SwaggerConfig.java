@@ -39,7 +39,7 @@ public class SwaggerConfig {
 	public Docket shelterApi() {
 		String version = "v1";
 		return buildDocket("보호소 " + version, Predicates.or(
-			PathSelectors.regex("/api/" + version + "/shelter.*")));
+			PathSelectors.regex("/" + version + "/shelter.*")));
 	}
 
 	public Docket buildDocket(String groupName, Predicate<String> predicates) {
