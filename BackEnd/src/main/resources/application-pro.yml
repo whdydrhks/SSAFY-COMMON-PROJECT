@@ -26,7 +26,7 @@ spring:
 
   redis:
     host: i8b209.p.ssafy.io
-    port: 6379
+    port: 6378
 
   devtools:
     livereload:
