@@ -18,7 +18,6 @@ import com.ssafy.backend.domain.member.model.request.UserUpdateDto;
 import com.ssafy.backend.domain.member.model.response.UserInfoDto;
 import com.ssafy.backend.domain.member.repository.UserRepository;
 import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
-import com.ssafy.backend.global.auth.model.LoginDto;
 import com.ssafy.backend.global.common.model.ResponseSuccessDto;
 import com.ssafy.backend.global.error.exception.ApiErrorException;
 import com.ssafy.backend.global.util.JwtUtil;
@@ -66,50 +65,6 @@ public class UserService {
 
 		return resp;
 	}
-
-	/**
-	 * 일반 로그인을 처리하는 메소드(auth 작업할 때 아래 있는 메소드로 교체 할 것)
-	 *
-	 * @param
-	 * @return Optional<>
-	 * @throws IllegalAccessException
-	 */
-	@Transactional
-	public UserEntity login(LoginDto loginDto) {
-		return null;
-	}
-
-	//	/**
-	//	 * 일반 로그인을 처리하는 메소드
-	//	 *
-	//	 * @param
-	//	 * @return Optional<>
-	//	 * @throws IllegalAccessException
-	//	 */
-	//	@Transactional
-	//	public ResponseEntity<?> login(LoginDto loginDto) {
-	//		UserEntity findUser = userRepository.findByEmailAndExpiredLike(loginDto.getEmail(), "F")
-	//			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
-	//
-	//		// 로그인을 시도한 이메일과 동일한 이메일이 없거나,
-	//		// 비밀번호가 일치하지 않는다면 빈 Optional객체를 보냄
-	//		if (!passwordEncoder.matches(loginDto.getPassword(), findUser.getPassword())) {
-	//			throw new ApiErrorException(ApiStatus.INVALID_PASSWORD);
-	//		}
-	//
-	//		String accessJwt = jwtUtil.createAccessToken(findUser);
-	//		String refreshJwt = jwtUtil.createRefreshToken(findUser);
-	//
-	//		Cookie refreshToken = cookieUtil.createCookie(jwtUtil.REFRESH_TOKEN, refreshJwt);
-	//
-	//		HttpHeaders headers = new HttpHeaders();
-	//		headers.set(HttpHeaders.SET_COOKIE, refreshToken.toString());
-	//		headers.set(HttpHeaders.AUTHORIZATION, accessJwt);
-	//
-	//		return ResponseEntity.ok()
-	//			.headers(headers)
-	//			.body("success");
-	//	}
 
 	/**
 	 * 사용자의 정보를 갱신하는 메소드
@@ -406,7 +361,7 @@ public class UserService {
 		for (int i = 1; i <= 25; i++) {
 			String name = "사용자_" + String.format("%03d", i);
 			UserEntity user = UserEntity.builder()
-				.email("user" + i + "gmail.com")
+				.email("user" + i + "@gmail.com")
 				.password(passwordEncoder.encode("user" + i))
 				.name(name)
 				.phoneNumber("010-" + String.format("%04d", i) + "-1234")
