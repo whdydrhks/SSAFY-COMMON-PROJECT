@@ -48,7 +48,7 @@ public class SecurityConfig {
 			.antMatchers("/csrf").permitAll() // swagger csrf 엔드포인트 오류를 지우기 위함 2
 			.antMatchers("/error/*").permitAll()
 			.antMatchers("/*/auth/**").permitAll()
-			.antMatchers("/*/user/**").permitAll() // 추후 유저 권한 이상으로 향상 시켜야 할 것
+			.antMatchers("/*/user", "/*/user/**").permitAll() // 추후 유저 권한 이상으로 향상 시켜야 할 것
 			.antMatchers("/*/shelter", "/*/shelter/**").permitAll() // 추후 유저 권한 이상으로 향상 시켜야 할 것
 			.antMatchers("/test/user").hasAnyRole(Role.USER.getHighRoles())
 			.antMatchers("/test/admin").hasAnyRole(Role.ADMIN.getHighRoles())

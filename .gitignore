@@ -39,9 +39,9 @@ out/
 .vscode/
 
 ### Slf4j ###
-.log
-.log.**.gz
-.log.**.**.gz
+*.log
+*.log.**.gz
+*.log.**.**.gz
 
 ##### BackEnd Ignore End #####
 

@@ -9,7 +9,15 @@ import com.ssafy.backend.domain.member.entity.UserEntity;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
-	List<UserEntity> findByExpiredLike(String expired);
+	List<UserEntity> findAllByExpiredLike(String expired);
+
+	List<UserEntity> findByEmailContaining(String email);
+
+	List<UserEntity> findByEmailContainingAndExpiredLike(String email, String expired);
+
+	List<UserEntity> findByNicknameContainingIgnoreCase(String nickname);
+
+	List<UserEntity> findByNicknameContainingIgnoreCaseAndExpiredLike(String nickname, String expired);
 
 	Optional<UserEntity> findByEmail(String email);
 
@@ -19,9 +27,10 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
 	Optional<UserEntity> findByNicknameAndExpiredLike(String nickname, String expired);
 
+	Optional<UserEntity> findByIdAndExpiredLike(Long id, String expired);
+
 	Long deleteByEmail(String email);
 
-	@Override
-	Optional<UserEntity> findById(Long id);
+	Long deleteByNickname(String nickname);
 
 }

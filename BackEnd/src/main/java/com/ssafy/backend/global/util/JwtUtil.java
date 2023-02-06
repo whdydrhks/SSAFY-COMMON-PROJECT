@@ -132,9 +132,9 @@ public class JwtUtil {
 
 	public String createAccessToken(UserEntity user) {
 		HashMap<String, String> payload = new HashMap<>();
-		//		payload.put(USER_ID, user.getId().toString());
+		payload.put(USER_ID, user.getId().toString());
 		payload.put(USER_EMAIL, user.getEmail());
-		payload.put(USER_NICKNAME, user.getNickname());
+		//		payload.put(USER_NICKNAME, user.getNickname());
 		payload.put(USER_PERMISSION, user.getRole().toString());
 
 		String accessToken = doCreateToken(ACCESS_TOKEN, payload, ACCESS_TOKEN_VALIDATION_SECOND * 1000L);
@@ -144,9 +144,9 @@ public class JwtUtil {
 
 	public String createRefreshToken(UserEntity user) {
 		HashMap<String, String> payload = new HashMap<>();
-		//payload.put(USER_ID, user.getId().toString());
+		payload.put(USER_ID, user.getId().toString());
 		payload.put(USER_EMAIL, user.getEmail());
-		payload.put(USER_NICKNAME, user.getNickname());
+		//		payload.put(USER_NICKNAME, user.getNickname());
 		//payload.put(USER_PERMISSION, user.getRole().toString());
 
 		String refreshToken = doCreateToken(REFRESH_TOKEN, payload, REFRESH_TOKEN_VALIDATION_SECOND * 1000L);

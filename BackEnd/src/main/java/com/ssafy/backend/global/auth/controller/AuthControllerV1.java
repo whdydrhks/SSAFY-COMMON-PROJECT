@@ -1,11 +1,6 @@
 package com.ssafy.backend.global.auth.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.backend.domain.member.entity.UserEntity;
-import com.ssafy.backend.domain.member.service.UserService;
 import com.ssafy.backend.global.auth.model.LoginDto;
+import com.ssafy.backend.global.auth.service.AuthService;
 import com.ssafy.backend.global.util.CookieUtil;
 import com.ssafy.backend.global.util.JwtUtil;
 
@@ -38,7 +32,7 @@ public class AuthControllerV1 {
 	private final JwtUtil jwtUtil;
 	private final CookieUtil cookieUtil;
 
-	private final UserService userService;
+	private final AuthService authService;
 
 	/**
 	 * 유저 로그인을 위한 메소드
@@ -51,47 +45,18 @@ public class AuthControllerV1 {
 	@PostMapping("/login")
 	@ApiOperation(value = "로그인")
 	public ResponseEntity<?> login(
-		@RequestBody LoginDto loginDto,
-		HttpServletResponse httpServletResponse) throws IllegalAccessException {
-		Map<String, Object> resultMap = new HashMap<>();
-		//	HttpHeaders headers = new HttpHeaders();
-		//	HttpStatus status = HttpStatus.OK;
+		@RequestBody LoginDto loginDto) {
 
-		UserEntity user = userService.login(loginDto);
-		String accessJwt = jwtUtil.createAccessToken(user);
-		String refreshJwt = jwtUtil.createRefreshToken(user);
-
-		Cookie refreshToken = cookieUtil.createCookie(jwtUtil.REFRESH_TOKEN, refreshJwt);
-
-		//	resultMap.put(jwtUtil.REFRESH_TOKEN, refreshToken);
-		//	resultMap.put(jwtUtil.ACCESS_TOKEN, accessJwt);
-		resultMap.put("msg", "로그인 성공");
-
-		httpServletResponse.addCookie(refreshToken);
-
-		return ResponseEntity.ok()
-			.header(HttpHeaders.AUTHORIZATION, accessJwt)
-			.body(resultMap);
+		return authService.login(loginDto);
 	}
 
 	// 미완성
 	@PostMapping("/logout")
 	@ApiOperation(value = "로그아웃")
 	public ResponseEntity<?> logout(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse) throws IllegalAccessException {
-		Map<String, Object> resultMap = new HashMap<>();
-		//	HttpStatus status = HttpStatus.OK;
+		HttpServletRequest request) {
 
-		String accessToken = getAuthToken(httpServletRequest);
-		String userEmail = jwtUtil.getUserEmail(accessToken);
-
-		jwtUtil.deleteRefreshToken(userEmail);
-
-		resultMap.put("msg", "로그인 성공");
-
-		return ResponseEntity.ok()
-			.body(resultMap);
+		return authService.logout(request);
 	}
 
 	/**

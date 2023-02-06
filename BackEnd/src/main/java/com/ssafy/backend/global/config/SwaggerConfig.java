@@ -36,6 +36,20 @@ public class SwaggerConfig {
 	}
 
 	@Bean
+	public Docket AuthApi() {
+		String version = "v1";
+		return buildDocket("인증 " + version, Predicates.or(
+			PathSelectors.regex("/api/" + version + "/auth.*")));
+	}
+
+	@Bean
+	public Docket UserApi() {
+		String version = "v1";
+		return buildDocket("사용자 " + version, Predicates.or(
+			PathSelectors.regex("/api/" + version + "/user.*")));
+	}
+
+	@Bean
 	public Docket shelterApi() {
 		String version = "v1";
 		return buildDocket("보호소 " + version, Predicates.or(
