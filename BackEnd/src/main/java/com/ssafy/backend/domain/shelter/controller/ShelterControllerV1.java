@@ -31,25 +31,22 @@ public class ShelterControllerV1 {
 
 	private final ShelterService shelterService;
 
-	@GetMapping("/search")
-	@ApiOperation(value = "보호소 검색")
+	@GetMapping
+	@ApiOperation(value = "보호소 조회")
 	public ResponseEntity<?> searchShelter(
-		@RequestParam(value = "keyword", defaultValue = "", required = false) String keyword,
+		@RequestParam(value = "keyword", required = true) String keyword,
 		@RequestParam(value = "pageNo", defaultValue = "1", required = false) int page,
+		@RequestParam(value = "sort", required = false) String sort,
+		@RequestParam(value = "limit", required = false) String limit,
 		HttpServletRequest request) {
+
+		//		if (keyword == null || keyword.isEmpty()) {
+		//			return ResponseEntity
+		//				.ok(shelterService.getInfoAll());
+		//		}
 
 		return ResponseEntity
 			.ok(shelterService.searchInfoByName(keyword));
-	}
-
-	@GetMapping
-	@ApiOperation(value = "보호소 전체 조회")
-	public ResponseEntity<?> getShelterInfoAll(
-		@RequestParam(value = "pageNo", defaultValue = "1", required = false) int page,
-		HttpServletRequest request) {
-
-		return ResponseEntity
-			.ok(shelterService.getInfoAll());
 	}
 
 	@PostMapping
@@ -62,34 +59,34 @@ public class ShelterControllerV1 {
 			.ok(shelterService.register(registerDto));
 	}
 
-	@GetMapping("/{name}")
+	@GetMapping("/{shelterId}")
 	@ApiOperation(value = "보호소 정보 조회")
 	public ResponseEntity<?> getShelterInfo(
-		@PathVariable(name = "name") String name,
+		@PathVariable(name = "shelterId") Long shelterId,
 		HttpServletRequest request) {
 
 		return ResponseEntity
-			.ok(shelterService.getInfoByName(name));
+			.ok(shelterService.getInfoById(shelterId));
 	}
 
-	@PutMapping("/{name}")
+	@PutMapping("/{shelterId}")
 	@ApiOperation(value = "보호소 정보 수정")
 	public ResponseEntity<?> updateShelter(
-		@PathVariable(name = "name") String name,
+		@PathVariable(name = "shelterId") Long shelterId,
 		@RequestBody ShelterUpdateDto updateDto,
 		HttpServletRequest request) {
 
 		return ResponseEntity
-			.ok(shelterService.update(name, updateDto));
+			.ok(shelterService.update(shelterId, updateDto));
 	}
 
-	@DeleteMapping("/{name}")
+	@DeleteMapping("/{shelterId}")
 	@ApiOperation(value = "보호소 정보 삭제")
 	public ResponseEntity<?> deleteShelter(
-		@PathVariable(name = "name") String name,
+		@PathVariable(name = "shelterId") Long shelterId,
 		HttpServletRequest request) {
 
 		return ResponseEntity
-			.ok(shelterService.delete(name));
+			.ok(shelterService.updateExpire(shelterId, true));
 	}
 }
