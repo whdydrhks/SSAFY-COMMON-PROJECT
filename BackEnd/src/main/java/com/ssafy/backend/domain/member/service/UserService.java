@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpHeaders;
@@ -47,16 +46,13 @@ public class UserService {
 	 */
 	@Transactional
 	public ResponseSuccessDto<?> register(UserSignupDto signupDto) {
-		// 패스워드 암호화
-		signupDto.setPassword(passwordEncoder.encode(signupDto.getPassword()));
+
+		signupDto.setPassword(passwordEncoder.encode(signupDto.getPassword())); // 패스워드 암호화
 
 		UserEntity joinUser = signupDto.toEntity();
 
-		// 이메일 중복검사
-		validateDuplicateEmail(joinUser.getEmail());
-
-		// 닉네임 중복검사
-		validateDuplicateNickname(joinUser.getNickname());
+		validateDuplicateEmail(joinUser.getEmail()); // 이메일 중복검사
+		validateDuplicateNickname(joinUser.getNickname()); // 닉네임 중복검사
 
 		Long userId = userRepository.save(joinUser).getId();
 
@@ -74,11 +70,11 @@ public class UserService {
 	 */
 	@Transactional
 	public ResponseSuccessDto<?> update(
-		String userNickname,
+		Long userId,
 		UserUpdateDto updateDto,
 		HttpServletRequest request) {
 
-		UserEntity findUser = validateAccount(userNickname, request);
+		UserEntity findUser = validateAccount(userId, request);
 
 		UserEntity updateUser = UserEntity.builder()
 			.id(findUser.getId())
@@ -93,10 +89,10 @@ public class UserService {
 			.createdDate(findUser.getCreatedDate())
 			.build();
 
-		Long userId = userRepository.save(updateUser).getId();
+		Long updatedUserId = userRepository.save(updateUser).getId();
 
 		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(userId);
+			.buildSuccessResponse(updatedUserId);
 
 		return resp;
 	}
@@ -108,11 +104,11 @@ public class UserService {
 	 * @return 계정 권한이 업데이트 된 userId
 	 */
 	public ResponseSuccessDto<?> updateRole(
-		String userNickname,
+		Long userId,
 		String roleName,
 		HttpServletRequest request) {
 
-		UserEntity findUser = validateAccount(userNickname, request);
+		UserEntity findUser = validateAccount(userId, request);
 
 		UserEntity updateUser = UserEntity.builder()
 			.id(findUser.getId())
@@ -127,10 +123,10 @@ public class UserService {
 			.createdDate(findUser.getCreatedDate())
 			.build();
 
-		Long userId = userRepository.save(updateUser).getId();
+		Long updatedUserId = userRepository.save(updateUser).getId();
 
 		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(userId);
+			.buildSuccessResponse(updatedUserId);
 
 		return resp;
 	}
@@ -142,11 +138,11 @@ public class UserService {
 	 * @return 만료 정보가 업데이트 된 userId
 	 */
 	public ResponseSuccessDto<?> updateExpire(
-		String userNickname,
+		Long userId,
 		Boolean expiredFlag,
 		HttpServletRequest request) {
 
-		UserEntity findUser = validateAccount(userNickname, request);
+		UserEntity findUser = validateAccount(userId, request);
 
 		UserEntity updateUser = UserEntity.builder()
 			.id(findUser.getId())
@@ -161,10 +157,10 @@ public class UserService {
 			.createdDate(findUser.getCreatedDate())
 			.build();
 
-		Long userId = userRepository.save(updateUser).getId();
+		Long updatedUserId = userRepository.save(updateUser).getId();
 
 		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(userId);
+			.buildSuccessResponse(updatedUserId);
 
 		return resp;
 	}
@@ -177,15 +173,15 @@ public class UserService {
 	 */
 	@Transactional
 	public ResponseSuccessDto<?> delete(
-		String userNickname,
+		Long userId,
 		HttpServletRequest request) {
 
-		validateAccount(userNickname, request);
+		validateAccount(userId, request);
 
-		Long count = userRepository.deleteByEmail(userNickname);
+		userRepository.deleteById(userId);
 
 		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(count);
+			.buildSuccessResponse(null);
 
 		return resp;
 	}
@@ -208,6 +204,26 @@ public class UserService {
 
 		ResponseSuccessDto<List<ShelterEntity>> resp = responseUtil
 			.buildSuccessResponse(userInfos);
+
+		return resp;
+	}
+
+	/**
+	 * id로 사용자 정보를 가져오는 메소드
+	 *
+	 * @param
+	 * @return UserInfoDto
+	 */
+	@Transactional
+	public ResponseSuccessDto<?> getInfoById(Long userId) {
+
+		UserEntity findUser = userRepository.findByIdAndExpiredLike(userId, "F")
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+
+		UserInfoDto infoDto = UserInfoDto.of(findUser);
+
+		ResponseSuccessDto<UserInfoDto> resp = responseUtil
+			.buildSuccessResponse(infoDto);
 
 		return resp;
 	}
@@ -261,6 +277,10 @@ public class UserService {
 	@Transactional
 	public ResponseSuccessDto<?> searchInfoByNickname(String userNickname) {
 
+		if (userNickname.isEmpty() || userNickname.length() < 2) {
+			throw new ApiErrorException(ApiStatus.KEYWORD_LESS_THAN_TWO);
+		}
+
 		List<UserEntity> findUsers = userRepository
 			.findByNicknameContainingIgnoreCaseAndExpiredLike(userNickname, "F");
 
@@ -280,14 +300,14 @@ public class UserService {
 	 *
 	 * @param
 	 */
-	private UserEntity validateAccount(String userNickname, HttpServletRequest request) {
+	private UserEntity validateAccount(Long userId, HttpServletRequest request) {
 
 		String tokenEmail = getEmailInAuthToken(request);
 
 		UserEntity validateUser = userRepository.findByEmailAndExpiredLike(tokenEmail, "F")
 			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-		if (!validateUser.getNickname().equals(userNickname)) {
+		if (!validateUser.getId().equals(userId)) {
 			throw new ApiErrorException(ApiStatus.BAD_REQUEST);
 		}
 
@@ -354,20 +374,4 @@ public class UserService {
 		return jwtUtil.getUserEmail(getAuthToken(request));
 	}
 
-	// 테스트용 더미 데이터 생성용
-	@PostConstruct
-	public void testInitializing() {
-
-		for (int i = 1; i <= 25; i++) {
-			String name = "사용자_" + String.format("%03d", i);
-			UserEntity user = UserEntity.builder()
-				.email("user" + i + "@gmail.com")
-				.password(passwordEncoder.encode("user" + i))
-				.name(name)
-				.phoneNumber("010-" + String.format("%04d", i) + "-1234")
-				.nickname("닉네임" + i)
-				.build();
-			userRepository.save(user);
-		}
-	}
 }
