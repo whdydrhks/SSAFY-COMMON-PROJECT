@@ -48,6 +48,7 @@
 // ---------------------------------------------------------------------
 import React, { useRef } from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const SBox = styled.div`
   display: flex;
@@ -85,9 +86,43 @@ const SDay = styled.button`
   align-items: center;
 `;
 
-function DayCarouselHost() {
+function DayCarouselHost(props) {
+  const { setDay } = props;
+  console.log(setDay);
+
   const dayRef = useRef(null);
-  const daylist = ['일', '월', '화', '수', '목', '금', '토'];
+  // const daylist = ['일', '월', '화', '수', '목', '금', '토'];
+
+  const dayList = [
+    {
+      title: '일',
+      value: 'Sun',
+    },
+    {
+      title: '월',
+      value: 'Mon',
+    },
+    {
+      title: '화',
+      value: 'Tue',
+    },
+    {
+      title: '수',
+      value: 'Wed',
+    },
+    {
+      title: '목',
+      value: 'Thr',
+    },
+    {
+      title: '금',
+      value: 'Fri',
+    },
+    {
+      title: '토',
+      value: 'Sat',
+    },
+  ];
 
   const dayClickLeft = nextType => {
     if (nextType === 'prev') {
@@ -107,6 +142,11 @@ function DayCarouselHost() {
     }
   };
 
+  const handleClick = value => {
+    console.log('value : ', value);
+    setDay(value);
+  };
+
   return (
     <SBox>
       <SButton
@@ -118,8 +158,10 @@ function DayCarouselHost() {
         클릭
       </SButton>
       <SDayList ref={dayRef}>
-        {daylist.map(day => (
-          <SDay type="button">{day}</SDay>
+        {dayList.map(day => (
+          <SDay type="button" onClick={() => handleClick(day.value)}>
+            {day.title}
+          </SDay>
         ))}
       </SDayList>
       <SButton
@@ -133,5 +175,10 @@ function DayCarouselHost() {
     </SBox>
   );
 }
+
+DayCarouselHost.propTypes = {
+  // ?
+  setDay: PropTypes.func.isRequired,
+};
 
 export default DayCarouselHost;

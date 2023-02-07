@@ -39,11 +39,11 @@ function Nav() {
     if (accessToken) {
       const decodedToken = jwtDecode(accessToken);
       const role = decodedToken.userRole;
-      const nickname = decodedToken.userNickname;
+      const { userId } = decodedToken.userId;
       const email = decodedToken.userEmail;
       axios
         .get(
-          `${API_URL}/user/${nickname}`,
+          `${API_URL}/user/${userId}`,
           {
             headers: {
               Authorization: accessToken,
@@ -52,8 +52,10 @@ function Nav() {
           { withCredentials: true },
         )
         .then(info => {
-          const { name, phoneNumber, profileImg } = info.data.userInfo;
+          const { name, nickname, phoneNumber, profileImg } =
+            info.data.userInfo;
           setUser({
+            userId,
             role,
             email,
             name,
@@ -108,7 +110,7 @@ function Nav() {
             label="내정보"
             icon={<PersonIcon />}
             component={Link}
-            to={`/mypage/${user.nickname}`}
+            to={`/mypage/${user.userId}`}
           />
         )}
       </SBottomNav>

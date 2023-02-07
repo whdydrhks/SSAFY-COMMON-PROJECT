@@ -55,7 +55,7 @@ function SignUp() {
       })
       .then(res => {
         console.log(res);
-        if (res.data.msg === 'success') {
+        if (res.data.msg === 'OK') {
           navigate('/login');
         } else {
           alert('회원가입 실패');

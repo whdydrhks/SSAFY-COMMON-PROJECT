@@ -53,11 +53,11 @@ function Login() {
           const accessToken = getCookie('accessToken');
           const decodedToken = jwtDecode(accessToken);
           const role = decodedToken.userRole;
-          const nickname = decodedToken.userNickname;
+          const { userId } = decodedToken.userId;
           console.log(accessToken);
           axios
             .get(
-              `${API_URL}/user/${nickname}`,
+              `${API_URL}/user/${userId}`,
               {
                 headers: {
                   Authorization: accessToken,
@@ -67,8 +67,10 @@ function Login() {
             )
             .then(info => {
               // console.log(info);
-              const { name, phoneNumber, profileImg } = info.data.userInfo;
+              const { name, nickname, phoneNumber, profileImg } =
+                info.data.userInfo;
               setUser({
+                userId,
                 role,
                 email,
                 name,
