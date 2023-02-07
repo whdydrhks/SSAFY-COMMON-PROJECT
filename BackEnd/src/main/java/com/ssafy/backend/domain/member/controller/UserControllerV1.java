@@ -66,7 +66,7 @@ public class UserControllerV1 {
 		HttpServletRequest request) {
 
 		return ResponseEntity
-			.ok(userService.getInfoById(userId));
+			.ok(userService.getInfoById(userId, request));
 	}
 
 	@PutMapping("/{userId}")

@@ -5,11 +5,14 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.ssafy.backend.domain.member.entity.UserEntity;
 import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
 
 public interface ShelterRepository extends JpaRepository<ShelterEntity, Long> {
 
 	List<ShelterEntity> findAllByExpiredLike(String expired);
+
+	List<ShelterEntity> findByUserAndExpiredLike(UserEntity user, String expired);
 
 	List<ShelterEntity> findByNameContainingIgnoreCase(String name);
 

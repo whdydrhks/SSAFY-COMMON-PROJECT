@@ -1,15 +1,19 @@
 package com.ssafy.backend.domain.member.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
+import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
 import com.ssafy.backend.global.common.entity.BaseTimeEntity;
 
 import lombok.AccessLevel;
@@ -60,5 +64,8 @@ public class UserEntity extends BaseTimeEntity {
 	@Column(name = "expired", nullable = false, length = 1)
 	@ColumnDefault("'F'")
 	private String expired;
+
+	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private ShelterEntity shelter;
 
 }
