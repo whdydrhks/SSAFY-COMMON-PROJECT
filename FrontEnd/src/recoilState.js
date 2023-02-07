@@ -103,4 +103,30 @@ const animalNumber = atom({
   default: 1,
 });
 
-export { authStateAtom, userAtom, animalListState, animalNumber };
+// const managedSchedule = atom({
+//   key : 'managedSchedule',
+//   default: {
+//     userShelterId = '',
+//     userId = '',
+//     day =
+//   }
+// })
+
+const setDayTime = atom({
+  key: 'setDayTime',
+  default: [
+    {
+      shelterId: 0,
+      Default: '0000000000000000000000000',
+      Sun: '0000000011111111111000000',
+      Mon: '0000000000111111111000000',
+      Tue: '0000000011100111111000000',
+      Wed: '0000000011111110011000000',
+      Thr: '0000000011111111111000000',
+      Fri: '0000000001011110110000000',
+      Sat: '0000000010111111101000000',
+    },
+  ],
+});
+
+export { authStateAtom, userAtom, animalListState, animalNumber, setDayTime };

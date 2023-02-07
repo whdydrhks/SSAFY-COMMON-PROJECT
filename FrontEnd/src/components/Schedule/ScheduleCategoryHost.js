@@ -8,9 +8,13 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { useRecoilValue } from 'recoil';
+
 import DayCarouselHost from './DayCarouselHost';
 import DateCarouselHost from './DateCarouselHost';
 import ManageTimeHost from './ManageTimeHost';
+
+import { setDayTime } from '../../recoilState';
 
 const STemp = styled(Tab)`
   width: 50%;
@@ -52,10 +56,16 @@ function a11yProps(index) {
 
 function ScheduleCategoryHost() {
   const [value, setValue] = React.useState(0);
+  const [day, setDay] = React.useState('Default');
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const dayTime = useRecoilValue(setDayTime);
+
+  console.log('dayTime : ', dayTime);
+  console.log(dayTime[0][day]);
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -71,13 +81,13 @@ function ScheduleCategoryHost() {
       </Box>
 
       <TabPanel value={value} index={0}>
-        <DayCarouselHost />
-        <ManageTimeHost />
+        <DayCarouselHost setDay={setDay} />
+        <ManageTimeHost start={9} end={17} times={dayTime[0][day]} />
       </TabPanel>
 
       <TabPanel value={value} index={1}>
         <DateCarouselHost />
-        <ManageTimeHost />
+        {/* <ManageTimeHost /> */}
       </TabPanel>
     </Box>
   );
