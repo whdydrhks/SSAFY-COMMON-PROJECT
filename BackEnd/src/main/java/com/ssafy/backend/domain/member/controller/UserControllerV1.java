@@ -31,25 +31,22 @@ public class UserControllerV1 {
 
 	private final UserService userService;
 
-	@GetMapping("/search")
-	@ApiOperation(value = "사용자 검색")
+	@GetMapping
+	@ApiOperation(value = "사용자 조회")
 	public ResponseEntity<?> userShelter(
-		@RequestParam(value = "keyword", defaultValue = "", required = false) String keyword,
+		@RequestParam(value = "keyword", required = true) String keyword,
 		@RequestParam(value = "pageNo", defaultValue = "1", required = false) int page,
+		@RequestParam(value = "sort", required = false) String sort,
+		@RequestParam(value = "limit", required = false) String limit,
 		HttpServletRequest request) {
+
+		//		if (keyword == null || keyword.isEmpty()) {
+		//			return ResponseEntity
+		//				.ok(userService.getInfoAll());
+		//		}
 
 		return ResponseEntity
 			.ok(userService.searchInfoByNickname(keyword));
-	}
-
-	@GetMapping
-	@ApiOperation(value = "사용자 전체 조회")
-	public ResponseEntity<?> getUserInfoAll(
-		@RequestParam(value = "pageNo", defaultValue = "1", required = false) int page,
-		HttpServletRequest request) {
-
-		return ResponseEntity
-			.ok(userService.getInfoAll());
 	}
 
 	@PostMapping
@@ -62,35 +59,35 @@ public class UserControllerV1 {
 			.ok(userService.register(signupDto));
 	}
 
-	@GetMapping("/{nickname}")
+	@GetMapping("/{userId}")
 	@ApiOperation(value = "사용자 정보 조회")
 	public ResponseEntity<?> getInfoUser(
-		@PathVariable(name = "nickname") String nickname,
+		@PathVariable(name = "userId") Long userId,
 		HttpServletRequest request) {
 
 		return ResponseEntity
-			.ok(userService.getInfoByNickname(nickname));
+			.ok(userService.getInfoById(userId));
 	}
 
-	@PutMapping("/{nickname}")
+	@PutMapping("/{userId}")
 	@ApiOperation(value = "사용자 정보 수정")
 	public ResponseEntity<?> updateUser(
-		@PathVariable(name = "nickname") String nickname,
+		@PathVariable(name = "userId") Long userId,
 		@RequestBody UserUpdateDto updateDto,
 		HttpServletRequest request) {
 
 		return ResponseEntity
-			.ok(userService.update(nickname, updateDto, request));
+			.ok(userService.update(userId, updateDto, request));
 	}
 
-	@DeleteMapping("/{nickname}")
+	@DeleteMapping("/{userId}")
 	@ApiOperation(value = "사용자 정보 삭제")
 	public ResponseEntity<?> deleteUser(
-		@PathVariable(name = "nickname") String nickname,
+		@PathVariable(name = "userId") Long userId,
 		HttpServletRequest request) {
 
 		return ResponseEntity
-			.ok(userService.updateExpire(nickname, true, request));
+			.ok(userService.updateExpire(userId, true, request));
 	}
 
 }
