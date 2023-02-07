@@ -30,7 +30,7 @@ public class UserEntity extends BaseTimeEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id", columnDefinition = "INT UNSIGNED")
 	private Long id;
 

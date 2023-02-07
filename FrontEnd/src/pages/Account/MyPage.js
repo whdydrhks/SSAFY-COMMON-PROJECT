@@ -41,7 +41,7 @@ function MyPage() {
   useEffect(() => {
     console.log(params);
     console.log(user);
-    if (params.nickname !== user.nickname) {
+    if (params.userId !== user.userId) {
       navigate('/notfound');
     }
   }, []);
