@@ -1,6 +1,6 @@
 /* eslint-disable global-require */
 
-export const manageNumber = require('./AnimalDetail/manageNumber.png');
+export const manageCode = require('./AnimalDetail/manageCode.png');
 export const name = require('./AnimalDetail/name.png');
 export const gender = require('./AnimalDetail/gender.png');
 export const weight = require('./AnimalDetail/weight.png');

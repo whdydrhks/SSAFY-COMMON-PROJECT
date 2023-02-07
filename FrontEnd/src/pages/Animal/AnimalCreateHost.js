@@ -53,7 +53,7 @@ function AnimalCreateHost() {
 
   // const setAnimalList = useSetRecoilState(animalListState);
 
-  const [manageNumber, setManageNumber] = useState('');
+  const [manageCode, setManageCode] = useState('');
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const genderList = ['M', 'F'];
@@ -68,8 +68,8 @@ function AnimalCreateHost() {
 
   // const [imgPreview, setImgPreview] = useState('');
 
-  const handleManageNumber = e => {
-    setManageNumber(e.target.value);
+  const handleManageCode = e => {
+    setManageCode(e.target.value);
   };
 
   const handleName = e => {
@@ -141,11 +141,11 @@ function AnimalCreateHost() {
     formData.append('image', images);
     const variables = [
       {
-        expired: 'F',
+        status: 'F',
         animalId: getId(),
         shelterId: 0,
         name,
-        manageNumber,
+        manageCode,
         thumbnailImage: '파일경로',
         breed,
         age,
@@ -185,7 +185,7 @@ function AnimalCreateHost() {
                 </Typography>
                 <TextField
                   type="text"
-                  onChange={handleManageNumber}
+                  onChange={handleManageCode}
                   placeholder="관리번호를 입력해 주세요."
                   fullWidth
                   required

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-unused-vars */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   TextField,
@@ -19,6 +19,7 @@ import { animalListState } from '../../recoilState';
 import Nav from '../../components/common/Nav';
 import Header from '../../components/common/Header';
 import '../../styles/cafe24.css';
+import API_URL from '../../api/api';
 
 const SH1 = styled.h1`
   font-size: 2rem;
@@ -42,11 +43,14 @@ const SPreviewCard = styled(Grid)`
 function AnimalUpdateHost() {
   const navigate = useNavigate;
   const animalIdForUpdate = useParams();
-  const tempAnimalList = useRecoilValue(animalListState);
+
+  const getAnimal = async () => {
+    const animal = await axios.get();
+  };
   const animal = tempAnimalList[animalIdForUpdate.animalId];
 
-  const [expired, setExpired] = useState(animal.expired);
-  const [manageNumber, setManageNumber] = useState(animal.manageNumber);
+  const [status, setStatus] = useState(animal.status);
+  const [manageCode, setManageCode] = useState(animal.manageCode);
   const [name, setName] = useState(animal.name);
   const [age, setAge] = useState(animal.age);
   const [gender, setGender] = useState(animal.gender);
@@ -59,13 +63,13 @@ function AnimalUpdateHost() {
 
   // const [imgPreview, setImgPreview] = useState('');
 
-  const handleExpired = e => {
+  const handleStatus = e => {
     console.log(e.target.value);
-    setExpired(e.target.value);
+    setStatus(e.target.value);
   };
 
-  const handleManageNumber = e => {
-    setManageNumber(e.target.value);
+  const handleManageCode = e => {
+    setManageCode(e.target.value);
   };
 
   const handleName = e => {
@@ -137,7 +141,7 @@ function AnimalUpdateHost() {
         animalId: animalIdForUpdate,
         shelterId: 0,
         name,
-        manageNumber,
+        manageCode,
         thumbnailImage: '파일경로',
         breed,
         age,
@@ -178,8 +182,8 @@ function AnimalUpdateHost() {
                 </Typography>
                 <TextField
                   select
-                  value={expired}
-                  onChange={handleExpired}
+                  value={status}
+                  onChange={handleStatus}
                   style={{ marginBottom: 20 }}
                 >
                   <MenuItem value="F">입양 중</MenuItem>
@@ -194,12 +198,12 @@ function AnimalUpdateHost() {
                 </Typography>
                 <TextField
                   type="text"
-                  onChange={handleManageNumber}
+                  onChange={handleManageCode}
                   placeholder="관리번호를 입력해 주세요."
                   fullWidth
                   required
                   style={{ marginBottom: 20 }}
-                  value={manageNumber}
+                  value={manageCode}
                 />
               </Grid>
 

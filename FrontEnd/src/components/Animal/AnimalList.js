@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 /* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/prop-types */
 
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
@@ -21,9 +20,9 @@ const SLink = styled(Link)`
 `;
 
 function AnimalList(props) {
-  const animalList = useRecoilValue(animalListState);
+  // const animalList = useRecoilValue(animalListState);
   // console.log(animalList);
-  // console.log(props);
+  // console.log(props, 'here');
 
   const [temp, setTemp] = useState([]);
 
@@ -31,15 +30,19 @@ function AnimalList(props) {
     const filteredAnimalList = await axios.get(
       `${API_URL}/shelter/1/animal?pageNo=1`,
     );
-    setTemp(filteredAnimalList.data);
+    setTemp(filteredAnimalList.data.data);
   };
-  console.log(temp);
+  // console.log(temp);
   useEffect(() => {
     getAnimalList();
   }, []);
-  axios.get(url, { params: { expired: props.expired } }).then(res => {
-    console.log(res);
-  });
+  // axios
+  //   .get(`${API_URL}/shelter/1/animal?pageNo=1`, {
+  //     params: { status: props.status },
+  //   })
+  //   .then(res => {
+  //     console.log(res);
+  //   });
 
   return (
     <div>

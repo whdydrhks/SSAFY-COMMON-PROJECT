@@ -87,6 +87,7 @@ function AnimalCategory() {
   };
 
   console.log(animalList);
+
   const url = 'api';
   const search = async () => {
     axios
