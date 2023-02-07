@@ -1,4 +1,4 @@
-package com.ssafy.backend.domain.shelter.service;
+package com.ssafy.backend.domain.animal.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -6,8 +6,11 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ssafy.backend.domain.animal.entity.AnimalEntity;
+import com.ssafy.backend.domain.animal.model.request.AnimalRegisterDto;
+import com.ssafy.backend.domain.animal.model.response.AnimalInfoDto;
+import com.ssafy.backend.domain.animal.repository.AnimalRepository;
 import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
-import com.ssafy.backend.domain.shelter.model.request.ShelterRegisterDto;
 import com.ssafy.backend.domain.shelter.model.request.ShelterUpdateDto;
 import com.ssafy.backend.domain.shelter.model.response.ShelterInfoDto;
 import com.ssafy.backend.domain.shelter.repository.ShelterRepository;
@@ -21,39 +24,43 @@ import lombok.RequiredArgsConstructor;
 @Service
 @Transactional(readOnly = true) // 기본적으로 트랜잭션 안에서만 데이터 변경하게 설정(성능 향상)
 @RequiredArgsConstructor // Lombok을 사용해 @Autowired 없이 의존성 주입. final 객제만 주입됨을 주의
-public class ShelterService {
+public class AnimalService {
 
 	private final ResponseUtil responseUtil;
 
+	private final AnimalRepository animalRepository;
 	private final ShelterRepository shelterRepository;
 
 	/**
-	 * 보호소 정보를 등록하는 메소드
+	 * 동물 정보를 등록하는 메소드
 	 *
 	 * @param
-	 * @return shelterId
+	 * @return animalId
 	 */
 	@Transactional
-	public ResponseSuccessDto<?> register(ShelterRegisterDto registerDto) {
+	public ResponseSuccessDto<?> register(Long shelterId, AnimalRegisterDto registerDto) {
 
-		ShelterEntity shelter = registerDto.toEntity();
+		ShelterEntity shelter = shelterRepository.findByIdAndExpiredLike(shelterId, "F")
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+
+		AnimalEntity animal = registerDto.toEntity(shelter);
 
 		// 중복검사
-		validateDuplicate(shelter);
+		validateDuplicate(animal);
 
-		Long shelterId = shelterRepository.save(shelter).getId();
+		Long animalId = animalRepository.save(animal).getId();
 
 		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(shelterId);
+			.buildSuccessResponse(animalId);
 
 		return resp;
 	}
 
 	/**
-	 * 보호소 정보를 수정하는 메소드
+	 * 동물 정보를 수정하는 메소드
 	 *
 	 * @param
-	 * @return 업데이트 된 shelterId
+	 * @return 업데이트 된 animalId
 	 */
 	@Transactional
 	public ResponseSuccessDto<?> update(String shelterName, ShelterUpdateDto updateDto) {
@@ -84,10 +91,10 @@ public class ShelterService {
 	}
 
 	/**
-	 * 보호소의 만료 여부를 갱신하는 메소드
+	 * 동물 정보의 만료 여부를 갱신하는 메소드
 	 *
 	 * @param
-	 * @return 만료 정보가 업데이트 된 shelterId
+	 * @return 만료 정보가 업데이트 된 animalId
 	 */
 	public ResponseSuccessDto<?> updateExpire(String shelterName, Boolean expiredFlag) {
 
@@ -117,10 +124,10 @@ public class ShelterService {
 	}
 
 	/**
-	 * 보호소의 정보를 삭제하는 메소드
+	 * 동물 정보를 삭제하는 메소드
 	 *
 	 * @param
-	 * @return 삭제된 된 shelterId
+	 * @return 삭제된 된 animalId
 	 */
 	@Transactional
 	public ResponseSuccessDto<?> delete(String shelterName) {
@@ -134,21 +141,44 @@ public class ShelterService {
 	}
 
 	/**
-	 * 사용자 정보를 전부 가져오는 메소드
+	 * 동물 정보를 전부 가져오는 메소드
 	 *
 	 * @param
-	 * @return List&ltShelterInfoDto&gt
+	 * @return List&ltanimalInfoDto&gt
 	 */
 	@Transactional
 	public ResponseSuccessDto<?> getInfoAll() {
-		List<ShelterEntity> findShelters = shelterRepository.findAllByExpiredLike("F");
-		List<ShelterInfoDto> shelterInfos = findShelters
+		List<AnimalEntity> findAnimals = animalRepository.findAllByExpiredLike("F");
+		List<AnimalInfoDto> animalInfos = findAnimals
 			.stream()
-			.map(ShelterInfoDto::of)
+			.map(AnimalInfoDto::of)
 			.collect(Collectors.toList());
 
 		ResponseSuccessDto<List<ShelterEntity>> resp = responseUtil
-			.buildSuccessResponse(shelterInfos);
+			.buildSuccessResponse(animalInfos);
+
+		return resp;
+	}
+
+	/**
+	 * 보호소에 등록된 동물 정보를 전부 가져오는 메소드
+	 *
+	 * @param
+	 * @return List&ltanimalInfoDto&gt
+	 */
+	@Transactional
+	public ResponseSuccessDto<?> getInfoByShelter(Long shelterId) {
+		ShelterEntity shelter = shelterRepository.findByIdAndExpiredLike(shelterId, "F")
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+
+		List<AnimalEntity> findAnimals = shelter.getAnimals();
+		List<AnimalInfoDto> animalInfos = findAnimals
+			.stream()
+			.map(AnimalInfoDto::of)
+			.collect(Collectors.toList());
+
+		ResponseSuccessDto<List<ShelterEntity>> resp = responseUtil
+			.buildSuccessResponse(animalInfos);
 
 		return resp;
 	}
@@ -157,16 +187,20 @@ public class ShelterService {
 	 * name으로 사용자 정보를 가져오는 메소드
 	 *
 	 * @param
-	 * @return ShelterInfoDto
+	 * @return AnimalInfoDto
 	 */
 	@Transactional
-	public ResponseSuccessDto<?> getInfoByName(String shelterName) {
-		ShelterEntity findShelter = shelterRepository.findByNameAndExpiredLike(shelterName, "F")
+	public ResponseSuccessDto<?> getInfoById(Long shelterId, Long animalId) {
+		AnimalEntity findAnimal = animalRepository.findByIdAndExpiredLike(animalId, "F")
 			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-		ShelterInfoDto infoDto = ShelterInfoDto.of(findShelter);
+		if (!findAnimal.getShelter().getId().equals(shelterId)) {
+			throw new ApiErrorException(ApiStatus.BAD_REQUEST);
+		}
 
-		ResponseSuccessDto<ShelterEntity> resp = responseUtil
+		AnimalInfoDto infoDto = AnimalInfoDto.of(findAnimal);
+
+		ResponseSuccessDto<AnimalInfoDto> resp = responseUtil
 			.buildSuccessResponse(infoDto);
 
 		return resp;
@@ -194,30 +228,15 @@ public class ShelterService {
 	}
 
 	/**
-	 * 보호소의 등록 정보가 이미 있는지 확인하는 메소드
+	 * 동물의 등록 정보가 이미 있는지 확인하는 메소드
 	 *
 	 * @param
 	 * @throws IllegalStateException
 	 */
-	private void validateDuplicate(ShelterEntity shelter) {
-		shelterRepository.findByName(shelter.getName())
-			.orElseThrow(() -> new ApiErrorException(ApiStatus.DUPLICATION));
+	private void validateDuplicate(AnimalEntity animal) {
+		animalRepository.findByManageCodeAndExpiredLike(animal.getManageCode(), "F")
+			.ifPresent(e -> {
+				throw new ApiErrorException(ApiStatus.DUPLICATION);
+			});
 	}
-
-	//	// 테스트용 더미 데이터 생성용
-	//	@PostConstruct
-	//	public void testInitializing() {
-	//		for (int i = 1; i <= 50; i++) {
-	//			String name = "보호소_" + String.format("%03d", i);
-	//			ShelterEntity shelter = ShelterEntity.builder()
-	//				.name(name)
-	//				.url("https://www." + name + ".com")
-	//				.introduce(name + "의 소개글 입니다.")
-	//				.telNumber("010-1234-" + String.format("%04d", i))
-	//				.postCode("111111")
-	//				.address("00시 00구 00대로 " + i)
-	//				.build();
-	//			shelterRepository.save(shelter);
-	//		}
-	//	}
 }
