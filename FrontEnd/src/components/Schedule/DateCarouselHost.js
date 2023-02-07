@@ -1,172 +1,87 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-unneeded-ternary */
+/* eslint-disable prefer-template */
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-props-no-spreading */
 
-import React, { useRef } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
+import '../../styles/slick-theme.css';
+import '../../styles/slick.css';
+import '../../styles/cafe24.css';
+import Slider from 'react-slick';
+import { Button, Switch } from '@mui/material';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { twoWeeksAtom, userAtom } from '../../recoilState';
 
-const SBox = styled.div`
-  display: flex;
-  background-color: white;
-  min-height: 50px;
-`;
-
-const SDateList = styled.div`
-  width: 500px;
-  height: 50px;
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  background-color: white;
-  overflow-x: hidden;
-`;
-
-const SDate = styled.button`
-  width: 50px;
-  height: 50px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  background-color: white;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const SButtonDiv = styled.div`
+  text-align: center;
+  margin: 10%;
 `;
 
 const SButton = styled.button`
-  width: 10px;
-  heigth: 10px;
-  boredr-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 90%;
+  height: 5vh;
+  background-color: beige;
+  border: none;
+  font-size: 1rem;
+  &.active {
+    background-color: lightblue;
+  }
 `;
 
-function DateCarouselHost() {
-  const dateRef = useRef(null);
-  const date = new Date();
-  // const todatDate = date.getDate();
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const lastDay = new Date(year, month + 1, 0).getDate();
-  const dateList = Array(lastDay)
-    .fill()
-    .map((_, i) => i + 1);
-  const dateClickLeft = nextType => {
-    if (nextType === 'prev') {
-      dateRef.current.scrollTo({
-        left: dateRef.current.scrollLeft - dateRef.current.offsetWidth,
-        behavior: 'smooth',
-      });
-    }
+const STimeList = styled.div``;
+const STimeBox = styled.div`
+  display: flex;
+  font-size: 2rem;
+  justify-content: space-between;
+  background-color: grey;
+`;
+const STime = styled.div``;
+
+function DayCarouselHost() {
+  const settings = {
+    arrows: false,
+    autoplay: false,
+    centerPadding: '10px',
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
   };
 
-  const dateClickRight = nextType => {
-    if (nextType === 'next') {
-      dateRef.current.scrollTo({
-        left: dateRef.current.scrollLeft + dateRef.current.offsetWidth,
-        behavior: 'smooth',
-      });
+  const { shelterId } = useRecoilValue(userAtom);
+  const [twoWeeks, setTwoWeeks] = useRecoilState(twoWeeksAtom);
+  useEffect(() => {
+    for (let i = 0; i < 14; i += 1) {
+      const today = new Date();
+      const nxtDay = new Date(today.setDate(today.getDate() + i));
+      setTwoWeeks([...twoWeeks, nxtDay]);
     }
-  };
+    const today = new Date().getMonth();
+    console.log(typeof today);
+  }, []);
 
   return (
-    <SBox>
-      <SButton
-        type="button"
-        onClick={() => {
-          dateClickLeft('prev');
-        }}
-      >
-        클릭
-      </SButton>
-      <SDateList ref={dateRef}>
-        {dateList.map(setDate => (
-          <SDate>{setDate}</SDate>
+    <>
+      <Slider {...settings}>
+        {twoWeeks.map((item, index) => (
+          <SButtonDiv key={index}>
+            <SButton
+              type="button"
+              value={item}
+              // className={'btn' + (index === btnActive ? ' active' : '')
+            >
+              {item.month}월 {item.day}일
+            </SButton>
+          </SButtonDiv>
         ))}
-      </SDateList>
-      <SButton
-        type="button"
-        onClick={() => {
-          dateClickRight('next');
-        }}
-      >
-        클릭
-      </SButton>
-    </SBox>
+      </Slider>
+      <STimeList>sdf</STimeList>
+    </>
   );
 }
 
-export default DateCarouselHost;
-
-// --------------------------------------------------------------------
-
-// /* eslint-disable react/jsx-props-no-spreading */
-
-// // import { BrowserRouter as Route } from 'react-router-dom';
-// import React, { useRef } from 'react';
-// import styled from 'styled-components';
-// // import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-
-// function DateCarouselHost() {
-//   // const dateRef = useRef(null);
-//   const today = new Date();
-//   const todayDay = today.getDay();
-//   const todayDate = today.getDate();
-//   const year = today.getFullYear();
-//   const month = today.getMonth();
-//   const lastDay = new Date(year, month + 1, 0).getDate();
-
-//   const [dayList, setDayList] = useState([]);
-//   const [DateList, setDateList] = useState([]);
-
-//   const getAlldate = (todayDate, lastDay) => {
-//     const dates = [];
-//     dates[0] = todayDate;
-//     for(let i = 1; i <= 6)
-//   }
-
-//   const dateClickLeft = nextType => {
-//     if (nextType === 'prev') {
-//       dateRef.current.scrollTo({
-//         left: dateRef.current.scrollLeft - dateRef.current.offsetWidth,
-//         behavior: 'smooth',
-//       });
-//     }
-//   };
-
-//   const dateClickRight = nextType => {
-//     if (nextType === 'next') {
-//       dateRef.current.scrollTo({
-//         left: dateRef.current.scrollLeft + dateRef.current.offsetWidth,
-//         behavior: 'smooth',
-//       });
-//     }
-//   };
-
-//   return (
-//     <SBox>
-//       <SButton
-//         type="button"
-//         onClick={() => {
-//           dateClickLeft('prev');
-//         }}
-//       >
-//         클릭
-//       </SButton>
-//       <SDateList ref={dateRef}>
-//         {dateList.map(setDate => (
-//           <SDate>{setDate}</SDate>
-//         ))}
-//       </SDateList>
-//       <SButton
-//         type="button"
-//         onClick={() => {
-//           dateClickRight('next');
-//         }}
-//       >
-//         클릭
-//       </SButton>
-//     </SBox>
-//   );
-// }
-
-// export default DateCarouselHost;
+export default DayCarouselHost;

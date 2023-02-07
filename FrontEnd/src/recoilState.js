@@ -12,6 +12,7 @@ const userAtom = atom({
   default: {
     role: '',
     userId: '',
+    shelterId: '',
     email: '',
     name: '',
     nickname: '',
@@ -112,21 +113,36 @@ const animalNumber = atom({
 //   }
 // })
 
-const setDayTime = atom({
-  key: 'setDayTime',
+const timeAtom = atom({
+  key: 'timeAtom',
   default: [
-    {
-      shelterId: 0,
-      Default: '0000000000000000000000000',
-      Sun: '0000000011111111111000000',
-      Mon: '0000000000111111111000000',
-      Tue: '0000000011100111111000000',
-      Wed: '0000000011111110011000000',
-      Thr: '0000000011111111111000000',
-      Fri: '0000000001011110110000000',
-      Sat: '0000000010111111101000000',
-    },
+    '0000000001111111111000000',
+    '0000000000111111111000001',
+    '0000000001100111111000002',
+    '0000000001111110011000003',
+    '0000000001111111111000004',
+    '0000000001011110110000005',
+    '0000000000111111101000006',
   ],
+  effects_UNSTABLE: [persistAtom],
 });
 
-export { authStateAtom, userAtom, animalListState, animalNumber, setDayTime };
+const twoWeeksAtom = atom({
+  key: 'twoWeeksAtom',
+  default: [
+    {
+      month: 0,
+      day: 0,
+    },
+  ],
+  effects_UNSTABLE: [persistAtom],
+});
+
+export {
+  authStateAtom,
+  userAtom,
+  animalListState,
+  animalNumber,
+  timeAtom,
+  twoWeeksAtom,
+};

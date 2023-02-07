@@ -1,0 +1,11 @@
+.btn {
+  width: 90%;
+  height: 5vh;
+  background-color: grey;
+  border: none;
+  font-size: 1rem;
+}
+
+.btnactive:active {
+  background-color: yellow;
+}
