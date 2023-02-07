@@ -20,6 +20,7 @@ public enum ApiStatus {
 	// Client Error 4xx
 	BAD_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다.", false),
 	INVALID_PARAMS(HttpStatus.BAD_REQUEST, "필수데이터 누락, 또는 형식과 다른 데이터를 요청했습니다.", false),
+	KEYWORD_LESS_THAN_TWO(HttpStatus.BAD_REQUEST, "검색 키워드가 2자 이하입니다.", false),
 	INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.", false),
 	UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "인증 정보가 유효하지 않습니다.", false),
 	NOT_LOGGED_IN(HttpStatus.UNAUTHORIZED, "인증 정보가 없습니다.", false),
