@@ -1,18 +1,26 @@
 package com.ssafy.backend.domain.shelter.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
+import com.ssafy.backend.domain.animal.entity.AnimalEntity;
 import com.ssafy.backend.global.common.entity.BaseTimeEntity;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -30,7 +38,7 @@ public class ShelterEntity extends BaseTimeEntity {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "shelter_id", columnDefinition = "INT UNSIGNED")
 	private Long id;
 
@@ -64,5 +72,10 @@ public class ShelterEntity extends BaseTimeEntity {
 	@Column(name = "expired", nullable = false, length = 1)
 	@ColumnDefault("'F'")
 	private String expired;
+
+	// Animal과 양방향 매핑
+	@OneToMany(mappedBy = "shelter", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Builder.Default
+	private List<AnimalEntity> animals = new ArrayList<>();
 
 }
