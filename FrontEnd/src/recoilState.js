@@ -7,15 +7,29 @@ const authStateAtom = atom({
   default: false,
 });
 
+// const userAtom = atom({
+//   key: 'userAtom',
+//   default: {
+//     role: '',
+//     userId: '',
+//     email: '',
+//     name: '',
+//     nickname: '',
+//     phoneNumber: '',
+//     profileImg: '',
+//   },
+//   effects_UNSTABLE: [persistAtom],
+// });
+
 const userAtom = atom({
   key: 'userAtom',
   default: {
-    role: '',
-    userId: '',
-    email: '',
-    name: '',
-    nickname: '',
-    phoneNumber: '',
+    role: 'HOST',
+    userId: 'ssafy',
+    email: 'ssafy@ssafy.com',
+    name: '김싸피',
+    nickname: 'kimssafy',
+    phoneNumber: '010-1234-5678',
     profileImg: '',
   },
   effects_UNSTABLE: [persistAtom],
