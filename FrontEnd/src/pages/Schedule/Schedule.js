@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 import TimeTableHost from '../../components/Schedule/TimeTableHost';
-import DateCarouselHost from '../../components/Schedule/DateCarouselHost';
+import ScheduleListHost from '../../components/Schedule/ScheduleListHost';
 
 const STemp = styled(Tab)`
   width: 50%;
@@ -31,7 +31,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <Typography component="div">{children}</Typography>
         </Box>
       )}
     </div>
@@ -72,11 +72,13 @@ function Schedule() {
           </Tabs>
         </Box>
 
-        <TabPanel value={value} index={0}>
-          <DateCarouselHost />
+        <TabPanel as="div" value={value} index={0}>
+          {/* <Suspense fallback={<div>Loading... </div>}> */}
+          <ScheduleListHost />
+          {/* </Suspense> */}
         </TabPanel>
 
-        <TabPanel value={value} index={1}>
+        <TabPanel as="div" value={value} index={1}>
           <TimeTableHost />
         </TabPanel>
       </Box>

@@ -129,11 +129,25 @@ const timeAtom = atom({
 
 const twoWeeksAtom = atom({
   key: 'twoWeeksAtom',
-  default: [
-    {
-      month: 0,
-      day: 0,
-    },
+  default: [],
+  effects_UNSTABLE: [persistAtom],
+});
+
+const scheduleHostAtom = atom({
+  key: 'scheduleHostAtom',
+  dafault: [
+    { scheduleId: '1', userNickname: '권오영', day: '0208', time: '9' },
+    { scheduleId: '2', userNickname: '이진혁', day: '0208', time: '11' },
+    { scheduleId: '3', userNickname: '한인환', day: '0208', time: '13' },
+    { scheduleId: '4', userNickname: '조용관', day: '0208', time: '15' },
+    { scheduleId: '5', userNickname: '권동규', day: '0209', time: '9' },
+    { scheduleId: '6', userNickname: '장준호', day: '0209', time: '11' },
+    { scheduleId: '7', userNickname: '권오영', day: '0209', time: '13' },
+    { scheduleId: '8', userNickname: '한인환', day: '0209', time: '15' },
+    { scheduleId: '9', userNickname: '이진혁', day: '0210', time: '9' },
+    { scheduleId: '10', userNickname: '조용관', day: '0210', time: '11' },
+    { scheduleId: '11', userNickname: '권동규', day: '0210', time: '13' },
+    { scheduleId: '12', userNickname: '장준호', day: '0210', time: '15' },
   ],
   effects_UNSTABLE: [persistAtom],
 });
@@ -145,4 +159,5 @@ export {
   animalNumber,
   timeAtom,
   twoWeeksAtom,
+  scheduleHostAtom,
 };

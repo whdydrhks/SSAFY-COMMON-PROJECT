@@ -41,7 +41,7 @@ const STimeBox = styled.div`
 `;
 const STime = styled.div``;
 
-function DayCarouselHost() {
+function TimeTableHost() {
   const settings = {
     arrows: false,
     autoplay: false,
@@ -79,15 +79,6 @@ function DayCarouselHost() {
     } else {
       true2false(9);
     }
-    setDayTime([
-      todayTime,
-      dayTime[1],
-      dayTime[2],
-      dayTime[3],
-      dayTime[4],
-      dayTime[5],
-      dayTime[6],
-    ]);
   };
   const handleTenChange = event => {
     if (event.target.checked === true) {
@@ -357,4 +348,4 @@ function DayCarouselHost() {
   );
 }
 
-export default DayCarouselHost;
+export default TimeTableHost;
