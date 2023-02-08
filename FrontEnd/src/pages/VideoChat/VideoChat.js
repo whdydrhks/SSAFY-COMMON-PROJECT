@@ -15,11 +15,23 @@
 import { OpenVidu } from 'openvidu-browser';
 import axios from 'axios';
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import './VideoChat.css';
 import '../../styles/cafe24.css';
 import UserVideoComponent from './UserVideoComponent';
 
 const APPLICATION_SERVER_URL = 'http://localhost:5000/';
+
+const Sdiv = styled.div`
+  position: relative;
+`;
+
+const SHostdiv = styled.div`
+  position: absolute;
+  top: 0em;
+  right: 0em;
+  width: 30%;
+`;
 
 class VideoChat extends Component {
   constructor(props) {
@@ -100,7 +112,7 @@ class VideoChat extends Component {
       },
       () => {
         const mySession = this.state.session;
-
+        // console.log(mySession);
         // --- 3) Specify the actions when events take place in the session ---
 
         // On every new Stream received...
@@ -110,6 +122,7 @@ class VideoChat extends Component {
           const subscriber = mySession.subscribe(event.stream, undefined);
           const subscribers = this.state.subscribers;
           subscribers.push(subscriber);
+          console.log(subscribers, '###############');
 
           // Update the state with the new subscribers
           this.setState({
@@ -155,7 +168,6 @@ class VideoChat extends Component {
               // --- 6) Publish your stream ---
 
               mySession.publish(publisher);
-
               // Obtain the current video device in use
               const devices = await this.OV.getDevices();
               const videoDevices = devices.filter(
@@ -254,11 +266,6 @@ class VideoChat extends Component {
       <div className="container">
         {this.state.session === undefined ? (
           <div id="join">
-            <div id="main-video" className="col-md-6">
-              <UserVideoComponent
-                streamManager={this.state.mainStreamManager}
-              />
-            </div>
             <div id="join-dialog" className="jumbotron vertical-center">
               <h1> 방 만들기 </h1>
               <form className="form-group" onSubmit={this.joinSession}>
@@ -299,31 +306,53 @@ class VideoChat extends Component {
 
         {this.state.session !== undefined ? (
           <div id="session">
-            <div id="session-header">
-              {/* 메인 화면 제목 */}
-              {/* <h1 id="session-title">{mySessionId}</h1> */}
-              <input
+            {/* <div id="session-header"> */}
+            {/* 메인 화면 제목 */}
+            {/* <h1 id="session-title">{mySessionId}</h1> */}
+            {/* <input
                 className="btn btn-large btn-danger"
                 type="button"
                 id="buttonLeaveSession"
                 onClick={this.leaveSession}
                 value="Leave session"
               />
-            </div>
+            </div> */}
 
             {this.state.mainStreamManager !== undefined ? (
-              <div id="main-video" className="col-md-6">
-                <UserVideoComponent
-                  streamManager={this.state.mainStreamManager}
-                />
+              <Sdiv id="main-video" className="col-md-6">
+                {/* {this.state.subscribers.map((sub, i) => (
+                  <div
+                    key={i}
+                    className="stream-container col-md-6 col-xs-6"
+                    onClick={() => this.handleMainVideoStream(sub)}
+                  > */}
+
+                <div>
+                  <UserVideoComponent
+                    streamManager={this.state.subscribers[0]}
+                  />
+                </div>
+
+                {/* <div>
+                  <UserVideoComponent
+                    streamManager={this.state.subscribers[0]}
+                  />
+                </div> */}
+                {/* </div>
+                ))} */}
+                <SHostdiv>
+                  <UserVideoComponent
+                    streamManager={this.state.mainStreamManager}
+                  />
+                </SHostdiv>
                 <input
                   className="btn btn-large btn-success"
                   type="button"
                   id="buttonSwitchCamera"
                   onClick={this.switchCamera}
-                  value="Switch Camera"
+                  value="카메라 전환"
                 />
-              </div>
+              </Sdiv>
             ) : null}
             <div id="video-container" className="col-md-6">
               {/* 호스트 작은 화면 */}
@@ -337,7 +366,7 @@ class VideoChat extends Component {
                   <UserVideoComponent streamManager={this.state.publisher} />
                 </div>
               ) : null} */}
-              {this.state.subscribers.map((sub, i) => (
+              {/* {this.state.subscribers.map((sub, i) => (
                 <div
                   key={i}
                   className="stream-container col-md-6 col-xs-6"
@@ -346,7 +375,18 @@ class VideoChat extends Component {
                   <UserVideoComponent streamManager={sub} />
                   <div>입장자캠</div>
                 </div>
-              ))}
+              ))} */}
+            </div>
+            <div id="session-header">
+              {/* 메인 화면 제목 */}
+              {/* <h1 id="session-title">{mySessionId}</h1> */}
+              <input
+                className="btn btn-large btn-danger"
+                type="button"
+                id="buttonLeaveSession"
+                onClick={this.leaveSession}
+                value="Leave session"
+              />
             </div>
           </div>
         ) : null}
