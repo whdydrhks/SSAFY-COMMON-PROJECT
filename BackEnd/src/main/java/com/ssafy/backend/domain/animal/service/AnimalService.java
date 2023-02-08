@@ -8,11 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.backend.domain.animal.entity.AnimalEntity;
 import com.ssafy.backend.domain.animal.model.request.AnimalRegisterDto;
+import com.ssafy.backend.domain.animal.model.request.AnimalUpdateDto;
 import com.ssafy.backend.domain.animal.model.response.AnimalInfoDto;
 import com.ssafy.backend.domain.animal.repository.AnimalRepository;
 import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
-import com.ssafy.backend.domain.shelter.model.request.ShelterUpdateDto;
-import com.ssafy.backend.domain.shelter.model.response.ShelterInfoDto;
 import com.ssafy.backend.domain.shelter.repository.ShelterRepository;
 import com.ssafy.backend.global.common.model.ResponseSuccessDto;
 import com.ssafy.backend.global.error.exception.ApiErrorException;
@@ -63,29 +62,34 @@ public class AnimalService {
 	 * @return 업데이트 된 animalId
 	 */
 	@Transactional
-	public ResponseSuccessDto<?> update(String shelterName, ShelterUpdateDto updateDto) {
+	public ResponseSuccessDto<?> update(
+		Long shelterId,
+		Long animalId,
+		AnimalUpdateDto updateDto) {
 
-		ShelterEntity findShelter = shelterRepository.findByName(shelterName)
-			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+		AnimalEntity findAnimal = validateAnimal(shelterId, animalId);
 
-		ShelterEntity updateShelter = ShelterEntity.builder()
-			.id(findShelter.getId())
-			.name(findShelter.getName())
-			.url(updateDto.getUrl())
-			.introduce(updateDto.getIntroduce())
-			.originImage(findShelter.getOriginImage())
-			.storedImage(findShelter.getStoredImage())
-			.telNumber(updateDto.getTelNumber())
-			.postCode(updateDto.getPostCode())
-			.address(updateDto.getAddress())
-			.expired(findShelter.getExpired())
-			.createdDate(findShelter.getCreatedDate())
+		AnimalEntity updateAnimal = AnimalEntity.builder()
+			.shelter(findAnimal.getShelter())
+			.id(findAnimal.getId())
+			.manageCode(findAnimal.getManageCode())
+			.name(updateDto.getName())
+			.thumbnail(findAnimal.getThumbnail())
+			.breed(updateDto.getBreed())
+			.age(updateDto.getAge())
+			.weight(updateDto.getWeight())
+			.gender(updateDto.getGender())
+			.neuter(updateDto.getNeuter())
+			.adoption(updateDto.getAdoption())
+			.note(updateDto.getNote())
+			.expired(findAnimal.getExpired())
+			.createdDate(findAnimal.getCreatedDate())
 			.build();
 
-		Long shelterId = shelterRepository.save(updateShelter).getId();
+		Long updatedAnimalId = animalRepository.save(updateAnimal).getId();
 
 		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(shelterId);
+			.buildSuccessResponse(updatedAnimalId);
 
 		return resp;
 	}
@@ -96,29 +100,37 @@ public class AnimalService {
 	 * @param
 	 * @return 만료 정보가 업데이트 된 animalId
 	 */
-	public ResponseSuccessDto<?> updateExpire(String shelterName, Boolean expiredFlag) {
+	@Transactional
+	public ResponseSuccessDto<?> updateExpire(
+		Long shelterId,
+		Long animalId,
+		Boolean expiredFlag) {
 
-		ShelterEntity findShelter = shelterRepository.findByName(shelterName)
-			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+		AnimalEntity findAnimal = validateAnimal(shelterId, animalId);
 
-		ShelterEntity updateShelter = ShelterEntity.builder()
-			.id(findShelter.getId())
-			.name(findShelter.getName())
-			.url(findShelter.getUrl())
-			.introduce(findShelter.getIntroduce())
-			.originImage(findShelter.getOriginImage())
-			.storedImage(findShelter.getStoredImage())
-			.telNumber(findShelter.getTelNumber())
-			.postCode(findShelter.getPostCode())
-			.address(findShelter.getAddress())
+		AnimalEntity updateAnimal = AnimalEntity.builder()
+			.shelter(findAnimal.getShelter())
+			.id(findAnimal.getId())
+			.manageCode(findAnimal.getManageCode())
+			.name(findAnimal.getName())
+			.thumbnail(findAnimal.getThumbnail())
+			.breed(findAnimal.getBreed())
+			.age(findAnimal.getAge())
+			.weight(findAnimal.getWeight())
+			.gender(findAnimal.getGender())
+			.neuter(findAnimal.getNeuter())
+			.adoption(findAnimal.getAdoption())
+			.note(findAnimal.getNote())
 			.expired(expiredFlag ? "T" : "F") // expiredFlag에 따라 변경 true:"T" / false:"F"
-			.createdDate(findShelter.getCreatedDate())
+			.createdDate(findAnimal.getCreatedDate())
 			.build();
 
-		Long shelterId = shelterRepository.save(updateShelter).getId();
+		System.out.println(updateAnimal);
+
+		Long updatedAnimalId = animalRepository.save(updateAnimal).getId();
 
 		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(shelterId);
+			.buildSuccessResponse(updatedAnimalId);
 
 		return resp;
 	}
@@ -130,12 +142,16 @@ public class AnimalService {
 	 * @return 삭제된 된 animalId
 	 */
 	@Transactional
-	public ResponseSuccessDto<?> delete(String shelterName) {
+	public ResponseSuccessDto<?> delete(
+		Long shelterId,
+		Long animalId) {
 
-		Long count = shelterRepository.deleteByName(shelterName);
+		validateAnimal(shelterId, animalId);
+
+		shelterRepository.deleteById(animalId);
 
 		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(count);
+			.buildSuccessResponse(null);
 
 		return resp;
 	}
@@ -148,7 +164,9 @@ public class AnimalService {
 	 */
 	@Transactional
 	public ResponseSuccessDto<?> getInfoAll() {
+
 		List<AnimalEntity> findAnimals = animalRepository.findAllByExpiredLike("F");
+
 		List<AnimalInfoDto> animalInfos = findAnimals
 			.stream()
 			.map(AnimalInfoDto::of)
@@ -168,10 +186,12 @@ public class AnimalService {
 	 */
 	@Transactional
 	public ResponseSuccessDto<?> getInfoByShelter(Long shelterId) {
-		ShelterEntity shelter = shelterRepository.findByIdAndExpiredLike(shelterId, "F")
+
+		ShelterEntity findShelter = shelterRepository.findByIdAndExpiredLike(shelterId, "F")
 			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-		List<AnimalEntity> findAnimals = shelter.getAnimals();
+		List<AnimalEntity> findAnimals = animalRepository.findByShelterAndExpiredLike(findShelter, "F");
+
 		List<AnimalInfoDto> animalInfos = findAnimals
 			.stream()
 			.map(AnimalInfoDto::of)
@@ -184,19 +204,15 @@ public class AnimalService {
 	}
 
 	/**
-	 * name으로 사용자 정보를 가져오는 메소드
+	 * id로 사용자 정보를 가져오는 메소드
 	 *
 	 * @param
 	 * @return AnimalInfoDto
 	 */
 	@Transactional
 	public ResponseSuccessDto<?> getInfoById(Long shelterId, Long animalId) {
-		AnimalEntity findAnimal = animalRepository.findByIdAndExpiredLike(animalId, "F")
-			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-		if (!findAnimal.getShelter().getId().equals(shelterId)) {
-			throw new ApiErrorException(ApiStatus.BAD_REQUEST);
-		}
+		AnimalEntity findAnimal = validateAnimal(shelterId, animalId);
 
 		AnimalInfoDto infoDto = AnimalInfoDto.of(findAnimal);
 
@@ -207,24 +223,111 @@ public class AnimalService {
 	}
 
 	/**
-	 * name으로 사용자 정보를 검색하는 메소드
+	 * 관리번호로 동물 정보를 검색하는 메소드
 	 *
 	 * @param
-	 * @return List&ltShelterInfoDto&gt
+	 * @return ResponseSuccessDto&ltList&ltAnimalInfoDto&gt&gt
 	 */
 	@Transactional
-	public ResponseSuccessDto<?> searchInfoByName(String shelterName) {
-		List<ShelterEntity> findShelters = shelterRepository
-			.findByNameContainingIgnoreCaseAndExpiredLike(shelterName, "F");
-		List<ShelterInfoDto> shelterInfos = findShelters
+	public ResponseSuccessDto<?> searchInfoByManageCode(Long shelterId, String manageCode) {
+
+		if (manageCode.isEmpty() || manageCode.length() <= 0) {
+			throw new ApiErrorException(ApiStatus.KEYWORD_EMPTY);
+		}
+
+		ShelterEntity findShelter = shelterRepository.findByIdAndExpiredLike(shelterId, "F")
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+
+		List<AnimalEntity> findAnimals = animalRepository
+			.findByShelterAndManageCodeContainingIgnoreCaseAndExpiredLike(findShelter, manageCode, "F");
+
+		List<AnimalInfoDto> animalInfos = findAnimals
 			.stream()
-			.map(ShelterInfoDto::of)
+			.map(AnimalInfoDto::of)
 			.collect(Collectors.toList());
 
 		ResponseSuccessDto<List<ShelterEntity>> resp = responseUtil
-			.buildSuccessResponse(shelterInfos);
+			.buildSuccessResponse(animalInfos);
 
 		return resp;
+	}
+
+	/**
+	 * 이름으로 동물 정보를 검색하는 메소드
+	 *
+	 * @param
+	 * @return ResponseSuccessDto&ltList&ltAnimalInfoDto&gt&gt
+	 */
+	@Transactional
+	public ResponseSuccessDto<?> searchInfoByName(Long shelterId, String name) {
+
+		if (name.isEmpty() || name.length() <= 0) {
+			throw new ApiErrorException(ApiStatus.KEYWORD_EMPTY);
+		}
+
+		ShelterEntity findShelter = shelterRepository.findByIdAndExpiredLike(shelterId, "F")
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+
+		List<AnimalEntity> findAnimals = animalRepository
+			.findByShelterAndNameContainingIgnoreCaseAndExpiredLike(findShelter, name, "F");
+
+		List<AnimalInfoDto> animalInfos = findAnimals
+			.stream()
+			.map(AnimalInfoDto::of)
+			.collect(Collectors.toList());
+
+		ResponseSuccessDto<List<ShelterEntity>> resp = responseUtil
+			.buildSuccessResponse(animalInfos);
+
+		return resp;
+	}
+
+	/**
+	 * 품종으로 동물 정보를 검색하는 메소드
+	 *
+	 * @param
+	 * @return ResponseSuccessDto&ltList&ltAnimalInfoDto&gt&gt
+	 */
+	@Transactional
+	public ResponseSuccessDto<?> searchInfoByBreed(Long shelterId, String breed) {
+
+		if (breed.isEmpty() || breed.length() <= 0) {
+			throw new ApiErrorException(ApiStatus.KEYWORD_EMPTY);
+		}
+
+		ShelterEntity findShelter = shelterRepository.findByIdAndExpiredLike(shelterId, "F")
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+
+		List<AnimalEntity> findAnimals = animalRepository
+			.findByShelterAndBreedContainingIgnoreCaseAndExpiredLike(findShelter, breed, "F");
+
+		List<AnimalInfoDto> animalInfos = findAnimals
+			.stream()
+			.map(AnimalInfoDto::of)
+			.collect(Collectors.toList());
+
+		ResponseSuccessDto<List<ShelterEntity>> resp = responseUtil
+			.buildSuccessResponse(animalInfos);
+
+		return resp;
+	}
+
+	/**
+	 * 쉘터와 소속 동물 정보가 일치하는 지 검증하는 메소드
+	 *
+	 * @param
+	 */
+	@Transactional
+	private AnimalEntity validateAnimal(Long shelterId, Long animalId) {
+
+		AnimalEntity validateAnimal = animalRepository.findByIdAndExpiredLike(animalId, "F")
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+
+		if (!validateAnimal.getShelter().getId().equals(shelterId)) {
+			throw new ApiErrorException(ApiStatus.BAD_REQUEST);
+		}
+
+		return validateAnimal;
 	}
 
 	/**
@@ -233,6 +336,7 @@ public class AnimalService {
 	 * @param
 	 * @throws IllegalStateException
 	 */
+	@Transactional
 	private void validateDuplicate(AnimalEntity animal) {
 		animalRepository.findByManageCodeAndExpiredLike(animal.getManageCode(), "F")
 			.ifPresent(e -> {
