@@ -96,7 +96,13 @@ function Schedule() {
           <Nav />
         </>
       ) : null}
-      {user.role === 'USER' ? <ScheduleListUser /> : null}
+      {user.role === 'USER' ? (
+        <>
+          <Header />
+          <ScheduleListUser />
+          <Nav />
+        </>
+      ) : null}
     </>
   );
 }
