@@ -6,7 +6,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
+import { useRecoilValue } from 'recoil';
+import {
+  animalListState,
+  scheduleHostAtom,
+  scheduleUserAtom,
+  twoWeeksAtom,
+  userAtom,
+} from '../recoilState';
 import Header from '../components/common/Header';
 import Nav from '../components/common/Nav';
 import ImageCarousel from '../components/common/ImageCarousel';
@@ -40,7 +47,6 @@ const SLine = styled.div`
 // const SReviewContainer = styled.div``;
 
 function Home() {
-  const str = '012345678';
   return (
     <>
       <Header />

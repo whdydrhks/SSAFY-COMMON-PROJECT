@@ -12,7 +12,6 @@ const userAtom = atom({
   default: {
     role: '',
     userId: '',
-    shelterId: '',
     email: '',
     name: '',
     nickname: '',
@@ -135,19 +134,118 @@ const twoWeeksAtom = atom({
 
 const scheduleHostAtom = atom({
   key: 'scheduleHostAtom',
-  dafault: [
-    { scheduleId: '1', userNickname: '권오영', day: '0208', time: '9' },
-    { scheduleId: '2', userNickname: '이진혁', day: '0208', time: '11' },
-    { scheduleId: '3', userNickname: '한인환', day: '0208', time: '13' },
-    { scheduleId: '4', userNickname: '조용관', day: '0208', time: '15' },
-    { scheduleId: '5', userNickname: '권동규', day: '0209', time: '9' },
-    { scheduleId: '6', userNickname: '장준호', day: '0209', time: '11' },
-    { scheduleId: '7', userNickname: '권오영', day: '0209', time: '13' },
-    { scheduleId: '8', userNickname: '한인환', day: '0209', time: '15' },
-    { scheduleId: '9', userNickname: '이진혁', day: '0210', time: '9' },
-    { scheduleId: '10', userNickname: '조용관', day: '0210', time: '11' },
-    { scheduleId: '11', userNickname: '권동규', day: '0210', time: '13' },
-    { scheduleId: '12', userNickname: '장준호', day: '0210', time: '15' },
+  default: [
+    {
+      scheduleId: '1',
+      userId: '1',
+      day: '0209',
+      time: '0',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '1',
+      userId: '1',
+      day: '0209',
+      time: '1',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '2',
+      userId: '2',
+      day: '0209',
+      time: '2',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '3',
+      userId: '3',
+      day: '0209',
+      time: '13',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '4',
+      userId: '4',
+      day: '0209',
+      time: '15',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '5',
+      userId: '6',
+      day: '0209',
+      time: '9',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '6',
+      userId: '7',
+      day: '0209',
+      time: '11',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '7',
+      userId: '3',
+      day: '0209',
+      time: '13',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '8',
+      userId: '4',
+      day: '0209',
+      time: '15',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '9',
+      userId: '1',
+      day: '0210',
+      time: '9',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '10',
+      userId: '2',
+      day: '0210',
+      time: '11',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '11',
+      userId: '6',
+      day: '0210',
+      time: '13',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '12',
+      userId: '5',
+      day: '0210',
+      time: '15',
+      room: '대전보호소-1312',
+    },
+  ],
+});
+
+const scheduleUserAtom = atom({
+  key: 'scheduleUserAtom',
+  default: [
+    {
+      scheduleId: '1',
+      shelterId: '1',
+      day: '0208',
+      time: '9',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '12',
+      userId: '5',
+      day: '0210',
+      time: '15',
+      room: '대전보호소-1312',
+    },
   ],
   effects_UNSTABLE: [persistAtom],
 });
@@ -160,4 +258,5 @@ export {
   timeAtom,
   twoWeeksAtom,
   scheduleHostAtom,
+  scheduleUserAtom,
 };

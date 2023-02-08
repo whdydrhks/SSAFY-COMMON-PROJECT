@@ -1,17 +1,21 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable react/jsx-props-no-spreading */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import { useRecoilValue } from 'recoil';
+import { userAtom } from '../../recoilState';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 import TimeTableHost from '../../components/Schedule/TimeTableHost';
 import ScheduleListHost from '../../components/Schedule/ScheduleListHost';
+import ScheduleListUser from '../../components/Schedule/ScheduleListUser';
 
 const STemp = styled(Tab)`
   width: 50%;
@@ -52,37 +56,47 @@ function a11yProps(index) {
 }
 
 function Schedule() {
+  const navigate = useNavigate();
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  const user = useRecoilValue(userAtom);
+
+  useEffect(() => {
+    if (user.role === '') {
+      navigate('/login');
+    }
+  });
+
   return (
     <>
-      <Header />
-      <Box sx={{ width: '100%' }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs example"
-          >
-            <STemp label="예약관리" {...a11yProps(0)} />
-            <STemp label="시간설정" {...a11yProps(1)} />
-          </Tabs>
-        </Box>
-
-        <TabPanel as="div" value={value} index={0}>
-          {/* <Suspense fallback={<div>Loading... </div>}> */}
-          <ScheduleListHost />
-          {/* </Suspense> */}
-        </TabPanel>
-
-        <TabPanel as="div" value={value} index={1}>
-          <TimeTableHost />
-        </TabPanel>
-      </Box>
-      <Nav />
+      {user.role === 'HOST' ? (
+        <>
+          <Header />
+          <Box sx={{ width: '100%' }}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                aria-label="basic tabs example"
+              >
+                <STemp label="예약관리" {...a11yProps(0)} />
+                <STemp label="시간설정" {...a11yProps(1)} />
+              </Tabs>
+            </Box>
+            <TabPanel as="div" value={value} index={0}>
+              <ScheduleListHost />
+            </TabPanel>
+            <TabPanel as="div" value={value} index={1}>
+              <TimeTableHost />
+            </TabPanel>
+          </Box>
+          <Nav />
+        </>
+      ) : null}
+      {user.role === 'USER' ? <ScheduleListUser /> : null}
     </>
   );
 }

@@ -54,7 +54,6 @@ function SignUp() {
         phoneNumber,
       })
       .then(res => {
-        console.log(res);
         if (res.data.msg === 'OK') {
           navigate('/login');
         } else {

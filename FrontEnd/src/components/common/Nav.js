@@ -39,11 +39,11 @@ function Nav() {
     if (accessToken) {
       const decodedToken = jwtDecode(accessToken);
       const role = decodedToken.userRole;
-      const { userId } = decodedToken.userId;
+      const id = decodedToken.userId;
       const email = decodedToken.userEmail;
       axios
         .get(
-          `${API_URL}/user/${userId}`,
+          `${API_URL}/user/${id}`,
           {
             headers: {
               Authorization: accessToken,
@@ -52,16 +52,15 @@ function Nav() {
           { withCredentials: true },
         )
         .then(info => {
-          const { name, nickname, phoneNumber, profileImg } =
-            info.data.userInfo;
+          const { name, nickname, phoneNumber, profileImage } = info.data.data;
           setUser({
-            userId,
+            userId: id,
             role,
             email,
             name,
             nickname,
             phoneNumber,
-            profileImg,
+            profileImage,
           });
         });
       setAuthState(true);

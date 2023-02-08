@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+/* eslint-disable no-unused-vars */
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import List from '@mui/material/List';
@@ -16,6 +18,7 @@ import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 import { userAtom } from '../../recoilState';
 import API_URL from '../../api/api';
+import { getCookie } from './cookie';
 
 const SImage = styled.div`
   width: 200px;
@@ -36,29 +39,45 @@ const SImage = styled.div`
 // `;
 
 function ModifyMyPage() {
+  const navigate = useNavigate();
+  const accessToken = getCookie('accessToken');
   const [user, setUser] = useRecoilState(userAtom);
-  const [name, setName] = useState(user.name);
-  const [nickname, setNickname] = useState(user.nickname);
-  const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
-  // const [profileImg, setProfileImg] = useState(user.profileImg);
-  const handleName = () => {
-    setName(name);
+  const handleName = event => {
+    setUser({
+      ...user,
+      name: event.target.value,
+    });
   };
-  const handleNickname = () => {
-    setNickname(nickname);
+  const handleNickname = event => {
+    setUser({
+      ...user,
+      nickname: event.target.value,
+    });
   };
-  const handlePhoneNumber = () => {
-    setPhoneNumber(phoneNumber);
+  const handlePhoneNumber = event => {
+    setUser({
+      ...user,
+      phoneNumber: event.target.value,
+    });
   };
 
   const handleModifyUserInfo = () => {
-    setUser({
-      name,
-      nickname,
-      phoneNumber,
-    });
-    axios.put(`${API_URL}/user/${nickname}`).then(res => console.log(res));
-    // 추가 수정 필요
+    axios
+      .put(
+        `${API_URL}/user/${user.userId}`,
+        {
+          name: user.name,
+          nickname: user.nickname,
+          password: '000',
+          phoneNumber: user.phoneNumber,
+        },
+        {
+          headers: {
+            Authorization: accessToken,
+          },
+        },
+      )
+      .then(() => navigate(`/mypage/${user.userId}`));
   };
 
   return (
@@ -82,7 +101,7 @@ function ModifyMyPage() {
           </ListItemAvatar>
           <Input
             placeholder={user.name}
-            defaultValue={name}
+            defaultValue={user.name}
             onChange={handleName}
           />
         </ListItem>
@@ -94,7 +113,7 @@ function ModifyMyPage() {
           </ListItemAvatar>
           <Input
             placeholder={user.nickname}
-            defaultValue={nickname}
+            defaultValue={user.nickname}
             onChange={handleNickname}
           />
         </ListItem>
@@ -106,7 +125,7 @@ function ModifyMyPage() {
           </ListItemAvatar>
           <Input
             placeholder="핸드폰 번호 입력"
-            defaultValue={phoneNumber}
+            defaultValue={user.phoneNumber}
             onChange={handlePhoneNumber}
           />
         </ListItem>

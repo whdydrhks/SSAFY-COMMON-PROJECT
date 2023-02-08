@@ -34,8 +34,6 @@ function Login() {
     setPassword(event.target.value);
   };
   const handleLogin = () => {
-    console.log(email);
-    console.log(password);
     axios
       .post(
         `${API_URL}/auth/login`,
@@ -53,11 +51,10 @@ function Login() {
           const accessToken = getCookie('accessToken');
           const decodedToken = jwtDecode(accessToken);
           const role = decodedToken.userRole;
-          const { userId } = decodedToken.userId;
-          console.log(accessToken);
+          const id = decodedToken.userId;
           axios
             .get(
-              `${API_URL}/user/${userId}`,
+              `${API_URL}/user/${id}`,
               {
                 headers: {
                   Authorization: accessToken,
@@ -66,11 +63,11 @@ function Login() {
               { withCredentials: true },
             )
             .then(info => {
-              // console.log(info);
+              console.log(info);
               const { name, nickname, phoneNumber, profileImg } =
-                info.data.userInfo;
+                info.data.data;
               setUser({
-                userId,
+                userId: id,
                 role,
                 email,
                 name,
@@ -78,8 +75,8 @@ function Login() {
                 phoneNumber,
                 profileImg,
               });
+              navigate('/');
             });
-          navigate('/');
         } else {
           alert('아이디와 비밀번호를 확인해주세요.');
         }
