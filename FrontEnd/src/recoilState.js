@@ -12,6 +12,7 @@ const userAtom = atom({
   default: {
     role: '',
     userId: '',
+    shelterId: '',
     email: '',
     name: '',
     nickname: '',
@@ -112,21 +113,51 @@ const animalNumber = atom({
 //   }
 // })
 
-const setDayTime = atom({
-  key: 'setDayTime',
+const timeAtom = atom({
+  key: 'timeAtom',
   default: [
-    {
-      shelterId: 0,
-      Default: '0000000000000000000000000',
-      Sun: '0000000011111111111000000',
-      Mon: '0000000000111111111000000',
-      Tue: '0000000011100111111000000',
-      Wed: '0000000011111110011000000',
-      Thr: '0000000011111111111000000',
-      Fri: '0000000001011110110000000',
-      Sat: '0000000010111111101000000',
-    },
+    '0000000001111111111000000',
+    '0000000000111111111000001',
+    '0000000001100111111000002',
+    '0000000001111110011000003',
+    '0000000001111111111000004',
+    '0000000001011110110000005',
+    '0000000000111111101000006',
   ],
+  effects_UNSTABLE: [persistAtom],
 });
 
-export { authStateAtom, userAtom, animalListState, animalNumber, setDayTime };
+const twoWeeksAtom = atom({
+  key: 'twoWeeksAtom',
+  default: [],
+  effects_UNSTABLE: [persistAtom],
+});
+
+const scheduleHostAtom = atom({
+  key: 'scheduleHostAtom',
+  dafault: [
+    { scheduleId: '1', userNickname: '권오영', day: '0208', time: '9' },
+    { scheduleId: '2', userNickname: '이진혁', day: '0208', time: '11' },
+    { scheduleId: '3', userNickname: '한인환', day: '0208', time: '13' },
+    { scheduleId: '4', userNickname: '조용관', day: '0208', time: '15' },
+    { scheduleId: '5', userNickname: '권동규', day: '0209', time: '9' },
+    { scheduleId: '6', userNickname: '장준호', day: '0209', time: '11' },
+    { scheduleId: '7', userNickname: '권오영', day: '0209', time: '13' },
+    { scheduleId: '8', userNickname: '한인환', day: '0209', time: '15' },
+    { scheduleId: '9', userNickname: '이진혁', day: '0210', time: '9' },
+    { scheduleId: '10', userNickname: '조용관', day: '0210', time: '11' },
+    { scheduleId: '11', userNickname: '권동규', day: '0210', time: '13' },
+    { scheduleId: '12', userNickname: '장준호', day: '0210', time: '15' },
+  ],
+  effects_UNSTABLE: [persistAtom],
+});
+
+export {
+  authStateAtom,
+  userAtom,
+  animalListState,
+  animalNumber,
+  timeAtom,
+  twoWeeksAtom,
+  scheduleHostAtom,
+};
