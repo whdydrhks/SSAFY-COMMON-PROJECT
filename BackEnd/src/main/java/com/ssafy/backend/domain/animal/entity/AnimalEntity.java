@@ -67,6 +67,10 @@ public class AnimalEntity extends BaseTimeEntity {
 	@Column(name = "neuter", nullable = false, length = 1)
 	private String neuter;
 
+	@Column(name = "adpotion", nullable = false, length = 1)
+	@ColumnDefault("'F'")
+	private String adoption;
+
 	@Column(name = "note", nullable = false)
 	@ColumnDefault("'공란'")
 	private String note;

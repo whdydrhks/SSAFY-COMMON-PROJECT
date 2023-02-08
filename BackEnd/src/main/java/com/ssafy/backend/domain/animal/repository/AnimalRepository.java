@@ -10,12 +10,40 @@ import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
 
 public interface AnimalRepository extends JpaRepository<AnimalEntity, Long> {
 
+	@Override
+	List<AnimalEntity> findAll();
+
 	List<AnimalEntity> findAllByExpiredLike(String expired);
 
-	List<ShelterEntity> findByShelterAndExpiredLike(ShelterEntity shelter, String expired);
+	List<AnimalEntity> findByShelterAndExpiredLike(ShelterEntity shelter, String expired);
+
+	List<AnimalEntity> findByShelterAndNameContainingIgnoreCase(ShelterEntity shelter, String name);
+
+	List<AnimalEntity> findByShelterAndNameContainingIgnoreCaseAndExpiredLike(ShelterEntity shelter, String name,
+		String expired);
+
+	List<AnimalEntity> findByShelterAndManageCodeContainingIgnoreCase(ShelterEntity shelter, String manageCode);
+
+	List<AnimalEntity> findByShelterAndManageCodeContainingIgnoreCaseAndExpiredLike(ShelterEntity shelter,
+		String manageCode, String expired);
+
+	List<AnimalEntity> findByShelterAndBreedContainingIgnoreCase(ShelterEntity shelter, String breed);
+
+	List<AnimalEntity> findByShelterAndBreedContainingIgnoreCaseAndExpiredLike(ShelterEntity shelter, String breed,
+		String expired);
+
+	@Override
+	Optional<AnimalEntity> findById(Long id);
+
+	Optional<AnimalEntity> findByIdAndExpiredLike(Long id, String expired);
+
+	Optional<AnimalEntity> findByManageCode(String manageCode);
 
 	Optional<AnimalEntity> findByManageCodeAndExpiredLike(String manageCode, String expired);
 
-	Optional<AnimalEntity> findByIdAndExpiredLike(Long id, String expired);
+	@Override
+	void deleteById(Long id);
+
+	Long deleteByManageCode(String manageCode);
 
 }
