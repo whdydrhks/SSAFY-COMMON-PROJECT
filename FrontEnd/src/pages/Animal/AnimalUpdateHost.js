@@ -45,7 +45,7 @@ function AnimalUpdateHost() {
   const animalIdForUpdate = useParams();
 
   const getAnimal = async () => {
-    const animal = await axios.get();
+    const animal = await axios.get(`${API_URL}/`);
   };
   const animal = tempAnimalList[animalIdForUpdate.animalId];
 
