@@ -149,7 +149,7 @@ function TimeTableHost() {
 
   useEffect(() => {
     // axios
-    //   .get(`${API_URL}/timetable/${shelterId}`, { shelterId })
+    // .get(`${API_URL}/timetable/${shelterId}`, { shelterId })
     //   .then(res => setDayTime(res.data));
   }, []);
 

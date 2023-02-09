@@ -109,7 +109,7 @@ const router = createBrowserRouter([
     element: <ModifyMyPage />,
   },
   {
-    path: '/alarm/:id',
+    path: '/alarm/:userId',
     element: <Alarm />,
   },
   {

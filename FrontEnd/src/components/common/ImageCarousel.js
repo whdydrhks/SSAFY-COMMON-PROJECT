@@ -38,7 +38,7 @@ const SSlider = styled(Slider)`
   margin-bottom: 5rem;
 `;
 
-function ImageCarousel(props) {
+function ImageCarousel() {
   const settings = {
     arrows: false,
     autoplay: true,
@@ -49,7 +49,6 @@ function ImageCarousel(props) {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-  console.log(props);
   // const [images, setImages] = useState([]);
   // const type = props.type;
 
