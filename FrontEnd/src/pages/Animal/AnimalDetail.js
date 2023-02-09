@@ -203,7 +203,7 @@ function AnimalDetail() {
         </SGrayLineBox>
       </SLine>
       {animalInformation.map((Item, index) => (
-        <SInformationBox>
+        <SInformationBox key={key[index]}>
           <SInformationImg src={key[index]} alt={`${Object.keys(Item)}`} />
           <SInformationText>
             <div>{korKey[index]}</div>
