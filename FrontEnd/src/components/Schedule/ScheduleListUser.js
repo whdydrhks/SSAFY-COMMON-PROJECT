@@ -14,11 +14,19 @@ import API_URL from '../../api/api';
 const SContainer = styled.div``;
 const SDate = styled.div`
   font-size: 2rem;
+  margin-bottom: 2rem;
 `;
-const STime = styled.div`
+const STimeTable = styled.div`
+  font-size: 20px;
   display: flex;
   justify-content: space-between;
+  background-color: white;
+  margin-bottom: 24px;
 `;
+const STime = styled.div`
+  margin-bottom: 16px;
+`;
+const SShelter = styled.div``;
 const SLiveButton = styled(Button)`
   color: green;
 `;
@@ -52,11 +60,19 @@ function ScheduleListUser() {
     <SContainer>
       {dateList.map((item, index) => (
         <div key={index}>
-          <SDate>{item}</SDate>
+          <SDate>
+            {Number(item.substring(0, 2))}월 {Number(item.substring(2))}일
+          </SDate>
           {scheduleUser.map(schedule =>
             schedule.day === item ? (
-              <STime key={schedule.room}>
-                <div>{schedule.time}</div>
+              <STimeTable key={schedule.room}>
+                <div>
+                  <STime>
+                    {schedule.time.padStart(2, '0')}:00 ~{' '}
+                    {(Number(schedule.time) + 1).toString().padStart(2, '0')}:00
+                  </STime>
+                  <SShelter>{schedule.room}</SShelter>
+                </div>
                 {today.getHours() > schedule.time ? (
                   <Button disabled>완료</Button>
                 ) : null}
@@ -73,7 +89,7 @@ function ScheduleListUser() {
                     취소
                   </SCancleButton>
                 ) : null}
-              </STime>
+              </STimeTable>
             ) : null,
           )}
         </div>

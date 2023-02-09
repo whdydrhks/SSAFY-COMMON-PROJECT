@@ -41,7 +41,7 @@ function Login() {
           email,
           password,
         },
-        { withCredentials: true },
+        { withCredentials: true, validateStatus: false },
       )
       .then(res => {
         console.log(res);
