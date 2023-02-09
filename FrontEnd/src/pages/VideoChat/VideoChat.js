@@ -33,7 +33,10 @@ import '../../styles/cafe24.css';
 import UserVideoComponent from './UserVideoComponent';
 import { userAtom } from '../../recoilState';
 
-const APPLICATION_SERVER_URL = 'http://localhost:5000';
+// const APPLICATION_SERVER_URL = 'http://localhost:5000';
+
+const APPLICATION_SERVER_URL = 'https://i8b209.p.ssafy.io:8445';
+// const OPENVIDU_SERVER_SECRET = 'ssafy';
 
 const Sdiv = styled.div`
   position: relative;
@@ -189,7 +192,7 @@ function VideoChat() {
         .post(APPLICATION_SERVER_URL + '/api/sessions', data, {
           headers: {
             // Authorization:
-            //   'Basic ' + btoa('OPENVIDUAPP:' + APPLICATION_SERVER_URL),
+            // 'Basic ' + btoa('OPENVIDUAPP:' + APPLICATION_SERVER_URL),
             'Content-Type': 'application/json',
             // 'Access-Control-Allow-Origin': '*',
             // 'Access-Control-Allow-Methods': 'GET,POST',
