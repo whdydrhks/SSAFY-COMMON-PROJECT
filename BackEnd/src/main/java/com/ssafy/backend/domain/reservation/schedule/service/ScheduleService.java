@@ -84,10 +84,10 @@ public class ScheduleService {
 		String tokenId = jwtUtil.getUserId(token);
 
 		UserEntity findUser = userRepository.findByIdAndExpiredLike(Long.valueOf( tokenId), "F")
-			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+				.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
 		ScheduleEntity findSchedule = scheduleRepository.findById(scheduleId)
-			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+				.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
 		//비ry
 		if(!findSchedule.getUser().getId().equals(findUser.getId())) {
@@ -99,7 +99,7 @@ public class ScheduleService {
 		scheduleRepository.deleteById(findSchedule.getId());
 
 		ResponseSuccessDto resp = responseUtil
-			.buildSuccessResponse(null);
+				.buildSuccessResponse(null);
 
 		return resp;
 	}

@@ -19,15 +19,15 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
-@RestController
-@RequiredArgsConstructor
-@Api(tags = "ScheduleController v1")
-@RequestMapping("/v1/schedule")
+//@Slf4j
+//@RestController
+//@RequiredArgsConstructor
+//@Api(tags = "ScheduleController v1")
+//@RequestMapping("/v1/schedule")
 public class ScheduleControllerV1 {
-	private final ScheduleService scheduleService;
-	private final ShelterService shelterService;
-	private final UserService userService;
+//	private final ScheduleService scheduleService;
+//	private final ShelterService shelterService;
+//	private final UserService userService;
 
 	// @GetMapping("/users/{userNickname}")
 	// @ApiOperation(value="유저 일정정보 조회")
@@ -48,15 +48,15 @@ public class ScheduleControllerV1 {
 	// 		.ok(scheduleService.getShelterInfoByName(shelterName));
 	// }
 
-	@DeleteMapping("/{scheduleId}")
-	@ApiOperation(value="보호소 기준 삭제")
-	public ResponseEntity<?> deleteHostSchedule(
-		@PathVariable(name="scheduleId") Long scheduleId,
-		HttpServletRequest request) {
-
-		return ResponseEntity
-			.ok(scheduleService.deleteSchedule(scheduleId, request));
-	}
+//	@DeleteMapping("/{scheduleId}")
+//	@ApiOperation(value="보호소 기준 삭제")
+//	public ResponseEntity<?> deleteHostSchedule(
+//		@PathVariable(name="scheduleId") Long scheduleId,
+//		HttpServletRequest request) {
+//
+//		return ResponseEntity
+//			.ok(scheduleService.deleteSchedule(scheduleId, request));
+//	}
 
 
 }

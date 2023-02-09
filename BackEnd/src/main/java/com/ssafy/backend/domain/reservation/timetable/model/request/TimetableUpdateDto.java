@@ -2,48 +2,27 @@ package com.ssafy.backend.domain.reservation.timetable.model.request;
 
 import com.ssafy.backend.domain.reservation.timetable.entity.TimetableEntity;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@ToString
 public class TimetableUpdateDto {
-	private String mon;
-	private String tue;
-	private String wed;
-	private String thr;
-	private String fri;
-	private String sat;
-	private String sun;
 
-	public static TimetableUpdateDto of(TimetableEntity timetable) {
-		return TimetableUpdateDto.builder()
-			.mon(timetable.getMon())
-			.tue(timetable.getTue())
-			.wed(timetable.getWed())
-			.thr(timetable.getThr())
-			.fri(timetable.getFri())
-			.sat(timetable.getSat())
-			.sun(timetable.getSun())
-			.build();
-	}
+	private String[] days;
 
 	public TimetableEntity toEntity() {
 		return TimetableEntity.builder()
-			.mon(this.mon)
-			.tue(this.tue)
-			.wed(this.wed)
-			.thr(this.thr)
-			.fri(this.fri)
-			.sat(this.sat)
-			.sun(this.sun)
-			.build();
+				.sun(this.days[0])
+				.mon(this.days[1])
+				.tue(this.days[2])
+				.wed(this.days[3])
+				.thr(this.days[4])
+				.fri(this.days[5])
+				.sat(this.days[6])
+				.build();
 	}
 }

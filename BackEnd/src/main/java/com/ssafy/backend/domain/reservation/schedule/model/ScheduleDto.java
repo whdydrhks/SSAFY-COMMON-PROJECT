@@ -30,28 +30,28 @@ public class ScheduleDto {
 
 	public static ScheduleDto of(ScheduleEntity schedule) {
 		return ScheduleDto.builder()
-			.shelterId(schedule.getShelter().getId())
-			.shelterNickname(schedule.getShelter().getName())
-			.userId(schedule.getUser().getId())
-			.userNickname(schedule.getUser().getNickname())
-			.day(schedule.getDay())
-			.state(schedule.getState())
-			.time(schedule.getTime())
-			.room(schedule.getRoom())
-			.build();
+				.shelterId(schedule.getShelter().getId())
+				.shelterNickname(schedule.getShelter().getName())
+				.userId(schedule.getUser().getId())
+				.userNickname(schedule.getUser().getNickname())
+				.day(schedule.getDay())
+				.state(schedule.getState())
+				.time(schedule.getTime())
+				.room(schedule.getRoom())
+				.build();
 	}
 
 	public ScheduleEntity toEntity() {
 		return ScheduleEntity.builder()
-			.id(this.scheduleId)
-			.room(this.room)
-			.shelter(this.toEntity().getShelter())
-			.user(this.toEntity().getUser())
-			.day(this.day)
-			.state(this.state)
-			.time(this.time)
-			.room(this.room)
-			.build();
+				.id(this.scheduleId)
+				.room(this.room)
+				.shelter(this.toEntity().getShelter())
+				.user(this.toEntity().getUser())
+				.day(this.day)
+				.state(this.state)
+				.time(this.time)
+				.room(this.room)
+				.build();
 	}
 }
 

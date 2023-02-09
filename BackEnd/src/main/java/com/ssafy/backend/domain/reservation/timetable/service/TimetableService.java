@@ -3,6 +3,8 @@ package com.ssafy.backend.domain.reservation.timetable.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.ssafy.backend.domain.reservation.timetable.model.request.TimetableUpdateDto;
+import lombok.ToString;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,62 +25,58 @@ import lombok.RequiredArgsConstructor;
 @Service
 @Transactional(readOnly = true) // 기본적으로 트랜잭션 안에서만 데이터 변경하게 설정(성능 향상)
 @RequiredArgsConstructor // Lombok을 사용해 @Autowired 없이 의존성 주입. final 객제만 주입됨을 주의
+@ToString
 public class TimetableService {
 	private final ResponseUtil responseUtil;
 
 	private final ShelterRepository shelterRepository;
 	private final TimetableRepository timetableRepository;
 
-	public String[] getDayInfoById(Long shelterId) {
-		TimetableEntity findShelter = timetableRepository.findById(shelterId)
-			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
-		if(!findShelter.getShelterId().getId().equals(shelterId)) {
-			throw new ApiErrorException(ApiStatus.BAD_REQUEST);
-		}
+	public ResponseSuccessDto<?> getDayInfoById(Long shelterId) {
+		TimetableEntity findTimetable = timetableRepository.findById(shelterId)
+				.orElseThrow(() -> new ApiErrorException(ApiStatus.BAD_REQUEST));
 
-		TimetableInfoDto infoDto = TimetableInfoDto.of(findShelter);
 
-		String[] days = new String[7];
-		days[0] = infoDto.getMon();
-		days[1] = infoDto.getTue();
-		days[2] = infoDto.getWed();
-		days[3] = infoDto.getThr();
-		days[4] = infoDto.getFri();
-		days[5] = infoDto.getSat();
-		days[6] = infoDto.getSun();
-
-		return days;
+		TimetableInfoDto infoDto = TimetableInfoDto.of(findTimetable);
+		ResponseSuccessDto<TimetableInfoDto> resp = responseUtil
+				.buildSuccessResponse(infoDto);
+		return resp;
 	}
 
 	@Transactional
-	public String[] update(Long shelter_Id, String[] days) {
+	public ResponseSuccessDto<?> update(Long shelter_Id, TimetableUpdateDto updateDto) {
 
-		TimetableEntity findShelter = timetableRepository.findById(shelter_Id)
-			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+		TimetableEntity findTimetable = timetableRepository.findById(shelter_Id)
+				.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
 		TimetableEntity updateTimetable = TimetableEntity.builder()
-			.id(findShelter.getId())
-			.sun(days[0])
-			.mon(days[1])
-			.tue(days[2])
-			.wed(days[3])
-			.thr(days[4])
-			.fri(days[5])
-			.sat(days[6])
-			.build();
+				.id(findTimetable.getId())
+				.shelter_id(findTimetable.getShelter_id())
+				.sun(updateDto.getDays()[0] )
+				.mon(updateDto.getDays()[1])
+				.tue(updateDto.getDays()[2])
+				.wed(updateDto.getDays()[3])
+				.thr(updateDto.getDays()[4])
+				.fri(updateDto.getDays()[5])
+				.sat(updateDto.getDays()[6])
+				.build();
 
-		Long shelterId = timetableRepository.save(updateTimetable).getId();
+		Long updateTimetableId = timetableRepository.save(updateTimetable).getId();
 
-		String[] str = new String[7];
-		str[0] = updateTimetable.getSun();
-		str[1] = updateTimetable.getMon();
-		str[2] = updateTimetable.getTue();
-		str[3] = updateTimetable.getWed();
-		str[4] = updateTimetable.getThr();
-		str[5] = updateTimetable.getFri();
-		str[6] = updateTimetable.getSat();
+		ResponseSuccessDto<Long> resp = responseUtil
+				.buildSuccessResponse(updateTimetableId);
+		return resp;
 
-		return str;
+//		String[] str = new String[7];
+//		str[0] = updateTimetable.getSun();
+//		str[1] = updateTimetable.getMon();
+//		str[2] = updateTimetable.getTue();
+//		str[3] = updateTimetable.getWed();
+//		str[4] = updateTimetable.getThr();
+//		str[5] = updateTimetable.getFri();
+//		str[6] = updateTimetable.getSat();
+//
+//		return str;
 	}
 
 }

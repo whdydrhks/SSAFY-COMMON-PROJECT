@@ -35,9 +35,12 @@ public class TimetableEntity {
 	@Column(name = "timetable_id", columnDefinition = "INT UNSIGNED")
 	private Long id;
 
-	@OneToOne
-	@JoinColumn(name="shelter_id")
-	private ShelterEntity shelterId;
+//	@OneToOne
+//	@JoinColumn(name="shelter_id")
+//	private ShelterEntity shelter;
+
+	@Column(name = "shelter_id", nullable = false, unique = true)
+	private Long shelter_id;
 
 	@Column(name = "mon", nullable = false, unique = true, length = 25)
 	private String mon;

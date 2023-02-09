@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import com.ssafy.backend.domain.member.entity.UserEntity;
@@ -55,4 +56,8 @@ public class ScheduleEntity {
 
 	@Column(name="room", nullable = false, unique = true, length=50)
 	private String room;
+
+	@Column(name = "expired", nullable = false, length = 1)
+	@ColumnDefault("'F'")
+	private String expired;
 }

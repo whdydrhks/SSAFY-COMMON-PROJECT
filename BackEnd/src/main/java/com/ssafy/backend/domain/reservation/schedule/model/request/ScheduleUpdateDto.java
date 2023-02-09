@@ -26,19 +26,19 @@ public class ScheduleUpdateDto {
 
 	public static ScheduleDto of(ScheduleEntity schedule) {
 		return ScheduleDto.builder()
-			.day(schedule.getDay())
-			.state(schedule.getState())
-			.time(schedule.getTime())
-			.room(schedule.getRoom())
-			.build();
+				.day(schedule.getDay())
+				.state(schedule.getState())
+				.time(schedule.getTime())
+				.room(schedule.getRoom())
+				.build();
 	}
 
 	public ScheduleEntity toEntity() {
 		return ScheduleEntity.builder()
-			.day(this.day)
-			.state(this.state)
-			.time(this.time)
-			.room(this.room)
-			.build();
+				.day(this.day)
+				.state(this.state)
+				.time(this.time)
+				.room(this.room)
+				.build();
 	}
 }

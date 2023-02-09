@@ -18,7 +18,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class TimetableRegisterDto {
 	private Long timetableId;
-	private ShelterEntity shelterId;
+	private Long shelterId;
 	private String mon;
 	private String tue;
 	private String wed;
@@ -29,29 +29,29 @@ public class TimetableRegisterDto {
 
 	public static TimetableDto of(TimetableEntity timetable) {
 		return TimetableDto.builder()
-			.timetableId(timetable.getId())
-			.shelterId(timetable.getShelterId())
-			.mon(timetable.getMon())
-			.tue(timetable.getTue())
-			.wed(timetable.getWed())
-			.thr(timetable.getThr())
-			.fri(timetable.getFri())
-			.sat(timetable.getSat())
-			.sun(timetable.getSun())
-			.build();
+				.timetableId(timetable.getId())
+				.shelterId(timetable.getShelter_id())
+				.mon(timetable.getMon())
+				.tue(timetable.getTue())
+				.wed(timetable.getWed())
+				.thr(timetable.getThr())
+				.fri(timetable.getFri())
+				.sat(timetable.getSat())
+				.sun(timetable.getSun())
+				.build();
 	}
 
 	public TimetableEntity toEntity() {
 		return TimetableEntity.builder()
-			.id(this.timetableId)
-			.shelterId(this.shelterId)
-			.mon(this.mon)
-			.tue(this.tue)
-			.wed(this.wed)
-			.thr(this.thr)
-			.fri(this.fri)
-			.sat(this.sat)
-			.sun(this.sun)
-			.build();
+				.id(this.timetableId)
+				.shelter_id(this.shelterId)
+				.mon(this.mon)
+				.tue(this.tue)
+				.wed(this.wed)
+				.thr(this.thr)
+				.fri(this.fri)
+				.sat(this.sat)
+				.sun(this.sun)
+				.build();
 	}
 }

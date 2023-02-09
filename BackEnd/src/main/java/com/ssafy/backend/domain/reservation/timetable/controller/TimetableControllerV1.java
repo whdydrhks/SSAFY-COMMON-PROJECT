@@ -1,6 +1,10 @@
 package com.ssafy.backend.domain.reservation.timetable.controller;
 import javax.servlet.http.HttpServletRequest;
 
+import com.ssafy.backend.domain.animal.model.request.AnimalUpdateDto;
+import com.ssafy.backend.domain.reservation.timetable.model.TimetableDto;
+import com.ssafy.backend.domain.reservation.timetable.model.request.TimetableUpdateDto;
+import com.ssafy.backend.global.common.model.ResponseSuccessDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,26 +37,25 @@ public class TimetableControllerV1 {
 
 	private final UserService userService;
 
-	@GetMapping("/{shelter_id}")
+	@GetMapping("/{shelterId}")
 	@ApiOperation(value="보호소 시간검색")
-	public String[] getShelterInfo(
-		@PathVariable(name="shelterId") Long shelterId,
-		HttpServletRequest request) {
+	public ResponseEntity<?> getShelterInfo(
+			@PathVariable(name="shelterId") Long shelterId,
+			HttpServletRequest request) {
 
-	 	String[] str = timetableService.getDayInfoById(shelterId);
-
-		return str;
+		return ResponseEntity
+				.ok(timetableService.getDayInfoById(shelterId));
 	}
 
-	@PutMapping("/{shelter_id}")
+	@PutMapping("/{shelterId}")
 	@ApiOperation(value="보호소 시간수정")
-	public String[] updateTimetableInfo(
-		@PathVariable(name="shelterId") Long shelterId,
-		@RequestBody String[] days,
-		HttpServletRequest request) {
+	public ResponseEntity<?> updateTimetableInfo(
+			@PathVariable(name="shelterId") Long shelterId,
+			@RequestBody TimetableUpdateDto updateDto,
+			HttpServletRequest request) {
 
-		String[] str = timetableService.update(shelterId, days);
-		return str;
+		return ResponseEntity
+				.ok(timetableService.update(shelterId, updateDto));
 	}
 
 

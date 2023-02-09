@@ -19,7 +19,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class TimetableDto {
 	private Long timetableId;
-	private ShelterEntity shelterId;
+	private Long shelterId;
 	private String mon;
 	private String tue;
 	private String wed;
@@ -28,31 +28,31 @@ public class TimetableDto {
 	private String sat;
 	private String sun;
 
-	public static TimetableDto of(TimetableEntity timetable) {
-		return TimetableDto.builder()
-			.timetableId(timetable.getId())
-			.shelterId(timetable.getShelterId())
-			.mon(timetable.getMon())
-			.tue(timetable.getTue())
-			.wed(timetable.getWed())
-			.thr(timetable.getThr())
-			.fri(timetable.getFri())
-			.sat(timetable.getSat())
-			.sun(timetable.getSun())
-			.build();
-	}
-
-	public TimetableEntity toEntity() {
-		return TimetableEntity.builder()
-			.id(this.timetableId)
-			.shelterId(this.shelterId)
-			.mon(this.mon)
-			.tue(this.tue)
-			.wed(this.wed)
-			.thr(this.thr)
-			.fri(this.fri)
-			.sat(this.sat)
-			.sun(this.sun)
-			.build();
-	}
+//	public static TimetableDto of(TimetableEntity timetable) {
+//		return TimetableDto.builder()
+//			.timetableId(timetable.getId())
+//			.shelterId(timetable.getShelter().getId())
+//			.mon(timetable.getMon())
+//			.tue(timetable.getTue())
+//			.wed(timetable.getWed())
+//			.thr(timetable.getThr())
+//			.fri(timetable.getFri())
+//			.sat(timetable.getSat())
+//			.sun(timetable.getSun())
+//			.build();
+//	}
+//
+//	public TimetableEntity toEntity() {
+//		return TimetableEntity.builder()
+//			.id(this.timetableId)
+//			.shelter(this.toEntity().getShelter())
+//			.mon(this.mon)
+//			.tue(this.tue)
+//			.wed(this.wed)
+//			.thr(this.thr)
+//			.fri(this.fri)
+//			.sat(this.sat)
+//			.sun(this.sun)
+//			.build();
+//	}
 }
