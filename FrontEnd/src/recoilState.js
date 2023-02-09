@@ -7,20 +7,6 @@ const authStateAtom = atom({
   default: false,
 });
 
-// const userAtom = atom({
-//   key: 'userAtom',
-//   default: {
-//     role: '',
-//     userId: '',
-//     email: '',
-//     name: '',
-//     nickname: '',
-//     phoneNumber: '',
-//     profileImg: '',
-//   },
-//   effects_UNSTABLE: [persistAtom],
-// });
-
 const userAtom = atom({
   key: 'userAtom',
   default: {
@@ -31,6 +17,7 @@ const userAtom = atom({
     nickname: '',
     phoneNumber: '',
     profileImg: '',
+    shelterId: '',
   },
   effects_UNSTABLE: [persistAtom],
 });
