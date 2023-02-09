@@ -1,8 +1,20 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable spaced-comment */
+/* eslint-disable react/sort-comp */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
+/* eslint-disable spaced-comment */
+/* eslint-disable react/sort-comp */
+/* eslint-disable react/destructuring-assignment */
+
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Home from './pages/Home';
 import Live from './pages/Live/Live';
 import Review from './pages/Review/Review';
+import ReviewCreate from './pages/Review/ReviewCreate';
+import ReviewDetail from './pages/Review/ReviewDetail';
+import ReviewUpdate from './pages/Review/ReviewUpdate';
 import Animal from './pages/Animal/Animal';
 import AnimalCreateHost from './pages/Animal/AnimalCreateHost';
 import AnimalUpdateHost from './pages/Animal/AnimalUpdateHost';
@@ -16,7 +28,7 @@ import ModifyPassword from './pages/Account/ModifyPassword';
 import MyPage from './pages/Account/MyPage';
 import ModifyMyPage from './pages/Account/ModifyMyPage';
 import Alarm from './pages/Alarm';
-import CreateRoomHost from './pages/VideoChat/CreateRoomHost';
+import VideoChat from './pages/VideoChat/VideoChat';
 import NotFound from './NotFound';
 
 const router = createBrowserRouter([
@@ -31,6 +43,18 @@ const router = createBrowserRouter([
   {
     path: '/review',
     element: <Review />,
+  },
+  {
+    path: '/review/create',
+    element: <ReviewCreate />,
+  },
+  {
+    path: '/review/:reviewId',
+    element: <ReviewDetail />,
+  },
+  {
+    path: '/review/update/:reviewId',
+    element: <ReviewUpdate />,
   },
   {
     path: '/animal',
@@ -90,7 +114,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/videochat',
-    element: <CreateRoomHost />,
+    element: <VideoChat />,
   },
   {
     path: '/notfound',

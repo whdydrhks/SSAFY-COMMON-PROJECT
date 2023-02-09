@@ -9,8 +9,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { useRecoilState } from 'recoil';
-import AnimalList from './AnimalList';
-import { animalListState } from '../../recoilState';
+import ReviewList from './ReviewList';
+import { reviewListState } from '../../recoilState';
 
 const STemp = styled(Tab)`
   width: 50%;
@@ -67,12 +67,12 @@ function a11yProps(index) {
   };
 }
 
-function AnimalCategory() {
+function ReviewCategory() {
   const [value, setValue] = useState(0);
 
-  const [searchCategory, setSearchCategory] = useState('searchManageNumber');
+  const [searchCategory, setSearchCategory] = useState('searchTitle');
   const [searchValue, setSearchValue] = useState('');
-  const [animalList, setAnimalList] = useRecoilState(animalListState);
+  const [reviewList, setReviewList] = useRecoilState(reviewListState);
 
   const handleSearchCategory = e => {
     setSearchCategory(e.target.value);
@@ -85,8 +85,7 @@ function AnimalCategory() {
   const handleSearchValue = e => {
     setSearchValue(e.target.value);
   };
-
-  console.log(animalList);
+  console.log(reviewList);
 
   const url = 'api';
   const search = async () => {
@@ -98,7 +97,7 @@ function AnimalCategory() {
         },
       })
       .then(res => {
-        setAnimalList(res);
+        setReviewList(res);
       });
   };
   return (
@@ -109,42 +108,33 @@ function AnimalCategory() {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <STemp label="입양중" {...a11yProps(0)} />
-          <STemp label="입양 완료" {...a11yProps(1)} />
+          <STemp label="전체글" {...a11yProps(0)} />
+          <STemp label="개념글" {...a11yProps(1)} />
         </Tabs>
       </Box>
 
       {/* 검색 카테고리 */}
       <SSearchBar>
         <SSearchCategory onChange={handleSearchCategory}>
-          <option value="searchManageNumber">관리 번호</option>
-          <option value="searchName">이름</option>
-          <option value="searchBreed">품종</option>
+          <option value="searchTitle">제목</option>
+          <option value="searchTitleContent">제목 + 내용</option>
         </SSearchCategory>
         {(() => {
           switch (searchCategory) {
-            case 'searchManageNumber':
+            case 'searchTitle':
               return (
                 <SInput
                   type="text"
                   onChange={handleSearchValue}
-                  placeholder="관리번호를 입력해 주세요."
+                  placeholder="제목을 입력해 주세요."
                 />
               );
-            case 'searchName':
+            case 'searchTitleContent':
               return (
                 <SInput
                   type="text"
                   onChange={handleSearchValue}
-                  placeholder="이름을 입력해 주세요."
-                />
-              );
-            case 'searchbreed':
-              return (
-                <SInput
-                  type="text"
-                  onChange={handleSearchValue}
-                  placeholder="품종을 입력해 주세요."
+                  placeholder="제목 + 내용을 입력해 주세요."
                 />
               );
             default:
@@ -152,7 +142,7 @@ function AnimalCategory() {
                 <SInput
                   type="text"
                   onChange={handleSearchValue}
-                  placeholder="관리번호를 입력해 주세요."
+                  placeholder="제목을 입력해 주세요."
                 />
               );
           }
@@ -164,13 +154,13 @@ function AnimalCategory() {
       </SSearchBar>
 
       <TabPanel value={value} index={0}>
-        <AnimalList expired="false" />
+        <ReviewList />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <AnimalList expired="true" />
+        <ReviewList />
       </TabPanel>
     </Box>
   );
 }
 
-export default AnimalCategory;
+export default ReviewCategory;

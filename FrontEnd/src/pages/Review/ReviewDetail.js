@@ -6,17 +6,12 @@ import styled from 'styled-components';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
-import ImageCarousel from '../../components/common/ImageCarousel';
+// import ImageCarousel from '../../components/common/ImageCarousel';
 import '../../styles/cafe24.css';
-import {
-  manageCode,
-  name,
-  breed,
-  gender,
-  note,
-  weight,
-  neuter,
-} from '../../images/index';
+// import { title, content, note } from '../../images/index';
+import { title, content } from '../../images/index';
+import API_URL from '../../api/api';
+import ReviewComment from '../../components/Review/ReviewComment';
 
 const STitle = styled.div`
   font-family: 'cafe24';
@@ -151,23 +146,21 @@ const SModalMessage = styled.div`
   font-family: 'cafe24';
   font-size: 24px;
 `;
-function AnimalDetail() {
+function ReviewDetail() {
   const navigate = useNavigate();
   const location = useLocation();
   // console.log(location.state);
-  const key = [manageCode, name, breed, gender, weight, neuter];
-  const korKey = ['관리 번호', '이름', '품종', '성별', '체중', '중성화 여부'];
-  const { animal } = location.state;
-  // animal 은 객체임
-  const animalInformation = [
-    { manageCode: animal.manageCode },
-    { name: animal.name },
-    { breed: animal.breed },
-    { gender: animal.gender },
-    { weight: animal.weight },
-    { neuter: animal.neuter },
+  const key = [title];
+  const korKey = ['제목'];
+  const { review } = location.state;
+  // const { review } = location.state;
+  // review 은 객체임
+  const reviewInformation = [
+    { title: review.title },
+    // { content: review.content },
   ];
-  // animalInformation.map(item =>
+  console.log(review.note);
+  // reviewInformation.map(item =>
   //   console.log(Object.keys(item)[0], Object.values(item)[0]),
   // );
   const [isModal, setIsModal] = useState(false);
@@ -176,23 +169,32 @@ function AnimalDetail() {
     setIsModal(false);
   };
 
-  const handleDeleteAnimal = () => {
+  const handleDeleteReview = () => {
     // navigate 핸들러 함수 최하단으로 내려야함
-    axios.delete('http://192.168.31.226:3000/animal', {
+    navigate('/review');
+
+    // 확인용
+    // axios.delete('http://192.168.31.226:3000/review', {
+    //   data: {
+    //     shelterId: {},
+    //     reviewID: review.reviewId,
+    //   },
+    // });
+
+    axios.delete(`${API_URL}/review`, {
       data: {
         shelterId: {},
-        animalID: animal.animalId,
+        reviewID: review.reviewId,
       },
     });
-    navigate(`/animal`);
   };
 
   return (
     <>
       <Header />
 
-      <STitle>동물 정보</STitle>
-      <ImageCarousel page="AnimalDetail" />
+      <STitle>입양 후기</STitle>
+      {/* <ImageCarousel page="ReviewDetail" /> */}
       <SLine>
         <SGrayLineBox>
           <SGrayLine />
@@ -202,24 +204,24 @@ function AnimalDetail() {
           <SGrayLine />
         </SGrayLineBox>
       </SLine>
-      {animalInformation.map((Item, index) => (
+      {reviewInformation.map((item, index) => (
         <SInformationBox>
-          <SInformationImg src={key[index]} alt={`${Object.keys(Item)}`} />
+          <SInformationImg src={key[index]} alt={`${Object.keys(item)}`} />
           <SInformationText>
             <div>{korKey[index]}</div>
-            <div>{Object.values(Item)}</div>
+            <div>{Object.values(item)}</div>
           </SInformationText>
         </SInformationBox>
       ))}
 
       <SNoteBox>
-        <SNoteImg src={note} alt="note.png" />
-        <SInformationNote>{animal.note}</SInformationNote>
+        <SNoteImg src={content} alt="note.png" />
+        <SInformationNote>{review.content}</SInformationNote>
       </SNoteBox>
 
       <SButtonBox>
         <Link
-          to={`/animal/update/${animal.animalId}`}
+          to={`/review/update/${review.reviewId}`}
           style={{ textDecoration: 'none' }}
         >
           <SModifyButton variant="contained" size="medium">
@@ -276,7 +278,7 @@ function AnimalDetail() {
         <SModalBlock>
           <SModalMessage>삭제하시겠습니까?</SModalMessage>
           <SButtonBlock>
-            <SModalDeletebutton onClick={handleDeleteAnimal} type="button">
+            <SModalDeletebutton onClick={handleDeleteReview} type="button">
               삭제
             </SModalDeletebutton>
             <SModalCancelbutton onClick={handleModal} type="button">
@@ -285,10 +287,12 @@ function AnimalDetail() {
           </SButtonBlock>
         </SModalBlock>
       </Modal>
-
+      <hr />
+      <div>댓글</div>
+      <ReviewComment />
       <Nav />
     </>
   );
 }
 
-export default AnimalDetail;
+export default ReviewDetail;

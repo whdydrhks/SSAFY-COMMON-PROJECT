@@ -10,7 +10,7 @@ const SDetail = styled.div`
 function AnimalItem({ item }) {
   return (
     <SDetail>
-      <div>관리번호 : {item.manageNumber}</div>
+      <div>관리번호 : {item.manageCode}</div>
       <div>이름 : {item.name}</div>
       <div>나이 : {item.age}</div>
       <div>품종 : {item.breed}</div>
@@ -28,10 +28,10 @@ AnimalItem.propTypes = {
     animalId: PropTypes.number,
     shelterId: PropTypes.number,
     name: PropTypes.string,
-    manageNumber: PropTypes.string,
+    manageCode: PropTypes.string,
     thumbnailImage: PropTypes.string,
     breed: PropTypes.string,
-    age: PropTypes.string,
+    age: PropTypes.number,
     gender: PropTypes.string,
     weight: PropTypes.number,
     neuter: PropTypes.string,

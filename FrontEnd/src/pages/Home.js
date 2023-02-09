@@ -17,6 +17,7 @@ import {
 import Header from '../components/common/Header';
 import Nav from '../components/common/Nav';
 import ImageCarousel from '../components/common/ImageCarousel';
+import ReviewList from '../components/Review/ReviewList';
 
 const STitleBox = styled.div`
   display: flex;
@@ -58,7 +59,12 @@ function Home() {
       {/* <SReviewContainer>리뷰컨테이너~</SReviewContainer> */}
       {/* <br /> */}
       <SLine />
-      <Link to="/review">리뷰 더 보기</Link>
+
+      <STitleBox>
+        <STitle>입양 후기</STitle>
+        <SMoreLink to="/review">더 보기 &gt;</SMoreLink>
+      </STitleBox>
+      <ReviewList />
       <Nav />
     </>
   );
