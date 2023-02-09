@@ -27,14 +27,14 @@ function AnimalList(props) {
 
   const userInfo = useRecoilValue(userAtom);
   const shelterId = userInfo.shelterId;
-  console.log(userInfo);
+
   const [animalList, setAnimalList] = useState([]);
 
   const getAnimalList = async () => {
     const filteredAnimalList = await axios.get(
       `${API_URL}/shelter/${shelterId}/animal?pageNo=1`,
     );
-    setTemp(filteredAnimalList.data.data);
+    setAnimalList(filteredAnimalList.data.data);
   };
   // console.log(temp);
   useEffect(() => {

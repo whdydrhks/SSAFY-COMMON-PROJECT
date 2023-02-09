@@ -36,7 +36,7 @@ import API_URL from '../../api/api';
 
 // const APPLICATION_SERVER_URL = 'http://localhost:5000';
 
-const APPLICATION_SERVER_URL = API_URL;
+const APPLICATION_SERVER_URL = API_URL + '/openvidu';
 // const OPENVIDU_SERVER_SECRET = 'ssafy';
 
 const Sdiv = styled.div`
@@ -190,7 +190,7 @@ function VideoChat() {
     return new Promise((resolve, reject) => {
       const data = JSON.stringify({ customSessionId: sessionId });
       axios
-        .post(APPLICATION_SERVER_URL + '/api/sessions', data, {
+        .post(APPLICATION_SERVER_URL + '/sessions', data, {
           headers: {
             // Authorization:
             // 'Basic ' + btoa('OPENVIDUAPP:' + APPLICATION_SERVER_URL),
@@ -249,10 +249,7 @@ function VideoChat() {
       };
       axios
         .post(
-          APPLICATION_SERVER_URL +
-            '/api/sessions/' +
-            sessionId +
-            '/connections',
+          APPLICATION_SERVER_URL + '/sessions/' + sessionId + '/connections',
           data,
           {
             headers: { 'Content-Type': 'application/json' },

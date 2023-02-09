@@ -48,8 +48,8 @@ function AnimalUpdateHost() {
 
   const userInfo = useRecoilValue(userAtom);
   const shelterId = userInfo.shelterId;
-  console.log(shelterId);
   console.log(animalId);
+  // console.log(shelterId);
   const animal = null;
   const getAnimal = async () => {
     animal = await axios.get(
@@ -61,9 +61,8 @@ function AnimalUpdateHost() {
   });
 
   // const animal = tempAnimalList[animalIdForUpdate.animalId];
-
   const [adoption, setAdoption] = useState(animal.adoption);
-  console.log(adoption);
+
   const [manageCode, setManageCode] = useState(animal.manageCode);
   const [name, setName] = useState(animal.name);
   const [age, setAge] = useState(animal.age);

@@ -63,7 +63,7 @@ function Login() {
             )
             .then(info => {
               console.log(info);
-              const { name, nickname, phoneNumber, profileImage } =
+              const { name, nickname, phoneNumber, profileImage, shelterId } =
                 info.data.data;
               setUser({
                 userId: id,
@@ -73,18 +73,17 @@ function Login() {
                 nickname,
                 phoneNumber,
                 profileImage,
-                shelterId: info.data.data.shelterId.toString(),
+                shelterId,
               });
-
-              navigate('/');
             });
+          navigate('/');
         } else {
           alert('아이디와 비밀번호를 확인해주세요.');
         }
       });
   };
 
-  // console.log(user);
+  console.log(user);
   return (
     <>
       <Header />
