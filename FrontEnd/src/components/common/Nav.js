@@ -17,17 +17,23 @@ import { getCookie } from '../../pages/Account/cookie';
 import { authStateAtom, userAtom } from '../../recoilState';
 
 const SBox = styled(Box)`
+  background-color: rgba(55, 155, 155, 0.2);
   position: fixed;
-  background-color: white;
   left: 0;
   right: 0;
   bottom: 0;
   height: 4rem;
 `;
 
+const SBottomNavigationAction = styled(BottomNavigationAction)`
+  background-color: rgba(55, 155, 155, 0.2);
+  font-family: 'cafe24';
+`;
+
 const SBottomNav = styled(BottomNavigation)`
   display: flex;
   justify-content: space-between;
+  /* background-color: rgba(55, 155, 155, 0.2); */
 `;
 
 function Nav() {
@@ -70,42 +76,42 @@ function Nav() {
   return (
     <SBox>
       <SBottomNav showLabels>
-        <BottomNavigationAction
+        <SBottomNavigationAction
           label="Home"
           icon={<HomeIcon />}
           component={Link}
           to="/"
         />
 
-        <BottomNavigationAction
+        <SBottomNavigationAction
           label="라이브"
           icon={<VideocamIcon />}
           component={Link}
           to="/live"
         />
 
-        <BottomNavigationAction
+        <SBottomNavigationAction
           label="관심동물"
           icon={<PetsIcon />}
           component={Link}
           to="/animal"
         />
 
-        <BottomNavigationAction
+        <SBottomNavigationAction
           label="예약일정"
           icon={<CalendarTodayIcon />}
           component={Link}
           to="/schedule"
         />
         {!authState ? (
-          <BottomNavigationAction
+          <SBottomNavigationAction
             label="사용자"
             icon={<PersonIcon />}
             component={Link}
             to="/login"
           />
         ) : (
-          <BottomNavigationAction
+          <SBottomNavigationAction
             label="내정보"
             icon={<PersonIcon />}
             component={Link}
