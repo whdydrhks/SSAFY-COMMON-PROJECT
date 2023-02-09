@@ -21,22 +21,43 @@ import '../../styles/cafe24.css';
 const SH1 = styled.h1`
   font-size: 2rem;
   font-family: 'cafe24';
+  margin-top: 1rem;
   margin-left: 1rem;
-  margin-bottom: 2rem;
+  /* margin-bottom: 1rem; */
 `;
 
 const STemp = styled.div`
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
+  justify-content: left;
 `;
+
 const SFileUploadButton = styled(Button)`
   font-family: 'cafe24';
+  text-align: left;
+  margin-top: 1rem;
 `;
 
 const SPreviewCard = styled(Grid)`
   display: flex;
   justify-content: center;
 `;
+
+const SSubmit = styled.div`
+  margin-top: 2rem;
+  text-align: right;
+`;
+
+const STypography = styled(Typography)`
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+`;
+
+const SButton = styled(Button)`
+  font-family: 'cafe24';
+  font-size: 1.5rem;
+`;
+
 function AnimalCreateHost() {
   const navigate = useNavigate();
   let id = useRecoilValue(animalNumber);
@@ -180,9 +201,9 @@ function AnimalCreateHost() {
           <form onSubmit={addAnimal}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <Typography component="h6" variant="body2">
+                <STypography component="h6" variant="body2">
                   관리번호
-                </Typography>
+                </STypography>
                 <TextField
                   type="text"
                   onChange={handleManageCode}
@@ -194,9 +215,9 @@ function AnimalCreateHost() {
               </Grid>
             </Grid>
             <Grid item xs={12}>
-              <Typography component="h6" variant="body2">
+              <STypography component="h6" variant="body2">
                 이름
-              </Typography>
+              </STypography>
               <TextField
                 type="text"
                 onChange={handleName}
@@ -207,9 +228,9 @@ function AnimalCreateHost() {
               />
             </Grid>
             <Grid item xs={12}>
-              <Typography component="h6" variant="body2">
+              <STypography component="h6" variant="body2">
                 나이
-              </Typography>
+              </STypography>
               <TextField
                 type="text"
                 onChange={handleAge}
@@ -220,9 +241,9 @@ function AnimalCreateHost() {
               />
             </Grid>
             <Grid item xs={12}>
-              <Typography component="h6" variant="body2">
+              <STypography component="h6" variant="body2">
                 성별
-              </Typography>
+              </STypography>
               <Select
                 onChange={handleGender}
                 defaultValue="M"
@@ -236,9 +257,9 @@ function AnimalCreateHost() {
               </Select>
             </Grid>
             <Grid item xs={12}>
-              <Typography component="h6" variant="body2">
+              <STypography component="h6" variant="body2">
                 품종
-              </Typography>
+              </STypography>
               <TextField
                 type="text"
                 onChange={handleBreed}
@@ -249,9 +270,9 @@ function AnimalCreateHost() {
               />
             </Grid>
             <Grid>
-              <Typography item xs={12}>
+              <STypography item xs={12}>
                 체중
-              </Typography>
+              </STypography>
               <TextField
                 type="number"
                 onChange={handleWeight}
@@ -262,9 +283,9 @@ function AnimalCreateHost() {
               />
             </Grid>
             <Grid item xs={12}>
-              <Typography component="h6" variant="body2">
+              <STypography component="h6" variant="body2">
                 중성화 여부
-              </Typography>
+              </STypography>
               <Select
                 onChange={handleNeuter}
                 defaultValue="Y"
@@ -278,9 +299,9 @@ function AnimalCreateHost() {
               </Select>
             </Grid>
             <Grid item xs={12}>
-              <Typography component="h6" variant="body2">
+              <STypography component="h6" variant="body2">
                 특징
-              </Typography>
+              </STypography>
               <TextField
                 onChange={handleNote}
                 multiline
@@ -291,9 +312,9 @@ function AnimalCreateHost() {
               />
             </Grid>
             <Grid item xs={12}>
-              <Typography component="h6" variant="body2">
+              <STypography component="h6" variant="body2">
                 사진
-              </Typography>
+              </STypography>
               <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={2}>
                   {previews.map((image, imageId) => (
@@ -332,7 +353,11 @@ function AnimalCreateHost() {
               </STemp>
             </Grid>
 
-            <Button type="submit">동물 등록하기</Button>
+            <SSubmit>
+              <SButton type="submit" variant="contained" component="label">
+                동물 등록하기
+              </SButton>
+            </SSubmit>
           </form>
         </Box>
       </Container>
