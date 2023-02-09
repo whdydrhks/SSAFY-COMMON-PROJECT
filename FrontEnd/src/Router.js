@@ -1,3 +1,12 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable spaced-comment */
+/* eslint-disable react/sort-comp */
+/* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/prop-types */
+/* eslint-disable spaced-comment */
+/* eslint-disable react/sort-comp */
+/* eslint-disable react/destructuring-assignment */
+
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Home from './pages/Home';
@@ -16,7 +25,7 @@ import ModifyPassword from './pages/Account/ModifyPassword';
 import MyPage from './pages/Account/MyPage';
 import ModifyMyPage from './pages/Account/ModifyMyPage';
 import Alarm from './pages/Alarm';
-import CreateRoomHost from './pages/VideoChat/CreateRoomHost';
+import VideoChat from './pages/VideoChat/VideoChat';
 import NotFound from './NotFound';
 
 const router = createBrowserRouter([
@@ -90,7 +99,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/videochat',
-    element: <CreateRoomHost />,
+    element: <VideoChat />,
   },
   {
     path: '/notfound',

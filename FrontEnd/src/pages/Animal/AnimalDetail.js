@@ -9,7 +9,7 @@ import Nav from '../../components/common/Nav';
 import ImageCarousel from '../../components/common/ImageCarousel';
 import '../../styles/cafe24.css';
 import {
-  manageNumber,
+  manageCode,
   name,
   breed,
   gender,
@@ -155,19 +155,18 @@ function AnimalDetail() {
   const navigate = useNavigate();
   const location = useLocation();
   // console.log(location.state);
-  const key = [manageNumber, name, breed, gender, weight, neuter];
+  const key = [manageCode, name, breed, gender, weight, neuter];
   const korKey = ['관리 번호', '이름', '품종', '성별', '체중', '중성화 여부'];
   const { animal } = location.state;
   // animal 은 객체임
   const animalInformation = [
-    { manageNumber: animal.manageNumber },
+    { manageCode: animal.manageCode },
     { name: animal.name },
     { breed: animal.breed },
     { gender: animal.gender },
     { weight: animal.weight },
     { neuter: animal.neuter },
   ];
-  console.log(animal.note);
   // animalInformation.map(item =>
   //   console.log(Object.keys(item)[0], Object.values(item)[0]),
   // );
@@ -179,13 +178,13 @@ function AnimalDetail() {
 
   const handleDeleteAnimal = () => {
     // navigate 핸들러 함수 최하단으로 내려야함
-    navigate(`/animal`);
     axios.delete('http://192.168.31.226:3000/animal', {
       data: {
         shelterId: {},
         animalID: animal.animalId,
       },
     });
+    navigate(`/animal`);
   };
 
   return (
