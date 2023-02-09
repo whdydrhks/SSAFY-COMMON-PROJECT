@@ -4,7 +4,7 @@ logging:
     org:
       hibernate:
         SQL: debug
-#        type: TRACE
+    #        type: TRACE
     com:
       ssafy:
         backend:
@@ -14,15 +14,14 @@ logging:
 
   file:
     name: ./demo.log
-    
+
 server:
   ssl:
     key-store: classpath:ssl/keystore.p12
     key-store-type: PKCS12
     key-store-password: ssafy
-    
-spring:
 
+spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -94,12 +93,12 @@ jwt:
   header: Authorization
   secret: d1659096d8c5bd34c2e96fdb235c123afccf23450af0870d95813d820c0dd44661507fe41d5a12c5b796299d260f314d9a5bdca31050fc00a2a4b44c9d31f93c
   validity-second:
-#    # test1
-#    access: 120
-#    refresh: 240
-#    # test2 - no used refresh
-     access: 3600
-     refresh: 3600
+    #    # test1
+    #    access: 120
+    #    refresh: 240
+    #    # test2 - no used refresh
+    access: 3600
+    refresh: 3600
 #    # service
 #    access: 300
 #    refresh: 172800

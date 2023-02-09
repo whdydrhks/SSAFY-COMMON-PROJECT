@@ -11,13 +11,16 @@ import { useRecoilState, useResetRecoilState } from 'recoil';
 import { authStateAtom, userAtom } from '../../recoilState';
 import { getCookie, removeCookie } from '../../pages/Account/cookie';
 import API_URL from '../../api/api';
+import '../../styles/cafe24.css';
 
 const SAppBar = styled(AppBar)`
   position: fixed;
-  background-color: grey;
+  padding: 4px;
+  background-color: rgba(55, 155, 155, 0.2) !important;
   a {
+    font-family: 'cafe24';
     text-decoration: none;
-    color: white;
+    color: black;
   }
 `;
 
