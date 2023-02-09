@@ -7,3 +7,6 @@ export const weight = require('./AnimalDetail/weight.png');
 export const neuter = require('./AnimalDetail/neuter.png');
 export const breed = require('./AnimalDetail/breed.png');
 export const note = require('./AnimalDetail/note.png');
+
+export const title = require('./ReviewDetail/title.png');
+export const content = require('./ReviewDetail/content.png');

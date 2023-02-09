@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-unneeded-ternary */
 /* eslint-disable prefer-template */
@@ -37,9 +39,22 @@ const STimeBox = styled.div`
   display: flex;
   font-size: 2rem;
   justify-content: space-between;
-  background-color: grey;
+  background-color: white;
 `;
 const STime = styled.div``;
+const SNickName = styled.div``;
+
+const SLiveButton = styled(Button)`
+  color: green;
+`;
+const SCancleButton = styled(Button)`
+  color: red;
+`;
+
+const today = new Date();
+const date =
+  (today.getMonth() + 1).toString().padStart(2, '0') +
+  today.getDate().toString().padStart(2, '0');
 
 function ScheduleListHost() {
   const settings = {
@@ -53,17 +68,17 @@ function ScheduleListHost() {
     slidesToScroll: 3,
   };
 
-  const { shelterId } = useRecoilValue(userAtom);
+  const shelterId = useRecoilValue(userAtom);
   const [twoWeeks, setTwoWeeks] = useRecoilState(twoWeeksAtom);
-  const [scheduleHost, setScheduleHost] = useRecoilValue(scheduleHostAtom);
-  const [isClickDate, setIsClickDate] = useState('');
+  const scheduleHost = useRecoilValue(scheduleHostAtom);
   const [todaySchedule, setTodaySchedule] = useState([]);
+  const [isClickDate, setIsClickDate] = useState(date);
 
   const handleDateClick = event => {
     setIsClickDate(event.target.value);
-    const tmp = scheduleHost.filter(schedule => schedule.day === isClickDate);
-    setTodaySchedule(tmp);
-    console.log(scheduleHost);
+    setTodaySchedule(
+      scheduleHost.filter(schedule => schedule.day === event.target.value),
+    );
   };
 
   useEffect(() => {
@@ -76,9 +91,12 @@ function ScheduleListHost() {
       weeks.push({ month: todayMonth, date: todayDate });
     }
     setTwoWeeks(weeks);
-    // console.log(twoWeeks);
+
+    setTodaySchedule(
+      scheduleHost.filter(schedule => schedule.day === isClickDate),
+    );
     // 등록된 보호소 예약 다 갖고오기
-    // axios.get(`${API_URL}/schedule/${shelterId}`).then((res) => )
+    // axios.get(`${API_URL}/schedule/shelters/${shelterId}`).then((res) => )
     // 취소
     // axios.delete(`${API_URL}/schedule/${userNickname}/${scheduleId}`).then((res) => )
   }, []);
@@ -100,10 +118,33 @@ function ScheduleListHost() {
         ))}
       </Slider>
       <STimeList>
-        {/* {todaySchedule.map((item, index) => (
-          <div>{item}</div>
-        ))} */}
-        제발떠라
+        {todaySchedule.map((item, index) => (
+          <STimeBox key={index}>
+            <div>
+              <STime>
+                {item.time.padStart(2, '0')}:00 ~
+                {(Number(item.time) + 1).toString().padStart(2, '0')}:00
+              </STime>
+              <SNickName>{item.userId}</SNickName>
+            </div>
+            {today.getHours() > item.time ? (
+              <Button disabled>완료</Button>
+            ) : null}
+            {today.getHours().toString().padStart(2, '0') ===
+            item.time.padStart(2, '0') ? (
+              <SLiveButton>화상채팅</SLiveButton>
+            ) : null}
+            {today.getHours() < item.time ? (
+              <SCancleButton
+                onClick={() => {
+                  // axios.delete(`${API_URL}/schedule/cancle/${item.scheduleId}`);
+                }}
+              >
+                취소
+              </SCancleButton>
+            ) : null}
+          </STimeBox>
+        ))}
       </STimeList>
     </>
   );

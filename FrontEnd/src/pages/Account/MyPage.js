@@ -39,8 +39,6 @@ function MyPage() {
   const params = useParams();
   const user = useRecoilValue(userAtom);
   useEffect(() => {
-    console.log(params);
-    console.log(user);
     if (params.userId !== user.userId) {
       navigate('/notfound');
     }

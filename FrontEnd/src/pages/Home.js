@@ -6,10 +6,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-
+import { useRecoilValue } from 'recoil';
+import {
+  animalListState,
+  scheduleHostAtom,
+  scheduleUserAtom,
+  twoWeeksAtom,
+  userAtom,
+} from '../recoilState';
 import Header from '../components/common/Header';
 import Nav from '../components/common/Nav';
 import ImageCarousel from '../components/common/ImageCarousel';
+import ReviewList from '../components/Review/ReviewList';
 
 const STitleBox = styled.div`
   display: flex;
@@ -40,7 +48,6 @@ const SLine = styled.div`
 // const SReviewContainer = styled.div``;
 
 function Home() {
-  const str = '012345678';
   return (
     <>
       <Header />
@@ -52,7 +59,12 @@ function Home() {
       {/* <SReviewContainer>리뷰컨테이너~</SReviewContainer> */}
       {/* <br /> */}
       <SLine />
-      <Link to="/review">리뷰 더 보기</Link>
+
+      <STitleBox>
+        <STitle>입양 후기</STitle>
+        <SMoreLink to="/review">더 보기 &gt;</SMoreLink>
+      </STitleBox>
+      <ReviewList />
       <Nav />
     </>
   );

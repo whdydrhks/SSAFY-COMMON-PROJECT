@@ -26,7 +26,6 @@ const userAtom = atom({
   default: {
     role: '',
     userId: '',
-    shelterId: '',
     email: '',
     name: '',
     nickname: '',
@@ -149,21 +148,239 @@ const twoWeeksAtom = atom({
 
 const scheduleHostAtom = atom({
   key: 'scheduleHostAtom',
-  dafault: [
-    { scheduleId: '1', userNickname: '권오영', day: '0208', time: '9' },
-    { scheduleId: '2', userNickname: '이진혁', day: '0208', time: '11' },
-    { scheduleId: '3', userNickname: '한인환', day: '0208', time: '13' },
-    { scheduleId: '4', userNickname: '조용관', day: '0208', time: '15' },
-    { scheduleId: '5', userNickname: '권동규', day: '0209', time: '9' },
-    { scheduleId: '6', userNickname: '장준호', day: '0209', time: '11' },
-    { scheduleId: '7', userNickname: '권오영', day: '0209', time: '13' },
-    { scheduleId: '8', userNickname: '한인환', day: '0209', time: '15' },
-    { scheduleId: '9', userNickname: '이진혁', day: '0210', time: '9' },
-    { scheduleId: '10', userNickname: '조용관', day: '0210', time: '11' },
-    { scheduleId: '11', userNickname: '권동규', day: '0210', time: '13' },
-    { scheduleId: '12', userNickname: '장준호', day: '0210', time: '15' },
+  default: [
+    {
+      scheduleId: '1',
+      userId: '1',
+      day: '0209',
+      time: '0',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '1',
+      userId: '1',
+      day: '0209',
+      time: '1',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '2',
+      userId: '2',
+      day: '0209',
+      time: '2',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '3',
+      userId: '3',
+      day: '0209',
+      time: '13',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '4',
+      userId: '4',
+      day: '0209',
+      time: '15',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '5',
+      userId: '6',
+      day: '0209',
+      time: '9',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '6',
+      userId: '7',
+      day: '0209',
+      time: '11',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '7',
+      userId: '3',
+      day: '0209',
+      time: '13',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '8',
+      userId: '4',
+      day: '0209',
+      time: '15',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '9',
+      userId: '1',
+      day: '0210',
+      time: '9',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '10',
+      userId: '2',
+      day: '0210',
+      time: '11',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '11',
+      userId: '6',
+      day: '0210',
+      time: '13',
+      room: '대전보호소-1312',
+    },
+    {
+      scheduleId: '12',
+      userId: '5',
+      day: '0210',
+      time: '15',
+      room: '대전보호소-1312',
+    },
+  ],
+});
+
+const scheduleUserAtom = atom({
+  key: 'scheduleUserAtom',
+  default: [
+    {
+      scheduleId: '1',
+      shelterId: '1',
+      day: '0208',
+      time: '9',
+      room: '대전보호소-112',
+    },
+    {
+      scheduleId: '1',
+      shelterId: '1',
+      day: '0208',
+      time: '9',
+      room: '대전보호소-13142',
+    },
+    {
+      scheduleId: '1',
+      shelterId: '1',
+      day: '0208',
+      time: '9',
+      room: '대전보호소-13212',
+    },
+    {
+      scheduleId: '1',
+      shelterId: '1',
+      day: '0208',
+      time: '9',
+      room: '대전보호소-11212',
+    },
+    {
+      scheduleId: '1',
+      shelterId: '1',
+      day: '0208',
+      time: '9',
+      room: '대전보호소-142112',
+    },
+    {
+      scheduleId: '12',
+      userId: '5',
+      day: '0210',
+      time: '15',
+      room: '대전보호소-1312412',
+    },
+    {
+      scheduleId: '12',
+      userId: '5',
+      day: '0210',
+      time: '15',
+      room: '대전보호소-135112',
+    },
+    {
+      scheduleId: '12',
+      userId: '5',
+      day: '0210',
+      time: '15',
+      room: '대전보호소-63412',
+    },
+    {
+      scheduleId: '12',
+      userId: '5',
+      day: '0210',
+      time: '15',
+      room: '대전보호소-6346312',
+    },
+    {
+      scheduleId: '12',
+      userId: '5',
+      day: '0210',
+      time: '15',
+      room: '대전보호소-3464312',
+    },
   ],
   effects_UNSTABLE: [persistAtom],
+});
+
+const reviewListState = atom({
+  key: 'ReveiwListState',
+  default: [
+    // {
+    //   reviewId: '',
+    //   title: '',
+    //   content: '',
+    //   userId: '', // 삭제 예정
+    //   contentId: '',
+    //   viewCount: '', // 삭제 예정
+    //   likeCount: '', // 삭제 예정
+    //   commentCount: '', // 삭제 예정
+    //   thumbnailImgage: '', // 삭제 예정
+    //   createdDate: '',
+    //   updatedDate: '',
+    // },
+    {
+      reviewId: 0,
+      title: '우리집 상추 자랑1',
+      content:
+        '입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...',
+      userId: 1,
+      contentId: 1,
+      viewCount: 10,
+      likeCount: 10,
+      commentCount: 5,
+      thumbnailImgage: '파일경로',
+    },
+    {
+      reviewId: 1,
+      title: '우리집 상추 자랑2',
+      content:
+        '입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...',
+      userId: 2,
+      contentId: 2,
+      viewCount: 7,
+      likeCount: 2,
+      commentCount: 9,
+      thumbnailImgage: '파일경로',
+    },
+  ],
+  effects_UNSTABLE: [persistAtom],
+});
+
+const commentListState = atom({
+  key: 'commentListState',
+  default: [
+    // {
+
+    //   reviewId:'',
+    //   userId:'',
+    //   content:'',
+    //   createdDate:'',
+    //   updatedDate:'',
+    // },
+    {
+      reviewId: 1,
+      userId: 1,
+      content: '정말 귀여워요',
+    },
+  ],
 });
 
 export {
@@ -174,4 +391,7 @@ export {
   timeAtom,
   twoWeeksAtom,
   scheduleHostAtom,
+  scheduleUserAtom,
+  reviewListState,
+  commentListState,
 };
