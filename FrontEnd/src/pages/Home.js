@@ -3,7 +3,7 @@
 /* eslint-disable import/no-named-as-default */
 /* eslint-disable import/no-named-as-default-member */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
@@ -48,6 +48,11 @@ const SLine = styled.div`
 // const SReviewContainer = styled.div``;
 
 function Home() {
+  const userInfo = useRecoilValue(userAtom);
+  useEffect(() => {
+    console.log(userInfo);
+  });
+
   return (
     <>
       <Header />

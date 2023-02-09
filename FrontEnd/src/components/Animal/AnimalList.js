@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
+/* eslint-disable prefer-destructuring */
 /* eslint-disable react/destructuring-assignment */
 
 import React, { useState, useEffect } from 'react';
@@ -9,9 +10,9 @@ import axios from 'axios';
 // import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { animalListState } from '../../recoilState';
 import AnimalItem from './AnimalItem';
 import API_URL from '../../api/api';
+import { userAtom } from '../../recoilState';
 
 const SLink = styled(Link)`
   margin: 0 auto;
@@ -24,18 +25,22 @@ function AnimalList(props) {
   // console.log(animalList);
   // console.log(props, 'here');
 
-  const [temp, setTemp] = useState([]);
+  const userInfo = useRecoilValue(userAtom);
+  const shelterId = userInfo.shelterId;
+
+  const [animalList, setAnimalList] = useState([]);
 
   const getAnimalList = async () => {
     const filteredAnimalList = await axios.get(
-      `${API_URL}/shelter/1/animal?pageNo=1`,
+      `${API_URL}/shelter/${shelterId}/animal?pageNo=1`,
     );
-    setTemp(filteredAnimalList.data.data);
+    setAnimalList(filteredAnimalList.data.data);
   };
   // console.log(temp);
   useEffect(() => {
     getAnimalList();
   }, []);
+
   // axios
   //   .get(`${API_URL}/shelter/1/animal?pageNo=1`, {
   //     params: { status: props.status },
@@ -46,7 +51,7 @@ function AnimalList(props) {
 
   return (
     <div>
-      {temp.map(animalItem => (
+      {animalList.map(animalItem => (
         <SLink
           to={`/animal/${animalItem.animalId}`}
           key={animalItem.animalId}

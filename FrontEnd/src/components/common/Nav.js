@@ -58,7 +58,8 @@ function Nav() {
           { withCredentials: true },
         )
         .then(info => {
-          const { name, nickname, phoneNumber, profileImage } = info.data.data;
+          const { name, nickname, phoneNumber, profileImage, shelterId } =
+            info.data.data;
           setUser({
             userId: id,
             role,
@@ -67,6 +68,7 @@ function Nav() {
             nickname,
             phoneNumber,
             profileImage,
+            shelterId,
           });
         });
       setAuthState(true);
