@@ -22,7 +22,7 @@ import io.openvidu.java.client.Session;
 import io.openvidu.java.client.SessionProperties;
 
 @RestController
-@RequestMapping("/v1")
+@RequestMapping("/v1/openvidu")
 public class OpenviduController {
 
 	@Value("${OPENVIDU_URL}")
