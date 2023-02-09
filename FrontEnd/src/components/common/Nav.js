@@ -17,7 +17,7 @@ import { getCookie } from '../../pages/Account/cookie';
 import { authStateAtom, userAtom } from '../../recoilState';
 
 const SBox = styled(Box)`
-  background-color: rgba(55, 155, 155, 0.2);
+  background-color: rgba(180, 230, 230);
   position: fixed;
   left: 0;
   right: 0;
@@ -26,14 +26,14 @@ const SBox = styled(Box)`
 `;
 
 const SBottomNavigationAction = styled(BottomNavigationAction)`
-  background-color: rgba(55, 155, 155, 0.2);
+  background-color: rgba(180, 230, 230);
   font-family: 'cafe24';
 `;
 
 const SBottomNav = styled(BottomNavigation)`
   display: flex;
   justify-content: space-between;
-  /* background-color: rgba(55, 155, 155, 0.2); */
+  background-color: rgba(180, 230, 230);
 `;
 
 function Nav() {

@@ -20,20 +20,32 @@ import API_URL from '../../api/api';
 
 const SButtonDiv = styled.div`
   text-align: center;
-  margin: 10%;
+  margin-bottom: 1.5rem;
 `;
 
 const SButton = styled.button`
-  width: 90%;
+  width: 80%;
   height: 5vh;
-  background-color: beige;
+  background-color: rgba(180, 210, 210, 0.8);
   border: none;
-  font-size: 1rem;
-  &.active {
-    background-color: lightblue;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  font-family: 'cafe24';
+  color: grey;
+  &:active,
+  &:hover {
+    color: black;
+    background-color: rgba(180, 230, 230);
   }
 `;
-
+const SContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+`;
 const STimeList = styled.div``;
 const STimeBox = styled.div`
   display: flex;
@@ -41,14 +53,24 @@ const STimeBox = styled.div`
   justify-content: space-between;
   background-color: white;
 `;
-const STime = styled.div``;
-const SNickName = styled.div``;
-
-const SLiveButton = styled(Button)`
-  color: green;
+const STime = styled.div`
+  font-size: 2.5rem;
+  font-family: 'cafe24';
 `;
-const SCancleButton = styled(Button)`
-  color: red;
+const SNickName = styled.div`
+  font-size: 1.5rem;
+  font-family: 'cafe24';
+`;
+
+const SClickButton = styled.button`
+  width: 5.5rem;
+  height: 3.5vh;
+  border: none;
+  font-size: 1.2rem;
+  border-radius: 10px;
+  font-family: 'cafe24';
+  color: white;
+  background-color: ${props => props.bgColor};
 `;
 
 const today = new Date();
@@ -120,29 +142,37 @@ function ScheduleListHost() {
       <STimeList>
         {todaySchedule.map((item, index) => (
           <STimeBox key={index}>
-            <div>
-              <STime>
-                {item.time.padStart(2, '0')}:00 ~
-                {(Number(item.time) + 1).toString().padStart(2, '0')}:00
-              </STime>
-              <SNickName>{item.userId}</SNickName>
-            </div>
-            {today.getHours() > item.time ? (
-              <Button disabled>완료</Button>
-            ) : null}
-            {today.getHours().toString().padStart(2, '0') ===
-            item.time.padStart(2, '0') ? (
-              <SLiveButton>화상채팅</SLiveButton>
-            ) : null}
-            {today.getHours() < item.time ? (
-              <SCancleButton
-                onClick={() => {
-                  // axios.delete(`${API_URL}/schedule/cancle/${item.scheduleId}`);
-                }}
-              >
-                취소
-              </SCancleButton>
-            ) : null}
+            <SContainer>
+              <div>
+                <STime>
+                  {item.time.padStart(2, '0')}:00 ~{' '}
+                  {(Number(item.time) + 1).toString().padStart(2, '0')}:00
+                </STime>
+                <SNickName>{item.userId}</SNickName>
+              </div>
+              <div>
+                {today.getHours() > item.time ? (
+                  <SClickButton bgColor="grey" disabled>
+                    완료
+                  </SClickButton>
+                ) : null}
+                {today.getHours().toString().padStart(2, '0') ===
+                item.time.padStart(2, '0') ? (
+                  <SClickButton bgColor="green">Live</SClickButton>
+                ) : null}
+                {today.getHours() < item.time ? (
+                  <SClickButton
+                    bgColor="red"
+                    onClick={() => {
+                      // axios.delete(`${API_URL}/schedule/cancle/${item.scheduleId}`);
+                    }}
+                  >
+                    {' '}
+                    취소
+                  </SClickButton>
+                ) : null}
+              </div>
+            </SContainer>
           </STimeBox>
         ))}
       </STimeList>
