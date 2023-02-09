@@ -21,6 +21,7 @@ import io.openvidu.java.client.OpenViduJavaClientException;
 import io.openvidu.java.client.Session;
 import io.openvidu.java.client.SessionProperties;
 
+
 @RestController
 @RequestMapping("/v1/openvidu")
 public class OpenviduController {
