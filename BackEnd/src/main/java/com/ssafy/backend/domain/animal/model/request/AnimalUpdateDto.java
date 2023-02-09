@@ -23,6 +23,7 @@ public class AnimalUpdateDto {
 	private int weight;
 	private String gender;
 	private String neuter;
+	private String adoption;
 	private String note;
 
 	public static AnimalUpdateDto of(AnimalEntity animal) {
@@ -34,6 +35,7 @@ public class AnimalUpdateDto {
 			.weight(animal.getWeight())
 			.gender(animal.getGender())
 			.neuter(animal.getNeuter())
+			.adoption(animal.getAdoption())
 			.note(animal.getNote())
 			.build();
 	}
@@ -47,6 +49,7 @@ public class AnimalUpdateDto {
 			.weight(this.weight)
 			.gender(this.gender)
 			.neuter(this.neuter)
+			.adoption(this.adoption)
 			.note(this.note)
 			.build();
 	}

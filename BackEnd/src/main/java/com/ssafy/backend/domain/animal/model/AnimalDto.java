@@ -32,6 +32,7 @@ public class AnimalDto {
 	private int weight;
 	private String gender;
 	private String neuter;
+	private String adoption;
 	private String note;
 	private String expired;
 
@@ -51,6 +52,7 @@ public class AnimalDto {
 			.weight(animal.getWeight())
 			.gender(animal.getGender())
 			.neuter(animal.getNeuter())
+			.adoption(animal.getAdoption())
 			.note(animal.getNote())
 			.expired(animal.getExpired())
 			.createdDate(animal.getCreatedDate())
@@ -71,6 +73,7 @@ public class AnimalDto {
 			.weight(this.weight)
 			.gender(this.gender)
 			.neuter(this.neuter)
+			.adoption(this.adoption)
 			.note(this.note)
 			.expired(this.expired)
 			.createdDate(this.createdDate)

@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class UserInfoDto {
+public class UserHostInfoDto {
 
 	// user
 	private Long userId;
@@ -24,11 +24,17 @@ public class UserInfoDto {
 	private String nickname;
 	private String profileImage;
 
+	// shelter
+	private Long shelterId;
+	private String shelterName;
+
 	private LocalDateTime createdDate;
 	private LocalDateTime updatedDate;
 
-	public static UserInfoDto of(UserEntity user) {
-		return UserInfoDto.builder()
+	public static UserHostInfoDto of(UserEntity user) {
+		return UserHostInfoDto.builder()
+			.shelterId(user.getShelter().getId())
+			.shelterName(user.getShelter().getName())
 			.userId(user.getId())
 			.email(user.getEmail())
 			.name(user.getName())

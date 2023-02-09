@@ -39,14 +39,16 @@ public class dummyCreate {
 				.name(name)
 				.phoneNumber("010-" + String.format("%04d", i) + "-1234")
 				.nickname("닉네임" + i)
+				.role(i == 1 ? "ADMIN" : (i <= 6 ? "HOST" : "USER")) // 1 번 어드민, 2 ~ 6번 호스트, 나머지 유저
 				.build();
 			userRepository.save(user);
 		}
 
 		// 보호소 생성
-		for (int i = 1; i <= 10; i++) {
+		for (int i = 1; i <= 5; i++) {
 			String name = "보호소_" + String.format("%03d", i);
 			ShelterEntity shelter = ShelterEntity.builder()
+				.user(userRepository.findByIdAndExpiredLike(i + 1L, "F").get())
 				.name(name)
 				.url("https://www." + name + ".com")
 				.introduce(name + "의 소개글 입니다.")
@@ -61,13 +63,13 @@ public class dummyCreate {
 
 		// 동물 생성
 		for (int i = 1; i <= 20; i++) {
-			String name = "동물" + String.format("%03d", i);
+			String name = (i % 2 == 0 ? "멍멍이" : "뭉뭉이") + String.format("%03d", i);
 			String gender = i % 2 == 0 ? "M" : "F";
 			AnimalEntity animal = AnimalEntity.builder()
 				.shelter(shelterRepository.findByIdAndExpiredLike(i % 3 + 1L, "F").get())
 				.manageCode("23-02-" + gender + "-" + String.format("%04d", i))
 				.name(name)
-				.breed("믹스")
+				.breed(i % 2 == 0 ? "골드 리트리버" : "포메라니안")
 				.age(i % 10 + 1)
 				.weight(i % 5 + 5)
 				.gender(gender)

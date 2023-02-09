@@ -56,9 +56,11 @@ public class ShelterService {
 	 * @return 업데이트 된 shelterId
 	 */
 	@Transactional
-	public ResponseSuccessDto<?> update(String shelterName, ShelterUpdateDto updateDto) {
+	public ResponseSuccessDto<?> update(
+		Long shelterId,
+		ShelterUpdateDto updateDto) {
 
-		ShelterEntity findShelter = shelterRepository.findByName(shelterName)
+		ShelterEntity findShelter = shelterRepository.findById(shelterId)
 			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
 		ShelterEntity updateShelter = ShelterEntity.builder()
@@ -75,10 +77,10 @@ public class ShelterService {
 			.createdDate(findShelter.getCreatedDate())
 			.build();
 
-		Long shelterId = shelterRepository.save(updateShelter).getId();
+		Long updatedShelterId = shelterRepository.save(updateShelter).getId();
 
 		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(shelterId);
+			.buildSuccessResponse(updatedShelterId);
 
 		return resp;
 	}
@@ -89,9 +91,11 @@ public class ShelterService {
 	 * @param
 	 * @return 만료 정보가 업데이트 된 shelterId
 	 */
-	public ResponseSuccessDto<?> updateExpire(String shelterName, Boolean expiredFlag) {
+	public ResponseSuccessDto<?> updateExpire(
+		Long shelterId,
+		Boolean expiredFlag) {
 
-		ShelterEntity findShelter = shelterRepository.findByName(shelterName)
+		ShelterEntity findShelter = shelterRepository.findById(shelterId)
 			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
 		ShelterEntity updateShelter = ShelterEntity.builder()
@@ -108,10 +112,10 @@ public class ShelterService {
 			.createdDate(findShelter.getCreatedDate())
 			.build();
 
-		Long shelterId = shelterRepository.save(updateShelter).getId();
+		Long updatedShelterId = shelterRepository.save(updateShelter).getId();
 
 		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(shelterId);
+			.buildSuccessResponse(updatedShelterId);
 
 		return resp;
 	}
@@ -123,18 +127,18 @@ public class ShelterService {
 	 * @return 삭제된 된 shelterId
 	 */
 	@Transactional
-	public ResponseSuccessDto<?> delete(String shelterName) {
+	public ResponseSuccessDto<?> delete(Long shelterId) {
 
-		Long count = shelterRepository.deleteByName(shelterName);
+		shelterRepository.deleteById(shelterId);
 
 		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(count);
+			.buildSuccessResponse(null);
 
 		return resp;
 	}
 
 	/**
-	 * 사용자 정보를 전부 가져오는 메소드
+	 * 보호소 정보를 전부 가져오는 메소드
 	 *
 	 * @param
 	 * @return List&ltShelterInfoDto&gt
@@ -154,13 +158,35 @@ public class ShelterService {
 	}
 
 	/**
-	 * name으로 사용자 정보를 가져오는 메소드
+	 * id로 보호소 정보를 가져오는 메소드
+	 *
+	 * @param
+	 * @return UserInfoDto
+	 */
+	@Transactional
+	public ResponseSuccessDto<?> getInfoById(Long shelterId) {
+
+		ShelterEntity findShelter = shelterRepository.findByIdAndExpiredLike(shelterId, "F")
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+
+		ShelterInfoDto infoDto = ShelterInfoDto.of(findShelter);
+
+		ResponseSuccessDto<ShelterInfoDto> resp = responseUtil
+			.buildSuccessResponse(infoDto);
+
+		return resp;
+	}
+
+	/**
+	 * name으로 보호소 정보를 가져오는 메소드
 	 *
 	 * @param
 	 * @return ShelterInfoDto
 	 */
 	@Transactional
-	public ResponseSuccessDto<?> getInfoByName(String shelterName) {
+	public ResponseSuccessDto<?> getInfoByName(
+		String shelterName) {
+
 		ShelterEntity findShelter = shelterRepository.findByNameAndExpiredLike(shelterName, "F")
 			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
@@ -173,15 +199,22 @@ public class ShelterService {
 	}
 
 	/**
-	 * name으로 사용자 정보를 검색하는 메소드
+	 * name으로 보호소 정보를 검색하는 메소드
 	 *
 	 * @param
-	 * @return List&ltShelterInfoDto&gt
+	 * @return ResponseSuccessDto&ltList&ltShelterInfoDto&gt&gt
 	 */
 	@Transactional
-	public ResponseSuccessDto<?> searchInfoByName(String shelterName) {
+	public ResponseSuccessDto<?> searchInfoByName(
+		String shelterName) {
+
+		if (shelterName.isEmpty() || shelterName.length() < 2) {
+			throw new ApiErrorException(ApiStatus.KEYWORD_LESS_THAN_TWO);
+		}
+
 		List<ShelterEntity> findShelters = shelterRepository
 			.findByNameContainingIgnoreCaseAndExpiredLike(shelterName, "F");
+
 		List<ShelterInfoDto> shelterInfos = findShelters
 			.stream()
 			.map(ShelterInfoDto::of)
@@ -194,14 +227,16 @@ public class ShelterService {
 	}
 
 	/**
-	 * 보호소의 등록 정보가 이미 있는지 확인하는 메소드
+	 * 같은 이름의 보호소의 등록 정보가 이미 있는지 확인하는 메소드
 	 *
 	 * @param
 	 * @throws IllegalStateException
 	 */
 	private void validateDuplicate(ShelterEntity shelter) {
 		shelterRepository.findByName(shelter.getName())
-			.orElseThrow(() -> new ApiErrorException(ApiStatus.DUPLICATION));
+			.ifPresent(e -> {
+				throw new ApiErrorException(ApiStatus.EMAIL_DUPLICATION);
+			});
 	}
 
 	//	// 테스트용 더미 데이터 생성용
