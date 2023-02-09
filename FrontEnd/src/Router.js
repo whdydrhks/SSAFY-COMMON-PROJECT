@@ -12,6 +12,9 @@ import { createBrowserRouter } from 'react-router-dom';
 import Home from './pages/Home';
 import Live from './pages/Live/Live';
 import Review from './pages/Review/Review';
+import ReviewCreate from './pages/Review/ReviewCreate';
+import ReviewDetail from './pages/Review/ReviewDetail';
+import ReviewUpdate from './pages/Review/ReviewUpdate';
 import Animal from './pages/Animal/Animal';
 import AnimalCreateHost from './pages/Animal/AnimalCreateHost';
 import AnimalUpdateHost from './pages/Animal/AnimalUpdateHost';
@@ -40,6 +43,18 @@ const router = createBrowserRouter([
   {
     path: '/review',
     element: <Review />,
+  },
+  {
+    path: '/review/create',
+    element: <ReviewCreate />,
+  },
+  {
+    path: '/review/:reviewId',
+    element: <ReviewDetail />,
+  },
+  {
+    path: '/review/update/:reviewId',
+    element: <ReviewUpdate />,
   },
   {
     path: '/animal',
