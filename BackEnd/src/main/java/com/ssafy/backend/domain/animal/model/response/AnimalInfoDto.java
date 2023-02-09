@@ -29,6 +29,7 @@ public class AnimalInfoDto {
 	private int weight;
 	private String gender;
 	private String neuter;
+	private String adoption;
 	private String note;
 
 	// shelter
@@ -52,6 +53,7 @@ public class AnimalInfoDto {
 			.weight(animal.getWeight())
 			.gender(animal.getGender())
 			.neuter(animal.getNeuter())
+			.adoption(animal.getAdoption())
 			.note(animal.getNote())
 			.createdDate(animal.getCreatedDate())
 			.updatedDate(animal.getUpdatedDate())
@@ -71,6 +73,7 @@ public class AnimalInfoDto {
 			.weight(this.weight)
 			.gender(this.gender)
 			.neuter(this.neuter)
+			.adoption(this.getAdoption())
 			.note(this.note)
 			.createdDate(this.createdDate)
 			.updatedDate(this.updatedDate)

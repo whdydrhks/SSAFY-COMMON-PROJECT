@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ssafy.backend.domain.member.entity.UserEntity;
 import com.ssafy.backend.domain.member.model.request.UserSignupDto;
 import com.ssafy.backend.domain.member.model.request.UserUpdateDto;
+import com.ssafy.backend.domain.member.model.response.UserHostInfoDto;
 import com.ssafy.backend.domain.member.model.response.UserInfoDto;
 import com.ssafy.backend.domain.member.repository.UserRepository;
 import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
@@ -22,6 +23,7 @@ import com.ssafy.backend.global.error.exception.ApiErrorException;
 import com.ssafy.backend.global.util.JwtUtil;
 import com.ssafy.backend.global.util.ResponseUtil;
 import com.ssafy.backend.global.util.enums.ApiStatus;
+import com.ssafy.backend.global.util.enums.Role;
 
 import lombok.RequiredArgsConstructor;
 
@@ -212,18 +214,25 @@ public class UserService {
 	 * id로 사용자 정보를 가져오는 메소드
 	 *
 	 * @param
-	 * @return UserInfoDto
+	 * @return InfoDto
 	 */
 	@Transactional
-	public ResponseSuccessDto<?> getInfoById(Long userId) {
+	public ResponseSuccessDto<?> getInfoById(
+		Long userId,
+		HttpServletRequest request) {
 
-		UserEntity findUser = userRepository.findByIdAndExpiredLike(userId, "F")
-			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+		UserEntity findUser = validateAccount(userId, request);
+
+		ResponseSuccessDto<UserInfoDto> resp;
 
 		UserInfoDto infoDto = UserInfoDto.of(findUser);
+		resp = responseUtil.buildSuccessResponse(infoDto);
 
-		ResponseSuccessDto<UserInfoDto> resp = responseUtil
-			.buildSuccessResponse(infoDto);
+		// host일 때 반환되는 dto
+		if (findUser.getRole().equals(Role.HOST.getName())) {
+			UserHostInfoDto hostInfoDto = UserHostInfoDto.of(findUser);
+			resp = responseUtil.buildSuccessResponse(hostInfoDto);
+		}
 
 		return resp;
 	}

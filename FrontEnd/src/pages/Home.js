@@ -40,6 +40,7 @@ const SLine = styled.div`
 // const SReviewContainer = styled.div``;
 
 function Home() {
+  const str = '012345678';
   return (
     <>
       <Header />

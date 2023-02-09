@@ -10,13 +10,16 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import com.ssafy.backend.domain.animal.entity.AnimalEntity;
+import com.ssafy.backend.domain.member.entity.UserEntity;
 import com.ssafy.backend.global.common.entity.BaseTimeEntity;
 
 import lombok.AccessLevel;
@@ -41,6 +44,10 @@ public class ShelterEntity extends BaseTimeEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "shelter_id", columnDefinition = "INT UNSIGNED")
 	private Long id;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private UserEntity user;
 
 	@Column(name = "name", nullable = false, unique = true, length = 50)
 	private String name;
