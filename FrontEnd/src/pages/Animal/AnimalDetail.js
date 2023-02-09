@@ -25,7 +25,8 @@ import { userAtom } from '../../recoilState';
 const STitle = styled.div`
   font-family: 'cafe24';
   font-size: 2rem;
-  margin-bottom: 2rem;
+  /* margin-top: 2rem; */
+  margin-bottom: 1.5rem;
   margin-left: 1rem;
   margin-right: 1rem;
 `;
