@@ -370,7 +370,13 @@ const commentListState = atom({
   ],
 });
 
+const animalState = atom({
+  key: 'animal',
+  default: [],
+});
+
 export {
+  animalState,
   authStateAtom,
   userAtom,
   animalListState,
