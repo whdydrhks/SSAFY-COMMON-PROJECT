@@ -166,6 +166,69 @@ const scheduleHostAtom = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+const reviewListState = atom({
+  key: 'ReveiwListState',
+  default: [
+    // {
+    //   reviewId: '',
+    //   title: '',
+    //   content: '',
+    //   userId: '', // 삭제 예정
+    //   contentId: '',
+    //   viewCount: '', // 삭제 예정
+    //   likeCount: '', // 삭제 예정
+    //   commentCount: '', // 삭제 예정
+    //   thumbnailImgage: '', // 삭제 예정
+    //   createdDate: '',
+    //   updatedDate: '',
+    // },
+    {
+      reviewId: 0,
+      title: '우리집 상추 자랑1',
+      content:
+        '입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...',
+      userId: 1,
+      contentId: 1,
+      viewCount: 10,
+      likeCount: 10,
+      commentCount: 5,
+      thumbnailImgage: '파일경로',
+    },
+    {
+      reviewId: 1,
+      title: '우리집 상추 자랑2',
+      content:
+        '입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...',
+      userId: 2,
+      contentId: 2,
+      viewCount: 7,
+      likeCount: 2,
+      commentCount: 9,
+      thumbnailImgage: '파일경로',
+    },
+  ],
+  effects_UNSTABLE: [persistAtom],
+});
+
+const commentListState = atom({
+  key: 'commentListState',
+  default: [
+    // {
+
+    //   reviewId:'',
+    //   userId:'',
+    //   content:'',
+    //   createdDate:'',
+    //   updatedDate:'',
+    // },
+    {
+      reviewId: 1,
+      userId: 1,
+      content: '정말 귀여워요',
+    },
+  ],
+});
+
 export {
   authStateAtom,
   userAtom,
@@ -174,4 +237,6 @@ export {
   timeAtom,
   twoWeeksAtom,
   scheduleHostAtom,
+  reviewListState,
+  commentListState,
 };
