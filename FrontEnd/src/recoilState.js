@@ -391,10 +391,7 @@ export {
   timeAtom,
   twoWeeksAtom,
   scheduleHostAtom,
-<<<<<<< HEAD
   scheduleUserAtom,
-=======
   reviewListState,
   commentListState,
->>>>>>> dd4e3ca1c59a2075657125430ea32159e5e5441c
 };

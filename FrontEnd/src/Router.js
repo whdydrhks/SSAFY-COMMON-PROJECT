@@ -1,3 +1,5 @@
+/* eslint-disable import/no-named-as-default */
+/* eslint-disable import/no-named-as-default-member */
 /* eslint-disable no-unused-vars */
 /* eslint-disable spaced-comment */
 /* eslint-disable react/sort-comp */
