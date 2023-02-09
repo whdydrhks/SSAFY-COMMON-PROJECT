@@ -32,10 +32,11 @@ import './VideoChat.css';
 import '../../styles/cafe24.css';
 import UserVideoComponent from './UserVideoComponent';
 import { userAtom } from '../../recoilState';
+import API_URL from '../../api/api';
 
 // const APPLICATION_SERVER_URL = 'http://localhost:5000';
 
-const APPLICATION_SERVER_URL = 'http://i8b209.p.ssafy.io:8444';
+const APPLICATION_SERVER_URL = API_URL;
 // const OPENVIDU_SERVER_SECRET = 'ssafy';
 
 const Sdiv = styled.div`
