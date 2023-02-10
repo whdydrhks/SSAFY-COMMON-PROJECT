@@ -121,13 +121,14 @@ function ScheduleListHost() {
   useEffect(() => {
     const weeks = [];
     for (let i = 0; i < 14; i += 1) {
-      const today = new Date();
-      const nxtDay = new Date(today.setDate(today.getDate() + i));
+      const to = new Date();
+      const nxtDay = new Date(to.setDate(to.getDate() + i));
       const todayMonth = (nxtDay.getMonth() + 1).toString();
       const todayDate = nxtDay.getDate().toString();
       weeks.push({ month: todayMonth, day: todayDate });
     }
     setTwoWeeks(weeks);
+    console.log('weeks', twoWeeks);
     setIsClickDate(todayDate);
     axios
       .get(`${API_URL}/schedule/shelters`, {
@@ -135,7 +136,9 @@ function ScheduleListHost() {
           Authorization: accessToken,
         },
       })
-      .then(res => setScheduleHost(res.data.data));
+      .then(res => {
+        setScheduleHost(res.data.data);
+      });
   }, []);
 
   return (

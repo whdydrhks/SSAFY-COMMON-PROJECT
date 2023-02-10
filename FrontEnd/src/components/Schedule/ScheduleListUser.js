@@ -8,8 +8,9 @@ import '../../styles/slick.css';
 import '../../styles/cafe24.css';
 import { Button, Switch } from '@mui/material';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { scheduleAtom, userAtom } from '../../recoilState';
+import { dateListAtom, scheduleAtom, twoWeeksAtom } from '../../recoilState';
 import API_URL from '../../api/api';
+import { getCookie } from '../../pages/Account/cookie';
 
 const SContainer = styled.div``;
 const SDate = styled.div`
@@ -36,63 +37,47 @@ const SCancleButton = styled(Button)`
 
 function ScheduleListUser() {
   const today = new Date();
-  const date =
-    (today.getMonth() + 1).toString().padStart(2, '0') +
-    today.getDate().toString().padStart(2, '0');
-  const user = useRecoilValue(userAtom);
+  const accessToken = getCookie('accessToken');
+  const [twoWeeks, setTwoWeeks] = useRecoilState(twoWeeksAtom);
   const [scheduleUser, setScheduleUser] = useRecoilState(scheduleAtom);
-  const [dateList, setDateList] = useState([]);
-
+  const [dateList, setDateList] = useRecoilState(dateListAtom);
   useEffect(() => {
-    // axios.get(`${API_URL}/schedule/users/${userId}`)
-    // .then((res) => {
-    // })
-    const list = [];
-    scheduleUser.forEach(schedule => {
-      if (!list.includes(schedule.day)) {
-        list.push(schedule.day);
-      }
-    });
-    setDateList(list);
+    const weeks = [];
+    for (let i = 0; i < 14; i += 1) {
+      const to = new Date();
+      const nxtDay = new Date(to.setDate(to.getDate() + i));
+      const todayMonth = (nxtDay.getMonth() + 1).toString();
+      const todayDate = nxtDay.getDate().toString();
+      weeks.push({ month: todayMonth, day: todayDate });
+    }
+    setTwoWeeks(weeks);
+    axios
+      .get(`${API_URL}/schedule/users`, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+      .then(res => {
+        setScheduleUser(res.data.data);
+      });
   }, []);
+
+  console.log('two', twoWeeks);
+  console.log('sc', scheduleUser);
 
   return (
     <SContainer>
-      {dateList.map((item, index) => (
-        <div key={index}>
-          <SDate>
-            {Number(item.substring(0, 2))}월 {Number(item.substring(2))}일
-          </SDate>
-          {scheduleUser.map(schedule =>
-            schedule.day === item ? (
-              <STimeTable key={schedule.room}>
-                <div>
-                  <STime>
-                    {schedule.time.padStart(2, '0')}:00 ~{' '}
-                    {(Number(schedule.time) + 1).toString().padStart(2, '0')}:00
-                  </STime>
-                  <SShelter>{schedule.room}</SShelter>
-                </div>
-                {today.getHours() > schedule.time ? (
-                  <Button disabled>완료</Button>
-                ) : null}
-                {today.getHours().toString().padStart(2, '0') ===
-                schedule.time.padStart(2, '0') ? (
-                  <SLiveButton>화상채팅</SLiveButton>
-                ) : null}
-                {today.getHours() < schedule.time ? (
-                  <SCancleButton
-                    onClick={() => {
-                      // axios.delete(`${API_URL}/schedule/cancle/${item.scheduleId}`);
-                    }}
-                  >
-                    취소
-                  </SCancleButton>
-                ) : null}
-              </STimeTable>
-            ) : null,
-          )}
-        </div>
+      {scheduleUser.map(schedule => (
+        <STimeTable key={schedule.room}>
+          <div>
+            <STime>
+              {schedule.time.toString().padStart(2, '0')}:00 ~{' '}
+              {(schedule.time + 1).toString().padStart(2, '0')}
+              :00
+            </STime>
+            <SShelter>{schedule.room}</SShelter>
+          </div>
+        </STimeTable>
       ))}
     </SContainer>
   );

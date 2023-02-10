@@ -129,6 +129,11 @@ const todayScheduleAtom = atom({
   default: [],
 });
 
+const dateListAtom = atom({
+  key: 'dayListAtom',
+  default: [],
+});
+
 // const today = new Date();
 // const todayDate =
 //   (today.getMonth() + 1).toString().padStart(2, '0') +
@@ -221,4 +226,5 @@ export {
   commentListState,
   todayScheduleAtom,
   todayAtom,
+  dateListAtom,
 };
