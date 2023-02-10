@@ -114,8 +114,8 @@ const animalNumber = atom({
 // })
 
 // 현재 사용 안하고 중, 더미데이터는 백에서 저장
-const timeAtom = atom({
-  key: 'timeAtom',
+const dayTimeAtom = atom({
+  key: 'dayTimeAtom',
   default: [
     '0000000000000000000000000',
     '0000000000000000000000001',
@@ -125,6 +125,11 @@ const timeAtom = atom({
     '0000000000000000000000005',
     '0000000000000000000000006',
   ],
+});
+
+const todayTimeAtom = atom({
+  key: 'todayTimeAtom',
+  default: '',
 });
 
 const twoWeeksAtom = atom({
@@ -381,7 +386,8 @@ export {
   userAtom,
   animalListState,
   animalNumber,
-  timeAtom,
+  dayTimeAtom,
+  todayTimeAtom,
   twoWeeksAtom,
   scheduleHostAtom,
   scheduleUserAtom,
