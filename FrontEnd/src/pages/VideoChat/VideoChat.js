@@ -402,13 +402,13 @@ function VideoChat() {
               {/* <SHostdiv>
                 <UserVideoComponent streamManager={host} />
               </SHostdiv> */}
-              {/* <input
+              <input
                 className="btn btn-large btn-success"
                 type="button"
                 id="buttonSwitchCamera"
                 onClick={this.switchCamera}
                 value="카메라 전환"
-              /> */}
+              />
             </Sdiv>
           ) : null}
           <div id="video-container" className="col-md-6">
