@@ -406,7 +406,7 @@ function VideoChat() {
                 className="btn btn-large btn-success"
                 type="button"
                 id="buttonSwitchCamera"
-                onClick={this.switchCamera}
+                onClick={switchCamera}
                 value="카메라 전환"
               />
             </Sdiv>
