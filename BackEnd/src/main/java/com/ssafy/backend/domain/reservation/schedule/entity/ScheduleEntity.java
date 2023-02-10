@@ -45,19 +45,19 @@ public class ScheduleEntity {
 	@JoinColumn(name="user_id")
 	private UserEntity user;
 
-	@Column(name="day", nullable=false, unique=true, length=10)
+	@Column(name="day", nullable=false, length=10)
 	private String day;
 
-	@Column(name="state", nullable = false, unique = true)
-	private int state;
+	// @Column(name="state", nullable = false)
+	// private int state;
 
-	@Column(name="time", nullable = false, unique = true)
+	@Column(name="time", nullable = false)
 	private int time;
 
 	@Column(name="room", nullable = false, unique = true, length=50)
 	private String room;
 
-	@Column(name = "expired", nullable = false, length = 1)
-	@ColumnDefault("'F'")
-	private String expired;
+	// @Column(name = "expired", nullable = false, length = 1)
+	// @ColumnDefault("'F'")
+	// private String expired;
 }

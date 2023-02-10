@@ -18,39 +18,17 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class ScheduleRegisterDto {
-	private Long scheduleId;
-	private Long shelterId;
-	private String scheduleNickname;
-	private Long userId;
-	private String userNickname;
+	private String shelterNickname;
 	private String day;
-	private int state;
 	private int time;
-	private String room;
 
-	public static ScheduleDto of(ScheduleEntity schedule) {
-		return ScheduleDto.builder()
-				.scheduleId(schedule.getId())
-				.shelterId(schedule.getShelter().getId())
-				.shelterNickname(schedule.getShelter().getName())
-				.userId(schedule.getUser().getId())
-				.userNickname(schedule.getUser().getNickname())
-				.day(schedule.getDay())
-				.state(schedule.getState())
-				.time(schedule.getTime())
-				.room(schedule.getRoom())
-				.build();
-	}
-
-	public ScheduleEntity toEntity() {
+	public ScheduleEntity toEntity(UserEntity user, ShelterEntity shelter, String room) {
 		return ScheduleEntity.builder()
-				.id(this.scheduleId)
-				.shelter(this.toEntity().getShelter())
-				.user(this.toEntity().getUser())
+				.user(user)
+				.shelter(shelter)
 				.day(this.day)
-				.state(this.state)
 				.time(this.time)
-				.room(this.room)
+				.room(room)
 				.build();
 	}
 }
