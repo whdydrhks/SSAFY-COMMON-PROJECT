@@ -127,11 +127,14 @@ function VideoChat() {
   };
 
   const switchCamera = () => {
+    let OV = new OpenVidu();
+
     OV.getDevices().then(devices => {
       var videoDevices = devices.filter(device => device.kind === 'videoinput');
-      console.log(videoDevices);
+
+      console.log('기존', publisher);
       if (videoDevices && videoDevices.length > 1) {
-        var newPublisher = OV.initPublisher(undefined, {
+        let newPublisher = OV.initPublisher(undefined, {
           videoSource: isFrontCamera
             ? videoDevices[1].deviceId
             : videoDevices[0].deviceId,
@@ -139,12 +142,19 @@ function VideoChat() {
           publishVideo: true,
           mirror: isFrontCamera,
         });
+        console.log('####################');
+        console.log(videoDevices[1].deviceId);
+        console.log(videoDevices[0].deviceId);
+        console.log(
+          isFrontCamera ? videoDevices[1].deviceId : videoDevices[0].deviceId,
+        );
+        console.log('신규', newPublisher);
 
         setIsFrontCamera(!isFrontCamera);
 
         session.unpublish(publisher).then(() => {
           console.log('Old publisher unpublished!');
-
+          console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
           setPublisher(newPublisher);
           session.publish(publisher).then(() => {
             console.log('New publisher published!');
