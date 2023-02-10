@@ -104,38 +104,19 @@ const animalNumber = atom({
   default: 1,
 });
 
-// const managedSchedule = atom({
-//   key : 'managedSchedule',
-//   default: {
-//     userShelterId = '',
-//     userId = '',
-//     day =
-//   }
-// })
+const twoWeeksAtom = atom({
+  key: 'twoWeeksAtom',
+  default: [],
+});
 
-// 현재 사용 안하고 중, 더미데이터는 백에서 저장
 const dayTimeAtom = atom({
   key: 'dayTimeAtom',
-  default: [
-    '0000000000000000000000000',
-    '0000000000000000000000001',
-    '0000000000000000000000002',
-    '0000000000000000000000003',
-    '0000000000000000000000004',
-    '0000000000000000000000005',
-    '0000000000000000000000006',
-  ],
+  default: [],
 });
 
 const todayTimeAtom = atom({
   key: 'todayTimeAtom',
   default: '',
-});
-
-const twoWeeksAtom = atom({
-  key: 'twoWeeksAtom',
-  default: [],
-  effects_UNSTABLE: [persistAtom],
 });
 
 const scheduleHostAtom = atom({
@@ -386,9 +367,9 @@ export {
   userAtom,
   animalListState,
   animalNumber,
+  twoWeeksAtom,
   dayTimeAtom,
   todayTimeAtom,
-  twoWeeksAtom,
   scheduleHostAtom,
   scheduleUserAtom,
   reviewListState,
