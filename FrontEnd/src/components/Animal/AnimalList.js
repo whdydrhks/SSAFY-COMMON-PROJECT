@@ -39,7 +39,7 @@ function AnimalList(props) {
   // console.log(temp);
   useEffect(() => {
     getAnimalList();
-  }, []);
+  }, [animalList]);
 
   // axios
   //   .get(`${API_URL}/shelter/1/animal?pageNo=1`, {

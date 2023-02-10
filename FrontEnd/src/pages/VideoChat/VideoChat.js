@@ -13,6 +13,8 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
+/* eslint-disable consistent-return */
+/* eslint-disable default-case */
 /* eslint-disable no-undef */
 /* eslint-disable no-shadow */
 /* eslint-disable no-var */
@@ -37,14 +39,14 @@ import API_URL from '../../api/api';
 // const APPLICATION_SERVER_URL = 'http://localhost:5000';
 
 // const APPLICATION_SERVER_URL = API_URL + '/openvidu';
-const APPLICATION_SERVER_URL = 'https://i8b209.p.ssafy.io:9999/api/v1/openvidu'
+const APPLICATION_SERVER_URL = 'https://i8b209.p.ssafy.io:9999/api/v1/openvidu';
 // const OPENVIDU_SERVER_SECRET = 'ssafy';
 
 const Sdiv = styled.div`
   position: relative;
 `;
 
-const SHostdiv = styled.div`
+const SSmallCamera = styled.div`
   position: absolute;
   top: 0em;
   right: 0em;
@@ -325,17 +327,41 @@ function VideoChat() {
 
           {host !== undefined ? (
             <Sdiv id="main-video" className="col-md-6">
+              {(() => {
+                switch (role) {
+                  case 'HOST':
+                    return (
+                      <>
+                        <SSmallCamera>
+                          <UserVideoComponent streamManager={host} />
+                        </SSmallCamera>
+                        <div>
+                          <UserVideoComponent streamManager={user} />
+                        </div>
+                      </>
+                    );
+                  case 'USER':
+                    return (
+                      <>
+                        <SSmallCamera>
+                          <UserVideoComponent streamManager={user} />
+                        </SSmallCamera>
+                        <div>
+                          <UserVideoComponent streamManager={host} />
+                        </div>
+                      </>
+                    );
+                }
+              })()}
               {/* {this.state.subscribers.map((sub, i) => (
                 <div
                   key={i}
                   className="stream-container col-md-6 col-xs-6"
                   onClick={() => this.handleMainVideoStream(sub)}
                 > */}
-
-              <div>
+              {/* <div>
                 <UserVideoComponent streamManager={user} />
-              </div>
-
+              </div> */}
               {/* <div>
                 <UserVideoComponent
                   streamManager={this.state.subscribers[0]}
@@ -343,9 +369,10 @@ function VideoChat() {
               </div> */}
               {/* </div>
               ))} */}
-              <SHostdiv>
+
+              {/* <SHostdiv>
                 <UserVideoComponent streamManager={host} />
-              </SHostdiv>
+              </SHostdiv> */}
               {/* <input
                 className="btn btn-large btn-success"
                 type="button"
