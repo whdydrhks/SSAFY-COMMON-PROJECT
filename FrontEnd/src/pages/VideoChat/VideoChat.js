@@ -71,7 +71,7 @@ function VideoChat() {
   const [host, setHost] = useState(undefined);
 
   const [OV, setOV] = useState(null);
-  const [isFrontCamera, setIsFrontCamera] = false;
+  const [isFrontCamera, setIsFrontCamera] = useState(false);
 
   useEffect(() => {
     window.addEventListener('beforeunload', onbeforeunload);
