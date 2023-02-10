@@ -1,4 +1,4 @@
-package com.ssafy.backend.global.openvidu.controller;
+package com.ssafy.backend.domain.openvidu.controller;
 
 import java.util.Map;
 
