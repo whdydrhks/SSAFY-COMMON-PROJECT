@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import {
@@ -8,14 +9,16 @@ import {
   Grid,
   Select,
   Button,
+  MenuItem,
 } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { animalNumber } from '../../recoilState';
+import { userAtom } from '../../recoilState';
 import Nav from '../../components/common/Nav';
 import Header from '../../components/common/Header';
+import API_URL from '../../api/api';
 import '../../styles/cafe24.css';
 
 const SH1 = styled.h1`
@@ -60,11 +63,8 @@ const SButton = styled(Button)`
 
 function AnimalCreateHost() {
   const navigate = useNavigate();
-  let id = useRecoilValue(animalNumber);
-  const getId = () => {
-    id += 1;
-    return id;
-  };
+  const userInfo = useRecoilValue(userAtom);
+  const shelterId = userInfo.shelterId;
 
   //   확인용
   // const temp = useRecoilValue(animalList);
@@ -162,18 +162,14 @@ function AnimalCreateHost() {
     formData.append('image', images);
     const variables = [
       {
-        status: 'F',
-        animalId: getId(),
-        shelterId: 0,
-        name,
-        manageCode,
-        thumbnailImage: '파일경로',
-        breed,
         age,
+        breed,
         gender,
-        weight,
+        manageCode,
+        name,
         neuter,
         note,
+        weight,
       },
     ];
 
@@ -181,7 +177,7 @@ function AnimalCreateHost() {
       'data',
       new Blob([JSON.stringify(variables)], { type: 'application/json' }),
     );
-    axios.post('http://192.168.31.226:3000/animal/create', formData);
+    axios.post(`${API_URL}/shelter/${shelterId}/animal`, formData);
     // console.log(variables[0].animalId);
     navigate(`/animal/${variables[0].animalId}`);
   };
@@ -250,9 +246,9 @@ function AnimalCreateHost() {
                 style={{ marginBottom: 20 }}
               >
                 {genderList.map(item => (
-                  <option value={item} key={item}>
+                  <MenuItem value={item} key={item}>
                     {item}
-                  </option>
+                  </MenuItem>
                 ))}
               </Select>
             </Grid>
@@ -292,9 +288,9 @@ function AnimalCreateHost() {
                 style={{ marginBottom: 20 }}
               >
                 {neuterList.map(item => (
-                  <option value={item} key={item}>
+                  <MenuItem value={item} key={item}>
                     {item}
-                  </option>
+                  </MenuItem>
                 ))}
               </Select>
             </Grid>

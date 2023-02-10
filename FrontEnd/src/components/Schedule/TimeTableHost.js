@@ -14,7 +14,7 @@ import Slider from 'react-slick';
 import { Button, FormControlLabel, Switch } from '@mui/material';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import API_URL from '../../api/api';
-import { userAtom, timeAtom } from '../../recoilState';
+import { userAtom } from '../../recoilState';
 
 const SButtonDiv = styled.div`
   text-align: center;
@@ -77,13 +77,15 @@ function TimeTableHost() {
     slidesToScroll: 1,
   };
 
+  let newDayTime = [];
   const { shelterId } = useRecoilValue(userAtom);
-  const [dayTime, setDayTime] = useRecoilState(timeAtom);
+  const [dayTime, setDayTime] = useState([]);
   const [todayTime, setTodayTime] = useState('');
 
   const false2true = time => {
     setTodayTime(
-      todayTime.substring(0, time) +
+      () =>
+        todayTime.substring(0, time) +
         '1' +
         todayTime.substring(time + 1, todayTime.length),
     );
@@ -91,13 +93,15 @@ function TimeTableHost() {
 
   const true2false = time => {
     setTodayTime(
-      todayTime.substring(0, time) +
+      () =>
+        todayTime.substring(0, time) +
         '0' +
         todayTime.substring(time + 1, todayTime.length),
     );
   };
 
   const handleNineChange = event => {
+    console.log(event.target.checked);
     if (event.target.checked === true) {
       false2true(9);
     } else {
@@ -172,9 +176,19 @@ function TimeTableHost() {
   ];
 
   useEffect(() => {
-    // axios
-    // .get(`${API_URL}/timetable/${shelterId}`, { shelterId })
-    //   .then(res => setDayTime(res.data));
+    axios
+      .get(`${API_URL}/timetable/${shelterId}`, { shelterId })
+      .then(res =>
+        setDayTime(() => [
+          res.data.data.sun,
+          res.data.data.mon,
+          res.data.data.tue,
+          res.data.data.wed,
+          res.data.data.thr,
+          res.data.data.fri,
+          res.data.data.sat,
+        ]),
+      );
   }, []);
 
   // const [btnActive, setBtnActive] = useState('');
@@ -184,8 +198,10 @@ function TimeTableHost() {
   // };
 
   const handleSetDayTime = () => {
+    const isSet = window.confirm('시간 설정을 변경하시겠습니까?');
+    if (!isSet) return;
     if (todayTime[24] === '0') {
-      setDayTime([
+      newDayTime = [
         todayTime,
         dayTime[1],
         dayTime[2],
@@ -193,9 +209,9 @@ function TimeTableHost() {
         dayTime[4],
         dayTime[5],
         dayTime[6],
-      ]);
+      ];
     } else if (todayTime[24] === '1') {
-      setDayTime([
+      newDayTime = [
         dayTime[0],
         todayTime,
         dayTime[2],
@@ -203,9 +219,9 @@ function TimeTableHost() {
         dayTime[4],
         dayTime[5],
         dayTime[6],
-      ]);
+      ];
     } else if (todayTime[24] === '2') {
-      setDayTime([
+      newDayTime = [
         dayTime[0],
         dayTime[1],
         todayTime,
@@ -213,9 +229,9 @@ function TimeTableHost() {
         dayTime[4],
         dayTime[5],
         dayTime[6],
-      ]);
+      ];
     } else if (todayTime[24] === '3') {
-      setDayTime([
+      newDayTime = [
         dayTime[0],
         dayTime[1],
         dayTime[2],
@@ -223,9 +239,9 @@ function TimeTableHost() {
         dayTime[4],
         dayTime[5],
         dayTime[6],
-      ]);
+      ];
     } else if (todayTime[24] === '4') {
-      setDayTime([
+      newDayTime = [
         dayTime[0],
         dayTime[1],
         dayTime[2],
@@ -233,9 +249,9 @@ function TimeTableHost() {
         todayTime,
         dayTime[5],
         dayTime[6],
-      ]);
+      ];
     } else if (todayTime[24] === '5') {
-      setDayTime([
+      newDayTime = [
         dayTime[0],
         dayTime[1],
         dayTime[2],
@@ -243,9 +259,9 @@ function TimeTableHost() {
         dayTime[4],
         todayTime,
         dayTime[6],
-      ]);
+      ];
     } else if (todayTime[24] === '6') {
-      setDayTime([
+      newDayTime = [
         dayTime[0],
         dayTime[1],
         dayTime[2],
@@ -253,10 +269,27 @@ function TimeTableHost() {
         dayTime[4],
         dayTime[5],
         todayTime,
-      ]);
+      ];
     }
+  };
 
-    // axios~!
+  const handleSetDayTimeButton = () => {
+    handleSetDayTime();
+    axios.put(`${API_URL}/timetable/${shelterId}`, { days: newDayTime });
+    setDayTime(newDayTime);
+    // axios
+    //   .get(`${API_URL}/timetable/${shelterId}`, { shelterId })
+    //   .then(res =>
+    //     setDayTime(() => [
+    //       res.data.data.sun,
+    //       res.data.data.mon,
+    //       res.data.data.tue,
+    //       res.data.data.wed,
+    //       res.data.data.thr,
+    //       res.data.data.fri,
+    //       res.data.data.sat,
+    //     ]),
+    //   );
   };
 
   return (
@@ -270,21 +303,20 @@ function TimeTableHost() {
               // className={'btn' + (index === btnActive ? ' active' : '')}
               onClick={() => {
                 if (item === '일요일') {
-                  setTodayTime(dayTime[0]);
+                  setTodayTime(() => dayTime[0]);
                 } else if (item === '월요일') {
-                  setTodayTime(dayTime[1]);
+                  setTodayTime(() => dayTime[1]);
                 } else if (item === '화요일') {
-                  setTodayTime(dayTime[2]);
+                  setTodayTime(() => dayTime[2]);
                 } else if (item === '수요일') {
-                  setTodayTime(dayTime[3]);
+                  setTodayTime(() => dayTime[3]);
                 } else if (item === '목요일') {
-                  setTodayTime(dayTime[4]);
+                  setTodayTime(() => dayTime[4]);
                 } else if (item === '금요일') {
-                  setTodayTime(dayTime[5]);
+                  setTodayTime(() => dayTime[5]);
                 } else if (item === '토요일') {
-                  setTodayTime(dayTime[6]);
+                  setTodayTime(() => dayTime[6]);
                 }
-                console.log(todayTime);
               }}
             >
               {item}
@@ -367,7 +399,7 @@ function TimeTableHost() {
           />
         </STimeBox>
       </STimeList>
-      <SClickButton onClick={handleSetDayTime}>적용하기</SClickButton>
+      <SClickButton onClick={handleSetDayTimeButton}>적용하기</SClickButton>
     </>
   );
 }

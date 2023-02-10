@@ -113,18 +113,23 @@ const animalNumber = atom({
 //   }
 // })
 
-const timeAtom = atom({
-  key: 'timeAtom',
+// 현재 사용 안하고 중, 더미데이터는 백에서 저장
+const dayTimeAtom = atom({
+  key: 'dayTimeAtom',
   default: [
-    '0000000001111111111000000',
-    '0000000000111111111000001',
-    '0000000001100111111000002',
-    '0000000001111110011000003',
-    '0000000001111111111000004',
-    '0000000001011110110000005',
-    '0000000000111111101000006',
+    '0000000000000000000000000',
+    '0000000000000000000000001',
+    '0000000000000000000000002',
+    '0000000000000000000000003',
+    '0000000000000000000000004',
+    '0000000000000000000000005',
+    '0000000000000000000000006',
   ],
-  effects_UNSTABLE: [persistAtom],
+});
+
+const todayTimeAtom = atom({
+  key: 'todayTimeAtom',
+  default: '',
 });
 
 const twoWeeksAtom = atom({
@@ -370,12 +375,19 @@ const commentListState = atom({
   ],
 });
 
+const animalState = atom({
+  key: 'animal',
+  default: [],
+});
+
 export {
+  animalState,
   authStateAtom,
   userAtom,
   animalListState,
   animalNumber,
-  timeAtom,
+  dayTimeAtom,
+  todayTimeAtom,
   twoWeeksAtom,
   scheduleHostAtom,
   scheduleUserAtom,

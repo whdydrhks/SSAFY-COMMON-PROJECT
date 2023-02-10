@@ -1,4 +1,6 @@
+/* eslint-disable prefer-destructuring */
 import React, { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import Modal from 'react-modal';
 import { Button } from '@mui/material';
 import axios from 'axios';
@@ -17,6 +19,8 @@ import {
   weight,
   neuter,
 } from '../../images/index';
+import API_URL from '../../api/api';
+import { userAtom } from '../../recoilState';
 
 const STitle = styled.div`
   font-family: 'cafe24';
@@ -155,6 +159,8 @@ const SModalMessage = styled.div`
 function AnimalDetail() {
   const navigate = useNavigate();
   const location = useLocation();
+  const userInfo = useRecoilValue(userAtom);
+  const shelterId = userInfo.shelterId;
   // console.log(location.state);
   const key = [manageCode, name, breed, gender, weight, neuter];
   const korKey = ['관리 번호', '이름', '품종', '성별', '체중', '중성화 여부'];
@@ -176,10 +182,9 @@ function AnimalDetail() {
   const handleModal = () => {
     setIsModal(false);
   };
-
   const handleDeleteAnimal = () => {
     // navigate 핸들러 함수 최하단으로 내려야함
-    axios.delete('http://192.168.31.226:3000/animal', {
+    axios.delete(`${API_URL}/shelter/${shelterId}/animal/${animal.animalId}`, {
       data: {
         shelterId: {},
         animalID: animal.animalId,
@@ -222,6 +227,7 @@ function AnimalDetail() {
         <Link
           to={`/animal/update/${animal.animalId}`}
           style={{ textDecoration: 'none' }}
+          state={{ animalInformation: animal }}
         >
           <SModifyButton variant="contained" size="medium">
             수정하기

@@ -2,6 +2,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-const-assign */
 /* eslint-disable prefer-destructuring */
+/* eslint-disable no-undef */
+/* eslint-disable no-restricted-globals */
 
 import React, { useState, useEffect } from 'react';
 import {
@@ -14,14 +16,19 @@ import {
   MenuItem,
 } from '@mui/material';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import Nav from '../../components/common/Nav';
 import Header from '../../components/common/Header';
 import '../../styles/cafe24.css';
 import API_URL from '../../api/api';
-import { userAtom } from '../../recoilState';
+import { userAtom, animalState } from '../../recoilState';
+
+const SButtonDiv = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
 
 const SH1 = styled.h1`
   font-size: 2rem;
@@ -45,24 +52,14 @@ const SPreviewCard = styled(Grid)`
 function AnimalUpdateHost() {
   const navigate = useNavigate;
   const animalId = useParams();
+  const location = useLocation();
+  const animal = location.state.animalInformation;
 
   const userInfo = useRecoilValue(userAtom);
   const shelterId = userInfo.shelterId;
-  console.log(animalId);
-  // console.log(shelterId);
-  const animal = null;
-  const getAnimal = async () => {
-    animal = await axios.get(
-      `${API_URL}/shelter/${shelterId}/animal/${animalId}`,
-    );
-  };
-  useEffect(() => {
-    getAnimal();
-  });
+  // const [animal, setAnimal] = useRecoilState(animalState);
 
-  // const animal = tempAnimalList[animalIdForUpdate.animalId];
   const [adoption, setAdoption] = useState(animal.adoption);
-
   const [manageCode, setManageCode] = useState(animal.manageCode);
   const [name, setName] = useState(animal.name);
   const [age, setAge] = useState(animal.age);
@@ -74,7 +71,7 @@ function AnimalUpdateHost() {
   const [images, setImages] = useState([]);
   const [previews, setPreviews] = useState([]);
 
-  // const [imgPreview, setImgPreview] = useState('');
+  const [imgPreview, setImgPreview] = useState('');
 
   const handleAdoption = e => {
     setAdoption(e.target.value);
@@ -141,7 +138,7 @@ function AnimalUpdateHost() {
     setPreviews(temp2);
   };
 
-  const addAnimal = e => {
+  const updateAnimal = e => {
     e.preventDefault();
     // console.log(e);
     const formData = new FormData();
@@ -149,12 +146,8 @@ function AnimalUpdateHost() {
     formData.append('image', images);
     const variables = [
       {
-        expired: 'F',
-        animalId,
-        shelterId: 0,
+        adoption,
         name,
-        manageCode,
-        thumbnailImage: '파일경로',
         breed,
         age,
         gender,
@@ -168,7 +161,10 @@ function AnimalUpdateHost() {
       'data',
       new Blob([JSON.stringify(variables)], { type: 'application/json' }),
     );
-    axios.put('http://192.168.31.226:3000/animal/create', formData);
+    axios.put(
+      `${API_URL}/shelter/${shelterId}/animal/${animalId.animalId}`,
+      formData,
+    );
     // console.log(variables[0].animalId);
     navigate(`/animal/${variables[0].animalId}`);
   };
@@ -185,7 +181,7 @@ function AnimalUpdateHost() {
             flexDirection: 'column',
           }}
         >
-          <form onSubmit={addAnimal}>
+          <form onSubmit={updateAnimal}>
             <Grid container spacing={2}>
               {/* 입양 상태 */}
               <Grid item xs={12}>
@@ -197,6 +193,7 @@ function AnimalUpdateHost() {
                   value={adoption}
                   onChange={handleAdoption}
                   style={{ marginBottom: 20 }}
+                  defaultValue={adoption}
                 >
                   <MenuItem value="F">입양 중</MenuItem>
                   <MenuItem value="T">입양 완료</MenuItem>
@@ -211,11 +208,12 @@ function AnimalUpdateHost() {
                 <TextField
                   type="text"
                   onChange={handleManageCode}
-                  placeholder="관리번호를 입력해 주세요."
                   fullWidth
                   required
                   style={{ marginBottom: 20 }}
                   value={manageCode}
+                  defaultValue={manageCode}
+                  disabled
                 />
               </Grid>
 
@@ -374,7 +372,7 @@ function AnimalUpdateHost() {
               </Grid>
             </Grid>
 
-            <Button type="submit">동물 등록하기</Button>
+            <Button type="submit">동물 수정하기</Button>
           </form>
         </Box>
       </Container>
