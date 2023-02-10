@@ -135,14 +135,16 @@ function VideoChat() {
       console.log('기존', publisher);
       if (videoDevices && videoDevices.length > 1) {
         let newPublisher = OV.initPublisher(undefined, {
-          videoSource: isFrontCamera
-            ? videoDevices[1].deviceId
-            : videoDevices[0].deviceId,
+          videoSource: videoDevices[1].deviceId,
+          // isFrontCamera
+          //   ? videoDevices[1].deviceId
+          //   : videoDevices[0].deviceId,
           publishAudio: true,
           publishVideo: true,
           mirror: isFrontCamera,
         });
         console.log('####################');
+        console.log(videoDevices);
         console.log(videoDevices[1].deviceId);
         console.log(videoDevices[0].deviceId);
         console.log(
