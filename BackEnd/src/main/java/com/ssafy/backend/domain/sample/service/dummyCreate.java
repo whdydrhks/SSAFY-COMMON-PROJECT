@@ -89,7 +89,7 @@ public class dummyCreate {
 
 		TimetableEntity timetable2 = TimetableEntity.builder()
 				.id(2L)
-				.shelter_id(2L)
+				.shelterId(2L)
 				.mon("0000000000000000000000001")
 				.tue("0000000000000000000000002")
 				.wed("0000000000000000000000003")
