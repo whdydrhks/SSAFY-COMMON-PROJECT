@@ -11,6 +11,7 @@
 /* eslint-disable react/no-unused-state */
 /* eslint-disable prefer-template */
 /* eslint-disable import/no-unresolved */
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-unused-vars */
 /* eslint-disable prefer-const */
 /* eslint-disable consistent-return */
@@ -23,6 +24,8 @@
 /* eslint-disable react/no-this-in-sfc */
 /* eslint-disable prefer-object-spread */
 /* eslint-disable no-use-before-define */
+/* eslint-disable object-shorthand */
+/* eslint-disable array-callback-return */
 
 import { OpenVidu } from 'openvidu-browser';
 import axios from 'axios';
@@ -38,8 +41,8 @@ import API_URL from '../../api/api';
 
 // const APPLICATION_SERVER_URL = 'http://localhost:5000';
 
-// const APPLICATION_SERVER_URL = API_URL + '/openvidu';
-const APPLICATION_SERVER_URL = 'https://i8b209.p.ssafy.io:9999/api/v1/openvidu';
+const APPLICATION_SERVER_URL = API_URL + '/openvidu';
+// const APPLICATION_SERVER_URL = 'https://i8b209.p.ssafy.io:9999/api/v1/openvidu';
 // const OPENVIDU_SERVER_SECRET = 'ssafy';
 
 const Sdiv = styled.div`
@@ -52,6 +55,8 @@ const SSmallCamera = styled.div`
   right: 0em;
   width: 30%;
 `;
+
+const SChatForm = styled.div``;
 
 function VideoChat() {
   const navigate = useNavigate();
@@ -73,12 +78,28 @@ function VideoChat() {
   const [OV, setOV] = useState(null);
   const [isFrontCamera, setIsFrontCamera] = useState(false);
 
+  const [sendMsg, setSendMsg] = useState('');
+  const [msgFlag, setMsgFlag] = useState(true);
+  const [receiveMsg, setReceiveMsg] = useState([]);
+
   useEffect(() => {
     window.addEventListener('beforeunload', onbeforeunload);
     return () => {
       window.removeEventListener('beforeunload', onbeforeunload);
     };
   }, []);
+
+  useEffect(() => {
+    if (session) {
+      session.on('signal', event => {
+        let name = event.from.data;
+        setReceiveMsg(receiveMsg.push({ name: name, data: event.data }));
+        console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+        console.log(receiveMsg);
+        console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+      });
+    }
+  }, [session]);
 
   useEffect(() => {
     if (role === 'user') {
@@ -122,6 +143,7 @@ function VideoChat() {
         if (role === 'HOST') {
           setHost(publisher);
         }
+        setSession(session);
       })
       .catch(error => {});
   };
@@ -176,10 +198,30 @@ function VideoChat() {
     const getOV = new OpenVidu();
 
     setSession(getOV.initSession());
-
+    console.log('@@@@@@@@@@@@@@@@@');
     setOV(getOV);
 
     // console.log(OV);
+  };
+
+  const sendMessage = () => {
+    session
+      .signal({
+        data: sendMsg,
+        to: [],
+        type: 'my-chat',
+      })
+      .then(() => {
+        setMsgFlag(!msgFlag);
+        setSendMsg('');
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  const handleMsg = e => {
+    setSendMsg(e.target.value);
   };
 
   const streamCreated = event => {
@@ -459,6 +501,19 @@ function VideoChat() {
           </div>
         </div>
       ) : null}
+
+      {/* 채팅창 */}
+      <SChatForm>
+        <input type="text" onChange={handleMsg} />
+        <button type="button" onClick={sendMessage}>
+          메시지 보내기
+        </button>
+      </SChatForm>
+
+      {/* 채팅 메시지 */}
+      {/* {receiveMsg.map(msg => {
+        <div>{msg.data}</div>;
+      })} */}
     </div>
   );
 }
