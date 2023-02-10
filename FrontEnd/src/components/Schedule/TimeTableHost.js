@@ -77,6 +77,7 @@ function TimeTableHost() {
     slidesToScroll: 1,
   };
 
+  let newDayTime = [];
   const { shelterId } = useRecoilValue(userAtom);
   const [dayTime, setDayTime] = useState([]);
   const [todayTime, setTodayTime] = useState('');
@@ -200,7 +201,7 @@ function TimeTableHost() {
     const isSet = window.confirm('시간 설정을 변경하시겠습니까?');
     if (!isSet) return;
     if (todayTime[24] === '0') {
-      setDayTime(() => [
+      newDayTime = [
         todayTime,
         dayTime[1],
         dayTime[2],
@@ -208,9 +209,9 @@ function TimeTableHost() {
         dayTime[4],
         dayTime[5],
         dayTime[6],
-      ]);
+      ];
     } else if (todayTime[24] === '1') {
-      setDayTime(() => [
+      newDayTime = [
         dayTime[0],
         todayTime,
         dayTime[2],
@@ -218,9 +219,9 @@ function TimeTableHost() {
         dayTime[4],
         dayTime[5],
         dayTime[6],
-      ]);
+      ];
     } else if (todayTime[24] === '2') {
-      setDayTime(() => [
+      newDayTime = [
         dayTime[0],
         dayTime[1],
         todayTime,
@@ -228,9 +229,9 @@ function TimeTableHost() {
         dayTime[4],
         dayTime[5],
         dayTime[6],
-      ]);
+      ];
     } else if (todayTime[24] === '3') {
-      setDayTime(() => [
+      newDayTime = [
         dayTime[0],
         dayTime[1],
         dayTime[2],
@@ -238,9 +239,9 @@ function TimeTableHost() {
         dayTime[4],
         dayTime[5],
         dayTime[6],
-      ]);
+      ];
     } else if (todayTime[24] === '4') {
-      setDayTime(() => [
+      newDayTime = [
         dayTime[0],
         dayTime[1],
         dayTime[2],
@@ -248,9 +249,9 @@ function TimeTableHost() {
         todayTime,
         dayTime[5],
         dayTime[6],
-      ]);
+      ];
     } else if (todayTime[24] === '5') {
-      setDayTime(() => [
+      newDayTime = [
         dayTime[0],
         dayTime[1],
         dayTime[2],
@@ -258,9 +259,9 @@ function TimeTableHost() {
         dayTime[4],
         todayTime,
         dayTime[6],
-      ]);
+      ];
     } else if (todayTime[24] === '6') {
-      setDayTime(() => [
+      newDayTime = [
         dayTime[0],
         dayTime[1],
         dayTime[2],
@@ -268,13 +269,27 @@ function TimeTableHost() {
         dayTime[4],
         dayTime[5],
         todayTime,
-      ]);
+      ];
     }
   };
 
   const handleSetDayTimeButton = () => {
     handleSetDayTime();
-    axios.put(`${API_URL}/timetable/${shelterId}`, { days: dayTime });
+    axios.put(`${API_URL}/timetable/${shelterId}`, { days: newDayTime });
+    setDayTime(newDayTime);
+    // axios
+    //   .get(`${API_URL}/timetable/${shelterId}`, { shelterId })
+    //   .then(res =>
+    //     setDayTime(() => [
+    //       res.data.data.sun,
+    //       res.data.data.mon,
+    //       res.data.data.tue,
+    //       res.data.data.wed,
+    //       res.data.data.thr,
+    //       res.data.data.fri,
+    //       res.data.data.sat,
+    //     ]),
+    //   );
   };
 
   return (
