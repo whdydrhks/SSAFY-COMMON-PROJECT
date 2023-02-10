@@ -7,42 +7,66 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import {
-  animalListState,
-  scheduleHostAtom,
-  scheduleUserAtom,
-  twoWeeksAtom,
-  userAtom,
-} from '../recoilState';
+import { userAtom } from '../recoilState';
 import Header from '../components/common/Header';
 import Nav from '../components/common/Nav';
 import ImageCarousel from '../components/common/ImageCarousel';
 import ReviewList from '../components/Review/ReviewList';
 
+// 1976d2
+
+const SContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  margin-top: 2rem;
+  background-color: lightgray;
+  border-radius: 20px 20px 0 0;
+  padding-top: 0.5rem;
+`;
+
 const STitleBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
+  margin: 1rem;
+  color: #195190;
+`;
+
+const SLiveItem = styled.div`
+  background-color: white;
+  border: 1px solid lightgray;
+  border-left: none;
+  border-right: none;
+`;
+
+const SReviewItem = styled.div`
+  background-color: white;
+  border: 1px solid lightgray;
+  border-left: none;
+  border-right: none;
+`;
+
+const SLive = styled.div`
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 2rem;
+`;
+
+const SReview = styled.div`
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 2rem;
 `;
 
 const STitle = styled.h1`
-  font-family: 'cafe24';
-  font-size: 2rem;
+  font-size: 1.5rem;
 `;
 
 const SMoreLink = styled(Link)`
-  font-size: 1.5rem;
-  font-family: 'cafe24';
+  font-size: 1.2rem;
   text-decoration: none;
-`;
-
-const SLine = styled.div`
-  height: 10px;
-  background-color: #d9d9d9;
-  opacity: 0.4;
+  color: #195190;
+  cursor: pointer;
 `;
 
 // const SReviewContainer = styled.div``;
@@ -56,20 +80,29 @@ function Home() {
   return (
     <>
       <Header />
-      <STitleBox>
-        <STitle>Live</STitle>
-        <SMoreLink to="/live">더 보기 &gt;</SMoreLink>
-      </STitleBox>
-      <ImageCarousel page="Home" />
-      {/* <SReviewContainer>리뷰컨테이너~</SReviewContainer> */}
-      {/* <br /> */}
-      <SLine />
-
-      <STitleBox>
-        <STitle>입양 후기</STitle>
-        <SMoreLink to="/review">더 보기 &gt;</SMoreLink>
-      </STitleBox>
-      <ReviewList />
+      <SContainer>
+        <STitleBox>
+          <STitle>라이브</STitle>
+          <SMoreLink to="/live">더 보기 &gt;</SMoreLink>
+        </STitleBox>
+        <SLiveItem>
+          <SLive>
+            <ImageCarousel page="Home" />
+          </SLive>
+        </SLiveItem>
+      </SContainer>
+      {/* <SLine /> */}
+      <SContainer>
+        <STitleBox>
+          <STitle>입양 후기</STitle>
+          <SMoreLink to="/review">더 보기 &gt;</SMoreLink>
+        </STitleBox>
+        <SReviewItem>
+          <SReview>
+            <ReviewList />
+          </SReview>
+        </SReviewItem>
+      </SContainer>
       <Nav />
     </>
   );

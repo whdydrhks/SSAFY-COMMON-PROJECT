@@ -6,21 +6,18 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import LogoutSharpIcon from '@mui/icons-material/LogoutSharp';
-import { Button } from '@mui/material';
 import styled from 'styled-components';
 import axios from 'axios';
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
-import { authStateAtom, userAtom } from '../../recoilState';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { userAtom } from '../../recoilState';
 import { getCookie, removeCookie } from '../../pages/Account/cookie';
 import helloIcon from '../../images/logo/helloIcon.png';
 import API_URL from '../../api/api';
-// import '../../styles/cafe24.css';
 
 const SAppBar = styled(AppBar)`
   position: fixed;
   padding: 4px;
   a {
-    /* font-family: 'cafe24'; */
     text-decoration: none;
     color: white;
   }
@@ -33,6 +30,19 @@ const SHomeLogo = styled.div`
     align-items: center;
   }
 `;
+const SIconDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  a {
+    display: flex;
+  }
+`;
+const SAlarmIcon = styled(NotificationsActiveIcon)`
+  margin-right: 2rem;
+`;
+const SLogout = styled(LogoutSharpIcon)`
+  cursor: pointer;
+`;
 const SImg = styled.img`
   width: 2rem;
   margin-right: 0.5rem;
@@ -41,18 +51,12 @@ const SHello = styled.span`
   font-size: 1.3rem;
 `;
 
-const SButton = styled(Button)`
-  margin-left: 12px;
-  /* background-color: transparent; */
-  &:hover {
-    background-color: none;
-  }
-  pointer-events: none;
+const SLink = styled(Link)`
+  width: 19.5px;
 `;
 
 function Header() {
   const accessToken = getCookie('accessToken');
-  const [authState, setAuthState] = useRecoilState(authStateAtom);
   const user = useRecoilValue(userAtom);
   const resetUser = useResetRecoilState(userAtom);
   const navigate = useNavigate();
@@ -73,7 +77,6 @@ function Header() {
         .then(() => {
           removeCookie('accessToken');
           resetUser();
-          setAuthState(false);
           navigate('/');
         });
     }
@@ -93,14 +96,22 @@ function Header() {
               </Link>
             </SHomeLogo>
           </Typography>
-          <Link to={`/alarm/${user.userId}`}>
-            <NotificationsActiveIcon />
-          </Link>
-          {!authState ? null : (
-            <SButton color="inherit" onClick={handleLogout}>
-              <LogoutSharpIcon />
-            </SButton>
-          )}
+          <SIconDiv>
+            {/* <SLink to={`/alarm/${user.userId}`}>
+              <SAlarmIcon />
+            </SLink> */}
+            {!accessToken ? null : (
+              <>
+                <SLink
+                  to={`/alarm/${user.userId}`}
+                  style={{ 'margin-right': '1.5rem' }}
+                >
+                  <SAlarmIcon />
+                </SLink>
+                <SLogout onClick={handleLogout} />
+              </>
+            )}
+          </SIconDiv>
         </Toolbar>
       </SAppBar>
     </Box>
