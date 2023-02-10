@@ -71,6 +71,7 @@ function VideoChat() {
   const [host, setHost] = useState(undefined);
 
   const [OV, setOV] = useState(null);
+  const [isFrontCamera, setIsFrontCamera] = false;
 
   useEffect(() => {
     window.addEventListener('beforeunload', onbeforeunload);
@@ -123,6 +124,34 @@ function VideoChat() {
         }
       })
       .catch(error => {});
+  };
+
+  const switchCamera = () => {
+    OV.getDevices().then(devices => {
+      var videoDevices = devices.filter(device => device.kind === 'videoinput');
+
+      if (videoDevices && videoDevicess.length > 1) {
+        var newPublisher = OV.initPublisher(undefined, {
+          videoSource: isFrontCamera
+            ? videoDevices[1].deviceId
+            : videoDevices[0].deviceId,
+          publishAudio: true,
+          publishVideo: true,
+          mirror: isFrontCamera,
+        });
+
+        setIsFrontCamera(!isFrontCamera);
+
+        session.unpublish(publisher).then(() => {
+          console.log('Old publisher unpublished!');
+
+          setPublisher(newPublisher);
+          session.publish(publisher).then(() => {
+            console.log('New publisher published!');
+          });
+        });
+      }
+    });
   };
 
   const onbeforeunload = () => {
