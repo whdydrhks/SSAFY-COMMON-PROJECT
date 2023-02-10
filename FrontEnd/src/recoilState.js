@@ -212,6 +212,10 @@ const animalState = atom({
   default: [],
 });
 
+const alarmAtom = atom({
+  key: 'alarmAtom',
+  default: [],
+});
 export {
   animalState,
   authStateAtom,
@@ -227,4 +231,5 @@ export {
   todayScheduleAtom,
   todayAtom,
   dateListAtom,
+  alarmAtom,
 };
