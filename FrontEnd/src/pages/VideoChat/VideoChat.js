@@ -130,7 +130,7 @@ function VideoChat() {
     OV.getDevices().then(devices => {
       var videoDevices = devices.filter(device => device.kind === 'videoinput');
 
-      if (videoDevices && videoDevicess.length > 1) {
+      if (videoDevices && videoDevices.length > 1) {
         var newPublisher = OV.initPublisher(undefined, {
           videoSource: isFrontCamera
             ? videoDevices[1].deviceId
