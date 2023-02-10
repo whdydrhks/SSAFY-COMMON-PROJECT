@@ -30,7 +30,7 @@ public class TimetableInfoDto {
 	public static TimetableInfoDto of(TimetableEntity timetable) {
 		return TimetableInfoDto.builder()
 				.timetableId(timetable.getId())
-				.shelterId(timetable.getShelter_id())
+				.shelterId(timetable.getShelterId())
 				.mon(timetable.getMon())
 				.tue(timetable.getTue())
 				.wed(timetable.getWed())

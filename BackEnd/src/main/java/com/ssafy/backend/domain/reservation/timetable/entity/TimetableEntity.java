@@ -40,7 +40,7 @@ public class TimetableEntity {
 //	private ShelterEntity shelter;
 
 	@Column(name = "shelter_id", nullable = false, unique = true)
-	private Long shelter_id;
+	private Long shelterId;
 
 	@Column(name = "mon", nullable = false, unique = true, length = 25)
 	private String mon;
