@@ -65,6 +65,7 @@ function Schedule() {
   const user = useRecoilValue(userAtom);
 
   useEffect(() => {
+    console.log(user.role);
     if (user.role === '') {
       navigate('/login');
     }

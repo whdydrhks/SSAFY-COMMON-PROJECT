@@ -84,30 +84,16 @@ public class dummyCreate {
 
 		//		System.out.println(shelterRepository.findById(1L).get().toString());
 
-
-		TimetableEntity timetable = TimetableEntity.builder()
-				.id(1L)
-				.shelter_id(1L)
-				.mon("0")
-				.tue("1")
-				.wed("1")
-				.thr("0")
-				.fri("1")
-				.sat("1")
-				.sun("0")
-				.build();
-		timetableRepository.save(timetable);
-
 		TimetableEntity timetable2 = TimetableEntity.builder()
 				.id(2L)
 				.shelter_id(2L)
-				.mon("1")
-				.tue("0")
-				.wed("0")
-				.thr("1")
-				.fri("0")
-				.sat("0")
-				.sun("1")
+				.mon("0000000000000000000000001")
+				.tue("0000000000000000000000002")
+				.wed("0000000000000000000000003")
+				.thr("0000000000000000000000004")
+				.fri("0000000000000000000000005")
+				.sat("0000000000000000000000006")
+				.sun("0000000000000000000000000")
 				.build();
 		timetableRepository.save(timetable2);
 
