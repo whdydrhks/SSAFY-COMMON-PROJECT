@@ -3,6 +3,8 @@ package com.ssafy.backend.domain.sample.service;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
+import com.ssafy.backend.domain.live.entity.LiveEntity;
+import com.ssafy.backend.domain.live.repository.LiveRepository;
 import com.ssafy.backend.domain.reservation.schedule.entity.ScheduleEntity;
 import com.ssafy.backend.domain.reservation.schedule.repository.ScheduleRepository;
 import com.ssafy.backend.domain.reservation.timetable.entity.TimetableEntity;
@@ -31,6 +33,7 @@ public class dummyCreate {
 
 	private final TimetableRepository timetableRepository;
 	private final ScheduleRepository scheduleRepository;
+	private final LiveRepository liveRepository;
 
 	// 테스트용 더미 데이터 생성용
 	@Transactional
@@ -146,6 +149,50 @@ public class dummyCreate {
 				.build();
 		scheduleRepository.save(schedule4);
 
+		LiveEntity live = LiveEntity.builder()
+				.id(1L)
+				.image("string")
+				.category("개")
+				.title("111")
+				.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
+				.build();
+		liveRepository.save(live);
+
+		LiveEntity live1 = LiveEntity.builder()
+				.id(5L)
+				.image("string")
+				.category("개")
+				.title("555")
+				.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
+				.build();
+		liveRepository.save(live1);
+
+		LiveEntity live2 = LiveEntity.builder()
+				.id(3L)
+				.image("string")
+				.category("개")
+				.title("333")
+				.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
+				.build();
+		liveRepository.save(live2);
+
+		LiveEntity live13 = LiveEntity.builder()
+				.id(2L)
+				.image("string")
+				.category("개")
+				.title("222")
+				.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
+				.build();
+		liveRepository.save(live13);
+
+		LiveEntity live14 = LiveEntity.builder()
+				.id(4L)
+				.image("string")
+				.category("개")
+				.title("441")
+				.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
+				.build();
+		liveRepository.save(live14);
 
 	}
 
