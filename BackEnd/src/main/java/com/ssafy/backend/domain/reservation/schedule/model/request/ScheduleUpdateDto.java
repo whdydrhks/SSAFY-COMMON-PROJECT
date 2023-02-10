@@ -20,25 +20,25 @@ import lombok.Setter;
 public class ScheduleUpdateDto {
 
 	private String day;
-	private int state;
+	// private int state;
 	private int time;
 	private String room;
 
-	public static ScheduleDto of(ScheduleEntity schedule) {
-		return ScheduleDto.builder()
-				.day(schedule.getDay())
-				.state(schedule.getState())
-				.time(schedule.getTime())
-				.room(schedule.getRoom())
-				.build();
-	}
-
-	public ScheduleEntity toEntity() {
-		return ScheduleEntity.builder()
-				.day(this.day)
-				.state(this.state)
-				.time(this.time)
-				.room(this.room)
-				.build();
-	}
+//	public static ScheduleDto of(ScheduleEntity schedule) {
+//		return ScheduleDto.builder()
+//				.day(schedule.getDay())
+//				// .state(schedule.getState())
+//				.time(schedule.getTime())
+//				.room(schedule.getRoom())
+//				.build();
+//	}
+//
+//	public ScheduleEntity toEntity() {
+//		return ScheduleEntity.builder()
+//				.day(this.day)
+//				// .state(this.state)
+//				.time(this.time)
+//				.room(this.room)
+//				.build();
+//	}
 }

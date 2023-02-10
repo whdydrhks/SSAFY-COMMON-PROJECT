@@ -13,7 +13,7 @@ public interface TimetableRepository extends JpaRepository<TimetableEntity, Long
 //
 //	List<TimetableEntity> findByNameContainingIgnoreCaseAndExpiredLike(String name);
 //
-	Optional<TimetableEntity> findById(Long id);
+	Optional<TimetableEntity> findByShelterId(Long shelterId);
 //
 //	Optional<TimetableEntity> findByNameAndTelNumber(String name, String telNumber);
 //

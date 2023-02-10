@@ -24,33 +24,33 @@ public class ScheduleInfoDto {
 	private Long userId;
 	private String userNickname;
 	private String day;
-	private int state;
+	// private int state;
 	private int time;
-
 	private String room;
 
 	public static ScheduleInfoDto of(ScheduleEntity schedule) {
 		return ScheduleInfoDto.builder()
+				.scheduleId(schedule.getId())
 				.shelterId(schedule.getShelter().getId())
 				.shelterNickname(schedule.getShelter().getName())
 				.userId(schedule.getUser().getId())
 				.userNickname(schedule.getUser().getNickname())
 				.day(schedule.getDay())
-				.state(schedule.getState())
+				// .state(schedule.getState())
 				.time(schedule.getTime())
 				.room(schedule.getRoom())
 				.build();
 	}
 
-	public ScheduleEntity toEntity() {
-		return ScheduleEntity.builder()
-				.id(this.scheduleId)
-				.shelter(this.toEntity().getShelter())
-				.user(this.toEntity().getUser())
-				.day(this.day)
-				.state(this.state)
-				.time(this.time)
-				.room(this.room)
-				.build();
-	}
+//	public ScheduleEntity toEntity() {
+//		return ScheduleEntity.builder()
+//				.id(this.scheduleId)
+//				.shelter(this.toEntity().getShelter())
+//				.user(this.toEntity().getUser())
+//				.day(this.day)
+//				// .state(this.state)
+//				.time(this.time)
+//				.room(this.room)
+//				.build();
+//	}
 }
