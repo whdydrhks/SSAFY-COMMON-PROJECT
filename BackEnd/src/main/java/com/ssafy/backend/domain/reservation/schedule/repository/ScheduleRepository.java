@@ -5,13 +5,21 @@ import java.util.Optional;
 
 import javax.swing.text.html.Option;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import com.ssafy.backend.domain.member.entity.UserEntity;
 import com.ssafy.backend.domain.reservation.schedule.entity.ScheduleEntity;
 import com.ssafy.backend.domain.reservation.timetable.entity.TimetableEntity;
+import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
 
 public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Long> {
+
+	List<ScheduleEntity> findByUser(UserEntity user, Sort sort);
+
+	List<ScheduleEntity> findByShelter(ShelterEntity shelter, Sort sort);
+
 //	List<ScheduleEntity> findByNameContainingIgnoreCase(String name);
 //
 //	List<ScheduleEntity> findByNameContainingIgnoreCaseAndExpiredLike(String name);

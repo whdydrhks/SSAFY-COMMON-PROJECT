@@ -54,6 +54,7 @@ public class SecurityConfig {
 				.antMatchers("/test/user").hasAnyRole(Role.USER.getHighRoles())
 				.antMatchers("/test/admin").hasAnyRole(Role.ADMIN.getHighRoles())
 				.antMatchers("/*/openvidu/**").permitAll()
+				.antMatchers("/*/schedule/**").permitAll()
 				.anyRequest().authenticated();
 
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

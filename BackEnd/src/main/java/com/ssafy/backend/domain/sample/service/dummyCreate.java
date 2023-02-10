@@ -3,6 +3,8 @@ package com.ssafy.backend.domain.sample.service;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
+import com.ssafy.backend.domain.reservation.schedule.entity.ScheduleEntity;
+import com.ssafy.backend.domain.reservation.schedule.repository.ScheduleRepository;
 import com.ssafy.backend.domain.reservation.timetable.entity.TimetableEntity;
 import com.ssafy.backend.domain.reservation.timetable.repository.TimetableRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +30,7 @@ public class dummyCreate {
 	private final ShelterRepository shelterRepository;
 
 	private final TimetableRepository timetableRepository;
+	private final ScheduleRepository scheduleRepository;
 
 	// 테스트용 더미 데이터 생성용
 	@Transactional
@@ -86,7 +89,7 @@ public class dummyCreate {
 
 		TimetableEntity timetable2 = TimetableEntity.builder()
 				.id(2L)
-				.shelter_id(2L)
+				.shelterId(2L)
 				.mon("0000000000000000000000001")
 				.tue("0000000000000000000000002")
 				.wed("0000000000000000000000003")
@@ -97,5 +100,54 @@ public class dummyCreate {
 				.build();
 		timetableRepository.save(timetable2);
 
+		ScheduleEntity schedule = ScheduleEntity.builder()
+				.day("0210")
+				.time(10)
+				.room("1")
+				.shelter(shelterRepository.findByIdAndExpiredLike( 1L, "F").get())
+				.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
+				.build();
+
+		scheduleRepository.save(schedule);
+
+		ScheduleEntity schedule1 = ScheduleEntity.builder()
+				.day("0209")
+				.time(11)
+				.room("2")
+				.shelter(shelterRepository.findByIdAndExpiredLike( 1L, "F").get())
+				.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
+				.build();
+		scheduleRepository.save(schedule1);
+
+		ScheduleEntity schedule2 = ScheduleEntity.builder()
+				.day("0209")
+				.time(8)
+				.room("3")
+				.shelter(shelterRepository.findByIdAndExpiredLike( 1L, "F").get())
+				.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
+				.build();
+		scheduleRepository.save(schedule2);
+
+		ScheduleEntity schedule3 = ScheduleEntity.builder()
+				.day("0214")
+				.time(5)
+				.room("4")
+				.shelter(shelterRepository.findByIdAndExpiredLike( 1L, "F").get())
+				.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
+				.build();
+		scheduleRepository.save(schedule3);
+
+		ScheduleEntity schedule4 = ScheduleEntity.builder()
+				.day("0204")
+				.time(17)
+				.room("5")
+				.shelter(shelterRepository.findByIdAndExpiredLike( 1L, "F").get())
+				.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
+				.build();
+		scheduleRepository.save(schedule4);
+
+
 	}
+
+
 }

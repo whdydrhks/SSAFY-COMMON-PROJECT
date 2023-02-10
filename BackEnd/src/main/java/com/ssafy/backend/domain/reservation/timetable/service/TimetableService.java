@@ -33,7 +33,7 @@ public class TimetableService {
 	private final TimetableRepository timetableRepository;
 
 	public ResponseSuccessDto<?> getDayInfoById(Long shelterId) {
-		TimetableEntity findTimetable = timetableRepository.findById(shelterId)
+		TimetableEntity findTimetable = timetableRepository.findByShelterId(shelterId)
 				.orElseThrow(() -> new ApiErrorException(ApiStatus.BAD_REQUEST));
 
 
@@ -44,14 +44,14 @@ public class TimetableService {
 	}
 
 	@Transactional
-	public ResponseSuccessDto<?> update(Long shelter_Id, TimetableUpdateDto updateDto) {
+	public ResponseSuccessDto<?> update(Long shelterId, TimetableUpdateDto updateDto) {
 
-		TimetableEntity findTimetable = timetableRepository.findById(shelter_Id)
+		TimetableEntity findTimetable = timetableRepository.findByShelterId(shelterId)
 				.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
 		TimetableEntity updateTimetable = TimetableEntity.builder()
 				.id(findTimetable.getId())
-				.shelter_id(findTimetable.getShelter_id())
+				.shelterId(findTimetable.getShelterId())
 				.sun(updateDto.getDays()[0] )
 				.mon(updateDto.getDays()[1])
 				.tue(updateDto.getDays()[2])

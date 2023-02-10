@@ -26,6 +26,9 @@ public interface ShelterRepository extends JpaRepository<ShelterEntity, Long> {
 
 	Optional<ShelterEntity> findByIdAndExpiredLike(Long id, String expired);
 
+	Optional<ShelterEntity> findByUser(UserEntity user);
+
 	Long deleteByName(String name);
+
 
 }

@@ -30,7 +30,7 @@ public class TimetableRegisterDto {
 	public static TimetableDto of(TimetableEntity timetable) {
 		return TimetableDto.builder()
 				.timetableId(timetable.getId())
-				.shelterId(timetable.getShelter_id())
+				.shelterId(timetable.getShelterId())
 				.mon(timetable.getMon())
 				.tue(timetable.getTue())
 				.wed(timetable.getWed())
@@ -44,7 +44,7 @@ public class TimetableRegisterDto {
 	public TimetableEntity toEntity() {
 		return TimetableEntity.builder()
 				.id(this.timetableId)
-				.shelter_id(this.shelterId)
+				.shelterId(this.shelterId)
 				.mon(this.mon)
 				.tue(this.tue)
 				.wed(this.wed)
