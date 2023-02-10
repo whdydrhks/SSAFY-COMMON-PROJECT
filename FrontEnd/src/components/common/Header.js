@@ -5,7 +5,8 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutSharpIcon from '@mui/icons-material/LogoutSharp';
+import { Button } from '@mui/material';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
@@ -13,16 +14,15 @@ import { authStateAtom, userAtom } from '../../recoilState';
 import { getCookie, removeCookie } from '../../pages/Account/cookie';
 import helloIcon from '../../images/logo/helloIcon.png';
 import API_URL from '../../api/api';
-import '../../styles/cafe24.css';
+// import '../../styles/cafe24.css';
 
 const SAppBar = styled(AppBar)`
   position: fixed;
   padding: 4px;
-  background-color: rgba(180, 230, 230) !important;
   a {
-    font-family: 'cafe24';
+    /* font-family: 'cafe24'; */
     text-decoration: none;
-    color: black;
+    color: white;
   }
 `;
 const SHomeLogo = styled.div`
@@ -38,15 +38,16 @@ const SImg = styled.img`
   margin-right: 0.5rem;
 `;
 const SHello = styled.span`
-  font-size: 1.7rem;
+  font-size: 1.3rem;
 `;
 
-const SButton = styled.button`
-  background-color: rgba(180, 230, 230) !important;
-  font-family: 'cafe24';
-  border: none;
-  color: black;
+const SButton = styled(Button)`
   margin-left: 12px;
+  /* background-color: transparent; */
+  &:hover {
+    background-color: none;
+  }
+  pointer-events: none;
 `;
 
 function Header() {
@@ -97,7 +98,7 @@ function Header() {
           </Link>
           {!authState ? null : (
             <SButton color="inherit" onClick={handleLogout}>
-              <LogoutIcon />
+              <LogoutSharpIcon />
             </SButton>
           )}
         </Toolbar>

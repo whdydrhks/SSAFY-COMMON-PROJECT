@@ -8,7 +8,7 @@ import '../../styles/slick.css';
 import '../../styles/cafe24.css';
 import { Button, Switch } from '@mui/material';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { scheduleUserAtom, userAtom } from '../../recoilState';
+import { scheduleAtom, userAtom } from '../../recoilState';
 import API_URL from '../../api/api';
 
 const SContainer = styled.div``;
@@ -40,7 +40,7 @@ function ScheduleListUser() {
     (today.getMonth() + 1).toString().padStart(2, '0') +
     today.getDate().toString().padStart(2, '0');
   const user = useRecoilValue(userAtom);
-  const [scheduleUser, setScheduleUser] = useRecoilState(scheduleUserAtom);
+  const [scheduleUser, setScheduleUser] = useRecoilState(scheduleAtom);
   const [dateList, setDateList] = useState([]);
 
   useEffect(() => {

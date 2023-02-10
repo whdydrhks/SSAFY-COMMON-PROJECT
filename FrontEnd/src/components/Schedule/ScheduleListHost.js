@@ -7,16 +7,22 @@
 /* eslint-disable react/jsx-props-no-spreading */
 
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import '../../styles/slick-theme.css';
 import '../../styles/slick.css';
 import '../../styles/cafe24.css';
 import Slider from 'react-slick';
-import { Button, Switch } from '@mui/material';
-import { useRecoilValue, useRecoilState } from 'recoil';
-import { scheduleHostAtom, twoWeeksAtom, userAtom } from '../../recoilState';
+import { useRecoilState } from 'recoil';
+import {
+  scheduleAtom,
+  todayAtom,
+  todayScheduleAtom,
+  twoWeeksAtom,
+} from '../../recoilState';
 import API_URL from '../../api/api';
+import { getCookie } from '../../pages/Account/cookie';
 
 const SButtonDiv = styled.div`
   text-align: center;
@@ -73,11 +79,6 @@ const SClickButton = styled.button`
   background-color: ${props => props.bgColor};
 `;
 
-const today = new Date();
-const date =
-  (today.getMonth() + 1).toString().padStart(2, '0') +
-  today.getDate().toString().padStart(2, '0');
-
 function ScheduleListHost() {
   const settings = {
     arrows: false,
@@ -90,19 +91,33 @@ function ScheduleListHost() {
     slidesToScroll: 3,
   };
 
-  const shelterId = useRecoilValue(userAtom);
+  const navigate = useNavigate();
+  const today = new Date();
+  const todayDate =
+    (today.getMonth() + 1).toString().padStart(2, '0') +
+    today.getDate().toString().padStart(2, '0');
+  const accessToken = getCookie('accessToken');
   const [twoWeeks, setTwoWeeks] = useRecoilState(twoWeeksAtom);
-  const scheduleHost = useRecoilValue(scheduleHostAtom);
-  const [todaySchedule, setTodaySchedule] = useState([]);
-  const [isClickDate, setIsClickDate] = useState(date);
+  const [scheduleHost, setScheduleHost] = useRecoilState(scheduleAtom);
+  const [todaySchedule, setTodaySchedule] = useRecoilState(todayScheduleAtom);
+  const [isClickDate, setIsClickDate] = useRecoilState(todayAtom);
 
   const handleDateClick = event => {
-    setIsClickDate(event.target.value);
-    setTodaySchedule(
+    setIsClickDate(() => event.target.value);
+    setTodaySchedule(() =>
       scheduleHost.filter(schedule => schedule.day === event.target.value),
     );
   };
 
+  const handleDeleteSchedule = sId => {
+    if (window.confirm('해당 일정을삭제하시겠습니까?')) {
+      axios.delete(`${API_URL}/schedule/${sId}`, {
+        headers: { Authorization: accessToken },
+      });
+      // navigate('/');
+      // window.location.reload();
+    }
+  };
   useEffect(() => {
     const weeks = [];
     for (let i = 0; i < 14; i += 1) {
@@ -110,61 +125,77 @@ function ScheduleListHost() {
       const nxtDay = new Date(today.setDate(today.getDate() + i));
       const todayMonth = (nxtDay.getMonth() + 1).toString();
       const todayDate = nxtDay.getDate().toString();
-      weeks.push({ month: todayMonth, date: todayDate });
+      weeks.push({ month: todayMonth, day: todayDate });
     }
     setTwoWeeks(weeks);
-
-    setTodaySchedule(
-      scheduleHost.filter(schedule => schedule.day === isClickDate),
-    );
-    // 등록된 보호소 예약 다 갖고오기
-    // axios.get(`${API_URL}/schedule/shelters/${shelterId}`).then((res) => )
-    // 취소
-    // axios.delete(`${API_URL}/schedule/${userNickname}/${scheduleId}`).then((res) => )
+    setIsClickDate(todayDate);
+    axios
+      .get(`${API_URL}/schedule/shelters`, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+      .then(res => setScheduleHost(res.data.data));
   }, []);
 
   return (
     <>
       <Slider {...settings}>
-        {twoWeeks.map((item, index) => (
+        {twoWeeks.map((date, index) => (
           <SButtonDiv key={index}>
             <SButton
               type="button"
-              value={item.month.padStart(2, '0') + item.date.padStart(2, '0')}
-              // className={'btn' + (index === btnActive ? ' active' : '')
+              value={date.month.padStart(2, '0') + date.day.padStart(2, '0')}
               onClick={handleDateClick}
             >
-              {item.month}월 {item.date}일
+              {date.month}월 {date.day}일
             </SButton>
           </SButtonDiv>
         ))}
       </Slider>
       <STimeList>
-        {todaySchedule.map((item, index) => (
+        {todaySchedule.map((schedule, index) => (
           <STimeBox key={index}>
             <SContainer>
               <div>
                 <STime>
-                  {item.time.padStart(2, '0')}:00 ~{' '}
-                  {(Number(item.time) + 1).toString().padStart(2, '0')}:00
+                  {schedule.time.toString().padStart(2, '0')}:00 ~{' '}
+                  {(schedule.time + 1).toString().padStart(2, '0')}:00
                 </STime>
-                <SNickName>{item.userId}</SNickName>
+                <SNickName>{schedule.userNickname}</SNickName>
               </div>
               <div>
-                {today.getHours() > item.time ? (
+                {/* 클릭한 날이 오늘이면서 시간이 동일하다면 Live */}
+                {todayDate === isClickDate &&
+                today.getHours() === schedule.time ? (
+                  <SClickButton bgColor="green">Live</SClickButton>
+                ) : null}
+                {/* 클릭한 날이 오늘이면서 시간이 지났으면 완료 */}
+                {todayDate === isClickDate &&
+                today.getHours() > schedule.time ? (
                   <SClickButton bgColor="grey" disabled>
                     완료
                   </SClickButton>
                 ) : null}
-                {today.getHours().toString().padStart(2, '0') ===
-                item.time.padStart(2, '0') ? (
-                  <SClickButton bgColor="green">Live</SClickButton>
-                ) : null}
-                {today.getHours() < item.time ? (
+                {/* 클릭한 날이 오늘이면서 아직 시간이 지나지 않았으면 취소 */}
+                {todayDate === isClickDate &&
+                today.getHours() < schedule.time ? (
                   <SClickButton
                     bgColor="red"
                     onClick={() => {
-                      // axios.delete(`${API_URL}/schedule/cancle/${item.scheduleId}`);
+                      handleDeleteSchedule(schedule.scheduleId);
+                    }}
+                  >
+                    {' '}
+                    취소
+                  </SClickButton>
+                ) : null}
+                {/* 날짜가 다르다면 취소 */}
+                {todayDate !== isClickDate ? (
+                  <SClickButton
+                    bgColor="red"
+                    onClick={() => {
+                      handleDeleteSchedule(schedule.scheduleId);
                     }}
                   >
                     {' '}
