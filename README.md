@@ -10,15 +10,20 @@
 - 1대1로 예약이 가능합니다.
 - 유기동물에 대한 정보를 쉽게 파악할 수 있습니다.
 
+<br />
+
 ### :feet: 주요 기능
 	일반 사용자
     * 🏃 회원 관리 (회원가입, 로그인, 수정)
     * 📹 화상 채팅 (비디오/ 마이크 On/Off)
     * 📅 1대1 예약
+	
     보호소
     * 🐕 동물 등록 🐈
     * 📆 일정 관리		
 	* 🎥 라이브 송출
+
+<br />
 
 ### 🌐 주요 기술
 	* WebSocket
@@ -27,6 +32,8 @@
 	* JWT Authentication
 	* JPA
 	* REST API
+<br />
+
 ### 🔨 기술 스택
 📕 **Front End**
 	<img src="https://img.shields.io/badge/HTML5-E34F26?style=flat&logo=HTML5&logoColor=white"/> <img src="https://img.shields.io/badge/CSS-1572B6?style=flat&logo=CSS3&logoColor=white"/> <img src="https://img.shields.io/badge/JS-F7DF1E?style=flat&logo=JavaScript&logoColor=white"/> <img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white"/> <img  src="https://img.shields.io/badge/node.js-339933?style=flat&logo=Node.js&logoColor=white">
@@ -43,36 +50,62 @@
 
 📓 **IDE**
 <img src="https://img.shields.io/badge/VS Code-007ACC?style=flat&logo=Visual Studio Code&logoColor=white"/> <img src="https://img.shields.io/badge/STS-6DB33F?style=flat&logo=STS&logoColor=white"/> <img src="https://img.shields.io/badge/IntelliJ-000000?style=flat&logo=IntelliJ IDEA&logoColor=white"/> 
-	
+
+<br />
+
 ### 🚀 배포 주소
 	🔎 URL : [https://i8b209.p.ssafy.io/]
+
+<br />
 
 ### 🎫 ERD
 #### ![ERD 이미지](https:// 링크)
 
+<br />
+
 ### 🍏 API
 #### [API 명세서 링크](https:// url 링크)
 
+<br />
+
 ### 🎇 서비스 아키텍쳐
 #### ![서비스 아키텍쳐 이미지](https:// url 링크)
+
+<br />
 
 ## 📜 프로젝트 결과물
 
 ### 메인 페이지
 
+<br />
+
 ### 회원가입
+
+<br />
 
 ### 로그인
 
+<br />
+
 ### 라이브
+
+<br />
 
 ### 예약 현황
 
+<br />
+
 ### 입양후기
+
+<br />
 
 ### 관심동물
 
+<br />
+
 ### 마이페이지
+
+<br />
 
 ## 💂‍♂️ Team Group
 **Front End**
