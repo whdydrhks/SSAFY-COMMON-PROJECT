@@ -1,8 +1,7 @@
-package com.ssafy.backend.domain.live.entity;
+package com.ssafy.backend.domain.schedule.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +11,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 
+import com.ssafy.backend.domain.member.entity.UserEntity;
 import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
 import com.ssafy.backend.global.common.entity.BaseTimeEntity;
 
@@ -23,12 +23,12 @@ import lombok.experimental.SuperBuilder;
 
 @Entity
 @DynamicInsert
-@Table(name = "live")
+@Table(name = "schedule")
 @Getter
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
-public class LiveEntity extends BaseTimeEntity {
+public class ScheduleEntity extends BaseTimeEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -37,16 +37,27 @@ public class LiveEntity extends BaseTimeEntity {
 	@Column(name = "id", columnDefinition = "INT UNSIGNED")
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "shelter_id")
 	private ShelterEntity shelter;
 
-	@Column(name = "title")
-	private String title;
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private UserEntity user;
 
-	@Column(name = "category")
-	private String category;
+	@Column(name = "day", nullable = false, length = 10)
+	private String day;
 
-	@Column(name = "image")
-	private String image;
+	// @Column(name="state", nullable = false)
+	// private int state;
+
+	@Column(name = "time", nullable = false)
+	private int time;
+
+	@Column(name = "room", nullable = false, unique = true, length = 50)
+	private String room;
+
+	// @Column(name = "expired", nullable = false, length = 1)
+	// @ColumnDefault("'F'")
+	// private String expired;
 }

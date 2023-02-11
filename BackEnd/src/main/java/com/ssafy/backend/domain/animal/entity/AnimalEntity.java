@@ -42,7 +42,7 @@ public class AnimalEntity extends BaseTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "animal_id", columnDefinition = "INT UNSIGNED")
+	@Column(name = "id", columnDefinition = "INT UNSIGNED")
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -81,10 +81,6 @@ public class AnimalEntity extends BaseTimeEntity {
 	@Column(name = "note", nullable = false)
 	@ColumnDefault("'공란'")
 	private String note;
-
-	@Column(name = "expired", nullable = false, length = 1)
-	@ColumnDefault("'F'")
-	private String expired;
 
 	@OneToMany(mappedBy = "animal", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@Builder.Default

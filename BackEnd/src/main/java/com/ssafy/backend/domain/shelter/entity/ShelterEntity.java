@@ -42,7 +42,7 @@ public class ShelterEntity extends BaseTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "shelter_id", columnDefinition = "INT UNSIGNED")
+	@Column(name = "id", columnDefinition = "INT UNSIGNED")
 	private Long id;
 
 	@OneToOne(fetch = FetchType.LAZY)

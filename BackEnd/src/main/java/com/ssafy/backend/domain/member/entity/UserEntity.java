@@ -36,7 +36,7 @@ public class UserEntity extends BaseTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "user_id", columnDefinition = "INT UNSIGNED")
+	@Column(name = "id", columnDefinition = "INT UNSIGNED")
 	private Long id;
 
 	@Column(name = "email", nullable = false, unique = true)
@@ -61,10 +61,6 @@ public class UserEntity extends BaseTimeEntity {
 	@Column(name = "profile_img", nullable = false)
 	@ColumnDefault("'default.png'")
 	private String profileImage;
-
-	@Column(name = "expired", nullable = false, length = 1)
-	@ColumnDefault("'F'")
-	private String expired;
 
 	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private ShelterEntity shelter;
