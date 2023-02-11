@@ -17,17 +17,23 @@ import { getCookie } from '../../pages/Account/cookie';
 import { authStateAtom, userAtom } from '../../recoilState';
 
 const SBox = styled(Box)`
+  background-color: rgba(180, 230, 230);
   position: fixed;
-  background-color: white;
   left: 0;
   right: 0;
   bottom: 0;
   height: 4rem;
 `;
 
+const SBottomNavigationAction = styled(BottomNavigationAction)`
+  background-color: rgba(180, 230, 230);
+  font-family: 'cafe24';
+`;
+
 const SBottomNav = styled(BottomNavigation)`
   display: flex;
   justify-content: space-between;
+  background-color: rgba(180, 230, 230);
 `;
 
 function Nav() {
@@ -39,11 +45,11 @@ function Nav() {
     if (accessToken) {
       const decodedToken = jwtDecode(accessToken);
       const role = decodedToken.userRole;
-      const { userId } = decodedToken.userId;
+      const id = decodedToken.userId;
       const email = decodedToken.userEmail;
       axios
         .get(
-          `${API_URL}/user/${userId}`,
+          `${API_URL}/user/${id}`,
           {
             headers: {
               Authorization: accessToken,
@@ -52,16 +58,17 @@ function Nav() {
           { withCredentials: true },
         )
         .then(info => {
-          const { name, nickname, phoneNumber, profileImg } =
-            info.data.userInfo;
+          const { name, nickname, phoneNumber, profileImage, shelterId } =
+            info.data.data;
           setUser({
-            userId,
+            userId: id,
             role,
             email,
             name,
             nickname,
             phoneNumber,
-            profileImg,
+            profileImage,
+            shelterId,
           });
         });
       setAuthState(true);
@@ -71,42 +78,42 @@ function Nav() {
   return (
     <SBox>
       <SBottomNav showLabels>
-        <BottomNavigationAction
+        <SBottomNavigationAction
           label="Home"
           icon={<HomeIcon />}
           component={Link}
           to="/"
         />
 
-        <BottomNavigationAction
+        <SBottomNavigationAction
           label="라이브"
           icon={<VideocamIcon />}
           component={Link}
           to="/live"
         />
 
-        <BottomNavigationAction
+        <SBottomNavigationAction
           label="관심동물"
           icon={<PetsIcon />}
           component={Link}
           to="/animal"
         />
 
-        <BottomNavigationAction
+        <SBottomNavigationAction
           label="예약일정"
           icon={<CalendarTodayIcon />}
           component={Link}
           to="/schedule"
         />
         {!authState ? (
-          <BottomNavigationAction
+          <SBottomNavigationAction
             label="사용자"
             icon={<PersonIcon />}
             component={Link}
             to="/login"
           />
         ) : (
-          <BottomNavigationAction
+          <SBottomNavigationAction
             label="내정보"
             icon={<PersonIcon />}
             component={Link}

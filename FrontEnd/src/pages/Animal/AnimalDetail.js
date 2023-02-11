@@ -1,4 +1,6 @@
+/* eslint-disable prefer-destructuring */
 import React, { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import Modal from 'react-modal';
 import { Button } from '@mui/material';
 import axios from 'axios';
@@ -9,7 +11,7 @@ import Nav from '../../components/common/Nav';
 import ImageCarousel from '../../components/common/ImageCarousel';
 import '../../styles/cafe24.css';
 import {
-  manageNumber,
+  manageCode,
   name,
   breed,
   gender,
@@ -17,11 +19,14 @@ import {
   weight,
   neuter,
 } from '../../images/index';
+import API_URL from '../../api/api';
+import { userAtom } from '../../recoilState';
 
 const STitle = styled.div`
   font-family: 'cafe24';
   font-size: 2rem;
-  margin-bottom: 2rem;
+  /* margin-top: 2rem; */
+  margin-bottom: 1.5rem;
   margin-left: 1rem;
   margin-right: 1rem;
 `;
@@ -154,20 +159,21 @@ const SModalMessage = styled.div`
 function AnimalDetail() {
   const navigate = useNavigate();
   const location = useLocation();
+  const userInfo = useRecoilValue(userAtom);
+  const shelterId = userInfo.shelterId;
   // console.log(location.state);
-  const key = [manageNumber, name, breed, gender, weight, neuter];
+  const key = [manageCode, name, breed, gender, weight, neuter];
   const korKey = ['관리 번호', '이름', '품종', '성별', '체중', '중성화 여부'];
   const { animal } = location.state;
   // animal 은 객체임
   const animalInformation = [
-    { manageNumber: animal.manageNumber },
+    { manageCode: animal.manageCode },
     { name: animal.name },
     { breed: animal.breed },
     { gender: animal.gender },
     { weight: animal.weight },
     { neuter: animal.neuter },
   ];
-  console.log(animal.note);
   // animalInformation.map(item =>
   //   console.log(Object.keys(item)[0], Object.values(item)[0]),
   // );
@@ -176,16 +182,15 @@ function AnimalDetail() {
   const handleModal = () => {
     setIsModal(false);
   };
-
   const handleDeleteAnimal = () => {
     // navigate 핸들러 함수 최하단으로 내려야함
-    navigate(`/animal`);
-    axios.delete('http://192.168.31.226:3000/animal', {
+    axios.delete(`${API_URL}/shelter/${shelterId}/animal/${animal.animalId}`, {
       data: {
         shelterId: {},
         animalID: animal.animalId,
       },
     });
+    navigate(`/animal`);
   };
 
   return (
@@ -204,7 +209,7 @@ function AnimalDetail() {
         </SGrayLineBox>
       </SLine>
       {animalInformation.map((Item, index) => (
-        <SInformationBox>
+        <SInformationBox key={key[index]}>
           <SInformationImg src={key[index]} alt={`${Object.keys(Item)}`} />
           <SInformationText>
             <div>{korKey[index]}</div>
@@ -222,6 +227,7 @@ function AnimalDetail() {
         <Link
           to={`/animal/update/${animal.animalId}`}
           style={{ textDecoration: 'none' }}
+          state={{ animalInformation: animal }}
         >
           <SModifyButton variant="contained" size="medium">
             수정하기

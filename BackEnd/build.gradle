@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.ssafy'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = '11'
 
 configurations {
 	compileOnly {
@@ -58,6 +58,9 @@ dependencies {
 	
 	// Javassist
 	implementation group: 'org.javassist', name: 'javassist', version: '3.27.0-GA'
+
+	// openvidu
+	implementation 'io.openvidu:openvidu-java-client:2.25.0'
 	
 	// Thumbnailator
 	implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.8'

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import {
   TextField,
@@ -13,20 +14,19 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import jwtDecode from 'jwt-decode';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 import API_URL from '../../api/api';
-import { authStateAtom, userAtom } from '../../recoilState';
+import { userAtom } from '../../recoilState';
 import { getCookie } from './cookie';
 
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const setAuthState = useSetRecoilState(authStateAtom);
-  const setUser = useSetRecoilState(userAtom);
+  const [user, setUser] = useRecoilState(userAtom);
   const onChangeUserEmail = event => {
     setEmail(event.target.value);
   };
@@ -34,8 +34,6 @@ function Login() {
     setPassword(event.target.value);
   };
   const handleLogin = () => {
-    console.log(email);
-    console.log(password);
     axios
       .post(
         `${API_URL}/auth/login`,
@@ -43,21 +41,19 @@ function Login() {
           email,
           password,
         },
-        { withCredentials: true },
+        { withCredentials: true, validateStatus: false },
       )
       .then(res => {
         console.log(res);
         if (res.status === 200) {
-          setAuthState(true);
           document.cookie = `accessToken=${res.headers.authorization}`;
           const accessToken = getCookie('accessToken');
           const decodedToken = jwtDecode(accessToken);
           const role = decodedToken.userRole;
-          const { userId } = decodedToken.userId;
-          console.log(accessToken);
+          const id = decodedToken.userId;
           axios
             .get(
-              `${API_URL}/user/${userId}`,
+              `${API_URL}/user/${id}`,
               {
                 headers: {
                   Authorization: accessToken,
@@ -66,17 +62,18 @@ function Login() {
               { withCredentials: true },
             )
             .then(info => {
-              // console.log(info);
-              const { name, nickname, phoneNumber, profileImg } =
-                info.data.userInfo;
+              console.log(info);
+              const { name, nickname, phoneNumber, profileImage, shelterId } =
+                info.data.data;
               setUser({
-                userId,
+                userId: id,
                 role,
                 email,
                 name,
                 nickname,
                 phoneNumber,
-                profileImg,
+                profileImage,
+                shelterId,
               });
             });
           navigate('/');
@@ -86,6 +83,7 @@ function Login() {
       });
   };
 
+  // console.log(user);
   return (
     <>
       <Header />
