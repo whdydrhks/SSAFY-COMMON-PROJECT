@@ -32,6 +32,11 @@ public enum ApiStatus {
 	EMAIL_DUPLICATION(HttpStatus.CONFLICT, "이미 가입된 이메일입니다.", false),
 	NICKNAME_DUPLICATION(HttpStatus.CONFLICT, "이미 사용중인 닉네임입니다.", false),
 
+	NOT_CREATE_DIRECTORY(HttpStatus.INTERNAL_SERVER_ERROR, "파일 디렉토리를 생성하지 못했습니다.", false),
+	FILE_INVALID_PATH(HttpStatus.BAD_REQUEST, "파일 경로가 올바르지 않습니다.", false),
+	FILE_NOT_UPLOAD(HttpStatus.BAD_REQUEST, "파일 업로드에 실패했습니다.", false),
+	FILE_NOT_DOWNLOAD(HttpStatus.BAD_REQUEST, "파일 다운로에 실패했습니다.", false),
+
 	// Server Error 5xx
 	INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "알 수 없는 에러입니다.", false);
 

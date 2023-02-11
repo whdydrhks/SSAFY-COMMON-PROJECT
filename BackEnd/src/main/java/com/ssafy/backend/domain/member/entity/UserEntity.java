@@ -15,6 +15,7 @@ import org.hibernate.annotations.DynamicInsert;
 
 import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
 import com.ssafy.backend.global.common.entity.BaseTimeEntity;
+import com.ssafy.backend.global.file.entity.FileEntity;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -67,5 +68,8 @@ public class UserEntity extends BaseTimeEntity {
 
 	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private ShelterEntity shelter;
+
+	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private FileEntity file;
 
 }

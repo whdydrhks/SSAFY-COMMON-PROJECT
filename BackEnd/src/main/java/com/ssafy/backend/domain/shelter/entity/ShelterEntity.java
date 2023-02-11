@@ -1,7 +1,7 @@
 package com.ssafy.backend.domain.shelter.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -83,6 +83,6 @@ public class ShelterEntity extends BaseTimeEntity {
 	// Animal과 양방향 매핑
 	@OneToMany(mappedBy = "shelter", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@Builder.Default
-	private List<AnimalEntity> animals = new ArrayList<>();
+	private Set<AnimalEntity> animals = new HashSet<>();
 
 }

@@ -171,8 +171,7 @@ public class AnimalService {
 		ShelterEntity shelter = shelterRepository.findByIdAndExpiredLike(shelterId, "F")
 			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-		List<AnimalEntity> findAnimals = shelter.getAnimals();
-		List<AnimalInfoDto> animalInfos = findAnimals
+		List<AnimalInfoDto> animalInfos = shelter.getAnimals()
 			.stream()
 			.map(AnimalInfoDto::of)
 			.collect(Collectors.toList());

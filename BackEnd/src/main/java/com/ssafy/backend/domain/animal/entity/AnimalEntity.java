@@ -1,5 +1,9 @@
 package com.ssafy.backend.domain.animal.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
@@ -15,8 +20,10 @@ import org.hibernate.annotations.DynamicInsert;
 
 import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
 import com.ssafy.backend.global.common.entity.BaseTimeEntity;
+import com.ssafy.backend.global.file.entity.FileEntity;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -74,5 +81,9 @@ public class AnimalEntity extends BaseTimeEntity {
 	@Column(name = "expired", nullable = false, length = 1)
 	@ColumnDefault("'F'")
 	private String expired;
+
+	@OneToMany(mappedBy = "animal", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@Builder.Default
+	private Set<FileEntity> files = new HashSet<>();
 
 }

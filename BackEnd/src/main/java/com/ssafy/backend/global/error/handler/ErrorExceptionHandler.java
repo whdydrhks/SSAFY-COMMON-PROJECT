@@ -42,6 +42,8 @@ public class ErrorExceptionHandler {
 	 */
 	@ExceptionHandler({Exception.class})
 	protected ResponseEntity<?> handleServerException(HttpServletRequest request, Exception e) {
+		log.info("Error Log :" + request.getContextPath() + "\n" + e);
+
 		return ResponseEntity
 			.status(HttpStatus.INTERNAL_SERVER_ERROR)
 			.body(responseUtil.buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "알 수 없는 에러입니다.",
