@@ -48,7 +48,7 @@ public class ScheduleControllerV1 {
 	}
 
 	@DeleteMapping("/{scheduleId}")
-	@ApiOperation(value="보호소 기준 삭제")
+	@ApiOperation(value="스케줄 삭제")
 	public ResponseEntity<?> deleteHostSchedule(
 		@PathVariable(name="scheduleId") Long scheduleId,
 		HttpServletRequest request) {

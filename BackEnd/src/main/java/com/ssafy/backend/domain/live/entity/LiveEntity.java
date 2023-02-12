@@ -31,10 +31,10 @@ public class LiveEntity extends BaseTimeEntity {
     @JoinColumn(name = "shelter_id")
     private ShelterEntity shelter;
 
-    @Column(name = "title")
+    @Column(name = "title", nullable = false, length = 30)
     private String title;
 
-    @Column(name = "category")
+    @Column(name = "category", nullable = false)
     private String category;
 
     @Column(name ="image")
