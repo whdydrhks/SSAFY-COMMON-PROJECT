@@ -1,9 +1,5 @@
 package com.ssafy.backend.global.file.controller;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.ResponseEntity;
@@ -16,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ssafy.backend.global.error.exception.ApiErrorException;
 import com.ssafy.backend.global.file.service.FileService;
-import com.ssafy.backend.global.util.enums.ApiStatus;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,24 +29,17 @@ public class FileControllerV1 {
 	private final FileService fileService;
 
 	@PostMapping("/upload/{category}/{id}")
-	@ApiOperation(value = "사용자 파일 업로드")
+	@ApiOperation(value = "파일 업로드")
 	public ResponseEntity<?> uploadFile(
 		@PathVariable("category") String category,
 		@PathVariable("id") Long id,
-		@RequestParam(name = "file", required = false) MultipartFile source,
+		@RequestParam(name = "file", required = false) MultipartFile file,
 		HttpServletRequest request) {
 
 		log.info("uploadFile - " + category);
 
-		if ("user".equals(category)) {
-			return ResponseEntity
-				.ok(fileService.uploadUserFile(id, source, request));
-		} else if ("animal".equals(category)) {
-			return ResponseEntity
-				.ok(fileService.uploadAnimalFile(id, source, request));
-		} else {
-			throw new ApiErrorException(ApiStatus.BAD_REQUEST);
-		}
+		return ResponseEntity
+			.ok(fileService.uploadFile(category, id, file, request));
 	}
 
 	@PostMapping("/uploadMultiple/{category}/{id}")
@@ -63,13 +50,8 @@ public class FileControllerV1 {
 		@RequestParam("files") MultipartFile[] files,
 		HttpServletRequest request) {
 
-		List<?> fileDownloadUriList = Arrays.asList(files)
-			.stream()
-			.map(file -> uploadFile(category, id, file, request))
-			.collect(Collectors.toList());
-
 		return ResponseEntity
-			.ok(fileDownloadUriList);
+			.ok(fileService.uploadMultipleFiles(category, id, files, request));
 	}
 
 	@GetMapping("/download/{category}/{file:.+}")

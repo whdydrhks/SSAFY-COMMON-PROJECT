@@ -1,5 +1,9 @@
 package com.ssafy.backend.global.file.model;
 
+import com.ssafy.backend.domain.animal.entity.AnimalEntity;
+import com.ssafy.backend.domain.member.entity.UserEntity;
+import com.ssafy.backend.global.common.model.BaseTimeDto;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,15 +16,20 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FileDto {
+public class FileDto extends BaseTimeDto {
 
-	private String name;
+	private Long id;
 
-	private String originPath;
+	private UserEntity user;
 
-	private String donwloadUrl;
+	private AnimalEntity animal;
 
-	private String type;
+	private String originName;
 
-	private int size;
+	private String storeName;
+
+	private String extension;
+
+	private String contentType;
+
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.backend.domain.member.model.request.UserRegisterDto;
 import com.ssafy.backend.domain.member.model.request.UserUpdateDto;
@@ -133,6 +134,17 @@ public class UserControllerV1 {
 
 		return ResponseEntity
 			.ok(fileService.getFilesByUser(userId, request));
+	}
+
+	@PostMapping("/{userId}/image")
+	@ApiOperation(value = "사용자 이미지 등록")
+	public ResponseEntity<?> uploadFilesByUser(
+		@PathVariable("userId") Long userId,
+		@RequestParam(name = "file", required = false) MultipartFile image,
+		HttpServletRequest request) {
+
+		return ResponseEntity
+			.ok(fileService.uploadUserFile(userId, image, request));
 	}
 
 }

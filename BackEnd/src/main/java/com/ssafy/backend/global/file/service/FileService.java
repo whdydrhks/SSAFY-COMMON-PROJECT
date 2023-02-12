@@ -9,6 +9,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
@@ -63,7 +66,7 @@ public class FileService {
 	private FileEntity animalDefault;
 
 	@Transactional
-	public ResponseSuccessDto<?> uploadUserFile(
+	public String uploadUserFile(
 		Long userId,
 		MultipartFile source,
 		HttpServletRequest request) {
@@ -93,7 +96,6 @@ public class FileService {
 		FileEntity uploadFile = null;
 
 		if (findFile == null) {
-			System.out.println("=============1");
 			uploadFile = FileEntity.builder()
 				.user(fileUser)
 				.originName(fileName)
@@ -102,7 +104,6 @@ public class FileService {
 				.storeName(storeName)
 				.build();
 		} else {
-			System.out.println("=============2");
 			uploadFile = FileEntity.builder()
 				.id(findFile.getId())
 				.user(fileUser)
@@ -120,13 +121,11 @@ public class FileService {
 		fileRepository.save(uploadFile);
 		System.out.println("=============3");
 
-		String fileDownloadUri = createDownloadUri(USER_SUB_PATH, uploadFile);
-
-		return responseUtil.buildSuccessResponse(fileDownloadUri);
+		return createDownloadUri(USER_SUB_PATH, uploadFile);
 	}
 
 	@Transactional
-	public ResponseSuccessDto<?> uploadAnimalFile(
+	public String uploadAnimalFile(
 		Long animalId,
 		MultipartFile source,
 		HttpServletRequest request) {
@@ -164,9 +163,54 @@ public class FileService {
 
 		fileRepository.save(uploadFile);
 
-		String fileDownloadUri = createDownloadUri(ANIMAL_SUB_PATH, uploadFile);
+		return createDownloadUri(ANIMAL_SUB_PATH, uploadFile);
+	}
+
+	@Transactional
+	public ResponseSuccessDto<?> uploadFile(
+		String category,
+		Long id,
+		MultipartFile file,
+		HttpServletRequest request) {
+
+		String fileDownloadUri = "null";
+
+		if ("user".equals(category)) {
+			fileDownloadUri = uploadUserFile(id, file, request);
+		} else if ("animal".equals(category)) {
+			fileDownloadUri = uploadAnimalFile(id, file, request);
+		} else {
+			throw new ApiErrorException(ApiStatus.BAD_REQUEST);
+		}
 
 		return responseUtil.buildSuccessResponse(fileDownloadUri);
+	}
+
+	@Transactional
+	public ResponseSuccessDto<?> uploadMultipleFiles(
+		String category,
+		Long id,
+		MultipartFile[] files,
+		HttpServletRequest request) {
+
+		List<?> fileDownloadUriList;
+
+		if ("user".equals(category)) {
+			fileDownloadUriList = Arrays.asList(files)
+				.stream()
+				.map(file -> uploadUserFile(id, file, request))
+				.collect(Collectors.toList());
+		} else if ("animal".equals(category)) {
+
+			fileDownloadUriList = Arrays.asList(files)
+				.stream()
+				.map(file -> uploadAnimalFile(id, file, request))
+				.collect(Collectors.toList());
+		} else {
+			throw new ApiErrorException(ApiStatus.BAD_REQUEST);
+		}
+
+		return responseUtil.buildSuccessResponse(fileDownloadUriList);
 	}
 
 	@Transactional
