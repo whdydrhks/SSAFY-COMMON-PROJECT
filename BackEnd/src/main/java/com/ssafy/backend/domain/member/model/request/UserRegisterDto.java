@@ -14,24 +14,13 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class UserSignupDto {
+public class UserRegisterDto {
 
 	private String email;
 	private String password;
 	private String name;
 	private String phoneNumber;
 	private String nickname;
-
-	public static UserSignupDto of(UserEntity user) {
-
-		return UserSignupDto.builder()
-			.email(user.getEmail())
-			.password(user.getPassword())
-			.name(user.getName())
-			.phoneNumber(user.getPhoneNumber())
-			.nickname(user.getNickname())
-			.build();
-	}
 
 	public UserEntity toEntity() {
 		return UserEntity.builder()

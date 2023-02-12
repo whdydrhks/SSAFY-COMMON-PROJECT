@@ -13,7 +13,7 @@ import com.ssafy.backend.domain.animal.model.response.AnimalInfoDto;
 import com.ssafy.backend.domain.animal.repository.AnimalRepository;
 import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
 import com.ssafy.backend.domain.shelter.repository.ShelterRepository;
-import com.ssafy.backend.global.common.model.ResponseSuccessDto;
+import com.ssafy.backend.global.common.model.response.ResponseSuccessDto;
 import com.ssafy.backend.global.error.exception.ApiErrorException;
 import com.ssafy.backend.global.util.ResponseUtil;
 import com.ssafy.backend.global.util.enums.ApiStatus;

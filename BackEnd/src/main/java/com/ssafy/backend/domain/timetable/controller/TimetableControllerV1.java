@@ -2,7 +2,7 @@ package com.ssafy.backend.domain.timetable.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import com.ssafy.backend.domain.animal.model.request.AnimalUpdateDto;
-import com.ssafy.backend.global.common.model.ResponseSuccessDto;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +19,7 @@ import com.ssafy.backend.domain.timetable.exception.NotShelterId;
 import com.ssafy.backend.domain.timetable.model.TimetableDto;
 import com.ssafy.backend.domain.timetable.model.request.TimetableUpdateDto;
 import com.ssafy.backend.domain.timetable.service.TimetableService;
+import com.ssafy.backend.global.common.model.response.ResponseSuccessDto;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

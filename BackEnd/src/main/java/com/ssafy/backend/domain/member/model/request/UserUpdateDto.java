@@ -17,26 +17,30 @@ import lombok.Setter;
 public class UserUpdateDto {
 
 	// user
-	private String password;
 	private String name;
 	private String phoneNumber;
 	private String nickname;
 
-	public static UserUpdateDto of(UserEntity user) {
-		return UserUpdateDto.builder()
-			.password(user.getPassword())
-			.name(user.getName())
-			.phoneNumber(user.getPhoneNumber())
-			.nickname(user.getNickname())
-			.build();
-	}
-
 	public UserEntity toEntity() {
 		return UserEntity.builder()
-			.password(this.password)
 			.name(this.name)
 			.phoneNumber(this.phoneNumber)
 			.nickname(this.nickname)
+			.build();
+	}
+
+	public UserEntity updateEntity(UserEntity entity) {
+		return UserEntity.builder()
+			.id(entity.getId())
+			.email(entity.getEmail())
+			.password(entity.getPassword())
+			.role(entity.getRole())
+			.name(this.getName())
+			.phoneNumber(this.getPhoneNumber())
+			.nickname(this.getNickname())
+			.profileImage(entity.getProfileImage())
+			.expired(entity.getExpired())
+			.createdDate(entity.getCreatedDate())
 			.build();
 	}
 }

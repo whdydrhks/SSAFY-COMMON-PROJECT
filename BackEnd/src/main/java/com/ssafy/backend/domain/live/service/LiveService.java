@@ -10,7 +10,7 @@ import com.ssafy.backend.domain.member.repository.UserRepository;
 import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
 import com.ssafy.backend.domain.shelter.repository.ShelterRepository;
 import com.ssafy.backend.global.common.entity.BaseTimeEntity;
-import com.ssafy.backend.global.common.model.ResponseSuccessDto;
+import com.ssafy.backend.global.common.model.response.ResponseSuccessDto;
 import com.ssafy.backend.global.error.exception.ApiErrorException;
 import com.ssafy.backend.global.util.JwtUtil;
 import com.ssafy.backend.global.util.ResponseUtil;

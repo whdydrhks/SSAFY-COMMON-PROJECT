@@ -1,4 +1,4 @@
-package com.ssafy.backend.global.common.model;
+package com.ssafy.backend.global.common.model.response;
 
 import java.time.ZonedDateTime;
 

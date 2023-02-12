@@ -15,7 +15,7 @@ import com.ssafy.backend.domain.timetable.entity.TimetableEntity;
 import com.ssafy.backend.domain.timetable.model.request.TimetableUpdateDto;
 import com.ssafy.backend.domain.timetable.model.response.TimetableInfoDto;
 import com.ssafy.backend.domain.timetable.repository.TimetableRepository;
-import com.ssafy.backend.global.common.model.ResponseSuccessDto;
+import com.ssafy.backend.global.common.model.response.ResponseSuccessDto;
 import com.ssafy.backend.global.error.exception.ApiErrorException;
 import com.ssafy.backend.global.util.ResponseUtil;
 import com.ssafy.backend.global.util.enums.ApiStatus;

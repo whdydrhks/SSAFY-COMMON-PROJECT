@@ -11,7 +11,7 @@ import com.ssafy.backend.domain.shelter.model.request.ShelterRegisterDto;
 import com.ssafy.backend.domain.shelter.model.request.ShelterUpdateDto;
 import com.ssafy.backend.domain.shelter.model.response.ShelterInfoDto;
 import com.ssafy.backend.domain.shelter.repository.ShelterRepository;
-import com.ssafy.backend.global.common.model.ResponseSuccessDto;
+import com.ssafy.backend.global.common.model.response.ResponseSuccessDto;
 import com.ssafy.backend.global.error.exception.ApiErrorException;
 import com.ssafy.backend.global.util.ResponseUtil;
 import com.ssafy.backend.global.util.enums.ApiStatus;

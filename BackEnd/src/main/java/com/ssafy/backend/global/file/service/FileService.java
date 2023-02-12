@@ -28,7 +28,7 @@ import com.ssafy.backend.domain.animal.entity.AnimalEntity;
 import com.ssafy.backend.domain.animal.repository.AnimalRepository;
 import com.ssafy.backend.domain.member.entity.UserEntity;
 import com.ssafy.backend.domain.member.repository.UserRepository;
-import com.ssafy.backend.global.common.model.ResponseSuccessDto;
+import com.ssafy.backend.global.common.model.response.ResponseSuccessDto;
 import com.ssafy.backend.global.error.exception.ApiErrorException;
 import com.ssafy.backend.global.error.exception.FileErrorException;
 import com.ssafy.backend.global.file.entity.FileEntity;

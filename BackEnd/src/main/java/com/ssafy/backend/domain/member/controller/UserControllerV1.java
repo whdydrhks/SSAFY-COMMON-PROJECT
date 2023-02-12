@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ssafy.backend.domain.member.model.request.UserSignupDto;
+import com.ssafy.backend.domain.member.model.request.UserRegisterDto;
 import com.ssafy.backend.domain.member.model.request.UserUpdateDto;
 import com.ssafy.backend.domain.member.service.UserService;
 
@@ -52,7 +52,7 @@ public class UserControllerV1 {
 	@PostMapping
 	@ApiOperation(value = "회원 가입")
 	public ResponseEntity<?> signup(
-		@RequestBody UserSignupDto signupDto,
+		@RequestBody UserRegisterDto signupDto,
 		HttpServletRequest request) {
 
 		return ResponseEntity
@@ -88,6 +88,39 @@ public class UserControllerV1 {
 
 		return ResponseEntity
 			.ok(userService.updateExpire(userId, true, request));
+	}
+
+	//	@PostMapping
+	//	@ApiOperation(value = "사용자 중복 아이디 조회")
+	//	public ResponseEntity<?> userShelter(
+	//		@RequestParam(value = "keyword", required = true) String keyword,
+	//		HttpServletRequest request) {
+	//
+	//		return ResponseEntity
+	//			.ok(userService.checkUser(keyword));
+	//	}
+
+	@PostMapping("/{userId}/password")
+	@ApiOperation(value = "비밀번호 검사")
+	public ResponseEntity<?> checkPassword(
+		@PathVariable(name = "userId") Long userId,
+		@RequestParam(name = "password") String password,
+		HttpServletRequest request) {
+
+		return ResponseEntity
+			.ok(userService.checkPassword(userId, password, request));
+	}
+
+	@PutMapping("/{userId}/password")
+	@ApiOperation(value = "비밀번호 수정")
+	public ResponseEntity<?> updatePassword(
+		@PathVariable(name = "userId") Long userId,
+		@RequestParam(name = "curPassword") String curPassword,
+		@RequestParam(name = "newPassword") String newPassword,
+		HttpServletRequest request) {
+
+		return ResponseEntity
+			.ok(userService.updatePassword(userId, curPassword, newPassword, request));
 	}
 
 }

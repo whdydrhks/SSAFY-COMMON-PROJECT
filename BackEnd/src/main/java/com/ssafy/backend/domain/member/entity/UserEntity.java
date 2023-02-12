@@ -20,6 +20,7 @@ import com.ssafy.backend.global.file.entity.FileEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
@@ -42,9 +43,11 @@ public class UserEntity extends BaseTimeEntity {
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 
+	@Setter
 	@Column(name = "password")
 	private String password;
 
+	@Setter
 	@Column(name = "role", nullable = false, length = 20)
 	@ColumnDefault("'USER'")
 	private String role;

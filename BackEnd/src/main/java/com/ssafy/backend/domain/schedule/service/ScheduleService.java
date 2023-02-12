@@ -23,7 +23,7 @@ import com.ssafy.backend.domain.shelter.model.ShelterDto;
 import com.ssafy.backend.domain.shelter.model.response.ShelterInfoDto;
 import com.ssafy.backend.domain.shelter.repository.ShelterRepository;
 import com.ssafy.backend.domain.timetable.repository.TimetableRepository;
-import com.ssafy.backend.global.common.model.ResponseSuccessDto;
+import com.ssafy.backend.global.common.model.response.ResponseSuccessDto;
 import com.ssafy.backend.global.error.exception.ApiErrorException;
 import com.ssafy.backend.global.util.JwtUtil;
 import com.ssafy.backend.global.util.ResponseUtil;
