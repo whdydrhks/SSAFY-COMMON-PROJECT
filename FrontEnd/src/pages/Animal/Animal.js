@@ -29,6 +29,7 @@ function Animal() {
 const Sh1 = styled.h1`
   font-size: 2rem;
   font-family: 'cafe24';
+  margin-top: 1rem;
   // margin-left: 1rem;
 `;
 
@@ -44,6 +45,7 @@ const STitle = styled.div`
 const SCreateButton = styled(Button)`
   font-family: 'cafe24';
   border-radius: 10px;
+  margin-top: 1rem;
   /* margin-right: 1rem; */
 `;
 

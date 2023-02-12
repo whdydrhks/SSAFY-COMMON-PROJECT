@@ -3,7 +3,7 @@
 /* eslint-disable import/no-named-as-default */
 /* eslint-disable import/no-named-as-default-member */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
@@ -69,14 +69,12 @@ const SMoreLink = styled(Link)`
   cursor: pointer;
 `;
 
-// const SReviewContainer = styled.div``;
+const SBox = styled.div`
+  margin-left: 2rem;
+  margin-right: 2rem;
+`;
 
 function Home() {
-  const userInfo = useRecoilValue(userAtom);
-  useEffect(() => {
-    console.log(userInfo);
-  });
-
   return (
     <>
       <Header />

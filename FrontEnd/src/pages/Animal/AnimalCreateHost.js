@@ -197,6 +197,7 @@ function AnimalCreateHost() {
           <form onSubmit={addAnimal}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
+                {/* 관리 번호 */}
                 <STypography component="h6" variant="body2">
                   관리번호
                 </STypography>
@@ -210,6 +211,8 @@ function AnimalCreateHost() {
                 />
               </Grid>
             </Grid>
+
+            {/* 이름 */}
             <Grid item xs={12}>
               <STypography component="h6" variant="body2">
                 이름

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Avatar,
+  // Avatar,
   Box,
   Button,
   Checkbox,
@@ -11,6 +11,7 @@ import {
   Typography,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import API_URL from '../../api/api';
@@ -125,9 +126,10 @@ function SignUp() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
+          {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}> */}
+          <LockOutlinedIcon />
+          <br />
+          {/* </Avatar> */}
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
@@ -241,6 +243,7 @@ function SignUp() {
                 </Typography>
               )}
             </Grid>
+            <br />
             <Grid item xs={12}>
               <Typography component="h6" variant="body2">
                 이름
@@ -255,6 +258,7 @@ function SignUp() {
                 onChange={handleName}
               />
             </Grid>
+            <br />
             <Grid item xs={12}>
               <Typography component="h6" variant="body2">
                 닉네임
@@ -330,9 +334,9 @@ function SignUp() {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link to="/login" variant="body2">
+              <SLoginLink to="/login" variant="body2">
                 로그인
-              </Link>
+              </SLoginLink>
             </Grid>
           </Grid>
         </Box>
@@ -341,5 +345,9 @@ function SignUp() {
     </>
   );
 }
+
+const SLoginLink = styled(Link)`
+  text-decoration: none;
+`;
 
 export default SignUp;
