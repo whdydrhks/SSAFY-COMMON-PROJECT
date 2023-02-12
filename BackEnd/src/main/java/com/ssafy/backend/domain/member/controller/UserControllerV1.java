@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.backend.domain.member.model.request.UserRegisterDto;
 import com.ssafy.backend.domain.member.model.request.UserUpdateDto;
 import com.ssafy.backend.domain.member.service.UserService;
+import com.ssafy.backend.global.file.service.FileService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,6 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserControllerV1 {
 
 	private final UserService userService;
+	private final FileService fileService;
 
 	@GetMapping
 	@ApiOperation(value = "사용자 조회")
@@ -121,6 +123,16 @@ public class UserControllerV1 {
 
 		return ResponseEntity
 			.ok(userService.updatePassword(userId, curPassword, newPassword, request));
+	}
+
+	@GetMapping("/{userId}/image")
+	@ApiOperation(value = "사용자 이미지 조회")
+	public ResponseEntity<?> getFilesByUser(
+		@PathVariable("userId") Long userId,
+		HttpServletRequest request) {
+
+		return ResponseEntity
+			.ok(fileService.getFilesByUser(userId, request));
 	}
 
 }

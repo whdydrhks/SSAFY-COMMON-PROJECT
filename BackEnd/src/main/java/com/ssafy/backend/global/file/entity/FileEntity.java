@@ -1,6 +1,5 @@
 package com.ssafy.backend.global.file.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import com.ssafy.backend.domain.animal.entity.AnimalEntity;
@@ -63,8 +61,4 @@ public class FileEntity extends BaseTimeEntity {
 
 	//	@Column(name = "size", nullable = false)
 	//	private int size;
-
-	@Column(name = "expired", nullable = false, length = 1)
-	@ColumnDefault("'F'")
-	private String expired;
 }

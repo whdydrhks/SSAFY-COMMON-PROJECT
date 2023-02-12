@@ -59,6 +59,9 @@ public class FileService {
 	@Value("${file.upload.animalPath}")
 	private String ANIMAL_SUB_PATH = "animal";
 
+	private FileEntity userDefault;
+	private FileEntity animalDefault;
+
 	@Transactional
 	public ResponseSuccessDto<?> uploadUserFile(
 		Long userId,
@@ -117,17 +120,9 @@ public class FileService {
 		fileRepository.save(uploadFile);
 		System.out.println("=============3");
 
-		String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-			.path("/v1/file")
-			.path("/download").path("/" + USER_SUB_PATH)
-			.path("/" + storeName).path("." + fileExt)
-			//	.path("/" + fileName).path("." + fileType)
-			.toUriString();
+		String fileDownloadUri = createDownloadUri(USER_SUB_PATH, uploadFile);
 
-		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(fileDownloadUri);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(fileDownloadUri);
 	}
 
 	@Transactional
@@ -169,17 +164,9 @@ public class FileService {
 
 		fileRepository.save(uploadFile);
 
-		String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-			.path("/v1/file")
-			.path("/download").path("/" + ANIMAL_SUB_PATH)
-			.path("/" + storeName).path("." + fileExt)
-			//	.path("/" + fileName).path("." + fileType)
-			.toUriString();
+		String fileDownloadUri = createDownloadUri(ANIMAL_SUB_PATH, uploadFile);
 
-		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(fileDownloadUri);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(fileDownloadUri);
 	}
 
 	@Transactional
@@ -208,34 +195,7 @@ public class FileService {
 
 		Long updatedFileId = fileRepository.save(updateFile).getId();
 
-		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(updatedFileId);
-
-		return resp;
-	}
-
-	@Transactional
-	private String storeFile(MultipartFile file, String subPath, String fileName, String storeName) {
-
-		Path fileStoragePath = createDirectories(subPath);
-
-		try {
-			if (fileName.contains("..")) {
-				throw new FileErrorException(ApiStatus.FILE_INVALID_PATH, fileName);
-			}
-
-			Path targetLocation = fileStoragePath.resolve(storeName).normalize();
-
-			System.out.println("path : " + targetLocation.toString());
-
-			Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-
-			return targetLocation.toString();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-			throw new FileErrorException(ApiStatus.FILE_NOT_UPLOAD, fileName);
-		}
+		return responseUtil.buildSuccessResponse(updatedFileId);
 	}
 
 	@Transactional
@@ -284,6 +244,62 @@ public class FileService {
 	public void deleteFile(Long fileId) {
 
 		fileRepository.deleteById(fileId);
+	}
+
+	@Transactional
+	public ResponseSuccessDto<?> getFilesByUser(
+		Long userId,
+		HttpServletRequest request) {
+
+		UserEntity findUser = userRepository.findByIdAndExpiredLike(userId, "F")
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+
+		// 사용자 이미지를 찾지 못하면 userDefault 이미지를 불러옴
+		FileEntity findFile = fileRepository.findByUserAndExpiredLike(findUser, "F")
+			.orElse(fileRepository.findByStoreName("default_profile").get());
+
+		String fileDownloadUri = createDownloadUri(USER_SUB_PATH, findFile);
+
+		return responseUtil.buildSuccessResponse(fileDownloadUri);
+	}
+
+	@Transactional
+	private String storeFile(MultipartFile file, String subPath, String fileName, String storeName) {
+
+		Path fileStoragePath = createDirectories(subPath);
+
+		try {
+			if (fileName.contains("..")) {
+				throw new FileErrorException(ApiStatus.FILE_INVALID_PATH, fileName);
+			}
+
+			Path targetLocation = fileStoragePath.resolve(storeName).normalize();
+
+			System.out.println("path : " + targetLocation.toString());
+
+			Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
+			return targetLocation.toString();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new FileErrorException(ApiStatus.FILE_NOT_UPLOAD, fileName);
+		}
+	}
+
+	/**
+	 * 파일 다운로드 패스를 만드는 메소드
+	 *
+	 * @param
+	 * @return
+	 */
+	@Transactional
+	private String createDownloadUri(String subPath, FileEntity file) {
+		return ServletUriComponentsBuilder.fromCurrentContextPath()
+			.path("/v1/file")
+			.path("/download").path("/" + subPath)
+			.path("/" + file.getStoreName()).path("." + file.getExtension())
+			.toUriString();
 	}
 
 	/**

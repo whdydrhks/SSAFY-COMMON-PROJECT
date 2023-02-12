@@ -18,6 +18,8 @@ import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
 import com.ssafy.backend.domain.shelter.repository.ShelterRepository;
 import com.ssafy.backend.domain.timetable.entity.TimetableEntity;
 import com.ssafy.backend.domain.timetable.repository.TimetableRepository;
+import com.ssafy.backend.global.file.entity.FileEntity;
+import com.ssafy.backend.global.file.repository.FileRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,6 +28,8 @@ import lombok.RequiredArgsConstructor;
 public class dummyCreate {
 
 	private final PasswordEncoder passwordEncoder;
+
+	private final FileRepository fileRepository;
 
 	private final UserRepository userRepository;
 	private final AnimalRepository animalRepository;
@@ -39,6 +43,26 @@ public class dummyCreate {
 	@Transactional
 	@PostConstruct
 	public void testInitializing() {
+
+		// 기본 유저 이미지 생성
+		FileEntity file = FileEntity.builder()
+			.originName("default_profile")
+			.storeName("default_profile")
+			.contentType("image/png")
+			.extension("png")
+			.build();
+
+		fileRepository.save(file);
+
+		// 기본 동물 이미지 생성
+		file = FileEntity.builder()
+			.originName("animal_profile")
+			.storeName("animal_profile")
+			.contentType("image/png")
+			.extension("png")
+			.build();
+
+		fileRepository.save(file);
 
 		// 멤버 생성
 		for (int i = 1; i <= 15; i++) {
