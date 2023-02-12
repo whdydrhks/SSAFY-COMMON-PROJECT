@@ -21,7 +21,6 @@ import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Nav from '../../components/common/Nav';
 import Header from '../../components/common/Header';
-import '../../styles/cafe24.css';
 import API_URL from '../../api/api';
 import { userAtom, animalState } from '../../recoilState';
 
@@ -39,16 +38,35 @@ const SH1 = styled.h1`
 
 const STemp = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: left;
 `;
+
+const STypography = styled(Typography)`
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+`;
+
 const SFileUploadButton = styled(Button)`
   font-family: 'cafe24';
+  text-align: left;
+  margin-top: 1rem;
 `;
 
 const SPreviewCard = styled(Grid)`
   display: flex;
   justify-content: center;
 `;
+
+const SSubmit = styled.div`
+  margin-top: 2rem;
+  text-align: right;
+`;
+
+const SButton = styled(Button)`
+  font-family: 'cafe24';
+  font-size: 1.5rem;
+`;
+
 function AnimalUpdateHost() {
   const navigate = useNavigate;
   const animalId = useParams();
@@ -202,9 +220,9 @@ function AnimalUpdateHost() {
 
               {/* 관리 번호 */}
               <Grid item xs={12}>
-                <Typography component="h6" variant="body2">
+                <STypography component="h6" variant="body2">
                   관리번호
-                </Typography>
+                </STypography>
                 <TextField
                   type="text"
                   onChange={handleManageCode}
@@ -219,9 +237,9 @@ function AnimalUpdateHost() {
 
               {/* 이름 */}
               <Grid item xs={12}>
-                <Typography component="h6" variant="body2">
+                <STypography component="h6" variant="body2">
                   이름
-                </Typography>
+                </STypography>
                 <TextField
                   type="text"
                   onChange={handleName}
@@ -234,9 +252,9 @@ function AnimalUpdateHost() {
 
               {/* 나이 */}
               <Grid item xs={12}>
-                <Typography component="h6" variant="body2">
+                <STypography component="h6" variant="body2">
                   나이
-                </Typography>
+                </STypography>
                 <TextField
                   type="text"
                   onChange={handleAge}
@@ -249,9 +267,9 @@ function AnimalUpdateHost() {
 
               {/* 성별 */}
               <Grid item xs={12}>
-                <Typography component="h6" variant="body2">
+                <STypography component="h6" variant="body2">
                   성별
-                </Typography>
+                </STypography>
                 <TextField
                   select
                   value={gender}
@@ -265,9 +283,9 @@ function AnimalUpdateHost() {
 
               {/* 품종 */}
               <Grid item xs={12}>
-                <Typography component="h6" variant="body2">
+                <STypography component="h6" variant="body2">
                   품종
-                </Typography>
+                </STypography>
                 <TextField
                   type="text"
                   onChange={handleBreed}
@@ -280,9 +298,9 @@ function AnimalUpdateHost() {
 
               {/* 체중 */}
               <Grid item xs={12}>
-                <Typography item xs={12}>
+                <STypography item xs={12}>
                   체중
-                </Typography>
+                </STypography>
                 <TextField
                   type="number"
                   value={weight}
@@ -296,9 +314,9 @@ function AnimalUpdateHost() {
 
               {/* 중성화 여부 */}
               <Grid item xs={12}>
-                <Typography component="h6" variant="body2">
+                <STypography component="h6" variant="body2">
                   중성화 여부
-                </Typography>
+                </STypography>
                 <TextField
                   select
                   value={neuter}
@@ -312,9 +330,9 @@ function AnimalUpdateHost() {
 
               {/* 특징 */}
               <Grid item xs={12}>
-                <Typography component="h6" variant="body2">
+                <STypography component="h6" variant="body2">
                   특징
-                </Typography>
+                </STypography>
                 <TextField
                   onChange={handleNote}
                   multiline
@@ -328,9 +346,9 @@ function AnimalUpdateHost() {
 
               {/* 사진 */}
               <Grid item xs={12}>
-                <Typography component="h6" variant="body2">
+                <STypography component="h6" variant="body2">
                   사진
-                </Typography>
+                </STypography>
                 <Box sx={{ flexGrow: 1 }}>
                   <Grid container spacing={2}>
                     {previews.map((image, imageId) => (
@@ -354,25 +372,29 @@ function AnimalUpdateHost() {
                   </Grid>
                 </Box>
               </Grid>
-
-              {/* 사진 업로드 */}
-              <Grid item xs={12}>
-                <STemp>
-                  <SFileUploadButton variant="contained" component="label">
-                    파일 업로드
-                    <input
-                      type="file"
-                      hidden
-                      onChange={handleImages}
-                      multiple="multiple"
-                      accept="image/*"
-                    />
-                  </SFileUploadButton>
-                </STemp>
-              </Grid>
             </Grid>
 
-            <Button type="submit">동물 수정하기</Button>
+            {/* 사진 업로드 */}
+            <Grid item xs={12}>
+              <STemp>
+                <SFileUploadButton variant="contained" component="label">
+                  파일 업로드
+                  <input
+                    type="file"
+                    hidden
+                    onChange={handleImages}
+                    multiple="multiple"
+                    accept="image/*"
+                  />
+                </SFileUploadButton>
+              </STemp>
+            </Grid>
+
+            <SSubmit>
+              <SButton type="submit" variant="contained" component="label">
+                동물 수정하기
+              </SButton>
+            </SSubmit>
           </form>
         </Box>
       </Container>

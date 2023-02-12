@@ -9,12 +9,11 @@ import axios from 'axios';
 import styled from 'styled-components';
 import '../../styles/slick-theme.css';
 import '../../styles/slick.css';
-import '../../styles/cafe24.css';
 import Slider from 'react-slick';
 import { Button, FormControlLabel, Switch } from '@mui/material';
 import { useRecoilValue, useRecoilState } from 'recoil';
 import API_URL from '../../api/api';
-import { userAtom } from '../../recoilState';
+import { dayTimeAtom, todayTimeAtom, userAtom } from '../../recoilState';
 
 const SButtonDiv = styled.div`
   text-align: center;
@@ -79,8 +78,8 @@ function TimeTableHost() {
 
   let newDayTime = [];
   const { shelterId } = useRecoilValue(userAtom);
-  const [dayTime, setDayTime] = useState([]);
-  const [todayTime, setTodayTime] = useState('');
+  const [dayTime, setDayTime] = useRecoilState(dayTimeAtom);
+  const [todayTime, setTodayTime] = useRecoilState(todayTimeAtom);
 
   const false2true = time => {
     setTodayTime(
@@ -179,7 +178,7 @@ function TimeTableHost() {
     axios
       .get(`${API_URL}/timetable/${shelterId}`, { shelterId })
       .then(res =>
-        setDayTime(() => [
+        setDayTime([
           res.data.data.sun,
           res.data.data.mon,
           res.data.data.tue,
@@ -303,19 +302,19 @@ function TimeTableHost() {
               // className={'btn' + (index === btnActive ? ' active' : '')}
               onClick={() => {
                 if (item === '일요일') {
-                  setTodayTime(() => dayTime[0]);
+                  setTodayTime(dayTime[0]);
                 } else if (item === '월요일') {
-                  setTodayTime(() => dayTime[1]);
+                  setTodayTime(dayTime[1]);
                 } else if (item === '화요일') {
-                  setTodayTime(() => dayTime[2]);
+                  setTodayTime(dayTime[2]);
                 } else if (item === '수요일') {
-                  setTodayTime(() => dayTime[3]);
+                  setTodayTime(dayTime[3]);
                 } else if (item === '목요일') {
-                  setTodayTime(() => dayTime[4]);
+                  setTodayTime(dayTime[4]);
                 } else if (item === '금요일') {
-                  setTodayTime(() => dayTime[5]);
+                  setTodayTime(dayTime[5]);
                 } else if (item === '토요일') {
-                  setTodayTime(() => dayTime[6]);
+                  setTodayTime(dayTime[6]);
                 }
               }}
             >

@@ -12,6 +12,7 @@ import {
   Container,
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import axios from 'axios';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useRecoilState } from 'recoil';
@@ -21,6 +22,29 @@ import Nav from '../../components/common/Nav';
 import API_URL from '../../api/api';
 import { userAtom } from '../../recoilState';
 import { getCookie } from './cookie';
+// import '../../styles/cafe24.css';
+
+const SButton = styled.button`
+  background-color: red;
+`;
+
+const SFindLink = styled(Link)`
+  text-decoration: none;
+`;
+
+const SignupLink = styled(Link)`
+  font-size: 'cafe24';
+  border-radius: 10px;
+  text-decoration: none;
+  /* box-shadow: 2px 2px 2px 2px gray; */
+`;
+
+const SFormControlLabel = styled.div`
+  /* position: relative; */
+  float: right;
+  /* margin-top: 1rem; */
+  margin-right: 15rem;
+`;
 
 function Login() {
   const navigate = useNavigate();
@@ -33,6 +57,7 @@ function Login() {
   const onChangeUserPassword = event => {
     setPassword(event.target.value);
   };
+
   const handleLogin = () => {
     axios
       .post(
@@ -83,6 +108,13 @@ function Login() {
       });
   };
 
+  // Enter 클릭 시 적용
+  // const handleOnKeyPress = e => {
+  //   if (e.key === 'Enter') {
+  //     handleLogin();
+  //   }
+  // };
+
   // console.log(user);
   return (
     <>
@@ -96,12 +128,14 @@ function Login() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
+          {/* <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}> */}
+
+          <LockOutlinedIcon />
+          <br />
           <Typography component="h1" variant="h5">
-            Sign in
+            로그인
           </Typography>
+          {/* <form onSubmit={handleOnKeyPress}> */}
           <TextField
             margin="normal"
             label="이메일"
@@ -124,10 +158,14 @@ function Login() {
             value={password}
             onChange={onChangeUserPassword}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember Me"
-          />
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="로그인 상태 유지"
+              />
+            </Grid>
+          </Grid>
           <Button
             type="submit"
             fullWidth
@@ -139,10 +177,14 @@ function Login() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link to="/findpassword">비밀번호 찾기</Link>
+              <SFindLink to="/findpassword">
+                <Button>비밀번호 찾기</Button>
+              </SFindLink>
             </Grid>
             <Grid item>
-              <Link to="/signup">회원가입</Link>
+              <SignupLink to="/signup">
+                <Button>회원가입</Button>
+              </SignupLink>
             </Grid>
           </Grid>
         </Box>

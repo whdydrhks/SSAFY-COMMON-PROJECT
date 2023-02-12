@@ -9,7 +9,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 import ImageCarousel from '../../components/common/ImageCarousel';
-import '../../styles/cafe24.css';
 import {
   manageCode,
   name,
@@ -23,7 +22,6 @@ import API_URL from '../../api/api';
 import { userAtom } from '../../recoilState';
 
 const STitle = styled.div`
-  font-family: 'cafe24';
   font-size: 2rem;
   /* margin-top: 2rem; */
   margin-bottom: 1.5rem;
@@ -50,7 +48,6 @@ const SGrayLine = styled.div`
 `;
 
 const SDetailInformation = styled.div`
-  font-family: 'cafe24';
   font-size: 24;
   width: 30%;
   text-align: center;
@@ -78,7 +75,6 @@ const SInformationText = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-family: 'cafe24';
   font-size: 16px;
   border: 1px solid #1f2247;
   border-radius: 40px;
@@ -98,16 +94,25 @@ const SNoteImg = styled.img`
   height: 2rem;
   margin-top: 0.2rem;
   margin-bottom: 0.5rem;
-  /* margin-right: 1rem; */
+  margin-right: 1rem;
 `;
 
 const SInformationNote = styled.div`
-  display: inline-block;
+  /* display: inline-block;
   width: 80%;
   border: 1px solid #1f2247;
-  border-radius: 10px;
+  border-radius: 40px;
   padding: 10px;
-  font-family: 'cafe24';
+  margin-left: 1rem; */
+
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
+  border: 1px solid #1f2247;
+  border-radius: 40px;
+  padding: 10px;
 `;
 
 const SButtonBox = styled.div`
@@ -117,14 +122,12 @@ const SButtonBox = styled.div`
 `;
 
 const SModifyButton = styled(Button)`
-  font-family: 'cafe24';
   border-radius: 10px;
   margin-right: 1rem;
   box-shadow: 2px 2px 2px 2px gray;
 `;
 
 const SDeleteButton = styled(Button)`
-  font-family: 'cafe24';
   background-color: red;
   border-radius: 10px;
   box-shadow: 2px 2px 2px 2px gray;
@@ -143,17 +146,14 @@ const SButtonBlock = styled.div`
 `;
 
 const SModalDeletebutton = styled(Button)`
-  font-family: 'cafe24';
   font-size: 2rem;
 `;
 
 const SModalCancelbutton = styled(Button)`
-  font-family: 'cafe24';
   font-size: 2rem;
 `;
 
 const SModalMessage = styled.div`
-  font-family: 'cafe24';
   font-size: 24px;
 `;
 function AnimalDetail() {
