@@ -1,3 +1,6 @@
+/* eslint-disable prefer-const */
+/* eslint-disable no-lone-blocks */
+/* eslint-disable array-callback-return */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from 'react';
@@ -5,10 +8,9 @@ import axios from 'axios';
 import styled from 'styled-components';
 import '../../styles/slick-theme.css';
 import '../../styles/slick.css';
-import '../../styles/cafe24.css';
 import { Button, Switch } from '@mui/material';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { dateListAtom, scheduleAtom, twoWeeksAtom } from '../../recoilState';
+import { scheduleAtom } from '../../recoilState';
 import API_URL from '../../api/api';
 import { getCookie } from '../../pages/Account/cookie';
 
@@ -38,19 +40,12 @@ const SCancleButton = styled(Button)`
 function ScheduleListUser() {
   const today = new Date();
   const accessToken = getCookie('accessToken');
-  const [twoWeeks, setTwoWeeks] = useRecoilState(twoWeeksAtom);
   const [scheduleUser, setScheduleUser] = useRecoilState(scheduleAtom);
-  const [dateList, setDateList] = useRecoilState(dateListAtom);
+  const [dateList, setDateList] = useState([]);
+
   useEffect(() => {
-    const weeks = [];
-    for (let i = 0; i < 14; i += 1) {
-      const to = new Date();
-      const nxtDay = new Date(to.setDate(to.getDate() + i));
-      const todayMonth = (nxtDay.getMonth() + 1).toString();
-      const todayDate = nxtDay.getDate().toString();
-      weeks.push({ month: todayMonth, day: todayDate });
-    }
-    setTwoWeeks(weeks);
+    let list = [];
+
     axios
       .get(`${API_URL}/schedule/users`, {
         headers: {
@@ -58,15 +53,26 @@ function ScheduleListUser() {
         },
       })
       .then(res => {
+        res.data.data.map(item => {
+          if (!list.includes(item.day)) {
+            list.push(item.day);
+          }
+        });
+        setDateList(() => list);
         setScheduleUser(res.data.data);
       });
   }, []);
 
-  console.log('two', twoWeeks);
   console.log('sc', scheduleUser);
+  console.log('date', dateList);
 
   return (
-    <SContainer>
+    <>
+      <SContainer>
+        {dateList.map(item => (
+          <SDate>{item}</SDate>
+        ))}
+      </SContainer>
       {scheduleUser.map(schedule => (
         <STimeTable key={schedule.room}>
           <div>
@@ -79,7 +85,7 @@ function ScheduleListUser() {
           </div>
         </STimeTable>
       ))}
-    </SContainer>
+    </>
   );
 }
 
