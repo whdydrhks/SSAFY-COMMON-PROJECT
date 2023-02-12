@@ -30,7 +30,7 @@ const SLinkList = styled.div`
   margin: 20px;
   a {
     text-decoration: none;
-    color: grey;
+    color: gray;
   }
 `;
 

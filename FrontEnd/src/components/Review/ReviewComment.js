@@ -1,11 +1,18 @@
 /* eslint-disable consistent-return */
 
 import React, { useState } from 'react';
-// import { useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
+import { userAtom } from '../../recoilState';
 // import styled from 'styled-components';
 // import { commentListState } from '../../recoilState';
 
 function ReviewComment() {
+  // comment 작성시 댓글 저장
+
+  // Comment 작성시 nickname 불러오기
+  const userInfo = useRecoilValue(userAtom);
+  const commentNickname = userInfo.nickname;
+
   // Comment 입력 State 저장
   const [comment, setComment] = useState('');
   const onChange = e => {
@@ -32,7 +39,7 @@ function ReviewComment() {
           <li>
             <div>
               <span>{value}</span>
-              <span> nickaname</span>
+              <span> {commentNickname}</span>
             </div>
           </li>
         ))}

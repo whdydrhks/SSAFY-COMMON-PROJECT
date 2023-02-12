@@ -3,7 +3,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
-import '../../styles/cafe24.css';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 import AnimalCategory from '../../components/Animal/AnimalCategory';
@@ -28,22 +27,21 @@ function Animal() {
 
 const Sh1 = styled.h1`
   font-size: 2rem;
-  font-family: 'cafe24';
+  margin-top: 1rem;
   // margin-left: 1rem;
 `;
 
 const STitle = styled.div`
   display: flex;
   justify-content: space-between;
-  font-family: 'cafe24';
   margin-bottom: 2rem;
   margin-left: 1rem;
   margin-right: 1rem;
 `;
 
 const SCreateButton = styled(Button)`
-  font-family: 'cafe24';
   border-radius: 10px;
+  margin-top: 1rem;
   /* margin-right: 1rem; */
 `;
 

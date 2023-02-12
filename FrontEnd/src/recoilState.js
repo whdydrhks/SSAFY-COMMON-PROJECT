@@ -104,27 +104,14 @@ const animalNumber = atom({
   default: 1,
 });
 
-// const managedSchedule = atom({
-//   key : 'managedSchedule',
-//   default: {
-//     userShelterId = '',
-//     userId = '',
-//     day =
-//   }
-// })
+const twoWeeksAtom = atom({
+  key: 'twoWeeksAtom',
+  default: [],
+});
 
-// 현재 사용 안하고 중, 더미데이터는 백에서 저장
 const dayTimeAtom = atom({
   key: 'dayTimeAtom',
-  default: [
-    '0000000000000000000000000',
-    '0000000000000000000000001',
-    '0000000000000000000000002',
-    '0000000000000000000000003',
-    '0000000000000000000000004',
-    '0000000000000000000000005',
-    '0000000000000000000000006',
-  ],
+  default: [],
 });
 
 const todayTimeAtom = atom({
@@ -132,184 +119,29 @@ const todayTimeAtom = atom({
   default: '',
 });
 
-const twoWeeksAtom = atom({
-  key: 'twoWeeksAtom',
+const scheduleAtom = atom({
+  key: 'scheduleAtom',
   default: [],
-  effects_UNSTABLE: [persistAtom],
 });
 
-const scheduleHostAtom = atom({
-  key: 'scheduleHostAtom',
-  default: [
-    {
-      scheduleId: '1',
-      userId: '1',
-      day: '0209',
-      time: '0',
-      room: '대전보호소-1312',
-    },
-    {
-      scheduleId: '1',
-      userId: '1',
-      day: '0209',
-      time: '1',
-      room: '대전보호소-1312',
-    },
-    {
-      scheduleId: '2',
-      userId: '2',
-      day: '0209',
-      time: '2',
-      room: '대전보호소-1312',
-    },
-    {
-      scheduleId: '3',
-      userId: '3',
-      day: '0209',
-      time: '13',
-      room: '대전보호소-1312',
-    },
-    {
-      scheduleId: '4',
-      userId: '4',
-      day: '0209',
-      time: '15',
-      room: '대전보호소-1312',
-    },
-    {
-      scheduleId: '5',
-      userId: '6',
-      day: '0209',
-      time: '16',
-      room: '대전보호소-1312',
-    },
-    {
-      scheduleId: '6',
-      userId: '7',
-      day: '0209',
-      time: '16',
-      room: '대전보호소-1312',
-    },
-    {
-      scheduleId: '7',
-      userId: '3',
-      day: '0209',
-      time: '17',
-      room: '대전보호소-1312',
-    },
-    {
-      scheduleId: '8',
-      userId: '4',
-      day: '0209',
-      time: '18',
-      room: '대전보호소-1312',
-    },
-    {
-      scheduleId: '9',
-      userId: '1',
-      day: '0210',
-      time: '9',
-      room: '대전보호소-1312',
-    },
-    {
-      scheduleId: '10',
-      userId: '2',
-      day: '0210',
-      time: '11',
-      room: '대전보호소-1312',
-    },
-    {
-      scheduleId: '11',
-      userId: '6',
-      day: '0210',
-      time: '13',
-      room: '대전보호소-1312',
-    },
-    {
-      scheduleId: '12',
-      userId: '5',
-      day: '0210',
-      time: '15',
-      room: '대전보호소-1312',
-    },
-  ],
+const todayScheduleAtom = atom({
+  key: 'todayScheduleAtom',
+  default: [],
 });
 
-const scheduleUserAtom = atom({
-  key: 'scheduleUserAtom',
-  default: [
-    {
-      scheduleId: '1',
-      shelterId: '1',
-      day: '0208',
-      time: '9',
-      room: '대전보호소-112',
-    },
-    {
-      scheduleId: '1',
-      shelterId: '1',
-      day: '0208',
-      time: '9',
-      room: '대전보호소-13142',
-    },
-    {
-      scheduleId: '1',
-      shelterId: '1',
-      day: '0208',
-      time: '9',
-      room: '대전보호소-13212',
-    },
-    {
-      scheduleId: '1',
-      shelterId: '1',
-      day: '0208',
-      time: '9',
-      room: '대전보호소-11212',
-    },
-    {
-      scheduleId: '1',
-      shelterId: '1',
-      day: '0208',
-      time: '9',
-      room: '대전보호소-142112',
-    },
-    {
-      scheduleId: '12',
-      userId: '5',
-      day: '0210',
-      time: '15',
-      room: '대전보호소-1312412',
-    },
-    {
-      scheduleId: '12',
-      userId: '5',
-      day: '0210',
-      time: '15',
-      room: '대전보호소-135112',
-    },
-    {
-      scheduleId: '12',
-      userId: '5',
-      day: '0210',
-      time: '15',
-      room: '대전보호소-63412',
-    },
-    {
-      scheduleId: '12',
-      userId: '5',
-      day: '0210',
-      time: '15',
-      room: '대전보호소-6346312',
-    },
-    {
-      scheduleId: '12',
-      userId: '5',
-      day: '0210',
-      time: '15',
-      room: '대전보호소-3464312',
-    },
-  ],
-  effects_UNSTABLE: [persistAtom],
+const dateListAtom = atom({
+  key: 'dayListAtom',
+  default: [],
+});
+
+// const today = new Date();
+// const todayDate =
+//   (today.getMonth() + 1).toString().padStart(2, '0') +
+//   today.getDate().toString().padStart(2, '0');
+
+const todayAtom = atom({
+  key: 'todayAtom',
+  default: '',
 });
 
 const reviewListState = atom({
@@ -369,8 +201,13 @@ const commentListState = atom({
     // },
     {
       reviewId: 1,
-      userId: 1,
+      userId: 2,
       content: '정말 귀여워요',
+    },
+    {
+      reviewId: 1,
+      userId: 3,
+      content: '너무 사랑스러워요 ♥',
     },
   ],
 });
@@ -380,17 +217,24 @@ const animalState = atom({
   default: [],
 });
 
+const alarmAtom = atom({
+  key: 'alarmAtom',
+  default: [],
+});
 export {
   animalState,
   authStateAtom,
   userAtom,
   animalListState,
   animalNumber,
+  twoWeeksAtom,
   dayTimeAtom,
   todayTimeAtom,
-  twoWeeksAtom,
-  scheduleHostAtom,
-  scheduleUserAtom,
+  scheduleAtom,
   reviewListState,
   commentListState,
+  todayScheduleAtom,
+  todayAtom,
+  dateListAtom,
+  alarmAtom,
 };

@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import '../../styles/cafe24.css';
 
 const SDetail = styled.div`
   font-family: 'cafe24';

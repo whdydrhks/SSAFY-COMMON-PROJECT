@@ -130,7 +130,10 @@ function ModifyMyPage() {
           />
         </ListItem>
       </List>
-      <Button onClick={handleModifyUserInfo}>수정</Button>
+
+      <Button onClick={handleModifyUserInfo} variant="body2">
+        수정
+      </Button>
 
       <Nav />
     </>

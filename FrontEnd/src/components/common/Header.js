@@ -5,24 +5,21 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutSharpIcon from '@mui/icons-material/LogoutSharp';
 import styled from 'styled-components';
 import axios from 'axios';
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
-import { authStateAtom, userAtom } from '../../recoilState';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { userAtom } from '../../recoilState';
 import { getCookie, removeCookie } from '../../pages/Account/cookie';
 import helloIcon from '../../images/logo/helloIcon.png';
 import API_URL from '../../api/api';
-import '../../styles/cafe24.css';
 
 const SAppBar = styled(AppBar)`
   position: fixed;
   padding: 4px;
-  background-color: rgba(180, 230, 230) !important;
   a {
-    font-family: 'cafe24';
     text-decoration: none;
-    color: black;
+    color: white;
   }
 `;
 const SHomeLogo = styled.div`
@@ -33,25 +30,33 @@ const SHomeLogo = styled.div`
     align-items: center;
   }
 `;
+const SIconDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  a {
+    display: flex;
+  }
+`;
+const SAlarmIcon = styled(NotificationsActiveIcon)`
+  margin-right: 2rem;
+`;
+const SLogout = styled(LogoutSharpIcon)`
+  cursor: pointer;
+`;
 const SImg = styled.img`
   width: 2rem;
   margin-right: 0.5rem;
 `;
 const SHello = styled.span`
-  font-size: 1.7rem;
+  font-size: 1.3rem;
 `;
 
-const SButton = styled.button`
-  background-color: rgba(180, 230, 230) !important;
-  font-family: 'cafe24';
-  border: none;
-  color: black;
-  margin-left: 12px;
+const SLink = styled(Link)`
+  width: 19.5px;
 `;
 
 function Header() {
   const accessToken = getCookie('accessToken');
-  const [authState, setAuthState] = useRecoilState(authStateAtom);
   const user = useRecoilValue(userAtom);
   const resetUser = useResetRecoilState(userAtom);
   const navigate = useNavigate();
@@ -72,7 +77,6 @@ function Header() {
         .then(() => {
           removeCookie('accessToken');
           resetUser();
-          setAuthState(false);
           navigate('/');
         });
     }
@@ -92,14 +96,22 @@ function Header() {
               </Link>
             </SHomeLogo>
           </Typography>
-          <Link to={`/alarm/${user.userId}`}>
-            <NotificationsActiveIcon />
-          </Link>
-          {!authState ? null : (
-            <SButton color="inherit" onClick={handleLogout}>
-              <LogoutIcon />
-            </SButton>
-          )}
+          <SIconDiv>
+            {/* <SLink to={`/alarm/${user.userId}`}>
+              <SAlarmIcon />
+            </SLink> */}
+            {!accessToken ? null : (
+              <>
+                <SLink
+                  to={`/alarm/${user.userId}`}
+                  style={{ 'margin-right': '1.5rem' }}
+                >
+                  <SAlarmIcon />
+                </SLink>
+                <SLogout onClick={handleLogout} />
+              </>
+            )}
+          </SIconDiv>
         </Toolbar>
       </SAppBar>
     </Box>
