@@ -8,7 +8,6 @@ import { useRecoilValue } from 'recoil';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 // import ImageCarousel from '../../components/common/ImageCarousel';
-import '../../styles/cafe24.css';
 // import { title, content, note } from '../../images/index';
 import { title, content } from '../../images/index';
 import API_URL from '../../api/api';
@@ -16,7 +15,6 @@ import ReviewComment from '../../components/Review/ReviewComment';
 import { userAtom } from '../../recoilState';
 
 const STitle = styled.div`
-  font-family: 'cafe24';
   font-size: 2rem;
   margin-bottom: 2rem;
   margin-left: 1rem;
@@ -42,7 +40,6 @@ const SGrayLine = styled.div`
 `;
 
 const SDetailInformation = styled.div`
-  font-family: 'cafe24';
   font-size: 24;
   width: 30%;
   text-align: center;
@@ -70,7 +67,6 @@ const SInformationText = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-family: 'cafe24';
   font-size: 16px;
   border: 1px solid #1f2247;
   border-radius: 40px;
@@ -100,7 +96,6 @@ const SInformationNote = styled.div`
   border: 1px solid #1f2247;
   border-radius: 10px;
   padding: 10px;
-  font-family: 'cafe24';
   border-radius: 20px;
   /* margin-left: 1rem; */
   margin-left: 1.5rem;

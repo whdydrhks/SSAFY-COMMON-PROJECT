@@ -21,7 +21,6 @@ import styled from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import Nav from '../../components/common/Nav';
 import Header from '../../components/common/Header';
-import '../../styles/cafe24.css';
 import API_URL from '../../api/api';
 import { userAtom, animalState } from '../../recoilState';
 

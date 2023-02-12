@@ -9,7 +9,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 import '../../styles/slick-theme.css';
 import '../../styles/slick.css';
-import '../../styles/cafe24.css';
 import Slider from 'react-slick';
 import { Button, FormControlLabel, Switch } from '@mui/material';
 import { useRecoilValue, useRecoilState } from 'recoil';

@@ -19,7 +19,6 @@ import { userAtom } from '../../recoilState';
 import Nav from '../../components/common/Nav';
 import Header from '../../components/common/Header';
 import API_URL from '../../api/api';
-import '../../styles/cafe24.css';
 
 const SH1 = styled.h1`
   font-size: 2rem;

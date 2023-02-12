@@ -31,7 +31,6 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import './VideoChat.css';
-import '../../styles/cafe24.css';
 import UserVideoComponent from './UserVideoComponent';
 import { userAtom } from '../../recoilState';
 import API_URL from '../../api/api';
