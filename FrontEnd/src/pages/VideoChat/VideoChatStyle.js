@@ -89,6 +89,9 @@ export const ChattingListBox = styled.ul`
   border: 1px solid black;
   border-radius: 10px;
   overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const Chat = styled.li``;
