@@ -8,6 +8,7 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/sort-comp */
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable prefer-template */
 /* eslint-disable import/no-unresolved */
@@ -29,15 +30,18 @@
 
 import { OpenVidu } from 'openvidu-browser';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import './VideoChat.css';
+import * as S from './VideoChatStyle';
 import '../../styles/cafe24.css';
 import UserVideoComponent from './UserVideoComponent';
 import { userAtom } from '../../recoilState';
+// import TextChat from './TextChat';
 import API_URL from '../../api/api';
+import Header from '../../components/common/Header';
+import Nav from '../../components/common/Nav';
 
 // const APPLICATION_SERVER_URL = 'http://localhost:5000';
 
@@ -45,26 +49,15 @@ const APPLICATION_SERVER_URL = API_URL + '/openvidu';
 // const APPLICATION_SERVER_URL = 'https://i8b209.p.ssafy.io:9999/api/v1/openvidu';
 // const OPENVIDU_SERVER_SECRET = 'ssafy';
 
-const Sdiv = styled.div`
-  position: relative;
-`;
-
-const SSmallCamera = styled.div`
-  position: absolute;
-  top: 0em;
-  right: 0em;
-  width: 30%;
-`;
-
-const SChatForm = styled.div``;
-
 function VideoChat() {
   const navigate = useNavigate();
+  const chatRef = useRef();
+
   // 유저 정보, 이메일, role 불러와야함
   const { nickname, email, role } = useRecoilValue(userAtom);
   const [session, setSession] = useState(undefined);
   const [user, setUser] = useState(undefined);
-  const [hostSessionName, setHostSessionName] = useState('호스트이름');
+  const [hostSessionName, setHostSessionName] = useState('ssafy1');
   const tmp = 'ssafy1';
   const [mySessionId, setMySessionId] = useState(
     role === 'HOST' ? tmp : hostSessionName,
@@ -79,8 +72,8 @@ function VideoChat() {
   const [isFrontCamera, setIsFrontCamera] = useState(false);
 
   const [sendMsg, setSendMsg] = useState('');
-  const [msgFlag, setMsgFlag] = useState(true);
   const [receiveMsg, setReceiveMsg] = useState([]);
+  const [oneChat, setOneChat] = useState('');
 
   useEffect(() => {
     window.addEventListener('beforeunload', onbeforeunload);
@@ -89,17 +82,47 @@ function VideoChat() {
     };
   }, []);
 
+  // 메세지 수신
   useEffect(() => {
     if (session) {
-      session.on('signal', event => {
-        let name = event.from.data;
-        setReceiveMsg(receiveMsg.push({ name: name, data: event.data }));
-        console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-        console.log(receiveMsg);
-        console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+      session.on('signal:my-chat', event => {
+        let words = event.from.data.split('"');
+        let name = words[3];
+        setOneChat({ name: name, data: event.data });
       });
     }
   }, [session]);
+
+  // 채팅 리스트에 추가
+  useEffect(() => {
+    oneChat && setReceiveMsg(prev => [...prev, oneChat]);
+
+    // session 정보가 없을 경우 useRef에서 chatRef를 찾지못함
+    if (session) {
+      chatRef.current.scrollIntoView(false);
+    }
+  }, [oneChat]);
+
+  // useEffect(() => {
+  //   if (session) {
+  //     session.on('signal:my-chat', event => {
+  //       let temp = event.from.data;
+  //       let words = event.from.data.split('"');
+  //       let name = words[3];
+  //       receiveMsg.push({ name: name, data: event.data });
+  //       console.log(receiveMsg);
+  //       setReceiveMsg(receiveMsg);
+  //     });
+  //   }
+  // }, [session]);
+
+  // useEffect(() => {
+  //   session.on('signal', event => {
+  //     let name = event.from.data;
+  //     receiveMsg.push({ name: name, data: event.data });
+  //     setReceiveMsg(receiveMsg);
+  //   });
+  // }, [receiveMsg]);
 
   useEffect(() => {
     if (role === 'user') {
@@ -198,26 +221,27 @@ function VideoChat() {
     const getOV = new OpenVidu();
 
     setSession(getOV.initSession());
-    console.log('@@@@@@@@@@@@@@@@@');
     setOV(getOV);
 
     // console.log(OV);
   };
 
-  const sendMessage = () => {
-    session
-      .signal({
-        data: sendMsg,
-        to: [],
-        type: 'my-chat',
-      })
-      .then(() => {
-        setMsgFlag(!msgFlag);
-        setSendMsg('');
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  const sendMessage = e => {
+    e.preventDefault();
+    if (sendMsg !== '' && sendMsg !== ' ') {
+      session
+        .signal({
+          data: sendMsg,
+          to: [],
+          type: 'my-chat',
+        })
+        .then(() => {
+          setSendMsg('');
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   };
 
   const handleMsg = e => {
@@ -350,85 +374,87 @@ function VideoChat() {
   };
 
   return (
-    <div className="container">
+    <S.VideoChatRoot>
+      <Header />
       {session === undefined ? (
-        <div id="join">
-          <div id="join-dialog" className="jumbotron vertical-center">
-            <h1> 방 만들기 </h1>
-            <form className="form-group" onSubmit={joinSession}>
-              <p>
-                <label>참가자 이름</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  id="userName"
-                  value={myUserName}
-                  onChange={handleChangeUserName}
-                  required
-                />
-              </p>
-              <p>
-                <label>방 제목</label>
-                <input
-                  className="form-control"
-                  type="text"
-                  id="sessionId"
-                  value={mySessionId}
-                  onChange={handleChangeSessionId}
-                  required
-                />
-              </p>
-              <p className="text-center">
-                <input
-                  className="btn btn-lg btn-success"
-                  name="commit"
-                  type="submit"
-                  value="방 만들기"
-                />
-              </p>
-            </form>
-          </div>
-        </div>
-      ) : null}
+        // <S.WaitingDiv>
+        // <div id="join-dialog" className="jumbotron vertical-center">
+        <S.WaitingDiv>
+          <S.Title>
+            <h1>화상채팅 참여하기</h1>
+          </S.Title>
+          <S.JoinForm className="form-group" onSubmit={joinSession}>
+            <S.NameDiv>
+              <label>참가자 이름</label>
+              <input
+                className="form-control"
+                type="text"
+                id="userName"
+                value={myUserName}
+                onChange={handleChangeUserName}
+                required
+                disabled
+              />
+            </S.NameDiv>
+            <S.RoomNameDiv>
+              <label>방 제목</label>
+              <input
+                className="form-control"
+                type="text"
+                id="sessionId"
+                value={mySessionId}
+                onChange={handleChangeSessionId}
+                required
+                // disabled
+              />
+            </S.RoomNameDiv>
+            <p className="text-center">
+              <S.JoinDiv>
+                <S.JoinButton type="button" onClick={joinSession}>
+                  방 입장하기
+                </S.JoinButton>
+              </S.JoinDiv>
+            </p>
+          </S.JoinForm>
+        </S.WaitingDiv>
+      ) : // </div>
+      // </S.WaitingDiv>
+      null}
 
       {session !== undefined ? (
         <div id="session">
-          {/* <div>나와라제발</div> */}
-          {/* <div>{user}</div>
-          <div>{host}</div> */}
-          {/* <div id="session-header"> */}
           {/* 메인 화면 제목 */}
-          {/* <h1 id="session-title">{mySessionId}</h1> */}
-          {/* <input
-              className="btn btn-large btn-danger"
-              type="button"
-              id="buttonLeaveSession"
-              onClick={this.leaveSession}
-              value="Leave session"
-            />
-          </div> */}
+          <h1 id="session-title">방 번호 : {mySessionId}</h1>
 
           {host !== undefined ? (
-            <Sdiv id="main-video" className="col-md-6">
+            <S.div id="main-video" className="col-md-6">
               {(() => {
                 switch (role) {
                   case 'HOST':
                     return (
                       <>
-                        <SSmallCamera>
+                        <S.SmallCamera>
                           <UserVideoComponent streamManager={host} />
-                        </SSmallCamera>
-                        <div>
-                          <UserVideoComponent streamManager={user} />
-                        </div>
+                        </S.SmallCamera>
+                        {user === undefined ? (
+                          <S.WaitingMessageBox>
+                            <S.WaitingMessage>
+                              상대방의 입장을 기다리는 중입니다.
+                            </S.WaitingMessage>
+                          </S.WaitingMessageBox>
+                        ) : (
+                          <div>
+                            <UserVideoComponent streamManager={user} />
+                          </div>
+                        )}
                       </>
                     );
                   case 'USER':
                     return (
                       <>
-                        <SSmallCamera>
+                        <S.SmallCamera>
                           <UserVideoComponent streamManager={user} />
-                        </SSmallCamera>
+                        </S.SmallCamera>
                         <div>
                           <UserVideoComponent streamManager={host} />
                         </div>
@@ -436,26 +462,7 @@ function VideoChat() {
                     );
                 }
               })()}
-              {/* {this.state.subscribers.map((sub, i) => (
-                <div
-                  key={i}
-                  className="stream-container col-md-6 col-xs-6"
-                  onClick={() => this.handleMainVideoStream(sub)}
-                > */}
-              {/* <div>
-                <UserVideoComponent streamManager={user} />
-              </div> */}
-              {/* <div>
-                <UserVideoComponent
-                  streamManager={this.state.subscribers[0]}
-                />
-              </div> */}
-              {/* </div>
-              ))} */}
 
-              {/* <SHostdiv>
-                <UserVideoComponent streamManager={host} />
-              </SHostdiv> */}
               <input
                 className="btn btn-large btn-success"
                 type="button"
@@ -463,31 +470,38 @@ function VideoChat() {
                 onClick={switchCamera}
                 value="카메라 전환"
               />
-            </Sdiv>
-          ) : null}
-          <div id="video-container" className="col-md-6">
-            {/* 호스트 작은 화면 */}
-            {/* {this.state.publisher !== undefined ? (
-              <div
-                className="stream-container col-md-6 col-xs-6"
-                onClick={() =>
-                  this.handleMainVideoStream(this.state.publisher)
+            </S.div>
+          ) : (
+            // 세션 있고 호스트가 없는 경우
+            <S.div id="main-video" className="col-md-6">
+              {(() => {
+                switch (role) {
+                  case 'USER':
+                    return (
+                      <>
+                        <S.SmallCamera>
+                          <UserVideoComponent streamManager={user} />
+                        </S.SmallCamera>
+                        <S.WaitingMessageBox>
+                          <S.WaitingMessage>
+                            상대방의 입장을 기다리는 중입니다.
+                          </S.WaitingMessage>
+                        </S.WaitingMessageBox>
+                      </>
+                    );
                 }
-              >
-                <UserVideoComponent streamManager={this.state.publisher} />
-              </div>
-            ) : null} */}
-            {/* {this.state.subscribers.map((sub, i) => (
-              <div
-                key={i}
-                className="stream-container col-md-6 col-xs-6"
-                onClick={() => this.handleMainVideoStream(sub)}
-              >
-                <UserVideoComponent streamManager={sub} />
-                <div>입장자캠</div>
-              </div>
-            ))} */}
-          </div>
+              })()}
+
+              <input
+                className="btn btn-large btn-success"
+                type="button"
+                id="buttonSwitchCamera"
+                onClick={switchCamera}
+                value="카메라 전환"
+              />
+            </S.div>
+          )}
+
           <div id="session-header">
             {/* 메인 화면 제목 */}
             {/* <h1 id="session-title">{mySessionId}</h1> */}
@@ -502,19 +516,27 @@ function VideoChat() {
         </div>
       ) : null}
 
-      {/* 채팅창 */}
-      <SChatForm>
-        <input type="text" onChange={handleMsg} />
-        <button type="button" onClick={sendMessage}>
-          메시지 보내기
-        </button>
-      </SChatForm>
+      {session ? (
+        <S.ChatBox>
+          <S.ChattingListBox ref={chatRef}>
+            {receiveMsg.map((data, index) => (
+              <S.Chat key={index}>
+                {data.name} : {data.data}
+              </S.Chat>
+            ))}
+          </S.ChattingListBox>
 
-      {/* 채팅 메시지 */}
-      {/* {receiveMsg.map(msg => {
-        <div>{msg.data}</div>;
-      })} */}
-    </div>
+          {/* 채팅창 */}
+          <S.ChatForm>
+            <form onSubmit={sendMessage}>
+              <input type="text" onChange={handleMsg} value={sendMsg} />
+              <button type="submit">메시지 보내기</button>
+            </form>
+          </S.ChatForm>
+        </S.ChatBox>
+      ) : null}
+      <Nav />
+    </S.VideoChatRoot>
   );
 }
 

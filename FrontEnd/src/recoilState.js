@@ -380,6 +380,12 @@ const animalState = atom({
   default: [],
 });
 
+const receiveMsgAtom = atom({
+  key: 'receiveMsgAtom',
+  default: [],
+  effects_UNSTABLE: [persistAtom],
+});
+
 export {
   animalState,
   authStateAtom,
@@ -393,4 +399,5 @@ export {
   scheduleUserAtom,
   reviewListState,
   commentListState,
+  receiveMsgAtom,
 };
