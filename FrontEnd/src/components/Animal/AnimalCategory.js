@@ -16,6 +16,7 @@ const STemp = styled(Tab)`
   width: 50%;
   border: 1px solid black;
   border-radius: 10px 10px 0px 0px;
+  /* color: rgba(180, 230, 230);   */
 `;
 
 const SSearchBar = styled.div`
@@ -24,15 +25,18 @@ const SSearchBar = styled.div`
   margin-top: 1rem;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
+  /* background-color: rgba(180, 230, 230); */
 `;
 
 const SSearchCategory = styled.select`
   text-align: center;
-  height: 3rem;
+  height: 2rem;
 `;
 
 const SInput = styled.input`
-  width: 50%;
+  text-align: left;
+
+  width: 49%;
 `;
 
 function TabPanel(props) {

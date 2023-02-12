@@ -98,16 +98,27 @@ const SNoteImg = styled.img`
   height: 2rem;
   margin-top: 0.2rem;
   margin-bottom: 0.5rem;
-  /* margin-right: 1rem; */
+  margin-right: 1rem;
 `;
 
 const SInformationNote = styled.div`
-  display: inline-block;
+  /* display: inline-block;
   width: 80%;
   border: 1px solid #1f2247;
-  border-radius: 10px;
+  border-radius: 40px;
   padding: 10px;
   font-family: 'cafe24';
+  margin-left: 1rem; */
+
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'cafe24';
+  font-size: 16px;
+  border: 1px solid #1f2247;
+  border-radius: 40px;
+  padding: 10px;
 `;
 
 const SButtonBox = styled.div`

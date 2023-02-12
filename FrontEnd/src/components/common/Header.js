@@ -20,7 +20,7 @@ const SAppBar = styled(AppBar)`
   padding: 4px;
   background-color: rgba(180, 230, 230) !important;
   a {
-    font-family: 'cafe24';
+    /* font-family: 'cafe24'; */
     text-decoration: none;
     color: black;
   }

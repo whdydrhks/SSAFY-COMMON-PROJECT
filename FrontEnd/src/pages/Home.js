@@ -3,7 +3,7 @@
 /* eslint-disable import/no-named-as-default */
 /* eslint-disable import/no-named-as-default-member */
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
@@ -23,6 +23,7 @@ const STitleBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 2rem;
   margin-bottom: 2rem;
   margin-left: 1rem;
   margin-right: 1rem;
@@ -33,10 +34,24 @@ const STitle = styled.h1`
   font-size: 2rem;
 `;
 
-const SMoreLink = styled(Link)`
+const SLiveMoreLink = styled(Link)`
   font-size: 1.5rem;
   font-family: 'cafe24';
   text-decoration: none;
+  margin-top: 20px;
+`;
+
+const SReviewTitle = styled.div`
+  margin-top: 20px;
+  font-family: 'cafe24';
+  font-size: 2rem;
+`;
+
+const SReviewMoreLink = styled(Link)`
+  font-size: 1.5rem;
+  font-family: 'cafe24';
+  text-decoration: none;
+  margin-top: 20px;
 `;
 
 const SLine = styled.div`
@@ -45,20 +60,18 @@ const SLine = styled.div`
   opacity: 0.4;
 `;
 
-// const SReviewContainer = styled.div``;
+const SBox = styled.div`
+  margin-left: 2rem;
+  margin-right: 2rem;
+`;
 
 function Home() {
-  const userInfo = useRecoilValue(userAtom);
-  useEffect(() => {
-    console.log(userInfo);
-  });
-
   return (
     <>
       <Header />
       <STitleBox>
         <STitle>Live</STitle>
-        <SMoreLink to="/live">더 보기 &gt;</SMoreLink>
+        <SLiveMoreLink to="/live">더 보기 &gt;</SLiveMoreLink>
       </STitleBox>
       <ImageCarousel page="Home" />
       {/* <SReviewContainer>리뷰컨테이너~</SReviewContainer> */}
@@ -66,10 +79,12 @@ function Home() {
       <SLine />
 
       <STitleBox>
-        <STitle>입양 후기</STitle>
-        <SMoreLink to="/review">더 보기 &gt;</SMoreLink>
+        <SReviewTitle>입양 후기</SReviewTitle>
+        <SReviewMoreLink to="/review">더 보기 &gt;</SReviewMoreLink>
       </STitleBox>
-      <ReviewList />
+      <SBox>
+        <ReviewList />
+      </SBox>
       <Nav />
     </>
   );
