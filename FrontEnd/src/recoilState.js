@@ -364,8 +364,13 @@ const commentListState = atom({
     // },
     {
       reviewId: 1,
-      userId: 1,
+      userId: 2,
       content: '정말 귀여워요',
+    },
+    {
+      reviewId: 1,
+      userId: 3,
+      content: '너무 사랑스러워요 ♥',
     },
   ],
 });

@@ -4,6 +4,7 @@ import { Button } from '@mui/material';
 import axios from 'axios';
 import styled from 'styled-components';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 // import ImageCarousel from '../../components/common/ImageCarousel';
@@ -12,6 +13,7 @@ import '../../styles/cafe24.css';
 import { title, content } from '../../images/index';
 import API_URL from '../../api/api';
 import ReviewComment from '../../components/Review/ReviewComment';
+import { userAtom } from '../../recoilState';
 
 const STitle = styled.div`
   font-family: 'cafe24';
@@ -80,7 +82,7 @@ const SNoteBox = styled.div`
   justify-content: space-evenly;
   margin-left: 1rem;
   margin-bottom: 2rem;
-  margin-right: 1rem;
+  margin-right: 2rem;
 `;
 
 const SNoteImg = styled.img`
@@ -88,16 +90,30 @@ const SNoteImg = styled.img`
   height: 2rem;
   margin-top: 0.2rem;
   margin-bottom: 0.5rem;
+  margin-left: 10px;
   /* margin-right: 1rem; */
 `;
 
 const SInformationNote = styled.div`
   display: inline-block;
-  width: 80%;
+  width: 82%;
   border: 1px solid #1f2247;
   border-radius: 10px;
   padding: 10px;
   font-family: 'cafe24';
+  border-radius: 20px;
+  /* margin-left: 1rem; */
+  margin-left: 1.5rem;
+
+  /* width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'cafe24';
+  font-size: 16px;
+  border: 1px solid #1f2247;
+  border-radius: 40px;
+  padding: 10px; */
 `;
 
 const SButtonBox = styled.div`
@@ -146,7 +162,12 @@ const SModalMessage = styled.div`
   font-family: 'cafe24';
   font-size: 24px;
 `;
+
 function ReviewDetail() {
+  // Review 작성자의 nickname 불러오기
+  const userInfo = useRecoilValue(userAtom);
+  const commentNickname = userInfo.nickname;
+
   const navigate = useNavigate();
   const location = useLocation();
   // console.log(location.state);
@@ -236,6 +257,8 @@ function ReviewDetail() {
           삭제하기
         </SDeleteButton>
       </SButtonBox>
+      <div>{commentNickname}</div>
+
       <Modal
         isOpen={isModal}
         onRequestClose={() => setIsModal(false)}

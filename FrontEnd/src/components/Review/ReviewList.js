@@ -19,7 +19,7 @@ const SLink = styled(Link)`
 function ReviewList(props) {
   const reviewList = useRecoilValue(reviewListState);
   console.log(props);
-  console.log('reviewList.reviewId : ', reviewList.reviewId);
+  // console.log('reviewList.reviewId : ', reviewList.reviewId);
 
   // const [temp, setTemp] = useState([])
 
