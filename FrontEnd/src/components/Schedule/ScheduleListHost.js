@@ -7,7 +7,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import '../../styles/slick-theme.css';
@@ -117,6 +117,11 @@ function ScheduleListHost() {
       // window.location.reload();
     }
   };
+
+  const handleVideoChatClick = () => {
+    navigate('/videochat');
+  };
+
   useEffect(() => {
     const weeks = [];
     for (let i = 0; i < 14; i += 1) {
@@ -170,7 +175,21 @@ function ScheduleListHost() {
                 {/* 클릭한 날이 오늘이면서 시간이 동일하다면 Live */}
                 {todayDate === isClickDate &&
                 today.getHours() === schedule.time ? (
-                  <SClickButton bgColor="green">Live</SClickButton>
+                  <Link
+                    to={{
+                      pathname: '/videochat',
+                      state: {
+                        room: schedule.room,
+                      },
+                    }}
+                  >
+                    <SClickButton
+                      bgColor="green"
+                      onClick={handleVideoChatClick}
+                    >
+                      Live
+                    </SClickButton>
+                  </Link>
                 ) : null}
                 {/* 클릭한 날이 오늘이면서 시간이 지났으면 완료 */}
                 {todayDate === isClickDate &&
