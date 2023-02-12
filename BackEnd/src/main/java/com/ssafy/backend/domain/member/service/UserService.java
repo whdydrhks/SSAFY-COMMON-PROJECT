@@ -145,6 +145,9 @@ public class UserService {
 
 		if ((boolean)res.get("matchResult")) {
 			findUser.setPassword(passwordEncoder.encode(newPassword));
+
+			userRepository.save(findUser);
+
 			res.put("updateResult", true);
 		}
 
