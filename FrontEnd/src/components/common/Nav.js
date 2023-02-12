@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
@@ -9,15 +9,11 @@ import VideocamIcon from '@mui/icons-material/Videocam';
 import PetsIcon from '@mui/icons-material/Pets';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import PersonIcon from '@mui/icons-material/Person';
-import axios from 'axios';
-import jwtDecode from 'jwt-decode';
-import { useRecoilState } from 'recoil';
-import API_URL from '../../api/api';
+import { useRecoilValue } from 'recoil';
+import { userAtom } from '../../recoilState';
 import { getCookie } from '../../pages/Account/cookie';
-import { authStateAtom, userAtom } from '../../recoilState';
 
 const SBox = styled(Box)`
-  background-color: rgba(180, 230, 230);
   position: fixed;
   left: 0;
   right: 0;
@@ -26,55 +22,17 @@ const SBox = styled(Box)`
 `;
 
 const SBottomNavigationAction = styled(BottomNavigationAction)`
-  background-color: rgba(180, 230, 230);
   font-family: 'cafe24';
 `;
 
 const SBottomNav = styled(BottomNavigation)`
   display: flex;
   justify-content: space-between;
-  background-color: rgba(180, 230, 230);
 `;
 
 function Nav() {
-  const [authState, setAuthState] = useRecoilState(authStateAtom);
-  const [user, setUser] = useRecoilState(userAtom);
-
-  useEffect(() => {
-    const accessToken = getCookie('accessToken');
-    if (accessToken) {
-      const decodedToken = jwtDecode(accessToken);
-      const role = decodedToken.userRole;
-      const id = decodedToken.userId;
-      const email = decodedToken.userEmail;
-      axios
-        .get(
-          `${API_URL}/user/${id}`,
-          {
-            headers: {
-              Authorization: accessToken,
-            },
-          },
-          { withCredentials: true },
-        )
-        .then(info => {
-          const { name, nickname, phoneNumber, profileImage, shelterId } =
-            info.data.data;
-          setUser({
-            userId: id,
-            role,
-            email,
-            name,
-            nickname,
-            phoneNumber,
-            profileImage,
-            shelterId,
-          });
-        });
-      setAuthState(true);
-    }
-  }, [authState]);
-
+  const accessToken = getCookie('accessToken');
+  const user = useRecoilValue(userAtom);
   return (
     <SBox>
       <SBottomNav showLabels>
@@ -105,7 +63,7 @@ function Nav() {
           component={Link}
           to="/schedule"
         />
-        {!authState ? (
+        {!accessToken ? (
           <SBottomNavigationAction
             label="사용자"
             icon={<PersonIcon />}

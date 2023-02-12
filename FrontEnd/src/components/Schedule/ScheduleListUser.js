@@ -1,3 +1,6 @@
+/* eslint-disable prefer-const */
+/* eslint-disable no-lone-blocks */
+/* eslint-disable array-callback-return */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from 'react';
@@ -5,11 +8,11 @@ import axios from 'axios';
 import styled from 'styled-components';
 import '../../styles/slick-theme.css';
 import '../../styles/slick.css';
-import '../../styles/cafe24.css';
 import { Button, Switch } from '@mui/material';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { scheduleUserAtom, userAtom } from '../../recoilState';
+import { scheduleAtom } from '../../recoilState';
 import API_URL from '../../api/api';
+import { getCookie } from '../../pages/Account/cookie';
 
 const SContainer = styled.div``;
 const SDate = styled.div`
@@ -36,65 +39,53 @@ const SCancleButton = styled(Button)`
 
 function ScheduleListUser() {
   const today = new Date();
-  const date =
-    (today.getMonth() + 1).toString().padStart(2, '0') +
-    today.getDate().toString().padStart(2, '0');
-  const user = useRecoilValue(userAtom);
-  const [scheduleUser, setScheduleUser] = useRecoilState(scheduleUserAtom);
+  const accessToken = getCookie('accessToken');
+  const [scheduleUser, setScheduleUser] = useRecoilState(scheduleAtom);
   const [dateList, setDateList] = useState([]);
 
   useEffect(() => {
-    // axios.get(`${API_URL}/schedule/users/${userId}`)
-    // .then((res) => {
-    // })
-    const list = [];
-    scheduleUser.forEach(schedule => {
-      if (!list.includes(schedule.day)) {
-        list.push(schedule.day);
-      }
-    });
-    setDateList(list);
+    let list = [];
+
+    axios
+      .get(`${API_URL}/schedule/users`, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+      .then(res => {
+        res.data.data.map(item => {
+          if (!list.includes(item.day)) {
+            list.push(item.day);
+          }
+        });
+        setDateList(() => list);
+        setScheduleUser(res.data.data);
+      });
   }, []);
 
+  console.log('sc', scheduleUser);
+  console.log('date', dateList);
+
   return (
-    <SContainer>
-      {dateList.map((item, index) => (
-        <div key={index}>
-          <SDate>
-            {Number(item.substring(0, 2))}월 {Number(item.substring(2))}일
-          </SDate>
-          {scheduleUser.map(schedule =>
-            schedule.day === item ? (
-              <STimeTable key={schedule.room}>
-                <div>
-                  <STime>
-                    {schedule.time.padStart(2, '0')}:00 ~{' '}
-                    {(Number(schedule.time) + 1).toString().padStart(2, '0')}:00
-                  </STime>
-                  <SShelter>{schedule.room}</SShelter>
-                </div>
-                {today.getHours() > schedule.time ? (
-                  <Button disabled>완료</Button>
-                ) : null}
-                {today.getHours().toString().padStart(2, '0') ===
-                schedule.time.padStart(2, '0') ? (
-                  <SLiveButton>화상채팅</SLiveButton>
-                ) : null}
-                {today.getHours() < schedule.time ? (
-                  <SCancleButton
-                    onClick={() => {
-                      // axios.delete(`${API_URL}/schedule/cancle/${item.scheduleId}`);
-                    }}
-                  >
-                    취소
-                  </SCancleButton>
-                ) : null}
-              </STimeTable>
-            ) : null,
-          )}
-        </div>
+    <>
+      <SContainer>
+        {dateList.map(item => (
+          <SDate>{item}</SDate>
+        ))}
+      </SContainer>
+      {scheduleUser.map(schedule => (
+        <STimeTable key={schedule.room}>
+          <div>
+            <STime>
+              {schedule.time.toString().padStart(2, '0')}:00 ~{' '}
+              {(schedule.time + 1).toString().padStart(2, '0')}
+              :00
+            </STime>
+            <SShelter>{schedule.room}</SShelter>
+          </div>
+        </STimeTable>
       ))}
-    </SContainer>
+    </>
   );
 }
 
