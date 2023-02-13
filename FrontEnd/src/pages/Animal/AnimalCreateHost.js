@@ -46,7 +46,14 @@ const SFileUploadButton = styled(Button)`
 
 const SPreviewCard = styled(Grid)`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+`;
+
+const SPreviewImg = styled.img`
+  width: 10rem;
+  margin-bottom: 1rem;
 `;
 
 const STypography = styled(Typography)`
@@ -322,7 +329,7 @@ function AnimalCreateHost() {
                 <Grid container spacing={2}>
                   {previews.map((image, imageId) => (
                     <SPreviewCard item xs={6}>
-                      <img
+                      <SPreviewImg
                         src={image}
                         alt={`${image}-${imageId}`}
                         style={{ width: '10rem' }}

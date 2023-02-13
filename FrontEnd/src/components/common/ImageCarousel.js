@@ -34,11 +34,13 @@ function ImageCarousel(props) {
 
   return (
     <div>
-      <SSlider {...settings}>
-        {images.map(image => (
-          <SImage src={image} />
-        ))}
-      </SSlider>
+      {images !== undefined ? (
+        <SSlider {...settings}>
+          {images.map(image => (
+            <SImage src={image} />
+          ))}
+        </SSlider>
+      ) : null}
     </div>
   );
 }
