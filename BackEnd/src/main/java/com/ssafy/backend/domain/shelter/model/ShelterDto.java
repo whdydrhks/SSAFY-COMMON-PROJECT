@@ -23,8 +23,6 @@ public class ShelterDto {
 	private String name;
 	private String url;
 	private String introduce;
-	private String originImage;
-	private String storedImage;
 	private String telNumber;
 	private String postCode;
 	private String address;
@@ -39,9 +37,7 @@ public class ShelterDto {
 			.shelterId(shelter.getId())
 			.name(shelter.getName())
 			.url(shelter.getUrl())
-			.introduce(shelter.getOriginImage())
-			.originImage(shelter.getOriginImage())
-			.storedImage(shelter.getStoredImage())
+			.introduce(shelter.getIntroduce())
 			.telNumber(shelter.getTelNumber())
 			.postCode(shelter.getPostCode())
 			.address(shelter.getAddress())
@@ -58,8 +54,6 @@ public class ShelterDto {
 			.name(this.name)
 			.url(this.url)
 			.introduce(this.introduce)
-			.originImage(this.originImage)
-			.storedImage(this.storedImage)
 			.telNumber(this.telNumber)
 			.postCode(this.postCode)
 			.address(this.address)

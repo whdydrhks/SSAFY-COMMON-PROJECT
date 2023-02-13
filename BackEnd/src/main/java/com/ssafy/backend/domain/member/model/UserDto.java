@@ -31,6 +31,7 @@ public class UserDto {
 	private LocalDateTime updatedDate;
 
 	public static UserDto of(UserEntity user) {
+
 		return UserDto.builder()
 			.role(user.getRole())
 			.userId(user.getId())
@@ -47,6 +48,7 @@ public class UserDto {
 	}
 
 	public UserEntity toEntity() {
+
 		return UserEntity.builder()
 			.id(this.userId)
 			.email(this.email)

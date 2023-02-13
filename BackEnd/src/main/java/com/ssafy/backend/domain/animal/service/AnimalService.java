@@ -49,10 +49,7 @@ public class AnimalService {
 
 		Long animalId = animalRepository.save(animal).getId();
 
-		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(animalId);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(animalId);
 	}
 
 	/**
@@ -69,29 +66,11 @@ public class AnimalService {
 
 		AnimalEntity findAnimal = validateAnimal(shelterId, animalId);
 
-		AnimalEntity updateAnimal = AnimalEntity.builder()
-			.shelter(findAnimal.getShelter())
-			.id(findAnimal.getId())
-			.manageCode(findAnimal.getManageCode())
-			.name(updateDto.getName())
-			.thumbnail(findAnimal.getThumbnail())
-			.breed(updateDto.getBreed())
-			.age(updateDto.getAge())
-			.weight(updateDto.getWeight())
-			.gender(updateDto.getGender())
-			.neuter(updateDto.getNeuter())
-			.adoption(updateDto.getAdoption())
-			.note(updateDto.getNote())
-			.expired(findAnimal.getExpired())
-			.createdDate(findAnimal.getCreatedDate())
-			.build();
+		AnimalEntity updateAnimal = updateDto.updateEntity(findAnimal);
 
 		Long updatedAnimalId = animalRepository.save(updateAnimal).getId();
 
-		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(updatedAnimalId);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(updatedAnimalId);
 	}
 
 	/**
@@ -108,31 +87,11 @@ public class AnimalService {
 
 		AnimalEntity findAnimal = validateAnimal(shelterId, animalId);
 
-		AnimalEntity updateAnimal = AnimalEntity.builder()
-			.shelter(findAnimal.getShelter())
-			.id(findAnimal.getId())
-			.manageCode(findAnimal.getManageCode())
-			.name(findAnimal.getName())
-			.thumbnail(findAnimal.getThumbnail())
-			.breed(findAnimal.getBreed())
-			.age(findAnimal.getAge())
-			.weight(findAnimal.getWeight())
-			.gender(findAnimal.getGender())
-			.neuter(findAnimal.getNeuter())
-			.adoption(findAnimal.getAdoption())
-			.note(findAnimal.getNote())
-			.expired(expiredFlag ? "T" : "F") // expiredFlag에 따라 변경 true:"T" / false:"F"
-			.createdDate(findAnimal.getCreatedDate())
-			.build();
+		findAnimal.setExpired(expiredFlag ? "T" : "F");
 
-		System.out.println(updateAnimal);
+		Long updatedAnimalId = animalRepository.save(findAnimal).getId();
 
-		Long updatedAnimalId = animalRepository.save(updateAnimal).getId();
-
-		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(updatedAnimalId);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(updatedAnimalId);
 	}
 
 	/**
@@ -150,17 +109,14 @@ public class AnimalService {
 
 		shelterRepository.deleteById(animalId);
 
-		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(null);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(null);
 	}
 
 	/**
 	 * 동물 정보를 전부 가져오는 메소드
 	 *
 	 * @param
-	 * @return List&ltanimalInfoDto&gt
+	 * @return ResponseSuccessDto&ltList&ltanimalInfoDto&gt&gt
 	 */
 	@Transactional
 	public ResponseSuccessDto<?> getInfoAll() {
@@ -172,17 +128,14 @@ public class AnimalService {
 			.map(AnimalInfoDto::of)
 			.collect(Collectors.toList());
 
-		ResponseSuccessDto<List<ShelterEntity>> resp = responseUtil
-			.buildSuccessResponse(animalInfos);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(animalInfos);
 	}
 
 	/**
 	 * 보호소에 등록된 동물 정보를 전부 가져오는 메소드
 	 *
 	 * @param
-	 * @return List&ltanimalInfoDto&gt
+	 * @return ResponseSuccessDto&ltList&ltanimalInfoDto&gt&gt
 	 */
 	@Transactional
 	public ResponseSuccessDto<?> getInfoByShelter(Long shelterId) {
@@ -195,10 +148,7 @@ public class AnimalService {
 			.map(AnimalInfoDto::of)
 			.collect(Collectors.toList());
 
-		ResponseSuccessDto<List<ShelterEntity>> resp = responseUtil
-			.buildSuccessResponse(animalInfos);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(animalInfos);
 	}
 
 	/**
@@ -214,10 +164,7 @@ public class AnimalService {
 
 		AnimalInfoDto infoDto = AnimalInfoDto.of(findAnimal);
 
-		ResponseSuccessDto<AnimalInfoDto> resp = responseUtil
-			.buildSuccessResponse(infoDto);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(infoDto);
 	}
 
 	/**
@@ -244,10 +191,7 @@ public class AnimalService {
 			.map(AnimalInfoDto::of)
 			.collect(Collectors.toList());
 
-		ResponseSuccessDto<List<ShelterEntity>> resp = responseUtil
-			.buildSuccessResponse(animalInfos);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(animalInfos);
 	}
 
 	/**
@@ -274,10 +218,7 @@ public class AnimalService {
 			.map(AnimalInfoDto::of)
 			.collect(Collectors.toList());
 
-		ResponseSuccessDto<List<ShelterEntity>> resp = responseUtil
-			.buildSuccessResponse(animalInfos);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(animalInfos);
 	}
 
 	/**
@@ -304,10 +245,7 @@ public class AnimalService {
 			.map(AnimalInfoDto::of)
 			.collect(Collectors.toList());
 
-		ResponseSuccessDto<List<ShelterEntity>> resp = responseUtil
-			.buildSuccessResponse(animalInfos);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(animalInfos);
 	}
 
 	/**
@@ -332,7 +270,6 @@ public class AnimalService {
 	 * 동물의 등록 정보가 이미 있는지 확인하는 메소드
 	 *
 	 * @param
-	 * @throws IllegalStateException
 	 */
 	@Transactional
 	private void validateDuplicate(AnimalEntity animal) {

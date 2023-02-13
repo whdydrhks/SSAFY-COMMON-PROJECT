@@ -17,7 +17,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class AnimalRegisterDto {
 
-	// animal
 	private String manageCode;
 	private String name;
 	private String breed;
@@ -26,20 +25,6 @@ public class AnimalRegisterDto {
 	private String gender;
 	private String neuter;
 	private String note;
-
-	public static AnimalRegisterDto of(AnimalEntity animal) {
-
-		return AnimalRegisterDto.builder()
-			.manageCode(animal.getManageCode())
-			.name(animal.getName())
-			.breed(animal.getBreed())
-			.age(animal.getAge())
-			.weight(animal.getWeight())
-			.gender(animal.getGender())
-			.neuter(animal.getNeuter())
-			.note(animal.getNote())
-			.build();
-	}
 
 	public AnimalEntity toEntity(ShelterEntity shelter) {
 
