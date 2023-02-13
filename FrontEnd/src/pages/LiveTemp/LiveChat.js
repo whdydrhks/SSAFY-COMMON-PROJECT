@@ -50,8 +50,8 @@ const APPLICATION_SERVER_URL = API_URL + '/openvidu';
 
 function LiveChat() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const roomNumber = location.state.room;
+  // const location = useLocation();
+  // const roomNumber = location.state.room;
   const chatRef = useRef();
 
   // 유저 정보, 이메일, role 불러와야함
@@ -414,31 +414,7 @@ function LiveChat() {
                   case 'HOST':
                     return (
                       <>
-                        <S.SmallCamera>
-                          <UserVideoComponent streamManager={host} />
-                        </S.SmallCamera>
-                        {user === undefined ? (
-                          <S.WaitingMessageBox>
-                            <S.WaitingMessage>
-                              상대방의 입장을 기다리는 중입니다.
-                            </S.WaitingMessage>
-                          </S.WaitingMessageBox>
-                        ) : (
-                          <div>
-                            <UserVideoComponent streamManager={user} />
-                          </div>
-                        )}
-                      </>
-                    );
-                  case 'USER':
-                    return (
-                      <>
-                        <S.SmallCamera>
-                          <UserVideoComponent streamManager={user} />
-                        </S.SmallCamera>
-                        <div>
-                          <UserVideoComponent streamManager={host} />
-                        </div>
+                        <UserVideoComponent streamManager={host} />
                       </>
                     );
                 }

@@ -34,6 +34,8 @@ import VideoChat from './pages/VideoChat/VideoChat';
 import NotFound from './NotFound';
 import LiveCreateHost from './pages/Live/LiveCreateHost';
 
+import LiveChat from './pages/LiveTemp/LiveChat';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -122,6 +124,10 @@ const router = createBrowserRouter([
   {
     path: '/live/create',
     element: <LiveCreateHost />,
+  },
+  {
+    path: '/livechat',
+    element: <LiveChat />,
   },
   {
     path: '/notfound',

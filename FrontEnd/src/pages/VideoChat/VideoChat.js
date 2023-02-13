@@ -452,36 +452,7 @@ function VideoChat() {
                 value="카메라 전환"
               />
             </S.div>
-          ) : (
-            // 세션 있고 호스트가 없는 경우
-            <S.div id="main-video" className="col-md-6">
-              {(() => {
-                switch (role) {
-                  case 'USER':
-                    return (
-                      <>
-                        <S.SmallCamera>
-                          <UserVideoComponent streamManager={user} />
-                        </S.SmallCamera>
-                        <S.WaitingMessageBox>
-                          <S.WaitingMessage>
-                            상대방의 입장을 기다리는 중입니다.
-                          </S.WaitingMessage>
-                        </S.WaitingMessageBox>
-                      </>
-                    );
-                }
-              })()}
-
-              <input
-                className="btn btn-large btn-success"
-                type="button"
-                id="buttonSwitchCamera"
-                onClick={switchCamera}
-                value="카메라 전환"
-              />
-            </S.div>
-          )}
+          ) : null}
 
           <div id="session-header">
             {/* 메인 화면 제목 */}
