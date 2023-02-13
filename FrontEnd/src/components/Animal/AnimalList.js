@@ -9,7 +9,7 @@ import axios from 'axios';
 // import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { animalListState } from '../../recoilState';
+import { animalListState, userAtom } from '../../recoilState';
 import AnimalItem from './AnimalItem';
 import API_URL from '../../api/api';
 
@@ -25,10 +25,12 @@ function AnimalList(props) {
   // console.log(props, 'here');
 
   const [temp, setTemp] = useState([]);
+  const userInfo = useRecoilValue(userAtom);
+  const shelterId = userInfo.shelterId;
 
   const getAnimalList = async () => {
     const filteredAnimalList = await axios.get(
-      `${API_URL}/shelter/1/animal?pageNo=1`,
+      `${API_URL}/shelter/${shelterId}/animal?pageNo=1`,
     );
     setTemp(filteredAnimalList.data.data);
   };

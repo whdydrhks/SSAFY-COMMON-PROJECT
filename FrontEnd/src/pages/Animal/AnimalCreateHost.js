@@ -174,22 +174,28 @@ function AnimalCreateHost() {
     };
     console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@');
     console.log(images);
-    const imageFiles = images;
-    console.log(imageFiles);
-    fileData.append('files', imageFiles);
+
+    // const imageFiles = images;
+    // console.log(imageFiles);
+    // fileData.append('files', imageFiles);
+    // console.log(fileData);
+
+    Object.values(images).forEach(image => {
+      fileData.append('files', image);
+    });
 
     axios
       .post(`${API_URL}/shelter/${shelterId}/animal`, variables)
       .then(res => {
+        console.log('###############################');
         console.log(res);
         axios.post(
           `${API_URL}/shelter/${shelterId}/animal/${res.data.data}/image`,
           fileData,
           {
-            headers: 'multipart/form-data',
+            headers: { 'Content-Type': 'multipart/form-data' },
           },
         );
-        console.log('이미지 보냄');
         navigate('/animal');
       });
 
