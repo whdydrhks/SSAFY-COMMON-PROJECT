@@ -46,17 +46,20 @@ public class ScheduleService {
 	);
 
 	@Transactional
-	public ResponseSuccessDto<?> getScheduleByUser(HttpServletRequest request) {
+	public ResponseSuccessDto<?> getScheduleByUser(Long userId, HttpServletRequest request) {
 
-		String token = Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION))
-			.orElseThrow(() -> new ApiErrorException(ApiStatus.UNAUTHORIZED));
+//		String token = Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION))
+//			.orElseThrow(() -> new ApiErrorException(ApiStatus.UNAUTHORIZED));
+//
+//		String tokenId = jwtUtil.getUserId(token);
+//
+//		UserEntity loginUser = userRepository.findByIdAndExpiredLike(Long.valueOf( tokenId), "F")
+//			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-		String tokenId = jwtUtil.getUserId(token);
+		UserEntity findUser = userRepository.findByIdAndExpiredLike(userId, "F")
+				.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-		UserEntity loginUser = userRepository.findByIdAndExpiredLike(Long.valueOf( tokenId), "F")
-			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
-
-		List<ScheduleEntity> findSchedule = scheduleRepository.findByUser(loginUser, sort);
+		List<ScheduleEntity> findSchedule = scheduleRepository.findByUser(findUser, sort);
 
 
 		List<ScheduleInfoDto> scheduleInfos = findSchedule
@@ -69,18 +72,21 @@ public class ScheduleService {
 	}
 
 	@Transactional
-	public ResponseSuccessDto<?> getScheduleByShelter(HttpServletRequest request) {
+	public ResponseSuccessDto<?> getScheduleByShelter(Long shelterId, HttpServletRequest request) {
 
-		String token = Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION))
-			.orElseThrow(() -> new ApiErrorException(ApiStatus.UNAUTHORIZED));
+//		String token = Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION))
+//			.orElseThrow(() -> new ApiErrorException(ApiStatus.UNAUTHORIZED));
+//
+//		String tokenId = jwtUtil.getUserId(token);
+//
+//		UserEntity loginUser = userRepository.findByIdAndExpiredLike(Long.valueOf( tokenId), "F")
+//			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+//
+//		ShelterEntity findShelter = shelterRepository.findByUser(loginUser)
+//			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-		String tokenId = jwtUtil.getUserId(token);
-
-		UserEntity loginUser = userRepository.findByIdAndExpiredLike(Long.valueOf( tokenId), "F")
-			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
-
-		ShelterEntity findShelter = shelterRepository.findByUser(loginUser)
-			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+		ShelterEntity findShelter = shelterRepository.findByIdAndExpiredLike(shelterId, "F")
+				.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
 		List<ScheduleEntity> findSchedule = scheduleRepository.findByShelter(findShelter, sort);
 

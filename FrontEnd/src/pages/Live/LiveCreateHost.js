@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-unused-vars */
-import { StopTwoTone } from '@mui/icons-material';
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import API_URL from '../../api/api';
@@ -123,9 +123,11 @@ function LiveCreateHost() {
         <label htmlFor="고양이">고양이</label>
       </SCategory>
       <SButtonDiv>
-        <SCreateButton type="button" onClick={handleCreateLive}>
-          생성
-        </SCreateButton>
+        <Link to="livechat">
+          <SCreateButton type="button" onClick={handleCreateLive}>
+            생성
+          </SCreateButton>
+        </Link>
       </SButtonDiv>
       <Nav />
     </>

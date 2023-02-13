@@ -20,6 +20,7 @@ import org.hibernate.annotations.DynamicInsert;
 
 import com.ssafy.backend.domain.animal.entity.AnimalEntity;
 import com.ssafy.backend.domain.member.entity.UserEntity;
+import com.ssafy.backend.domain.timetable.entity.TimetableEntity;
 import com.ssafy.backend.global.common.entity.BaseTimeEntity;
 
 import lombok.AccessLevel;
@@ -72,5 +73,8 @@ public class ShelterEntity extends BaseTimeEntity {
 	@OneToMany(mappedBy = "shelter", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@Builder.Default
 	private Set<AnimalEntity> animals = new HashSet<>();
+
+	@OneToOne(mappedBy = "shelter", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private TimetableEntity timetable;
 
 }

@@ -1,4 +1,6 @@
-package com.ssafy.backend.domain.live.entity;
+package com.ssafy.backend.domain.animal.entity;
+
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,44 +14,38 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 
-import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
+import com.ssafy.backend.domain.member.entity.UserEntity;
 import com.ssafy.backend.global.common.entity.BaseTimeEntity;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Entity
 @DynamicInsert
-@Table(name = "live")
+@Table(name = "like_animal")
 @Getter
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
-public class LiveEntity extends BaseTimeEntity {
+public class LikeAnimalEntity extends BaseTimeEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", columnDefinition = "INT UNSIGNED")
+	@Column(name = "like_animal_id", columnDefinition = "INT UNSIGNED")
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "shelter_id")
-	private ShelterEntity shelter;
+	@JoinColumn(name = "user_id")
+	private UserEntity user;
 
-	@Column(name = "title", nullable = false, length = 30)
-	private String title;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "animal_id")
+	private AnimalEntity animal;
 
-	@Column(name = "category", nullable = false)
-	private String category;
+	@Column(name = "expired_date")
+	private LocalDateTime expiredDate;
 
-	@Column(name = "image")
-	private String image;
-
-	@Column(name = "room", nullable = false)
-	private String room;
 }

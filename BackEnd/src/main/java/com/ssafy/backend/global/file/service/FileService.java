@@ -57,10 +57,10 @@ public class FileService {
 	private String UPLOAD_DIR_PATH;
 
 	@Value("${file.upload.userPath}")
-	private String USER_SUB_PATH = "user";
+	public String USER_SUB_PATH = "user";
 
 	@Value("${file.upload.animalPath}")
-	private String ANIMAL_SUB_PATH = "animal";
+	public String ANIMAL_SUB_PATH = "animal";
 
 	private FileEntity userDefault;
 	private FileEntity animalDefault;
@@ -190,18 +190,18 @@ public class FileService {
 	public ResponseSuccessDto<?> uploadMultipleFiles(
 		String category,
 		Long id,
-		MultipartFile[] files,
+		List<MultipartFile> files,
 		HttpServletRequest request) {
 
 		List<?> fileDownloadUriList;
 
 		if ("user".equals(category)) {
-			fileDownloadUriList = Arrays.asList(files)
+			fileDownloadUriList = files
 				.stream()
 				.map(file -> uploadUserFile(id, file, request))
 				.collect(Collectors.toList());
 		} else if ("animal".equals(category)) {
-			fileDownloadUriList = Arrays.asList(files)
+			fileDownloadUriList = files
 				.stream()
 				.map(file -> uploadAnimalFile(id, file, request))
 				.collect(Collectors.toList());
@@ -365,7 +365,7 @@ public class FileService {
 	 * @return
 	 */
 	@Transactional
-	private String createDownloadUri(String subPath, FileEntity file) {
+	public String createDownloadUri(String subPath, FileEntity file) {
 		return ServletUriComponentsBuilder.fromCurrentContextPath()
 			.path("/v1/file")
 			.path("/download").path("/" + subPath)

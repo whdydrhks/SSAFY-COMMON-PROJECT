@@ -51,7 +51,9 @@ public class LiveService extends BaseTimeEntity {
         ShelterEntity findShelter = shelterRepository.findByUser(loginUser)
                 .orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-        LiveEntity live = registDto.toEntity(findShelter);
+        String room = registDto.getRoom() + "_" + findShelter.getId();
+
+        LiveEntity live = registDto.toEntity(findShelter, room);
 
         Long liveId = liveRepository.save(live).getId();
 
