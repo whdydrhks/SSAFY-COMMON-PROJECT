@@ -32,19 +32,23 @@ public class ScheduleControllerV1 {
 	private final ShelterService shelterService;
 	private final UserService userService;
 
-	@GetMapping("/users")
+	@GetMapping("/users/{userId}")
 	@ApiOperation(value="유저 일정정보 조회")
-	public ResponseEntity<?> getUserScheduleInfo(HttpServletRequest request) {
+	public ResponseEntity<?> getUserScheduleInfo(
+			@PathVariable Long userId,
+			HttpServletRequest request) {
 		return ResponseEntity
-			.ok(scheduleService.getScheduleByUser(request));
+			.ok(scheduleService.getScheduleByUser(userId, request));
 	}
 
-	@GetMapping("/shelters")
+	@GetMapping("/shelters/{shelterId}")
 	@ApiOperation(value="보호소 일정정보 조회")
-	public ResponseEntity<?> getShelterScheduleInfo(HttpServletRequest request) {
+	public ResponseEntity<?> getShelterScheduleInfo(
+			@PathVariable Long shelterId,
+			HttpServletRequest request) {
 		// 김싸피 0208 1 9
 		return ResponseEntity
-			.ok(scheduleService.getScheduleByShelter(request));
+			.ok(scheduleService.getScheduleByShelter(shelterId, request));
 	}
 
 	@DeleteMapping("/{scheduleId}")
