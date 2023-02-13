@@ -48,7 +48,7 @@ const APPLICATION_SERVER_URL = API_URL + '/openvidu';
 // const APPLICATION_SERVER_URL = 'https://i8b209.p.ssafy.io:9999/api/v1/openvidu';
 // const OPENVIDU_SERVER_SECRET = 'ssafy';
 
-function LiveChat() {
+function Live() {
   const navigate = useNavigate();
   // const location = useLocation();
   // const roomNumber = location.state.room;
@@ -141,6 +141,8 @@ function LiveChat() {
         publisher.subscribeToRemote();
         session.publish(publisher);
         setPublisher(publisher);
+        console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+        console.log(publisher);
         if (role === 'USER') {
           setUser(publisher);
         }
@@ -259,7 +261,6 @@ function LiveChat() {
     if (role === 'HOST') {
       if (session) {
         session.disconnect();
-        navigate('/');
       }
     }
     if (role === 'USER' && session) {
@@ -271,6 +272,7 @@ function LiveChat() {
     setUser(undefined);
     setMyUserName(nickname);
     setHost(undefined);
+    navigate('/');
   };
 
   const getToken = () => {
@@ -417,16 +419,22 @@ function LiveChat() {
                         <UserVideoComponent streamManager={host} />
                       </>
                     );
+                  case 'USER':
+                    return (
+                      <>
+                        <UserVideoComponent streamManager={host} />
+                      </>
+                    );
                 }
               })()}
 
-              <input
+              {/* <input
                 className="btn btn-large btn-success"
                 type="button"
                 id="buttonSwitchCamera"
                 onClick={switchCamera}
                 value="카메라 전환"
-              />
+              /> */}
             </S.div>
           ) : (
             // 세션 있고 호스트가 없는 경우
@@ -497,4 +505,4 @@ function LiveChat() {
   );
 }
 
-export default LiveChat;
+export default Live;
