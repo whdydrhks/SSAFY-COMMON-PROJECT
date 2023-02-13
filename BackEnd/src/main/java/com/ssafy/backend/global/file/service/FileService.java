@@ -190,18 +190,18 @@ public class FileService {
 	public ResponseSuccessDto<?> uploadMultipleFiles(
 		String category,
 		Long id,
-		MultipartFile[] files,
+		List<MultipartFile> files,
 		HttpServletRequest request) {
 
 		List<?> fileDownloadUriList;
 
 		if ("user".equals(category)) {
-			fileDownloadUriList = Arrays.asList(files)
+			fileDownloadUriList = files
 				.stream()
 				.map(file -> uploadUserFile(id, file, request))
 				.collect(Collectors.toList());
 		} else if ("animal".equals(category)) {
-			fileDownloadUriList = Arrays.asList(files)
+			fileDownloadUriList = files
 				.stream()
 				.map(file -> uploadAnimalFile(id, file, request))
 				.collect(Collectors.toList());
