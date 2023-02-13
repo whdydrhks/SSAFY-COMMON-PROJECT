@@ -57,10 +57,10 @@ public class FileService {
 	private String UPLOAD_DIR_PATH;
 
 	@Value("${file.upload.userPath}")
-	private String USER_SUB_PATH = "user";
+	public String USER_SUB_PATH = "user";
 
 	@Value("${file.upload.animalPath}")
-	private String ANIMAL_SUB_PATH = "animal";
+	public String ANIMAL_SUB_PATH = "animal";
 
 	private FileEntity userDefault;
 	private FileEntity animalDefault;
@@ -365,7 +365,7 @@ public class FileService {
 	 * @return
 	 */
 	@Transactional
-	private String createDownloadUri(String subPath, FileEntity file) {
+	public String createDownloadUri(String subPath, FileEntity file) {
 		return ServletUriComponentsBuilder.fromCurrentContextPath()
 			.path("/v1/file")
 			.path("/download").path("/" + subPath)

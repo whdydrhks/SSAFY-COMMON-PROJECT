@@ -174,41 +174,51 @@ public class dummyCreate {
 		scheduleRepository.save(schedule4);
 
 		LiveEntity live = LiveEntity.builder()
+			//			.id(1L)
 			.image("string")
 			.category("개")
 			.title("111")
+			.room("1")
 			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
 			.build();
 		liveRepository.save(live);
 
 		LiveEntity live1 = LiveEntity.builder()
+			//			.id(5L)
 			.image("string")
 			.category("개")
 			.title("555")
+			.room("5")
 			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
 			.build();
 		liveRepository.save(live1);
 
 		LiveEntity live2 = LiveEntity.builder()
+			//			.id(3L)
 			.image("string")
 			.category("개")
 			.title("333")
+			.room("3")
 			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
 			.build();
 		liveRepository.save(live2);
 
 		LiveEntity live13 = LiveEntity.builder()
+			//			.id(2L)
 			.image("string")
 			.category("개")
 			.title("222")
+			.room("2")
 			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
 			.build();
 		liveRepository.save(live13);
 
 		LiveEntity live14 = LiveEntity.builder()
+			//			.id(4L)
 			.image("string")
 			.category("개")
 			.title("441")
+			.room("4")
 			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
 			.build();
 		liveRepository.save(live14);

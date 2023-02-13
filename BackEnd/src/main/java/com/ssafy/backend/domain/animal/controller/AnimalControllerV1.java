@@ -158,4 +158,5 @@ public class AnimalControllerV1 {
 		return ResponseEntity
 			.ok(animalService.searchInfoByBreed(shelterId, keyword));
 	}
+
 }
