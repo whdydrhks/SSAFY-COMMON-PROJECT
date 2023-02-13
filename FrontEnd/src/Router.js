@@ -32,6 +32,7 @@ import ModifyMyPage from './pages/Account/ModifyMyPage';
 import Alarm from './pages/Alarm';
 import VideoChat from './pages/VideoChat/VideoChat';
 import NotFound from './NotFound';
+import LiveCreateHost from './pages/Live/LiveCreateHost';
 
 const router = createBrowserRouter([
   {
@@ -117,6 +118,10 @@ const router = createBrowserRouter([
   {
     path: '/videochat',
     element: <VideoChat />,
+  },
+  {
+    path: '/live/create',
+    element: <LiveCreateHost />,
   },
   {
     path: '/notfound',
