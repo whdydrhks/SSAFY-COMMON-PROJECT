@@ -20,7 +20,7 @@ public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Long> 
 
 	List<ScheduleEntity> findByShelter(ShelterEntity shelter, Sort sort);
 
-	List<ScheduleEntity> findByDay(String day);
+	List<ScheduleEntity> findByDay(String day, Sort sort);
 
 //	List<ScheduleEntity> findByNameContainingIgnoreCase(String name);
 //

@@ -6,6 +6,7 @@ import com.ssafy.backend.domain.schedule.entity.ScheduleEntity;
 import com.ssafy.backend.domain.schedule.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -28,18 +29,19 @@ public class AlarmScheduler {
     private final ScheduleRepository scheduleRepository;
 
     @Async
-    @Scheduled(cron = "0 0 2 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 11 2 * * *", zone = "Asia/Seoul")
     @Transactional
     public void dailyScheduleAlarm(){
-        System.out.println("======================================");
-        System.out.println("Daily Schedule Alarm");
-        System.out.println("======================================");
 
         LocalDate now = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMdd");
         String day = now.format(formatter);
 
-        List<ScheduleEntity> todayScheduleList = scheduleRepository.findByDay(day);
+        Sort sort = Sort.by(
+                Sort.Order.asc("time")
+        );
+
+        List<ScheduleEntity> todayScheduleList = scheduleRepository.findByDay(day, sort);
         List<AlarmEntity> alarmList = new ArrayList<>();
 
         for(ScheduleEntity schedule : todayScheduleList){
