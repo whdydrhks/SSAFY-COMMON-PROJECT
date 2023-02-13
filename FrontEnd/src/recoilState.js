@@ -226,6 +226,12 @@ const liveListAtom = atom({
   key: 'liveListAtom',
   default: [],
 });
+
+const timetableShelterIdAtom = atom({
+  key: 'timetableShelterIdAtom',
+  default: '',
+});
+
 export {
   animalState,
   authStateAtom,
@@ -243,4 +249,5 @@ export {
   dateListAtom,
   alarmAtom,
   liveListAtom,
+  timetableShelterIdAtom,
 };

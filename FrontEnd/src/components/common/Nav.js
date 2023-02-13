@@ -19,6 +19,7 @@ const SBox = styled(Box)`
   right: 0;
   bottom: 0;
   height: 4rem;
+  background-color: white;
 `;
 
 const SBottomNavigationAction = styled(BottomNavigationAction)`

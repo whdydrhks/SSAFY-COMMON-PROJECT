@@ -33,6 +33,7 @@ import Alarm from './pages/Alarm';
 import VideoChat from './pages/VideoChat/VideoChat';
 import NotFound from './NotFound';
 import LiveCreateHost from './pages/Live/LiveCreateHost';
+import CreateSchedule from './components/Schedule/CreateSchedule';
 
 const router = createBrowserRouter([
   {
@@ -126,6 +127,10 @@ const router = createBrowserRouter([
   {
     path: '/notfound',
     element: <NotFound />,
+  },
+  {
+    path: '/createschedule',
+    element: <CreateSchedule />,
   },
 ]);
 
