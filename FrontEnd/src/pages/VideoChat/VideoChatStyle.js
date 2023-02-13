@@ -82,10 +82,11 @@ export const ChatBox = styled.div`
 export const ChatForm = styled.div`
   display: flex;
   justify-content: space-around;
+  height: 10vh;
 `;
 
 export const ChattingListBox = styled.ul`
-  height: 20vh;
+  height: 43vh;
   border: 1px solid black;
   border-radius: 10px;
   overflow: scroll;
@@ -94,7 +95,24 @@ export const ChattingListBox = styled.ul`
   }
 `;
 
-export const Chat = styled.li``;
+export const ChatInput = styled.input`
+  border-radius: 10px;
+  height: 5vh;
+  width: 19rem;
+`;
+
+export const ChatButton = styled.button`
+  background-color: #1976d2;
+  color: white;
+  border: 1px solid #1976d2;
+  border-radius: 10px;
+  height: 5vh;
+`;
+
+export const Chat = styled.li`
+  font-size: 1.5rem;
+  margin: 3%;
+`;
 
 /* 
 .stream-container {

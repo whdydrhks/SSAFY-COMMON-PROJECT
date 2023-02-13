@@ -33,7 +33,7 @@ import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import styled from 'styled-components';
+// import styled from 'styled-components';
 import * as S from './VideoChatStyle';
 import UserVideoComponent from './UserVideoComponent';
 import { userAtom } from '../../recoilState';
@@ -98,7 +98,8 @@ function VideoChat() {
 
     // session 정보가 없을 경우 useRef에서 chatRef를 찾지못함
     if (session) {
-      chatRef.current.scrollIntoView(false);
+      // chatRef.current.scrollIntoView(false);
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
   }, [oneChat]);
 
@@ -528,8 +529,8 @@ function VideoChat() {
           {/* 채팅창 */}
           <S.ChatForm>
             <form onSubmit={sendMessage}>
-              <input type="text" onChange={handleMsg} value={sendMsg} />
-              <button type="submit">메시지 보내기</button>
+              <S.ChatInput type="text" onChange={handleMsg} value={sendMsg} />
+              <S.ChatButton type="submit">메시지 보내기</S.ChatButton>
             </form>
           </S.ChatForm>
         </S.ChatBox>
