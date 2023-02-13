@@ -1,6 +1,8 @@
 package com.ssafy.backend.domain.member.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -12,13 +14,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.backend.domain.member.entity.UserEntity;
-import com.ssafy.backend.domain.member.model.request.UserSignupDto;
+import com.ssafy.backend.domain.member.model.request.UserRegisterDto;
 import com.ssafy.backend.domain.member.model.request.UserUpdateDto;
 import com.ssafy.backend.domain.member.model.response.UserHostInfoDto;
 import com.ssafy.backend.domain.member.model.response.UserInfoDto;
 import com.ssafy.backend.domain.member.repository.UserRepository;
 import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
-import com.ssafy.backend.global.common.model.ResponseSuccessDto;
+import com.ssafy.backend.global.common.model.response.ResponseSuccessDto;
 import com.ssafy.backend.global.error.exception.ApiErrorException;
 import com.ssafy.backend.global.util.JwtUtil;
 import com.ssafy.backend.global.util.ResponseUtil;
@@ -47,7 +49,7 @@ public class UserService {
 	 * @throws IllegalStateException
 	 */
 	@Transactional
-	public ResponseSuccessDto<?> register(UserSignupDto signupDto) {
+	public ResponseSuccessDto<?> register(UserRegisterDto signupDto) {
 
 		signupDto.setPassword(passwordEncoder.encode(signupDto.getPassword())); // 패스워드 암호화
 
@@ -58,10 +60,8 @@ public class UserService {
 
 		Long userId = userRepository.save(joinUser).getId();
 
-		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(userId);
+		return responseUtil.buildSuccessResponse(userId);
 
-		return resp;
 	}
 
 	/**
@@ -78,25 +78,11 @@ public class UserService {
 
 		UserEntity findUser = validateAccount(userId, request);
 
-		UserEntity updateUser = UserEntity.builder()
-			.id(findUser.getId())
-			.email(findUser.getEmail())
-			.password(updateDto.getPassword())
-			.role(findUser.getRole())
-			.name(updateDto.getName())
-			.phoneNumber(updateDto.getPhoneNumber())
-			.nickname(updateDto.getNickname())
-			.profileImage(findUser.getProfileImage())
-			.expired(findUser.getExpired())
-			.createdDate(findUser.getCreatedDate())
-			.build();
+		UserEntity updateUser = updateDto.updateEntity(findUser);
 
-		Long updatedUserId = userRepository.save(updateUser).getId();
+		Long updatedUserId = userRepository.save(findUser).getId();
 
-		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(updatedUserId);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(updatedUserId);
 	}
 
 	/**
@@ -112,25 +98,11 @@ public class UserService {
 
 		UserEntity findUser = validateAccount(userId, request);
 
-		UserEntity updateUser = UserEntity.builder()
-			.id(findUser.getId())
-			.email(findUser.getEmail())
-			.password(findUser.getPassword())
-			.role(roleName)
-			.name(findUser.getName())
-			.phoneNumber(findUser.getPhoneNumber())
-			.nickname(findUser.getNickname())
-			.profileImage(findUser.getProfileImage())
-			.expired(findUser.getExpired())
-			.createdDate(findUser.getCreatedDate())
-			.build();
+		findUser.setRole(roleName);
 
-		Long updatedUserId = userRepository.save(updateUser).getId();
+		Long updatedUserId = userRepository.save(findUser).getId();
 
-		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(updatedUserId);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(updatedUserId);
 	}
 
 	/**
@@ -146,25 +118,40 @@ public class UserService {
 
 		UserEntity findUser = validateAccount(userId, request);
 
-		UserEntity updateUser = UserEntity.builder()
-			.id(findUser.getId())
-			.email(findUser.getEmail())
-			.password(findUser.getPassword())
-			.role(findUser.getRole())
-			.name(findUser.getName())
-			.phoneNumber(findUser.getPhoneNumber())
-			.nickname(findUser.getNickname())
-			.profileImage(findUser.getProfileImage())
-			.expired(expiredFlag ? "T" : "F") // expiredFlag에 따라 변경 true:"T" / false:"F"
-			.createdDate(findUser.getCreatedDate())
-			.build();
+		findUser.setExpired(expiredFlag ? "T" : "F");
 
-		Long updatedUserId = userRepository.save(updateUser).getId();
+		Long updatedUserId = userRepository.save(findUser).getId();
 
-		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(updatedUserId);
+		return responseUtil.buildSuccessResponse(updatedUserId);
+	}
 
-		return resp;
+	/**
+	 * 사용자의 비밀번호를 갱신하는 메소드
+	 *
+	 * @param
+	 * @return 만료 정보가 업데이트 된 userId
+	 */
+	public ResponseSuccessDto<?> updatePassword(
+		Long userId,
+		String oldPassword,
+		String newPassword,
+		HttpServletRequest request) {
+
+		UserEntity findUser = validateAccount(userId, request);
+
+		Map<String, Object> res = new HashMap<>();
+
+		res.put("matchResult", passwordEncoder.matches(oldPassword, findUser.getPassword()));
+
+		if ((boolean)res.get("matchResult")) {
+			findUser.setPassword(passwordEncoder.encode(newPassword));
+
+			userRepository.save(findUser);
+
+			res.put("updateResult", true);
+		}
+
+		return responseUtil.buildSuccessResponse(res);
 	}
 
 	/**
@@ -182,10 +169,7 @@ public class UserService {
 
 		userRepository.deleteById(userId);
 
-		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(null);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(null);
 	}
 
 	/**
@@ -204,10 +188,7 @@ public class UserService {
 			.map(UserInfoDto::of)
 			.collect(Collectors.toList());
 
-		ResponseSuccessDto<List<ShelterEntity>> resp = responseUtil
-			.buildSuccessResponse(userInfos);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(userInfos);
 	}
 
 	/**
@@ -302,6 +283,26 @@ public class UserService {
 			.buildSuccessResponse(userInfos);
 
 		return resp;
+	}
+
+	/**
+	 * 사용자 비밀번호를 체크하는 메소드
+	 *
+	 * @param
+	 * @return 비밀번호 일치 여부
+	 */
+	public ResponseSuccessDto<?> checkPassword(
+		Long userId,
+		String password,
+		HttpServletRequest request) {
+
+		UserEntity findUser = validateAccount(userId, request);
+
+		Map<String, Object> res = new HashMap<>();
+
+		res.put("passwordMatch", passwordEncoder.matches(password, findUser.getPassword()));
+
+		return responseUtil.buildSuccessResponse(res);
 	}
 
 	/**

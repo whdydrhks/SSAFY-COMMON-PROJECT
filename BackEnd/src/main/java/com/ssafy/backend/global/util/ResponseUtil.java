@@ -6,8 +6,8 @@ import java.util.TimeZone;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import com.ssafy.backend.global.common.model.ResponseErrorDto;
-import com.ssafy.backend.global.common.model.ResponseSuccessDto;
+import com.ssafy.backend.global.common.model.response.ResponseErrorDto;
+import com.ssafy.backend.global.common.model.response.ResponseSuccessDto;
 
 @Component
 public class ResponseUtil<T> {

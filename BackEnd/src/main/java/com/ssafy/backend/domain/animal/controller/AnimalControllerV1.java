@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.backend.domain.animal.model.request.AnimalRegisterDto;
 import com.ssafy.backend.domain.animal.model.request.AnimalUpdateDto;
 import com.ssafy.backend.domain.animal.service.AnimalService;
 import com.ssafy.backend.domain.shelter.service.ShelterService;
+import com.ssafy.backend.global.file.service.FileService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,6 +34,7 @@ public class AnimalControllerV1 {
 
 	private final AnimalService animalService;
 	private final ShelterService shelterService;
+	private final FileService fileService;
 
 	@GetMapping("/animal")
 	@ApiOperation(value = "보호소내 동물 전체 조회")
@@ -87,6 +90,27 @@ public class AnimalControllerV1 {
 
 		return ResponseEntity
 			.ok(animalService.updateExpire(shelterId, animalId, true));
+	}
+
+	@GetMapping("/{animalId}/image")
+	@ApiOperation(value = "동물 이미지 조회")
+	public ResponseEntity<?> getFilesByUser(
+		@PathVariable("animalId") Long animalId,
+		HttpServletRequest request) {
+
+		return ResponseEntity
+			.ok(fileService.getFilesByAnimal(animalId, request));
+	}
+
+	@PostMapping("/{animalId}/image")
+	@ApiOperation(value = "사용자 이미지 등록")
+	public ResponseEntity<?> uploadFilesByUser(
+		@PathVariable("animalId") Long animalId,
+		@RequestParam(name = "file", required = false) MultipartFile[] images,
+		HttpServletRequest request) {
+
+		return ResponseEntity
+			.ok(fileService.uploadMultipleFiles("animal", animalId, images, request));
 	}
 
 	@GetMapping("/search/manage-code")

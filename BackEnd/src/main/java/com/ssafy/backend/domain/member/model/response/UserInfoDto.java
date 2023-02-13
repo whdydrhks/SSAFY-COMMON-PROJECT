@@ -1,20 +1,21 @@
 package com.ssafy.backend.domain.member.model.response;
 
-import java.time.LocalDateTime;
-
 import com.ssafy.backend.domain.member.entity.UserEntity;
+import com.ssafy.backend.global.common.model.BaseTimeDto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
-@Builder
+@Setter
+@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class UserInfoDto {
+public class UserInfoDto extends BaseTimeDto {
 
 	// user
 	private Long userId;
@@ -23,9 +24,6 @@ public class UserInfoDto {
 	private String phoneNumber;
 	private String nickname;
 	private String profileImage;
-
-	private LocalDateTime createdDate;
-	private LocalDateTime updatedDate;
 
 	public static UserInfoDto of(UserEntity user) {
 		return UserInfoDto.builder()
@@ -37,19 +35,6 @@ public class UserInfoDto {
 			.profileImage(user.getProfileImage())
 			.createdDate(user.getCreatedDate())
 			.updatedDate(user.getUpdatedDate())
-			.build();
-	}
-
-	public UserEntity toEntity() {
-		return UserEntity.builder()
-			.id(this.userId)
-			.email(this.email)
-			.name(this.name)
-			.phoneNumber(this.phoneNumber)
-			.nickname(this.nickname)
-			.profileImage(this.profileImage)
-			.createdDate(this.createdDate)
-			.updatedDate(this.updatedDate)
 			.build();
 	}
 }

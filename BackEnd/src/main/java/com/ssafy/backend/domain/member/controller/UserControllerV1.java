@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.ssafy.backend.domain.member.model.request.UserSignupDto;
+import com.ssafy.backend.domain.member.model.request.UserRegisterDto;
 import com.ssafy.backend.domain.member.model.request.UserUpdateDto;
 import com.ssafy.backend.domain.member.service.UserService;
+import com.ssafy.backend.global.file.service.FileService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserControllerV1 {
 
 	private final UserService userService;
+	private final FileService fileService;
 
 	@GetMapping
 	@ApiOperation(value = "사용자 조회")
@@ -52,7 +55,7 @@ public class UserControllerV1 {
 	@PostMapping
 	@ApiOperation(value = "회원 가입")
 	public ResponseEntity<?> signup(
-		@RequestBody UserSignupDto signupDto,
+		@RequestBody UserRegisterDto signupDto,
 		HttpServletRequest request) {
 
 		return ResponseEntity
@@ -88,6 +91,60 @@ public class UserControllerV1 {
 
 		return ResponseEntity
 			.ok(userService.updateExpire(userId, true, request));
+	}
+
+	//	@PostMapping
+	//	@ApiOperation(value = "사용자 중복 아이디 조회")
+	//	public ResponseEntity<?> userShelter(
+	//		@RequestParam(value = "keyword", required = true) String keyword,
+	//		HttpServletRequest request) {
+	//
+	//		return ResponseEntity
+	//			.ok(userService.checkUser(keyword));
+	//	}
+
+	@PostMapping("/{userId}/password")
+	@ApiOperation(value = "비밀번호 검사")
+	public ResponseEntity<?> checkPassword(
+		@PathVariable(name = "userId") Long userId,
+		@RequestParam(name = "password") String password,
+		HttpServletRequest request) {
+
+		return ResponseEntity
+			.ok(userService.checkPassword(userId, password, request));
+	}
+
+	@PutMapping("/{userId}/password")
+	@ApiOperation(value = "비밀번호 수정")
+	public ResponseEntity<?> updatePassword(
+		@PathVariable(name = "userId") Long userId,
+		@RequestParam(name = "curPassword") String curPassword,
+		@RequestParam(name = "newPassword") String newPassword,
+		HttpServletRequest request) {
+
+		return ResponseEntity
+			.ok(userService.updatePassword(userId, curPassword, newPassword, request));
+	}
+
+	@GetMapping("/{userId}/image")
+	@ApiOperation(value = "사용자 이미지 조회")
+	public ResponseEntity<?> getFilesByUser(
+		@PathVariable("userId") Long userId,
+		HttpServletRequest request) {
+
+		return ResponseEntity
+			.ok(fileService.getFilesByUser(userId, request));
+	}
+
+	@PostMapping("/{userId}/image")
+	@ApiOperation(value = "사용자 이미지 등록")
+	public ResponseEntity<?> uploadFilesByUser(
+		@PathVariable("userId") Long userId,
+		@RequestParam(name = "file", required = false) MultipartFile image,
+		HttpServletRequest request) {
+
+		return ResponseEntity
+			.ok(fileService.uploadFile("user", userId, image, request));
 	}
 
 }

@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.8'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id 'com.diffplug.eclipse.apt' version '3.26.0' // eclipse setting
 }
 
 group = 'com.ssafy'
@@ -23,13 +24,19 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'	
+
 	compileOnly 'org.projectlombok:lombok'
+    
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	
 	annotationProcessor 'org.projectlombok:lombok'
+	
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-
+	
+	testAnnotationProcessor 'org.projectlombok:lombok'
+    
 	// Mail Send
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 
@@ -61,6 +68,13 @@ dependencies {
 
 	// openvidu
 	implementation 'io.openvidu:openvidu-java-client:2.25.0'
+	
+	// Thumbnailator
+	implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.8'
+	
+	// Apache Commons
+	implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
+	implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
 	
 }
 

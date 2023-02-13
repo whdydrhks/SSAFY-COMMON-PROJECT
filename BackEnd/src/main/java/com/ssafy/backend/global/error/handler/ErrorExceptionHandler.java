@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.ssafy.backend.global.error.exception.ApiErrorException;
+import com.ssafy.backend.global.error.exception.FileErrorException;
 import com.ssafy.backend.global.util.ResponseUtil;
 
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,24 @@ public class ErrorExceptionHandler {
 	 */
 	@ExceptionHandler({ApiErrorException.class})
 	private ResponseEntity<?> handle(HttpServletRequest request, final ApiErrorException e) {
+		log.info("Error Log :" + request.getContextPath() + "\n" + e);
+
+		return ResponseEntity
+			.status(e.getException().getStatus())
+			.body(responseUtil.buildErrorResponse(e.getException().getStatus(), e.getMessage(),
+				request.getRequestURI()));
+	}
+
+	/**
+	 * File Rest Api 에러를 핸들링 하기 위한 핸들러 메소드
+	 *
+	 * @param
+	 * @return ResponseEntity&ltResponseErrorDto&gt
+	 */
+	@ExceptionHandler({FileErrorException.class})
+	private ResponseEntity<?> handle(HttpServletRequest request, final FileErrorException e) {
+		log.info("Error Log :" + request.getContextPath() + "\n" + e);
+
 		return ResponseEntity
 			.status(e.getException().getStatus())
 			.body(responseUtil.buildErrorResponse(e.getException().getStatus(), e.getMessage(),
@@ -42,6 +61,8 @@ public class ErrorExceptionHandler {
 	 */
 	@ExceptionHandler({Exception.class})
 	protected ResponseEntity<?> handleServerException(HttpServletRequest request, Exception e) {
+		log.info("Error Log :" + request.getContextPath() + "\n" + e);
+
 		return ResponseEntity
 			.status(HttpStatus.INTERNAL_SERVER_ERROR)
 			.body(responseUtil.buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "알 수 없는 에러입니다.",

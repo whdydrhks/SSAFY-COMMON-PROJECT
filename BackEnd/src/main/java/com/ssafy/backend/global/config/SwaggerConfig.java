@@ -31,29 +31,33 @@ public class SwaggerConfig {
 
 	@Bean
 	public Docket allApi() {
-		return buildDocket("_전체_", Predicates.or(
-			PathSelectors.regex("/*.*")));
+		return buildDocket("_전체_", Predicates
+			.or(PathSelectors.regex("/*.*")));
 	}
 
 	@Bean
-	public Docket AuthApi() {
+	public Docket authApi() {
 		String version = "v1";
-		return buildDocket("인증 " + version, Predicates.or(
-			PathSelectors.regex("/api/" + version + "/auth.*")));
-	}
-
-	@Bean
-	public Docket UserApi() {
-		String version = "v1";
-		return buildDocket("사용자 " + version, Predicates.or(
-			PathSelectors.regex("/api/" + version + "/user.*")));
+		return buildDocket("회원 " + version, Predicates
+			.or(PathSelectors.ant("/" + version + "/auth/**"),
+				PathSelectors.ant("/" + version + "/user"),
+				PathSelectors.ant("/" + version + "/user/**")));
 	}
 
 	@Bean
 	public Docket shelterApi() {
 		String version = "v1";
-		return buildDocket("보호소 " + version, Predicates.or(
-			PathSelectors.regex("/" + version + "/shelter.*")));
+		return buildDocket("보호소 " + version, Predicates
+			.or(PathSelectors.ant("/" + version + "/shelter"),
+				PathSelectors.ant("/" + version + "/shelter/*")));
+	}
+
+	@Bean
+	public Docket animalApi() {
+		String version = "v1";
+		return buildDocket("동물 " + version, Predicates
+			.or(PathSelectors.ant("/" + version + "/**/animal"),
+				PathSelectors.ant("/" + version + "/**/animal/*")));
 	}
 
 	public Docket buildDocket(String groupName, Predicate<String> predicates) {
