@@ -313,6 +313,29 @@ public class FileService {
 	}
 
 	@Transactional
+	public ResponseSuccessDto<?> getFilesByAnimal(
+		Long animalId,
+		HttpServletRequest request) {
+
+		AnimalEntity findAnimal = animalRepository.findByIdAndExpiredLike(animalId, "F")
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+
+		// 사용자 이미지를 찾지 못하면 userDefault 이미지를 불러옴
+		List<FileEntity> findFiles = fileRepository.findByAnimalAndExpiredLike(findAnimal, "F");
+
+		if (findFiles == null) {
+			findFiles = Arrays.asList(fileRepository.findByStoreName("default_profile").get());
+		}
+
+		List<?> fileDownloadUriList = findFiles
+			.stream()
+			.map(findFile -> createDownloadUri(ANIMAL_SUB_PATH, findFile))
+			.collect(Collectors.toList());
+
+		return responseUtil.buildSuccessResponse(fileDownloadUriList);
+	}
+
+	@Transactional
 	private String storeFile(MultipartFile file, String subPath, String fileName, String storeName) {
 
 		Path fileStoragePath = createDirectories(subPath);
