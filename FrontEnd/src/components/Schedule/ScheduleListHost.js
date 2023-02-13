@@ -13,12 +13,13 @@ import styled from 'styled-components';
 import '../../styles/slick-theme.css';
 import '../../styles/slick.css';
 import Slider from 'react-slick';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   scheduleAtom,
   todayAtom,
   todayScheduleAtom,
   twoWeeksAtom,
+  userAtom,
 } from '../../recoilState';
 import API_URL from '../../api/api';
 import { getCookie } from '../../pages/Account/cookie';
@@ -96,6 +97,7 @@ function ScheduleListHost() {
     (today.getMonth() + 1).toString().padStart(2, '0') +
     today.getDate().toString().padStart(2, '0');
   const accessToken = getCookie('accessToken');
+  const user = useRecoilValue(userAtom);
   const [twoWeeks, setTwoWeeks] = useRecoilState(twoWeeksAtom);
   const [scheduleHost, setScheduleHost] = useRecoilState(scheduleAtom);
   const [todaySchedule, setTodaySchedule] = useRecoilState(todayScheduleAtom);
@@ -112,6 +114,8 @@ function ScheduleListHost() {
     navigate('/videochat');
   };
 
+  const handleDeleteSchedule = () => {};
+
   useEffect(() => {
     const weeks = [];
     for (let i = 0; i < 14; i += 1) {
@@ -123,15 +127,9 @@ function ScheduleListHost() {
     }
     setTwoWeeks(weeks);
     setIsClickDate(todayDate);
-    axios
-      .get(`${API_URL}/schedule/shelters`, {
-        headers: {
-          Authorization: accessToken,
-        },
-      })
-      .then(res => {
-        setScheduleHost(res.data.data);
-      });
+    axios.get(`${API_URL}/schedule/shelters/${user.shelterId}`).then(res => {
+      setScheduleHost(res.data.data);
+    });
   }, []);
 
   return (
@@ -160,7 +158,57 @@ function ScheduleListHost() {
                 </STime>
                 <SNickName>{schedule.userNickname}</SNickName>
               </div>
-              <div>버튼필요함</div>
+              <div>
+                {/* 클릭한 날이 오늘이면서 시간이 동일하다면 Live */}
+                {todayDate === isClickDate &&
+                today.getHours() === schedule.time ? (
+                  <Link
+                    to={{
+                      pathname: '/videochat',
+                    }}
+                    state={{ room: schedule.room }}
+                  >
+                    <SClickButton
+                      bgColor="green"
+                      onClick={handleVideoChatClick}
+                    >
+                      Live
+                    </SClickButton>
+                  </Link>
+                ) : null}
+                {/* 클릭한 날이 오늘이면서 시간이 지났으면 완료 */}
+                {todayDate === isClickDate &&
+                today.getHours() > schedule.time ? (
+                  <SClickButton bgColor="grey" disabled>
+                    완료
+                  </SClickButton>
+                ) : null}
+                {/* 클릭한 날이 오늘이면서 아직 시간이 지나지 않았으면 취소 */}
+                {todayDate === isClickDate &&
+                today.getHours() < schedule.time ? (
+                  <SClickButton
+                    bgColor="red"
+                    onClick={() => {
+                      handleDeleteSchedule(schedule.scheduleId);
+                    }}
+                  >
+                    {' '}
+                    취소
+                  </SClickButton>
+                ) : null}
+                {/* 날짜가 다르다면 취소 */}
+                {todayDate !== isClickDate ? (
+                  <SClickButton
+                    bgColor="red"
+                    onClick={() => {
+                      handleDeleteSchedule(schedule.scheduleId);
+                    }}
+                  >
+                    {' '}
+                    취소
+                  </SClickButton>
+                ) : null}
+              </div>
             </SContainer>
           </STimeBox>
         ))}

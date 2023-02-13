@@ -16,6 +16,7 @@ import {
   timetableShelterIdAtom,
   todayTimeAtom,
   dayTimeAtom,
+  scheduleAtom,
 } from '../../recoilState';
 
 const SContainer = styled.div`
@@ -86,12 +87,14 @@ function CreateSchedule() {
     slidesToScroll: 3,
   };
 
-  const timetableShelterId = useRecoilValue(timetableShelterIdAtom);
+  const accessToken = getCookie('accessToken');
   const [timetableShelterNickname, setTimetableShelterNickname] = useState('');
+  const timetableShelterId = useRecoilValue(timetableShelterIdAtom);
   const [twoWeeks, setTwoWeeks] = useRecoilState(twoWeeksAtom);
   const [dayTime, setDayTime] = useRecoilState(dayTimeAtom);
   const [clickDate, setClickDate] = useState('');
   const [todayTimeArr, setTodayTimeArr] = useState([]);
+  const [scheduleHost, setScheduleHost] = useRecoilState(scheduleAtom);
 
   const handleClickDate = (cDate, idx) => {
     const today = new Date();
@@ -101,16 +104,23 @@ function CreateSchedule() {
   };
 
   const handleCreateSchedule = idx => {
-    axios.post(`${API_URL}/schedule/register`, {
-      day: clickDate,
-      shelterNickname: timetableShelterNickname,
-      time: idx,
-    });
+    console.log(clickDate);
+    console.log(timetableShelterNickname);
+    console.log(idx);
+    axios.post(
+      `${API_URL}/schedule/register`,
+      {
+        day: clickDate,
+        shelterNickname: timetableShelterNickname,
+        time: idx,
+      },
+      { headers: { Authorization: accessToken } },
+    );
   };
 
   useEffect(() => {
     const weeks = [];
-    for (let i = 0; i < 14; i += 1) {
+    for (let i = 1; i < 14; i += 1) {
       const to = new Date();
       const nxtDay = new Date(to.setDate(to.getDate() + i));
       const todayMonth = (nxtDay.getMonth() + 1).toString();
@@ -120,7 +130,7 @@ function CreateSchedule() {
     setTwoWeeks(weeks);
 
     axios
-      .get(`${API_URL}/timetable/${timetableShelterId}`)
+      .get(`${API_URL}/shelter/${timetableShelterId}/timetable`)
       .then(res =>
         setDayTime([
           res.data.data.sun,
@@ -161,7 +171,7 @@ function CreateSchedule() {
       <STimeList>
         {todayTimeArr.map((item, index) =>
           index >= 9 && index <= 17 ? (
-            <STimeBox>
+            <STimeBox key={index}>
               <STime>
                 {index.toString().padStart(2, '0')}:00 ~{' '}
                 {(index + 1).toString().padStart(2, '0')}:00

@@ -11,7 +11,7 @@ import '../../styles/slick-theme.css';
 import '../../styles/slick.css';
 import { Button, Switch } from '@mui/material';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { scheduleAtom } from '../../recoilState';
+import { scheduleAtom, userAtom } from '../../recoilState';
 import API_URL from '../../api/api';
 import { getCookie } from '../../pages/Account/cookie';
 
@@ -48,6 +48,7 @@ function ScheduleListUser() {
     (today.getMonth() + 1).toString().padStart(2, '0') +
     today.getDate().toString().padStart(2, '0');
   const accessToken = getCookie('accessToken');
+  const user = useRecoilValue(userAtom);
   const [scheduleUser, setScheduleUser] = useRecoilState(scheduleAtom);
   const [dateList, setDateList] = useState([]);
 
@@ -69,7 +70,7 @@ function ScheduleListUser() {
     let list = [];
 
     axios
-      .get(`${API_URL}/schedule/users`, {
+      .get(`${API_URL}/schedule/users/${user.userId}`, {
         headers: {
           Authorization: accessToken,
         },
