@@ -23,18 +23,6 @@ public class ShelterRegisterDto {
 	private String postCode;
 	private String address;
 
-	public static ShelterRegisterDto of(ShelterEntity shelter) {
-
-		return ShelterRegisterDto.builder()
-			.name(shelter.getName())
-			.url(shelter.getUrl())
-			.introduce(shelter.getOriginImage())
-			.telNumber(shelter.getTelNumber())
-			.postCode(shelter.getPostCode())
-			.address(shelter.getAddress())
-			.build();
-	}
-
 	public ShelterEntity toEntity() {
 
 		return ShelterEntity.builder()

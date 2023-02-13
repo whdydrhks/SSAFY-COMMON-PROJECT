@@ -22,17 +22,6 @@ public class ShelterUpdateDto {
 	private String postCode;
 	private String address;
 
-	public static ShelterUpdateDto of(ShelterEntity shelter) {
-
-		return ShelterUpdateDto.builder()
-			.url(shelter.getUrl())
-			.introduce(shelter.getIntroduce())
-			.telNumber(shelter.getTelNumber())
-			.postCode(shelter.getPostCode())
-			.address(shelter.getAddress())
-			.build();
-	}
-
 	public ShelterEntity toEntity() {
 
 		return ShelterEntity.builder()
@@ -41,6 +30,22 @@ public class ShelterUpdateDto {
 			.telNumber(this.telNumber)
 			.postCode(this.postCode)
 			.address(this.address)
+			.build();
+	}
+
+	public ShelterEntity updateEntity(ShelterEntity entity) {
+
+		return ShelterEntity.builder()
+			.id(entity.getId())
+			.user(entity.getUser())
+			.name(entity.getName())
+			.url(this.getUrl())
+			.introduce(this.getIntroduce())
+			.telNumber(this.getTelNumber())
+			.postCode(this.getPostCode())
+			.address(this.getAddress())
+			.expired(entity.getExpired())
+			.createdDate(entity.getCreatedDate())
 			.build();
 	}
 }
