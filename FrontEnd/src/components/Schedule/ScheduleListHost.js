@@ -160,7 +160,57 @@ function ScheduleListHost() {
                 </STime>
                 <SNickName>{schedule.userNickname}</SNickName>
               </div>
-              <div>버튼필요함</div>
+              <div>
+                {/* 클릭한 날이 오늘이면서 시간이 동일하다면 Live */}
+                {todayDate === isClickDate &&
+                today.getHours() === schedule.time ? (
+                  <Link
+                    to={{
+                      pathname: '/videochat',
+                    }}
+                    state={{ room: schedule.room }}
+                  >
+                    <SClickButton
+                      bgColor="green"
+                      onClick={handleVideoChatClick}
+                    >
+                      Live
+                    </SClickButton>
+                  </Link>
+                ) : null}
+                {/* 클릭한 날이 오늘이면서 시간이 지났으면 완료 */}
+                {todayDate === isClickDate &&
+                today.getHours() > schedule.time ? (
+                  <SClickButton bgColor="grey" disabled>
+                    완료
+                  </SClickButton>
+                ) : null}
+                {/* 클릭한 날이 오늘이면서 아직 시간이 지나지 않았으면 취소 */}
+                {todayDate === isClickDate &&
+                today.getHours() < schedule.time ? (
+                  <SClickButton
+                    bgColor="red"
+                    onClick={() => {
+                      handleDeleteSchedule(schedule.scheduleId);
+                    }}
+                  >
+                    {' '}
+                    취소
+                  </SClickButton>
+                ) : null}
+                {/* 날짜가 다르다면 취소 */}
+                {todayDate !== isClickDate ? (
+                  <SClickButton
+                    bgColor="red"
+                    onClick={() => {
+                      handleDeleteSchedule(schedule.scheduleId);
+                    }}
+                  >
+                    {' '}
+                    취소
+                  </SClickButton>
+                ) : null}
+              </div>
             </SContainer>
           </STimeBox>
         ))}

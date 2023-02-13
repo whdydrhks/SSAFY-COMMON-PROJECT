@@ -32,7 +32,7 @@ footer, header, hgroup, main, menu, nav, section {
 }
 body {
   line-height: 1;
-  padding: 5rem 0px;
+  padding: 5rem 0;
 }
 menu, ol, ul {
   list-style: none;
