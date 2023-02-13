@@ -325,7 +325,7 @@ function TimeTableHost() {
       </Slider>
       <STimeList>
         <STimeBox>
-          {dayTime[9]}
+          {/* {dayTime[9]} */}
           <STime>09:00 ~ 10:00</STime>
           <SSwitch
             checked={todayTime[9] === '1' ? true : false}

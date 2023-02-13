@@ -33,6 +33,7 @@ import Alarm from './pages/Alarm';
 import VideoChat from './pages/VideoChat/VideoChat';
 import NotFound from './NotFound';
 import LiveCreateHost from './pages/Live/LiveCreateHost';
+import CreateSchedule from './components/Schedule/CreateSchedule';
 
 const router = createBrowserRouter([
   {
@@ -92,11 +93,11 @@ const router = createBrowserRouter([
     element: <FindPassword />,
   },
   {
-    path: '/checkpassword/:userId',
+    path: '/checkpassword/:userId/password',
     element: <CheckPassword />,
   },
   {
-    path: '/modifypassword/:userId',
+    path: '/modifypassword/:userId/password',
     element: <ModifyPassword />,
   },
   {
@@ -126,6 +127,10 @@ const router = createBrowserRouter([
   {
     path: '/notfound',
     element: <NotFound />,
+  },
+  {
+    path: '/createschedule',
+    element: <CreateSchedule />,
   },
 ]);
 
