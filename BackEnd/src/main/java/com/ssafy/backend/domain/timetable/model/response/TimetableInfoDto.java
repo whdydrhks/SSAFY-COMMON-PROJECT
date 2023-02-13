@@ -1,24 +1,23 @@
 package com.ssafy.backend.domain.timetable.model.response;
 
-import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
 import com.ssafy.backend.domain.timetable.entity.TimetableEntity;
-import com.ssafy.backend.domain.timetable.model.TimetableDto;
+import com.ssafy.backend.global.common.model.BaseTimeDto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class TimetableInfoDto {
+public class TimetableInfoDto extends BaseTimeDto {
+
 	private Long timetableId;
-	private Long shelterId;
 	private String mon;
 	private String tue;
 	private String wed;
@@ -27,31 +26,23 @@ public class TimetableInfoDto {
 	private String sat;
 	private String sun;
 
+	private Long shelterId;
+	private String shelterName;
+
 	public static TimetableInfoDto of(TimetableEntity timetable) {
 		return TimetableInfoDto.builder()
-				.timetableId(timetable.getId())
-				.shelterId(timetable.getShelterId())
-				.mon(timetable.getMon())
-				.tue(timetable.getTue())
-				.wed(timetable.getWed())
-				.thr(timetable.getThr())
-				.fri(timetable.getFri())
-				.sat(timetable.getSat())
-				.sun(timetable.getSun())
-				.build();
+			.timetableId(timetable.getId())
+			.mon(timetable.getMon())
+			.tue(timetable.getTue())
+			.wed(timetable.getWed())
+			.thr(timetable.getThr())
+			.fri(timetable.getFri())
+			.sat(timetable.getSat())
+			.sun(timetable.getSun())
+			.shelterId(timetable.getShelter().getId())
+			.shelterName(timetable.getShelter().getName())
+			.createdDate(timetable.getCreatedDate())
+			.updatedDate(timetable.getUpdatedDate())
+			.build();
 	}
-
-//	public TimetableEntity toEntity() {
-//		return TimetableEntity.builder()
-//			.id(this.timetableId)
-//			.shelter(this.toEntity().getShelter())
-//			.mon(this.mon)
-//			.tue(this.tue)
-//			.wed(this.wed)
-//			.thr(this.thr)
-//			.fri(this.fri)
-//			.sat(this.sat)
-//			.sun(this.sun)
-//			.build();
-//	}
 }

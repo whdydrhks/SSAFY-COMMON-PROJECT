@@ -1,5 +1,7 @@
 package com.ssafy.backend.domain.member.entity;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,12 +9,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
+import com.ssafy.backend.domain.animal.entity.LikeAnimalEntity;
 import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
 import com.ssafy.backend.global.common.entity.BaseTimeEntity;
 import com.ssafy.backend.global.file.entity.FileEntity;
@@ -70,5 +74,8 @@ public class UserEntity extends BaseTimeEntity {
 
 	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private FileEntity file;
+
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<LikeAnimalEntity> likeAnimals;
 
 }

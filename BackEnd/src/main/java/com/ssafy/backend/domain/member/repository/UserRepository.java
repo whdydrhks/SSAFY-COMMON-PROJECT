@@ -3,6 +3,7 @@ package com.ssafy.backend.domain.member.repository;
 import java.util.List;
 import java.util.Optional;
 
+import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ssafy.backend.domain.member.entity.UserEntity;
@@ -34,6 +35,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 	Optional<UserEntity> findByNickname(String nickname);
 
 	Optional<UserEntity> findByNicknameAndExpiredLike(String nickname, String expired);
+
+	Optional<UserEntity> findByShelter(ShelterEntity shelter);
 
 	@Override
 	void deleteById(Long id);

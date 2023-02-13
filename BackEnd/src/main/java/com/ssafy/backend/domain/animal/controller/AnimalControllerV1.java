@@ -1,5 +1,7 @@
 package com.ssafy.backend.domain.animal.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.ResponseEntity;
@@ -108,7 +110,7 @@ public class AnimalControllerV1 {
 	public ResponseEntity<?> uploadFilesByUser(
 		@PathVariable("shelterId") Long shelterId,
 		@PathVariable("animalId") Long animalId,
-		@RequestParam("files") MultipartFile[] images,
+		@RequestParam("files") List<MultipartFile> images,
 		HttpServletRequest request) {
 
 		return ResponseEntity
@@ -156,4 +158,5 @@ public class AnimalControllerV1 {
 		return ResponseEntity
 			.ok(animalService.searchInfoByBreed(shelterId, keyword));
 	}
+
 }
