@@ -15,10 +15,12 @@ import org.hibernate.annotations.DynamicInsert;
 
 import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
 import com.ssafy.backend.global.common.entity.BaseTimeEntity;
+import com.ssafy.backend.global.file.entity.FileEntity;
 
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
@@ -35,15 +37,17 @@ public class UserEntity extends BaseTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "user_id", columnDefinition = "INT UNSIGNED")
+	@Column(name = "id", columnDefinition = "INT UNSIGNED")
 	private Long id;
 
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
 
+	@Setter
 	@Column(name = "password")
 	private String password;
 
+	@Setter
 	@Column(name = "role", nullable = false, length = 20)
 	@ColumnDefault("'USER'")
 	private String role;
@@ -61,11 +65,10 @@ public class UserEntity extends BaseTimeEntity {
 	@ColumnDefault("'default.png'")
 	private String profileImage;
 
-	@Column(name = "expired", nullable = false, length = 1)
-	@ColumnDefault("'F'")
-	private String expired;
-
 	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private ShelterEntity shelter;
+
+	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private FileEntity file;
 
 }

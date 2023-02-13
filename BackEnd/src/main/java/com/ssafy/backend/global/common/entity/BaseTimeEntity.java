@@ -1,6 +1,5 @@
 package com.ssafy.backend.global.common.entity;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -32,7 +31,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 @MappedSuperclass
-public abstract class BaseTimeEntity implements Serializable {
+public abstract class BaseTimeEntity extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
 
