@@ -5,9 +5,12 @@ import com.ssafy.backend.domain.alarm.repository.AlarmRepository;
 import com.ssafy.backend.domain.schedule.entity.ScheduleEntity;
 import com.ssafy.backend.domain.schedule.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -15,6 +18,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
+@Service
+@EnableAsync
 @RequiredArgsConstructor
 public class AlarmScheduler {
 
@@ -22,7 +28,7 @@ public class AlarmScheduler {
     private final ScheduleRepository scheduleRepository;
 
     @Async
-    @Scheduled(cron = "0 27 1 * * *")
+    @Scheduled(cron = "0 0 2 * * *", zone = "Asia/Seoul")
     @Transactional
     public void dailyScheduleAlarm(){
         System.out.println("======================================");
