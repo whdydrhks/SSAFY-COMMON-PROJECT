@@ -323,7 +323,7 @@ public class FileService {
 		// 사용자 이미지를 찾지 못하면 userDefault 이미지를 불러옴
 		List<FileEntity> findFiles = fileRepository.findByAnimalAndExpiredLike(findAnimal, "F");
 
-		if (findFiles == null) {
+		if (findFiles.isEmpty()) {
 			findFiles = Arrays.asList(fileRepository.findByStoreName("default_profile").get());
 		}
 
