@@ -108,16 +108,6 @@ function ScheduleListHost() {
     );
   };
 
-  const handleDeleteSchedule = sId => {
-    if (window.confirm('해당 일정을삭제하시겠습니까?')) {
-      axios.delete(`${API_URL}/schedule/${sId}`, {
-        headers: { Authorization: accessToken },
-      });
-      // navigate('/');
-      // window.location.reload();
-    }
-  };
-
   const handleVideoChatClick = () => {
     navigate('/videochat');
   };
@@ -132,7 +122,6 @@ function ScheduleListHost() {
       weeks.push({ month: todayMonth, day: todayDate });
     }
     setTwoWeeks(weeks);
-    console.log('weeks', twoWeeks);
     setIsClickDate(todayDate);
     axios
       .get(`${API_URL}/schedule/shelters`, {

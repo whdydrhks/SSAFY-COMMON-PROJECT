@@ -26,6 +26,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
@@ -55,9 +56,9 @@ public class AnimalEntity extends BaseTimeEntity {
 	@Column(name = "name", nullable = false, unique = true, length = 50)
 	private String name;
 
-	@Column(name = "thumbnail_image", nullable = false)
-	@ColumnDefault("'default.png'")
-	private String thumbnail;
+	//	@Column(name = "thumbnail_image", nullable = false)
+	//	@ColumnDefault("'default.png'")
+	//	private String thumbnail;
 
 	@Column(name = "breed", nullable = false, length = 50)
 	private String breed;
@@ -74,6 +75,7 @@ public class AnimalEntity extends BaseTimeEntity {
 	@Column(name = "neuter", nullable = false, length = 1)
 	private String neuter;
 
+	@Setter
 	@Column(name = "adpotion", nullable = false, length = 1)
 	@ColumnDefault("'F'")
 	private String adoption;
