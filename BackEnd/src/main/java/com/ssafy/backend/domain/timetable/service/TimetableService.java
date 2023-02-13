@@ -1,15 +1,8 @@
 package com.ssafy.backend.domain.timetable.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import lombok.ToString;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
-import com.ssafy.backend.domain.shelter.model.request.ShelterUpdateDto;
-import com.ssafy.backend.domain.shelter.model.response.ShelterInfoDto;
 import com.ssafy.backend.domain.shelter.repository.ShelterRepository;
 import com.ssafy.backend.domain.timetable.entity.TimetableEntity;
 import com.ssafy.backend.domain.timetable.model.request.TimetableUpdateDto;
@@ -21,6 +14,7 @@ import com.ssafy.backend.global.util.ResponseUtil;
 import com.ssafy.backend.global.util.enums.ApiStatus;
 
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 @Service
 @Transactional(readOnly = true) // 기본적으로 트랜잭션 안에서만 데이터 변경하게 설정(성능 향상)
@@ -34,49 +28,45 @@ public class TimetableService {
 
 	public ResponseSuccessDto<?> getDayInfoById(Long shelterId) {
 		TimetableEntity findTimetable = timetableRepository.findByShelterId(shelterId)
-				.orElseThrow(() -> new ApiErrorException(ApiStatus.BAD_REQUEST));
-
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.BAD_REQUEST));
 
 		TimetableInfoDto infoDto = TimetableInfoDto.of(findTimetable);
-		ResponseSuccessDto<TimetableInfoDto> resp = responseUtil
-				.buildSuccessResponse(infoDto);
-		return resp;
+
+		return responseUtil.buildSuccessResponse(infoDto);
 	}
 
 	@Transactional
 	public ResponseSuccessDto<?> update(Long shelterId, TimetableUpdateDto updateDto) {
 
 		TimetableEntity findTimetable = timetableRepository.findByShelterId(shelterId)
-				.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
 		TimetableEntity updateTimetable = TimetableEntity.builder()
-				.id(findTimetable.getId())
-				.shelterId(findTimetable.getShelterId())
-				.sun(updateDto.getDays()[0] )
-				.mon(updateDto.getDays()[1])
-				.tue(updateDto.getDays()[2])
-				.wed(updateDto.getDays()[3])
-				.thr(updateDto.getDays()[4])
-				.fri(updateDto.getDays()[5])
-				.sat(updateDto.getDays()[6])
-				.build();
+			.id(findTimetable.getId())
+			.shelterId(findTimetable.getShelterId())
+			.sun(updateDto.getDays()[0])
+			.mon(updateDto.getDays()[1])
+			.tue(updateDto.getDays()[2])
+			.wed(updateDto.getDays()[3])
+			.thr(updateDto.getDays()[4])
+			.fri(updateDto.getDays()[5])
+			.sat(updateDto.getDays()[6])
+			.build();
 
 		Long updateTimetableId = timetableRepository.save(updateTimetable).getId();
 
-		ResponseSuccessDto<Long> resp = responseUtil
-				.buildSuccessResponse(updateTimetableId);
-		return resp;
+		return responseUtil.buildSuccessResponse(updateTimetableId);
 
-//		String[] str = new String[7];
-//		str[0] = updateTimetable.getSun();
-//		str[1] = updateTimetable.getMon();
-//		str[2] = updateTimetable.getTue();
-//		str[3] = updateTimetable.getWed();
-//		str[4] = updateTimetable.getThr();
-//		str[5] = updateTimetable.getFri();
-//		str[6] = updateTimetable.getSat();
-//
-//		return str;
+		//		String[] str = new String[7];
+		//		str[0] = updateTimetable.getSun();
+		//		str[1] = updateTimetable.getMon();
+		//		str[2] = updateTimetable.getTue();
+		//		str[3] = updateTimetable.getWed();
+		//		str[4] = updateTimetable.getThr();
+		//		str[5] = updateTimetable.getFri();
+		//		str[6] = updateTimetable.getSat();
+		//
+		//		return str;
 	}
 
 }
