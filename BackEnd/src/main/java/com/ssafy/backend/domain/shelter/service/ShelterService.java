@@ -38,15 +38,11 @@ public class ShelterService {
 
 		ShelterEntity shelter = registerDto.toEntity();
 
-		// 중복검사
-		validateDuplicate(shelter);
+		validateDuplicateName(shelter); // 보호소 이름 중복검사
 
 		Long shelterId = shelterRepository.save(shelter).getId();
 
-		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(shelterId);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(shelterId);
 	}
 
 	/**
@@ -63,26 +59,11 @@ public class ShelterService {
 		ShelterEntity findShelter = shelterRepository.findById(shelterId)
 			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-		ShelterEntity updateShelter = ShelterEntity.builder()
-			.id(findShelter.getId())
-			.name(findShelter.getName())
-			.url(updateDto.getUrl())
-			.introduce(updateDto.getIntroduce())
-			.originImage(findShelter.getOriginImage())
-			.storedImage(findShelter.getStoredImage())
-			.telNumber(updateDto.getTelNumber())
-			.postCode(updateDto.getPostCode())
-			.address(updateDto.getAddress())
-			.expired(findShelter.getExpired())
-			.createdDate(findShelter.getCreatedDate())
-			.build();
+		ShelterEntity updateShelter = updateDto.updateEntity(findShelter);
 
 		Long updatedShelterId = shelterRepository.save(updateShelter).getId();
 
-		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(updatedShelterId);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(updatedShelterId);
 	}
 
 	/**
@@ -98,26 +79,11 @@ public class ShelterService {
 		ShelterEntity findShelter = shelterRepository.findById(shelterId)
 			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-		ShelterEntity updateShelter = ShelterEntity.builder()
-			.id(findShelter.getId())
-			.name(findShelter.getName())
-			.url(findShelter.getUrl())
-			.introduce(findShelter.getIntroduce())
-			.originImage(findShelter.getOriginImage())
-			.storedImage(findShelter.getStoredImage())
-			.telNumber(findShelter.getTelNumber())
-			.postCode(findShelter.getPostCode())
-			.address(findShelter.getAddress())
-			.expired(expiredFlag ? "T" : "F") // expiredFlag에 따라 변경 true:"T" / false:"F"
-			.createdDate(findShelter.getCreatedDate())
-			.build();
+		findShelter.setExpired(expiredFlag ? "T" : "F");
 
-		Long updatedShelterId = shelterRepository.save(updateShelter).getId();
+		Long updatedShelterId = shelterRepository.save(findShelter).getId();
 
-		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(updatedShelterId);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(updatedShelterId);
 	}
 
 	/**
@@ -131,10 +97,7 @@ public class ShelterService {
 
 		shelterRepository.deleteById(shelterId);
 
-		ResponseSuccessDto<Long> resp = responseUtil
-			.buildSuccessResponse(null);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(null);
 	}
 
 	/**
@@ -145,23 +108,22 @@ public class ShelterService {
 	 */
 	@Transactional
 	public ResponseSuccessDto<?> getInfoAll() {
+
 		List<ShelterEntity> findShelters = shelterRepository.findAllByExpiredLike("F");
+
 		List<ShelterInfoDto> shelterInfos = findShelters
 			.stream()
 			.map(ShelterInfoDto::of)
 			.collect(Collectors.toList());
 
-		ResponseSuccessDto<List<ShelterEntity>> resp = responseUtil
-			.buildSuccessResponse(shelterInfos);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(shelterInfos);
 	}
 
 	/**
 	 * id로 보호소 정보를 가져오는 메소드
 	 *
 	 * @param
-	 * @return UserInfoDto
+	 * @return ShelterInfoDto
 	 */
 	@Transactional
 	public ResponseSuccessDto<?> getInfoById(Long shelterId) {
@@ -171,10 +133,7 @@ public class ShelterService {
 
 		ShelterInfoDto infoDto = ShelterInfoDto.of(findShelter);
 
-		ResponseSuccessDto<ShelterInfoDto> resp = responseUtil
-			.buildSuccessResponse(infoDto);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(infoDto);
 	}
 
 	/**
@@ -184,18 +143,14 @@ public class ShelterService {
 	 * @return ShelterInfoDto
 	 */
 	@Transactional
-	public ResponseSuccessDto<?> getInfoByName(
-		String shelterName) {
+	public ResponseSuccessDto<?> getInfoByName(String shelterName) {
 
 		ShelterEntity findShelter = shelterRepository.findByNameAndExpiredLike(shelterName, "F")
 			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
 		ShelterInfoDto infoDto = ShelterInfoDto.of(findShelter);
 
-		ResponseSuccessDto<ShelterEntity> resp = responseUtil
-			.buildSuccessResponse(infoDto);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(infoDto);
 	}
 
 	/**
@@ -205,8 +160,7 @@ public class ShelterService {
 	 * @return ResponseSuccessDto&ltList&ltShelterInfoDto&gt&gt
 	 */
 	@Transactional
-	public ResponseSuccessDto<?> searchInfoByName(
-		String shelterName) {
+	public ResponseSuccessDto<?> searchInfoByName(String shelterName) {
 
 		if (shelterName.isEmpty() || shelterName.length() < 2) {
 			throw new ApiErrorException(ApiStatus.KEYWORD_LESS_THAN_TWO);
@@ -220,39 +174,20 @@ public class ShelterService {
 			.map(ShelterInfoDto::of)
 			.collect(Collectors.toList());
 
-		ResponseSuccessDto<List<ShelterEntity>> resp = responseUtil
-			.buildSuccessResponse(shelterInfos);
-
-		return resp;
+		return responseUtil.buildSuccessResponse(shelterInfos);
 	}
 
 	/**
 	 * 같은 이름의 보호소의 등록 정보가 이미 있는지 확인하는 메소드
 	 *
 	 * @param
-	 * @throws IllegalStateException
+	 * @throws ApiErrorException
 	 */
-	private void validateDuplicate(ShelterEntity shelter) {
+	private void validateDuplicateName(ShelterEntity shelter) {
 		shelterRepository.findByName(shelter.getName())
 			.ifPresent(e -> {
 				throw new ApiErrorException(ApiStatus.EMAIL_DUPLICATION);
 			});
 	}
 
-	//	// 테스트용 더미 데이터 생성용
-	//	@PostConstruct
-	//	public void testInitializing() {
-	//		for (int i = 1; i <= 50; i++) {
-	//			String name = "보호소_" + String.format("%03d", i);
-	//			ShelterEntity shelter = ShelterEntity.builder()
-	//				.name(name)
-	//				.url("https://www." + name + ".com")
-	//				.introduce(name + "의 소개글 입니다.")
-	//				.telNumber("010-1234-" + String.format("%04d", i))
-	//				.postCode("111111")
-	//				.address("00시 00구 00대로 " + i)
-	//				.build();
-	//			shelterRepository.save(shelter);
-	//		}
-	//	}
 }

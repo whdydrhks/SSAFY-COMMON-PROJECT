@@ -26,20 +26,6 @@ public class AnimalUpdateDto {
 	private String adoption;
 	private String note;
 
-	public static AnimalUpdateDto of(AnimalEntity animal) {
-
-		return AnimalUpdateDto.builder()
-			.name(animal.getName())
-			.breed(animal.getBreed())
-			.age(animal.getAge())
-			.weight(animal.getWeight())
-			.gender(animal.getGender())
-			.neuter(animal.getNeuter())
-			.adoption(animal.getAdoption())
-			.note(animal.getNote())
-			.build();
-	}
-
 	public AnimalEntity toEntity() {
 
 		return AnimalEntity.builder()
@@ -51,6 +37,26 @@ public class AnimalUpdateDto {
 			.neuter(this.neuter)
 			.adoption(this.adoption)
 			.note(this.note)
+			.build();
+	}
+
+	public AnimalEntity updateEntity(AnimalEntity entity) {
+
+		return AnimalEntity.builder()
+			.shelter(entity.getShelter())
+			.id(entity.getId())
+			.manageCode(entity.getManageCode())
+			.name(this.getName())
+			// .thumbnail(this.getThumbnail())
+			.breed(this.getBreed())
+			.age(this.getAge())
+			.weight(this.getWeight())
+			.gender(this.getGender())
+			.neuter(this.getNeuter())
+			.adoption(this.getAdoption())
+			.note(this.getNote())
+			.expired(entity.getExpired())
+			.createdDate(entity.getCreatedDate())
 			.build();
 	}
 }

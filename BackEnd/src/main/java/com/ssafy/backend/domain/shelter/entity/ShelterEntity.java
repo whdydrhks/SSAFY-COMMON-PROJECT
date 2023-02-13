@@ -59,14 +59,6 @@ public class ShelterEntity extends BaseTimeEntity {
 	@ColumnDefault("'보호소 소개 글'")
 	private String introduce;
 
-	@Column(name = "origin_image", nullable = false)
-	@ColumnDefault("'default.png'")
-	private String originImage;
-
-	@Column(name = "stored_image", nullable = false)
-	@ColumnDefault("'default.png'")
-	private String storedImage;
-
 	@Column(name = "tel_number", nullable = false, length = 20)
 	private String telNumber;
 
@@ -75,10 +67,6 @@ public class ShelterEntity extends BaseTimeEntity {
 
 	@Column(name = "address")
 	private String address;
-
-	@Column(name = "expired", nullable = false, length = 1)
-	@ColumnDefault("'F'")
-	private String expired;
 
 	// Animal과 양방향 매핑
 	@OneToMany(mappedBy = "shelter", fetch = FetchType.EAGER, cascade = CascadeType.ALL)

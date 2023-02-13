@@ -22,6 +22,7 @@ public class UserUpdateDto {
 	private String nickname;
 
 	public UserEntity toEntity() {
+
 		return UserEntity.builder()
 			.name(this.name)
 			.phoneNumber(this.phoneNumber)
@@ -30,6 +31,7 @@ public class UserUpdateDto {
 	}
 
 	public UserEntity updateEntity(UserEntity entity) {
+
 		return UserEntity.builder()
 			.id(entity.getId())
 			.email(entity.getEmail())

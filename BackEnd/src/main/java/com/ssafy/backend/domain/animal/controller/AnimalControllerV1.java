@@ -47,7 +47,7 @@ public class AnimalControllerV1 {
 			.ok(animalService.getInfoByShelter(shelterId));
 	}
 
-	@PostMapping("/animal/{animalId}")
+	@PostMapping("/animal")
 	@ApiOperation(value = "동물 등록")
 	public ResponseEntity<?> registerShelter(
 		@PathVariable(name = "shelterId") Long shelterId,
@@ -92,9 +92,10 @@ public class AnimalControllerV1 {
 			.ok(animalService.updateExpire(shelterId, animalId, true));
 	}
 
-	@GetMapping("/{animalId}/image")
+	@GetMapping("/animal/{animalId}/image")
 	@ApiOperation(value = "동물 이미지 조회")
 	public ResponseEntity<?> getFilesByUser(
+		@PathVariable("shelterId") Long shelterId,
 		@PathVariable("animalId") Long animalId,
 		HttpServletRequest request) {
 
@@ -102,11 +103,12 @@ public class AnimalControllerV1 {
 			.ok(fileService.getFilesByAnimal(animalId, request));
 	}
 
-	@PostMapping("/{animalId}/image")
-	@ApiOperation(value = "사용자 이미지 등록")
+	@PostMapping("/animal/{animalId}/image")
+	@ApiOperation(value = "동물 이미지 등록")
 	public ResponseEntity<?> uploadFilesByUser(
+		@PathVariable("shelterId") Long shelterId,
 		@PathVariable("animalId") Long animalId,
-		@RequestParam(name = "file", required = false) MultipartFile[] images,
+		@RequestParam("files") MultipartFile[] images,
 		HttpServletRequest request) {
 
 		return ResponseEntity
