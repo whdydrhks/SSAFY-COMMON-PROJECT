@@ -69,28 +69,22 @@ function ScheduleListUser() {
   useEffect(() => {
     let list = [];
 
-    axios
-      .get(`${API_URL}/schedule/users/${user.userId}`, {
-        headers: {
-          Authorization: accessToken,
-        },
-      })
-      .then(res => {
-        res.data.data.map(item => {
-          if (
-            Number(item.day) >=
-              Number(
-                (today.getMonth() + 1).toString().padStart(2, '0') +
-                  today.getDate().toString().padStart(2, '0'),
-              ) &&
-            !list.includes(item.day)
-          ) {
-            list.push(item.day);
-          }
-        });
-        setDateList(() => list);
-        setScheduleUser(res.data.data);
+    axios.get(`${API_URL}/schedule/users/${user.userId}`).then(res => {
+      res.data.data.map(item => {
+        if (
+          Number(item.day) >=
+            Number(
+              (today.getMonth() + 1).toString().padStart(2, '0') +
+                today.getDate().toString().padStart(2, '0'),
+            ) &&
+          !list.includes(item.day)
+        ) {
+          list.push(item.day);
+        }
       });
+      setDateList(() => list);
+      setScheduleUser(res.data.data);
+    });
   }, []);
 
   console.log('sc', scheduleUser);

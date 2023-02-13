@@ -146,7 +146,13 @@ function CreateSchedule() {
     axios
       .get(`${API_URL}/shelter/${timetableShelterId}`)
       .then(res => setTimetableShelterNickname(res.data.data.name));
+
+    axios
+      .get(`${API_URL}/schedule/shelters/${timetableShelterId}`)
+      .then(res => setScheduleHost(res.data.data));
   }, []);
+
+  console.log(scheduleHost);
 
   return (
     <>
@@ -176,18 +182,38 @@ function CreateSchedule() {
                 {index.toString().padStart(2, '0')}:00 ~{' '}
                 {(index + 1).toString().padStart(2, '0')}:00
               </STime>
-              {item === '1' ? (
-                <SClickButton
-                  bgColor="green"
-                  onClick={() => handleCreateSchedule(index)}
-                >
-                  예약하기
-                </SClickButton>
-              ) : (
+
+              {/* ======================================= */}
+              {/* ======================================= */}
+              {/* ======================================= */}
+              {/* ======================================= */}
+              {/* ======================================= */}
+              {/* ======================================= */}
+              {/* ======================================= */}
+              {/* ======================================= */}
+              {item === '0' ? (
                 <SClickButton bgColor="grey" disabled>
                   예약불가
                 </SClickButton>
-              )}
+              ) : null}
+              {/* {scheduleHost.map((date, index2) =>
+                item === '1' &&
+                date.day === clickDate &&
+                index === date.time ? (
+                  <SClickButton key={index2} bgColor="grey" disabled>
+                    예약불가
+                  </SClickButton>
+                ) : (
+                  <SClickButton
+                    key={index2}
+                    bgColor="green"
+                    onClick={() => handleCreateSchedule(index)}
+                  >
+                    예약가능
+                  </SClickButton>
+                ),
+              )} */}
+              {/* {ㄻㄴㅇㄻㄴㄻㄴㅇㄻㄴㅇㄻㄴㅇㄹㄴㅁㄹㄴㅁㅇㄻㄴㅇㄻㄴㅇ} */}
             </STimeBox>
           ) : null,
         )}
