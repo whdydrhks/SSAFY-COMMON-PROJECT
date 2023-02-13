@@ -78,8 +78,8 @@ public class dummyCreate {
 			userRepository.save(user);
 		}
 
-		// 보호소 생성
 		for (int i = 1; i <= 5; i++) {
+			// 보호소 생성
 			String name = "보호소_" + String.format("%03d", i);
 			ShelterEntity shelter = ShelterEntity.builder()
 				.user(userRepository.findByIdAndExpiredLike(i + 1L, "F").get())
@@ -91,6 +91,19 @@ public class dummyCreate {
 				.address("00시 00구 00대로 " + i)
 				.build();
 			shelterRepository.save(shelter);
+
+			// 타임테이블 생성
+			TimetableEntity timetable = TimetableEntity.builder()
+				.shelter(shelterRepository.findByIdAndExpiredLike(Long.valueOf(i), "F").get())
+				.sun("0000000000000000000000000")
+				.mon("0000000000000000000000001")
+				.tue("0000000000000000000000002")
+				.wed("0000000000000000000000003")
+				.thr("0000000000000000000000004")
+				.fri("0000000000000000000000005")
+				.sat("0000000000000000000000006")
+				.build();
+			timetableRepository.save(timetable);
 		}
 
 		//		System.out.println(shelterRepository.findById(1L).get().toString());
@@ -113,19 +126,6 @@ public class dummyCreate {
 		}
 
 		//		System.out.println(shelterRepository.findById(1L).get().toString());
-
-		TimetableEntity timetable2 = TimetableEntity.builder()
-			.id(2L)
-			.shelterId(2L)
-			.mon("0000000000000000000000001")
-			.tue("0000000000000000000000002")
-			.wed("0000000000000000000000003")
-			.thr("0000000000000000000000004")
-			.fri("0000000000000000000000005")
-			.sat("0000000000000000000000006")
-			.sun("0000000000000000000000000")
-			.build();
-		timetableRepository.save(timetable2);
 
 		ScheduleEntity schedule = ScheduleEntity.builder()
 			.day("0210")
