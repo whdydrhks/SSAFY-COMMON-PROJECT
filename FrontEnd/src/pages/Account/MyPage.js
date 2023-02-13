@@ -86,10 +86,10 @@ function MyPage() {
         </ListItem>
       </List>
       <SLinkList>
-        <Link to="/checkpassword" variant="body2">
+        <Link to={`/modifypassword/${user.userId}/password`} variant="body2">
           비밀번호변경
         </Link>
-        <Link to={`/modifymypage/${user.nickname}`} variant="body2">
+        <Link to={`/modifymypage/${user.userId}`} variant="body2">
           회원정보수정
         </Link>
       </SLinkList>

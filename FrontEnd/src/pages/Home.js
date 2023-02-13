@@ -14,7 +14,6 @@ import ImageCarousel from '../components/common/ImageCarousel';
 import ReviewList from '../components/Review/ReviewList';
 
 // 1976d2
-
 const SContainer = styled.div`
   width: 100%;
   height: 100%;

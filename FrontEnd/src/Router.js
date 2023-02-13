@@ -93,11 +93,11 @@ const router = createBrowserRouter([
     element: <FindPassword />,
   },
   {
-    path: '/checkpassword/:userId',
+    path: '/checkpassword/:userId/password',
     element: <CheckPassword />,
   },
   {
-    path: '/modifypassword/:userId',
+    path: '/modifypassword/:userId/password',
     element: <ModifyPassword />,
   },
   {

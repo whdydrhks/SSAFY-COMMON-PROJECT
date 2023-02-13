@@ -68,7 +68,6 @@ function ModifyMyPage() {
         {
           name: user.name,
           nickname: user.nickname,
-          password: '000',
           phoneNumber: user.phoneNumber,
         },
         {
