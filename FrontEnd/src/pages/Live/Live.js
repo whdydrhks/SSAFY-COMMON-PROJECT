@@ -6,12 +6,16 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import API_URL from '../../api/api';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
-import { liveListAtom, userAtom } from '../../recoilState';
+import {
+  liveListAtom,
+  timetableShelterIdAtom,
+  userAtom,
+} from '../../recoilState';
 
 const SLiveHeader = styled.div`
   display: flex;
@@ -31,15 +35,61 @@ const SLiveCreateButton = styled.button`
   color: white;
 `;
 
-const SLiveContainer = styled.div``;
-const SLiveItem = styled.div``;
+const SLiveContainer = styled.div`
+  a {
+    text-decoration: none;
+    color: black;
+  }
+`;
+const SLiveItem = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 2rem;
+  border: 1px solid black;
+`;
+const SLiveImgBox = styled.div`
+  width: 34%;
+  height: 6rem;
+  border: 1px solid black;
+  background-color: yellow;
+`;
+const SLiveContentBox = styled.div`
+  width: 66%;
+  height: 6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: beige;
+`;
+const SLiveImg = styled.div``;
+
+const SLiveTitle = styled.div`
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+`;
+const SLiveShelter = styled.div`
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
+  text-align: right;
+`;
 
 function Live() {
   const user = useRecoilValue(userAtom);
   const [liveList, setLiveList] = useRecoilState(liveListAtom);
+  const [timetableShelterId, setTimetableShelterId] = useRecoilState(
+    timetableShelterIdAtom,
+  );
+
+  const handleClickLive = id => {
+    setTimetableShelterId(id);
+  };
 
   useEffect(() => {
-    axios.get(`${API_URL}/live/all`).then(res => setLiveList(res.data.data));
+    axios.get(`${API_URL}/live/all`).then(res => {
+      setLiveList(res.data.data);
+    });
   }, []);
 
   return (
@@ -55,14 +105,21 @@ function Live() {
       </SLiveHeader>
       <SLiveContainer>
         {liveList.map((live, index) => (
-          <SLiveItem key={index}>
-            라이브 제목 : {live.title} <br /> 보호소 : {live.shelterName}
-          </SLiveItem>
+          <Link to="/createschedule" key={index} state={live}>
+            <SLiveItem onClick={() => handleClickLive(live.shelterId)}>
+              <SLiveImgBox>
+                <SLiveImg>{live.image}</SLiveImg>
+              </SLiveImgBox>
+              <SLiveContentBox>
+                <SLiveTitle>{live.title}</SLiveTitle>
+                <SLiveShelter>{live.shelterName}</SLiveShelter>
+              </SLiveContentBox>
+            </SLiveItem>
+          </Link>
         ))}
       </SLiveContainer>
       <Nav />
     </>
   );
 }
-
 export default Live;

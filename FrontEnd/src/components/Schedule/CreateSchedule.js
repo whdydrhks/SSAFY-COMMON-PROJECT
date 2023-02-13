@@ -8,10 +8,15 @@ import styled from 'styled-components';
 import '../../styles/slick-theme.css';
 import '../../styles/slick.css';
 import Slider from 'react-slick';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import API_URL from '../../api/api';
 import { getCookie } from '../../pages/Account/cookie';
-import { twoWeeksAtom } from '../../recoilState';
+import {
+  twoWeeksAtom,
+  timetableShelterIdAtom,
+  todayTimeAtom,
+  dayTimeAtom,
+} from '../../recoilState';
 
 const SContainer = styled.div`
   width: 100%;
@@ -81,7 +86,16 @@ function CreateSchedule() {
     slidesToScroll: 3,
   };
 
+  const timetableShelterId = useRecoilValue(timetableShelterIdAtom);
   const [twoWeeks, setTwoWeeks] = useRecoilState(twoWeeksAtom);
+  const [dayTime, setDayTime] = useRecoilState(dayTimeAtom);
+  const [todayTimeArr, setTodayTimeArr] = useState([]);
+
+  const handleClickDate = idx => {
+    const today = new Date();
+    const day = today.getDay();
+    setTodayTimeArr(dayTime[(day + idx) % 7].split(''));
+  };
 
   useEffect(() => {
     const weeks = [];
@@ -93,13 +107,29 @@ function CreateSchedule() {
       weeks.push({ month: todayMonth, day: todayDate });
     }
     setTwoWeeks(weeks);
-  });
+
+    axios
+      .get(`${API_URL}/timetable/${timetableShelterId}`, {
+        shelterId: timetableShelterId,
+      })
+      .then(res =>
+        setDayTime([
+          res.data.data.sun,
+          res.data.data.mon,
+          res.data.data.tue,
+          res.data.data.wed,
+          res.data.data.thr,
+          res.data.data.fri,
+          res.data.data.sat,
+        ]),
+      );
+  }, []);
 
   return (
     <>
       <Slider {...settings}>
         {twoWeeks.map((date, index) => (
-          <SButtonDiv key={index}>
+          <SButtonDiv key={index} onClick={() => handleClickDate(index)}>
             <SButton
               type="button"
               value={date.month.padStart(2, '0') + date.day.padStart(2, '0')}
@@ -110,6 +140,23 @@ function CreateSchedule() {
         ))}
       </Slider>
       <STimeList>
+        {todayTimeArr.map((item, index) =>
+          index >= 9 && index <= 17 ? (
+            <STimeBox>
+              <STime>
+                {index.toString().padStart(2, '0')}:00 ~{' '}
+                {(index + 1).toString().padStart(2, '0')}:00
+              </STime>
+              {item === '1' ? (
+                <SClickButton bgColor="green">예약하기</SClickButton>
+              ) : (
+                <SClickButton bgColor="grey" disabled>
+                  예약불가
+                </SClickButton>
+              )}
+            </STimeBox>
+          ) : null,
+        )}
         {/* {todaySchedule.map((schedule, index) => (
           <STimeBox key={index}>
             <SContainer>
