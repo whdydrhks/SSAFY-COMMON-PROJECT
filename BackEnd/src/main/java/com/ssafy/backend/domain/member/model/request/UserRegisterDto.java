@@ -23,6 +23,7 @@ public class UserRegisterDto {
 	private String nickname;
 
 	public UserEntity toEntity() {
+
 		return UserEntity.builder()
 			.email(this.email)
 			.password(this.password)
