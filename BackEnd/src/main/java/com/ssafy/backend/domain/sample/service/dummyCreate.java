@@ -56,8 +56,8 @@ public class dummyCreate {
 
 		// 기본 동물 이미지 생성
 		file = FileEntity.builder()
-			.originName("animal_profile")
-			.storeName("animal_profile")
+			.originName("default_animal")
+			.storeName("default_animal")
 			.contentType("image/png")
 			.extension("png")
 			.build();

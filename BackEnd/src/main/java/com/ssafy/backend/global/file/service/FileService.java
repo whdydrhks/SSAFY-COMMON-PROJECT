@@ -225,6 +225,11 @@ public class FileService {
 		FileEntity findFile = fileRepository.findByStoreName(storeName)
 			.orElseThrow(() -> new FileErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
+		// 기본파일 프로필 이미지 삭제를 막기위한 예외
+		if (findFile.getStoreName().contains("default")) {
+			throw new FileErrorException(ApiStatus.FILE_INVALID_PATH);
+		}
+
 		FileEntity updateFile = FileEntity.builder()
 			.id(findFile.getId())
 			.user(findFile.getUser())
@@ -240,6 +245,12 @@ public class FileService {
 		Long updatedFileId = fileRepository.save(updateFile).getId();
 
 		return responseUtil.buildSuccessResponse(updatedFileId);
+	}
+
+	@Transactional
+	public void deleteFile(Long fileId) {
+
+		fileRepository.deleteById(fileId);
 	}
 
 	@Transactional
@@ -282,12 +293,6 @@ public class FileService {
 			.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""
 				+ findFile.getOriginName() + "." + findFile.getExtension() + "\"")
 			.body(resource);
-	}
-
-	@Transactional
-	public void deleteFile(Long fileId) {
-
-		fileRepository.deleteById(fileId);
 	}
 
 	@Transactional
