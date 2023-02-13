@@ -57,8 +57,17 @@ const SReview = styled.div`
   margin-top: 2rem;
 `;
 
-const STitle = styled.h1`
-  font-size: 1.5rem;
+const STitle = styled.div`
+  width: 30%;
+  font-size: 1.6rem;
+  margin: auto;
+  border-radius: 15px 15px 15px 0;
+  border-bottom: 5px solid #b9c4c4;
+  padding: 1rem 2.5rem;
+  background: #cedada;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  text-align: center;
 `;
 
 const SMoreLink = styled(Link)`
@@ -77,29 +86,21 @@ function Home() {
   return (
     <>
       <Header />
-      <SContainer>
-        <STitleBox>
-          <STitle>라이브</STitle>
-          <SMoreLink to="/live">더 보기 &gt;</SMoreLink>
-        </STitleBox>
-        <SLiveItem>
-          <SLive>
-            <ImageCarousel page="Home" />
-          </SLive>
-        </SLiveItem>
-      </SContainer>
+      <STitle>라이브</STitle>
+      <SMoreLink to="/live">더 보기 &gt;</SMoreLink>
+      <SLiveItem>
+        <SLive>
+          <ImageCarousel page="Home" />
+        </SLive>
+      </SLiveItem>
       {/* <SLine /> */}
-      <SContainer>
-        <STitleBox>
-          <STitle>입양 후기</STitle>
-          <SMoreLink to="/review">더 보기 &gt;</SMoreLink>
-        </STitleBox>
-        <SReviewItem>
-          <SReview>
-            <ReviewList />
-          </SReview>
-        </SReviewItem>
-      </SContainer>
+      <STitle>입양 후기</STitle>
+      <SMoreLink to="/review">더 보기 &gt;</SMoreLink>
+      <SReviewItem>
+        <SReview>
+          <ReviewList />
+        </SReview>
+      </SReviewItem>
       <Nav />
     </>
   );
