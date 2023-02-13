@@ -2,9 +2,12 @@
 /* eslint-disable no-unused-vars */
 import { StopTwoTone } from '@mui/icons-material';
 import React, { useState } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
+import API_URL from '../../api/api';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
+import { getCookie } from '../Account/cookie';
 
 const SHeader = styled.div`
   font-size: 2rem;
@@ -50,24 +53,35 @@ const SButtonDiv = styled.div`
 const SCreateButton = styled.button``;
 
 function LiveCreateHost() {
-  const [image, setImage] = useState('');
+  const accessToken = getCookie('accessToken');
+  const [image, setImage] = useState('dog.png');
   const [title, setTitle] = useState('');
   const [category, setCagegory] = useState('');
 
-  const handleImage = event => {
-    console.log(event.target);
-    setImage(event.target);
-  };
+  //   const handleImage = event => {
+  //     setImage(event.target);
+  //   };
   const handleTitle = event => {
-    console.log(event.target.value);
     setTitle(event.target.value);
   };
   const handleCategory = event => {
-    console.log(event.target.id);
-    setCagegory(event.target.value);
+    setCagegory(event.target.id);
   };
 
-  const handleCreateLive = () => {};
+  const handleCreateLive = () => {
+    if (window.confirm('방을 생성하시겠습니까?')) {
+      axios.post(
+        `${API_URL}/live`,
+        { category, image, title },
+        {
+          headers: {
+            Authorization: accessToken,
+          },
+        },
+      );
+      // 영상 띄워주는 곳으로 고고
+    }
+  };
 
   return (
     <>
@@ -78,7 +92,7 @@ function LiveCreateHost() {
           <SFileUpload
             className="btn-upload"
             value={image}
-            onChange={handleImage}
+            // onChange={handleImage}
           >
             썸네일 업로드
           </SFileUpload>
