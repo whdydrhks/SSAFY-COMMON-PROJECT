@@ -28,6 +28,10 @@ const SH1 = styled.h1`
   /* margin-bottom: 1rem; */
 `;
 
+const SContainer = styled(Container)`
+  margin-bottom: 5rem;
+`;
+
 const STemp = styled.div`
   display: flex;
   /* justify-content: center; */
@@ -85,6 +89,7 @@ function AnimalCreateHost() {
   const [note, setNote] = useState('');
   const [images, setImages] = useState([]);
   const [previews, setPreviews] = useState([]);
+  const [animalId, setAnimalId] = useState(undefined);
 
   // const [imgPreview, setImgPreview] = useState('');
 
@@ -97,7 +102,7 @@ function AnimalCreateHost() {
   };
 
   const handleAge = e => {
-    setAge(e.target.value);
+    setAge(parseInt(e.target.value));
   };
 
   const handleGender = e => {
@@ -109,7 +114,7 @@ function AnimalCreateHost() {
   };
 
   const handleWeight = e => {
-    setWeight(e.target.value);
+    setWeight(parseInt(e.target.value));
   };
 
   const handleNeuter = e => {
@@ -155,37 +160,53 @@ function AnimalCreateHost() {
 
   const addAnimal = e => {
     e.preventDefault();
-    // console.log(e);
-    const formData = new FormData();
+    console.log(e.target);
+    const fileData = new FormData();
+    const variables = {
+      age,
+      breed,
+      gender,
+      manageCode,
+      name,
+      neuter,
+      note,
+      weight,
+    };
+    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@');
+    console.log(images);
+    const imageFiles = images;
+    console.log(imageFiles);
+    fileData.append('files', imageFiles);
 
-    formData.append('image', images);
-    const variables = [
-      {
-        age,
-        breed,
-        gender,
-        manageCode,
-        name,
-        neuter,
-        note,
-        weight,
-      },
-    ];
+    axios
+      .post(`${API_URL}/shelter/${shelterId}/animal`, variables)
+      .then(res => {
+        console.log(res);
+        axios.post(
+          `${API_URL}/shelter/${shelterId}/animal/${res.data.data}/image`,
+          fileData,
+          {
+            headers: 'multipart/form-data',
+          },
+        );
+        console.log('이미지 보냄');
+        navigate('/animal');
+      });
 
-    formData.append(
-      'data',
-      new Blob([JSON.stringify(variables)], { type: 'application/json' }),
-    );
-    axios.post(`${API_URL}/shelter/${shelterId}/animal`, formData);
-    // console.log(variables[0].animalId);
-    navigate(`/animal/${variables[0].animalId}`);
+    // axios
+    //   .post(`${API_URL}/shelter/${shelterId}/animal`, variables)
+    //   .then(res => {
+    //     console.log(res);
+    //     // console.log('이미지 보냄');
+    //     // navigate('/animal');
+    //   });
   };
 
   return (
     <>
       <Header />
       <SH1>동물 등록</SH1>
-      <Container component="main" maxWidth="xs">
+      <SContainer component="main" maxWidth="xs">
         <Box
           sx={{
             marginTop: 8,
@@ -351,14 +372,15 @@ function AnimalCreateHost() {
               </STemp>
             </Grid>
 
-            <SSubmit>
-              <SButton type="submit" variant="contained" component="label">
-                동물 등록하기
-              </SButton>
-            </SSubmit>
+            {/* <SSubmit> */}
+            {/* <SButton type="submit" variant="contained" component="label">
+              동물 등록하기
+            </SButton> */}
+            <button type="submit">동물 등록하기</button>
+            {/* </SSubmit> */}
           </form>
         </Box>
-      </Container>
+      </SContainer>
 
       <Nav />
     </>

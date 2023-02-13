@@ -164,6 +164,7 @@ function AnimalDetail() {
   // console.log(location.state);
   const key = [manageCode, name, breed, gender, weight, neuter];
   const korKey = ['관리 번호', '이름', '품종', '성별', '체중', '중성화 여부'];
+  console.log(location);
   const { animal } = location.state;
   // animal 은 객체임
   const animalInformation = [
