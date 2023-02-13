@@ -29,7 +29,7 @@ public class AlarmScheduler {
     private final ScheduleRepository scheduleRepository;
 
     @Async
-    @Scheduled(cron = "0 11 2 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "0 0 1 * * *", zone = "Asia/Seoul")
     @Transactional
     public void dailyScheduleAlarm(){
 
@@ -37,11 +37,7 @@ public class AlarmScheduler {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMdd");
         String day = now.format(formatter);
 
-        Sort sort = Sort.by(
-                Sort.Order.asc("time")
-        );
-
-        List<ScheduleEntity> todayScheduleList = scheduleRepository.findByDay(day, sort);
+        List<ScheduleEntity> todayScheduleList = scheduleRepository.findByDay(day, Sort.by(Sort.Order.asc("time")));
         List<AlarmEntity> alarmList = new ArrayList<>();
 
         for(ScheduleEntity schedule : todayScheduleList){
