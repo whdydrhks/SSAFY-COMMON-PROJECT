@@ -23,13 +23,13 @@ import API_URL from '../../api/api';
 const SH1 = styled.h1`
   font-size: 2rem;
   font-family: 'cafe24';
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
   margin-left: 1rem;
   /* margin-bottom: 1rem; */
 `;
 
 const SContainer = styled(Container)`
-  margin-bottom: 5rem;
+  /* margin-bottom: 5rem; */
 `;
 
 const STemp = styled.div`
@@ -49,20 +49,15 @@ const SPreviewCard = styled(Grid)`
   justify-content: center;
 `;
 
-const SSubmit = styled.div`
-  margin-top: 2rem;
-  text-align: right;
-`;
-
 const STypography = styled(Typography)`
   margin-top: 1rem;
   margin-bottom: 1rem;
 `;
 
-const SButton = styled(Button)`
-  font-family: 'cafe24';
-  font-size: 1.5rem;
-`;
+// const SButton = styled(Button)`
+//   font-family: 'cafe24';
+//   font-size: 1.5rem;
+// `;
 
 function AnimalCreateHost() {
   const navigate = useNavigate();
@@ -172,13 +167,6 @@ function AnimalCreateHost() {
       note,
       weight,
     };
-    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@');
-    console.log(images);
-
-    // const imageFiles = images;
-    // console.log(imageFiles);
-    // fileData.append('files', imageFiles);
-    // console.log(fileData);
 
     Object.values(images).forEach(image => {
       fileData.append('files', image);
@@ -187,8 +175,6 @@ function AnimalCreateHost() {
     axios
       .post(`${API_URL}/shelter/${shelterId}/animal`, variables)
       .then(res => {
-        console.log('###############################');
-        console.log(res);
         axios.post(
           `${API_URL}/shelter/${shelterId}/animal/${res.data.data}/image`,
           fileData,
@@ -198,14 +184,6 @@ function AnimalCreateHost() {
         );
         navigate('/animal');
       });
-
-    // axios
-    //   .post(`${API_URL}/shelter/${shelterId}/animal`, variables)
-    //   .then(res => {
-    //     console.log(res);
-    //     // console.log('이미지 보냄');
-    //     // navigate('/animal');
-    //   });
   };
 
   return (
@@ -378,10 +356,6 @@ function AnimalCreateHost() {
               </STemp>
             </Grid>
 
-            {/* <SSubmit> */}
-            {/* <SButton type="submit" variant="contained" component="label">
-              동물 등록하기
-            </SButton> */}
             <button type="submit">동물 등록하기</button>
             {/* </SSubmit> */}
           </form>

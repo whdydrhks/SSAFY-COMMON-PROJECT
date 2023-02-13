@@ -8,28 +8,9 @@ import '../../styles/slick-theme.css';
 import '../../styles/slick.css';
 import Slider from 'react-slick';
 
-// const STitleBox = styled.div`
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   margin-bottom: 1rem;
-//   margin-left: 1rem;
-//   margin-right: 1rem;
-// `;
-
-// const STitle = styled.h1`
-//   font-family: 'cafe24';
-//   font-size: 2rem;
-// `;
-
-// const SMoreLink = styled(Link)`
-//   font-size: 1.5rem;
-//   font-family: 'cafe24';
-//   text-decoration: none;
-// `;
-const SImage = styled.div`
+const SImage = styled.img`
   width: 240px;
-  height: 120px;
+  height: 200px;
   border: 1px solid black;
 `;
 
@@ -37,7 +18,9 @@ const SSlider = styled(Slider)`
   margin-bottom: 5rem;
 `;
 
-function ImageCarousel() {
+function ImageCarousel(props) {
+  const images = props.animalImages;
+
   const settings = {
     arrows: false,
     autoplay: true,
@@ -48,43 +31,13 @@ function ImageCarousel() {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
-  // const [images, setImages] = useState([]);
-  // const type = props.type;
-
-  // useEffect(() => {
-  //   const getImages = async () => {
-  //     try {
-  //       setImages(
-  //         await axios.get(url, {
-  //           params: { type },
-  //         }),
-  //       );
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   getImages();
-  // }, []);
 
   return (
     <div>
-      {/* <STitleBox>
-        <STitle>Live</STitle>
-        <SMoreLink to="/live">더 보기 &gt;</SMoreLink>
-      </STitleBox> */}
       <SSlider {...settings}>
-        <SImage>1</SImage>
-        <SImage>2</SImage>
-        <SImage>3</SImage>
-        <SImage>4</SImage>
-        <SImage>5</SImage>
-        <SImage>6</SImage>
-        {/* {
-          images.map(imageItem =>(
-            <img src={} />
-          ))
-        } */}
+        {images.map(image => (
+          <SImage src={image} />
+        ))}
       </SSlider>
     </div>
   );

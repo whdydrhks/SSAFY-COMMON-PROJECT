@@ -1,5 +1,5 @@
 /* eslint-disable prefer-destructuring */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import Modal from 'react-modal';
 import { Button } from '@mui/material';
@@ -164,7 +164,7 @@ function AnimalDetail() {
   // console.log(location.state);
   const key = [manageCode, name, breed, gender, weight, neuter];
   const korKey = ['관리 번호', '이름', '품종', '성별', '체중', '중성화 여부'];
-  console.log(location);
+  // console.log(location);
   const { animal } = location.state;
   // animal 은 객체임
   const animalInformation = [
@@ -175,9 +175,23 @@ function AnimalDetail() {
     { weight: animal.weight },
     { neuter: animal.neuter },
   ];
-  // animalInformation.map(item =>
-  //   console.log(Object.keys(item)[0], Object.values(item)[0]),
-  // );
+  const [animalImages, setAnimalImages] = useState([]);
+
+  const getAnimalImage = async () => {
+    await axios
+      .get(`${API_URL}/shelter/${shelterId}/animal/${animal.animalId}/image`)
+      .then(res => {
+        setAnimalImages(res.data.data);
+        // console.log('###################');
+        // console.log(res.data.data);
+        // console.log('###################');
+      });
+  };
+
+  useEffect(() => {
+    getAnimalImage();
+  }, []);
+
   const [isModal, setIsModal] = useState(false);
 
   const handleModal = () => {
@@ -199,7 +213,9 @@ function AnimalDetail() {
       <Header />
 
       <STitle>동물 정보</STitle>
-      <ImageCarousel page="AnimalDetail" />
+      {animalImages ? (
+        <ImageCarousel page="AnimalDetail" animalImages={animalImages} />
+      ) : null}
       <SLine>
         <SGrayLineBox>
           <SGrayLine />

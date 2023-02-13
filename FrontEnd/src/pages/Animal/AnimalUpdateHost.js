@@ -91,6 +91,20 @@ function AnimalUpdateHost() {
 
   const [imgPreview, setImgPreview] = useState('');
 
+  const [animalImages, setAnimalImages] = useState([]);
+
+  const getImages = () => {
+    axios
+      .get(`${API_URL}/shelter/${shelterId}/animal/${animal.animalId}/image`)
+      .then(res => {
+        setAnimalImages(res.data.data);
+      });
+  };
+  useEffect(() => {
+    getImages();
+    setImgPreview(animalImages);
+  });
+
   const handleAdoption = e => {
     setAdoption(e.target.value);
   };
@@ -162,26 +176,24 @@ function AnimalUpdateHost() {
     const formData = new FormData();
 
     formData.append('image', images);
-    const variables = [
-      {
-        adoption,
-        name,
-        breed,
-        age,
-        gender,
-        weight,
-        neuter,
-        note,
-      },
-    ];
+    const variables = {
+      adoption,
+      name,
+      breed,
+      age,
+      gender,
+      weight,
+      neuter,
+      note,
+    };
 
-    formData.append(
-      'data',
-      new Blob([JSON.stringify(variables)], { type: 'application/json' }),
-    );
+    Object.values(images).forEach(image => {
+      fileData.append('files', image);
+    });
+
     axios.put(
       `${API_URL}/shelter/${shelterId}/animal/${animalId.animalId}`,
-      formData,
+      variables,
     );
     // console.log(variables[0].animalId);
     navigate(`/animal/${variables[0].animalId}`);
