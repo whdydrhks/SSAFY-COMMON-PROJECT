@@ -47,7 +47,7 @@ public class AnimalControllerV1 {
 			.ok(animalService.getInfoByShelter(shelterId));
 	}
 
-	@PostMapping("/animal/{animalId}")
+	@PostMapping("/animal")
 	@ApiOperation(value = "동물 등록")
 	public ResponseEntity<?> registerShelter(
 		@PathVariable(name = "shelterId") Long shelterId,
