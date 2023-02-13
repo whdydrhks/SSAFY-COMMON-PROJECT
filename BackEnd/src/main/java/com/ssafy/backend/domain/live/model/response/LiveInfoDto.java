@@ -18,6 +18,7 @@ public class LiveInfoDto {
     private String title;
     private String image;
     private String category;
+    private String room;
     private LocalDateTime createdDate;
 
     public static LiveInfoDto of(LiveEntity live){
@@ -29,6 +30,7 @@ public class LiveInfoDto {
                 .image((live.getImage()))
                 .category(live.getCategory())
                 .createdDate(live.getCreatedDate())
+                .room(live.getRoom())
                 .build();
     }
 

@@ -39,4 +39,7 @@ public class LiveEntity extends BaseTimeEntity {
 
     @Column(name ="image")
     private String image;
+
+    @Column(name ="room", nullable = false)
+    private String room;
 }

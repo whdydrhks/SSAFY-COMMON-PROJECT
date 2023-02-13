@@ -154,6 +154,7 @@ public class dummyCreate {
 				.image("string")
 				.category("개")
 				.title("111")
+				.room("1")
 				.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
 				.build();
 		liveRepository.save(live);
@@ -163,6 +164,7 @@ public class dummyCreate {
 				.image("string")
 				.category("개")
 				.title("555")
+				.room("5")
 				.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
 				.build();
 		liveRepository.save(live1);
@@ -172,6 +174,7 @@ public class dummyCreate {
 				.image("string")
 				.category("개")
 				.title("333")
+				.room("3")
 				.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
 				.build();
 		liveRepository.save(live2);
@@ -181,6 +184,7 @@ public class dummyCreate {
 				.image("string")
 				.category("개")
 				.title("222")
+				.room("2")
 				.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
 				.build();
 		liveRepository.save(live13);
@@ -190,6 +194,7 @@ public class dummyCreate {
 				.image("string")
 				.category("개")
 				.title("441")
+				.room("4")
 				.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
 				.build();
 		liveRepository.save(live14);

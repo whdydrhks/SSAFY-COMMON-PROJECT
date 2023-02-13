@@ -56,6 +56,8 @@ public class SecurityConfig {
 				.antMatchers("/*/openvidu/**").permitAll()
 				.antMatchers("/*/schedule/**").permitAll()
 				.antMatchers("/*/live", "/*/live/**").permitAll()
+				.antMatchers("/*/like/animal","/*/like/animal/**" ).permitAll()
+				.antMatchers("/*/alarm","/*/alarm/**" ).permitAll()
 				.anyRequest().authenticated();
 
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

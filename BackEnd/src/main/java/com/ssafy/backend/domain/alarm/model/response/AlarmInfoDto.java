@@ -19,11 +19,17 @@ public class AlarmInfoDto {
     private int time;
     private LocalDateTime createdDate;
 
-//    public static AlarmInfoDto of(AlarmEntity alarm){
-//        return AlarmInfoDto.builder()
-//                .alarmId(alarm.getId())
-//                .alarmType(alarm.getAlarmType())
-//                .targetName(alarm.get)
-//    }
+    public static AlarmInfoDto of(AlarmEntity alarm){
+        return AlarmInfoDto.builder()
+                .alarmId(alarm.getId())
+                .alarmType(alarm.getAlarmType())
+                .targetName(alarm.getTargetName())
+                .profileImage(alarm.getProfileImage())
+                .time(alarm.getTime())
+                .createdDate(alarm.getCreatedDate())
+                .build();
+    }
+
+
 
 }

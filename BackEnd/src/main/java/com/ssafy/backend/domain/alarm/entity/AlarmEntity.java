@@ -3,6 +3,7 @@ package com.ssafy.backend.domain.alarm.entity;
 import com.ssafy.backend.domain.animal.entity.AnimalEntity;
 import com.ssafy.backend.domain.member.entity.UserEntity;
 import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
+import com.ssafy.backend.global.common.entity.BaseTimeEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,7 @@ import javax.persistence.*;
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
-public class AlarmEntity {
+public class AlarmEntity extends BaseTimeEntity {
 
     private static final long serialVersionUID = 1L;
 
@@ -29,8 +30,8 @@ public class AlarmEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+    @JoinColumn(name = "receiver_id", nullable = false)
+    private UserEntity receiver;
 
     @Column(name = "alarm_type", nullable = false, length = 1)
     private int alarmType;
@@ -38,11 +39,11 @@ public class AlarmEntity {
     @Column(name = "time")
     private int time;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sender_id")
-    private UserEntity sender;
+    @Column(name = "target_name", nullable = false)
+    private String targetName;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "animal_id")
-    private AnimalEntity animal;
+    @Column(name = "profile_image")
+    private String profileImage;
+
+
 }

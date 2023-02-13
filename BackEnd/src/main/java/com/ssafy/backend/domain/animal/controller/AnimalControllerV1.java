@@ -2,6 +2,8 @@ package com.ssafy.backend.domain.animal.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.ssafy.backend.domain.animal.model.request.LikeAnimalDeleteDto;
+import com.ssafy.backend.domain.animal.model.request.LikeAnimalRegisterDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -130,4 +132,5 @@ public class AnimalControllerV1 {
 		return ResponseEntity
 			.ok(animalService.searchInfoByBreed(shelterId, keyword));
 	}
+
 }
