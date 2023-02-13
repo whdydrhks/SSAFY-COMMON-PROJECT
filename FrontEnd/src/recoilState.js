@@ -221,6 +221,11 @@ const alarmAtom = atom({
   key: 'alarmAtom',
   default: [],
 });
+
+const liveListAtom = atom({
+  key: 'liveListAtom',
+  default: [],
+});
 export {
   animalState,
   authStateAtom,
@@ -237,4 +242,5 @@ export {
   todayAtom,
   dateListAtom,
   alarmAtom,
+  liveListAtom,
 };
