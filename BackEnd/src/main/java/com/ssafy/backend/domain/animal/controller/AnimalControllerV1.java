@@ -92,7 +92,7 @@ public class AnimalControllerV1 {
 			.ok(animalService.updateExpire(shelterId, animalId, true));
 	}
 
-	@GetMapping("/{animalId}/image")
+	@GetMapping("/animal/{animalId}/image")
 	@ApiOperation(value = "동물 이미지 조회")
 	public ResponseEntity<?> getFilesByUser(
 		@PathVariable("animalId") Long animalId,
@@ -102,7 +102,7 @@ public class AnimalControllerV1 {
 			.ok(fileService.getFilesByAnimal(animalId, request));
 	}
 
-	@PostMapping("/{animalId}/image")
+	@PostMapping("/animal/{animalId}/image")
 	@ApiOperation(value = "사용자 이미지 등록")
 	public ResponseEntity<?> uploadFilesByUser(
 		@PathVariable("animalId") Long animalId,
