@@ -180,7 +180,7 @@ public class FileService {
 		} else if ("animal".equals(category)) {
 			fileDownloadUri = uploadAnimalFile(id, file, request);
 		} else {
-			throw new ApiErrorException(ApiStatus.BAD_REQUEST);
+			throw new FileErrorException(ApiStatus.FILE_INVALID_PATH);
 		}
 
 		return responseUtil.buildSuccessResponse(fileDownloadUri);
@@ -201,13 +201,12 @@ public class FileService {
 				.map(file -> uploadUserFile(id, file, request))
 				.collect(Collectors.toList());
 		} else if ("animal".equals(category)) {
-
 			fileDownloadUriList = Arrays.asList(files)
 				.stream()
 				.map(file -> uploadAnimalFile(id, file, request))
 				.collect(Collectors.toList());
 		} else {
-			throw new ApiErrorException(ApiStatus.BAD_REQUEST);
+			throw new FileErrorException(ApiStatus.FILE_INVALID_PATH);
 		}
 
 		return responseUtil.buildSuccessResponse(fileDownloadUriList);

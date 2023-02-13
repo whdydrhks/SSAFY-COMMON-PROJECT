@@ -108,7 +108,7 @@ public class AnimalControllerV1 {
 	public ResponseEntity<?> uploadFilesByUser(
 		@PathVariable("shelterId") Long shelterId,
 		@PathVariable("animalId") Long animalId,
-		@RequestParam(name = "file", required = false) MultipartFile[] images,
+		@RequestParam("files") MultipartFile[] images,
 		HttpServletRequest request) {
 
 		return ResponseEntity

@@ -140,7 +140,7 @@ public class UserControllerV1 {
 	@ApiOperation(value = "사용자 이미지 등록")
 	public ResponseEntity<?> uploadFilesByUser(
 		@PathVariable("userId") Long userId,
-		@RequestParam(name = "file", required = false) MultipartFile image,
+		@RequestParam("file") MultipartFile image,
 		HttpServletRequest request) {
 
 		return ResponseEntity
