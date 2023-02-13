@@ -80,7 +80,7 @@ public class UserService {
 
 		UserEntity updateUser = updateDto.updateEntity(findUser);
 
-		Long updatedUserId = userRepository.save(findUser).getId();
+		Long updatedUserId = userRepository.save(updateUser).getId();
 
 		return responseUtil.buildSuccessResponse(updatedUserId);
 	}
