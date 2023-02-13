@@ -128,7 +128,7 @@ public class dummyCreate {
 		//		System.out.println(shelterRepository.findById(1L).get().toString());
 
 		ScheduleEntity schedule = ScheduleEntity.builder()
-			.day("0210")
+			.day("0214")
 			.time(10)
 			.room("1")
 			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
@@ -138,7 +138,7 @@ public class dummyCreate {
 		scheduleRepository.save(schedule);
 
 		ScheduleEntity schedule1 = ScheduleEntity.builder()
-			.day("0209")
+			.day("0214")
 			.time(11)
 			.room("2")
 			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
@@ -147,7 +147,7 @@ public class dummyCreate {
 		scheduleRepository.save(schedule1);
 
 		ScheduleEntity schedule2 = ScheduleEntity.builder()
-			.day("0209")
+			.day("0214")
 			.time(8)
 			.room("3")
 			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
@@ -165,7 +165,7 @@ public class dummyCreate {
 		scheduleRepository.save(schedule3);
 
 		ScheduleEntity schedule4 = ScheduleEntity.builder()
-			.day("0204")
+			.day("0215")
 			.time(17)
 			.room("5")
 			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
