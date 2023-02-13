@@ -57,7 +57,7 @@ public class SwaggerConfig {
 		String version = "v1";
 		return buildDocket("동물 " + version, Predicates
 			.or(PathSelectors.ant("/" + version + "/**/animal"),
-				PathSelectors.ant("/" + version + "/**/animal/*")));
+				PathSelectors.ant("/" + version + "/**/animal/**")));
 	}
 
 	public Docket buildDocket(String groupName, Predicate<String> predicates) {
