@@ -26,7 +26,7 @@ public class AnimalDto {
 	private Long animalId;
 	private String manageCode;
 	private String name;
-	private String thumbnail;
+	// private String thumbnail;
 	private String breed;
 	private int age;
 	private int weight;
@@ -46,7 +46,7 @@ public class AnimalDto {
 			.animalId(animal.getId())
 			.manageCode(animal.getManageCode())
 			.name(animal.getName())
-			.thumbnail(animal.getThumbnail())
+			// .thumbnail(animal.getThumbnail())
 			.breed(animal.getBreed())
 			.age(animal.getAge())
 			.weight(animal.getWeight())
@@ -67,7 +67,7 @@ public class AnimalDto {
 			.id(this.animalId)
 			.manageCode(this.manageCode)
 			.name(this.name)
-			.thumbnail(this.thumbnail)
+			// .thumbnail(this.thumbnail)
 			.breed(this.breed)
 			.age(this.age)
 			.weight(this.weight)
