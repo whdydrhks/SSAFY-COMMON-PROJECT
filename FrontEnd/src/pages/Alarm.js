@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
@@ -25,9 +26,9 @@ function Alarm() {
     <>
       <Header />
       <SContainer>
-        {/* {alarmList.map((alarm, index) => (
-        <SAlarm key={index}>{alarm}</SAlarm>
-      ))} */}
+        {alarmList.map((alarm, index) => (
+          <SAlarm key={index}>{alarm}</SAlarm>
+        ))}
       </SContainer>
       <Nav />
     </>

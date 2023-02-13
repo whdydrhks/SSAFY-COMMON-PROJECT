@@ -87,14 +87,25 @@ function CreateSchedule() {
   };
 
   const timetableShelterId = useRecoilValue(timetableShelterIdAtom);
+  const [timetableShelterNickname, setTimetableShelterNickname] = useState('');
   const [twoWeeks, setTwoWeeks] = useRecoilState(twoWeeksAtom);
   const [dayTime, setDayTime] = useRecoilState(dayTimeAtom);
+  const [clickDate, setClickDate] = useState('');
   const [todayTimeArr, setTodayTimeArr] = useState([]);
 
-  const handleClickDate = idx => {
+  const handleClickDate = (cDate, idx) => {
     const today = new Date();
     const day = today.getDay();
     setTodayTimeArr(dayTime[(day + idx) % 7].split(''));
+    setClickDate(cDate);
+  };
+
+  const handleCreateSchedule = idx => {
+    axios.post(`${API_URL}/schedule/register`, {
+      day: clickDate,
+      shelterNickname: timetableShelterNickname,
+      time: idx,
+    });
   };
 
   useEffect(() => {
@@ -109,9 +120,7 @@ function CreateSchedule() {
     setTwoWeeks(weeks);
 
     axios
-      .get(`${API_URL}/timetable/${timetableShelterId}`, {
-        shelterId: timetableShelterId,
-      })
+      .get(`${API_URL}/timetable/${timetableShelterId}`)
       .then(res =>
         setDayTime([
           res.data.data.sun,
@@ -123,16 +132,26 @@ function CreateSchedule() {
           res.data.data.sat,
         ]),
       );
+
+    axios
+      .get(`${API_URL}/shelter/${timetableShelterId}`)
+      .then(res => setTimetableShelterNickname(res.data.data.name));
   }, []);
 
   return (
     <>
       <Slider {...settings}>
         {twoWeeks.map((date, index) => (
-          <SButtonDiv key={index} onClick={() => handleClickDate(index)}>
+          <SButtonDiv key={index}>
             <SButton
               type="button"
               value={date.month.padStart(2, '0') + date.day.padStart(2, '0')}
+              onClick={() =>
+                handleClickDate(
+                  date.month.padStart(2, '0') + date.day.padStart(2, '0'),
+                  index,
+                )
+              }
             >
               {date.month}월 {date.day}일
             </SButton>
@@ -148,7 +167,12 @@ function CreateSchedule() {
                 {(index + 1).toString().padStart(2, '0')}:00
               </STime>
               {item === '1' ? (
-                <SClickButton bgColor="green">예약하기</SClickButton>
+                <SClickButton
+                  bgColor="green"
+                  onClick={() => handleCreateSchedule(index)}
+                >
+                  예약하기
+                </SClickButton>
               ) : (
                 <SClickButton bgColor="grey" disabled>
                   예약불가

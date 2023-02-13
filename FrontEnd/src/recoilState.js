@@ -22,6 +22,11 @@ const userAtom = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+const shelterAtom = atom({
+  key: 'shelterAtom',
+  default: {},
+});
+
 const animalListState = atom({
   key: 'animalListState',
   default: [
@@ -236,6 +241,7 @@ export {
   animalState,
   authStateAtom,
   userAtom,
+  shelterAtom,
   animalListState,
   animalNumber,
   twoWeeksAtom,

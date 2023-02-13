@@ -104,7 +104,7 @@ function Header() {
               <>
                 <SLink
                   to={`/alarm/${user.userId}`}
-                  style={{ 'margin-right': '1.5rem' }}
+                  style={{ marginRight: '1.5rem' }}
                 >
                   <SAlarmIcon />
                 </SLink>
