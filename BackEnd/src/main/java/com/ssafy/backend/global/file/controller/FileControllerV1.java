@@ -1,5 +1,7 @@
 package com.ssafy.backend.global.file.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.ResponseEntity;
@@ -47,7 +49,7 @@ public class FileControllerV1 {
 	public ResponseEntity<?> uploadMultipleFiles(
 		@PathVariable("category") String category,
 		@PathVariable("id") Long id,
-		@RequestParam("files") MultipartFile[] files,
+		@RequestParam("files") List<MultipartFile> files,
 		HttpServletRequest request) {
 
 		return ResponseEntity

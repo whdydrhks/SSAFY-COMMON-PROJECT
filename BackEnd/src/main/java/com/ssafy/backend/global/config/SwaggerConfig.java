@@ -49,7 +49,7 @@ public class SwaggerConfig {
 		String version = "v1";
 		return buildDocket("보호소 " + version, Predicates
 			.or(PathSelectors.ant("/" + version + "/shelter"),
-				PathSelectors.ant("/" + version + "/shelter/*")));
+				PathSelectors.ant("/" + version + "/shelter/**")));
 	}
 
 	@Bean

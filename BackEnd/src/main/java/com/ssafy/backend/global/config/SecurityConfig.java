@@ -50,12 +50,14 @@ public class SecurityConfig {
 			.antMatchers("/*/auth/**").permitAll()
 			.antMatchers("/*/user", "/*/user/**").permitAll() // 추후 유저 권한 이상으로 향상 시켜야 할 것
 			.antMatchers("/*/shelter", "/*/shelter/**").permitAll() // 추후 유저 권한 이상으로 향상 시켜야 할 것
-			.antMatchers("/*/file", "/*/file/**").permitAll() // 추후 유저 권한 이상으로 향상 시켜야 할 것
+			.antMatchers("/*/live", "/*/live/**").permitAll()
+			.antMatchers("/*/alarm", "/*/alarm/**").permitAll()
+			.antMatchers("/*/like/**").permitAll()
+			.antMatchers("/*/timetable/**").permitAll()
+			.antMatchers("/*/schedule/**").permitAll()
+			.antMatchers("/*/openvidu/**").permitAll()
 			.antMatchers("/test/user").hasAnyRole(Role.USER.getHighRoles())
 			.antMatchers("/test/admin").hasAnyRole(Role.ADMIN.getHighRoles())
-			.antMatchers("/*/openvidu/**").permitAll()
-			.antMatchers("/*/schedule/**").permitAll()
-			.antMatchers("/*/live", "/*/live/**").permitAll()
 			.anyRequest().authenticated();
 
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
