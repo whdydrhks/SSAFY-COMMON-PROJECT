@@ -144,7 +144,7 @@ public class UserControllerV1 {
 		HttpServletRequest request) {
 
 		return ResponseEntity
-			.ok(fileService.uploadUserFile(userId, image, request));
+			.ok(fileService.uploadFile("user", userId, image, request));
 	}
 
 }
