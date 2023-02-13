@@ -31,7 +31,7 @@
 import { OpenVidu } from 'openvidu-browser';
 import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 // import styled from 'styled-components';
 import * as S from './VideoChatStyle';
@@ -50,6 +50,8 @@ const APPLICATION_SERVER_URL = API_URL + '/openvidu';
 
 function VideoChat() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const roomNumber = location.state.room;
   const chatRef = useRef();
 
   // 유저 정보, 이메일, role 불러와야함
@@ -102,27 +104,6 @@ function VideoChat() {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
   }, [oneChat]);
-
-  // useEffect(() => {
-  //   if (session) {
-  //     session.on('signal:my-chat', event => {
-  //       let temp = event.from.data;
-  //       let words = event.from.data.split('"');
-  //       let name = words[3];
-  //       receiveMsg.push({ name: name, data: event.data });
-  //       console.log(receiveMsg);
-  //       setReceiveMsg(receiveMsg);
-  //     });
-  //   }
-  // }, [session]);
-
-  // useEffect(() => {
-  //   session.on('signal', event => {
-  //     let name = event.from.data;
-  //     receiveMsg.push({ name: name, data: event.data });
-  //     setReceiveMsg(receiveMsg);
-  //   });
-  // }, [receiveMsg]);
 
   useEffect(() => {
     if (role === 'user') {
@@ -384,7 +365,7 @@ function VideoChat() {
             <h1>화상채팅 참여하기</h1>
           </S.Title>
           <S.JoinForm className="form-group" onSubmit={joinSession}>
-            <S.NameDiv>
+            {/* <S.NameDiv>
               <label>참가자 이름</label>
               <input
                 className="form-control"
@@ -402,12 +383,12 @@ function VideoChat() {
                 className="form-control"
                 type="text"
                 id="sessionId"
-                value={mySessionId}
+                value={roomNumber}
                 onChange={handleChangeSessionId}
                 required
-                // disabled
+                disabled
               />
-            </S.RoomNameDiv>
+            </S.RoomNameDiv> */}
             <p className="text-center">
               <S.JoinDiv>
                 <S.JoinButton type="button" onClick={joinSession}>
@@ -424,7 +405,7 @@ function VideoChat() {
       {session !== undefined ? (
         <div id="session">
           {/* 메인 화면 제목 */}
-          <h1 id="session-title">방 번호 : {mySessionId}</h1>
+          {/* <h1 id="session-title">방 번호 : {roomNumber}</h1> */}
 
           {host !== undefined ? (
             <S.div id="main-video" className="col-md-6">
@@ -510,7 +491,7 @@ function VideoChat() {
               type="button"
               id="buttonLeaveSession"
               onClick={leaveSession}
-              value="Leave session"
+              value="화상채팅 나가기"
             />
           </div>
         </div>

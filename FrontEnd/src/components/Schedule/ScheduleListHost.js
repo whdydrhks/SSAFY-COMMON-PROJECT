@@ -178,10 +178,8 @@ function ScheduleListHost() {
                   <Link
                     to={{
                       pathname: '/videochat',
-                      state: {
-                        room: schedule.room,
-                      },
                     }}
+                    state={{ room: schedule.room }}
                   >
                     <SClickButton
                       bgColor="green"
