@@ -57,10 +57,12 @@ const APPLICATION_SERVER_URL = API_URL + '/openvidu';
 // const APPLICATION_SERVER_URL = 'https://i8b209.p.ssafy.io:9999/api/v1/openvidu';
 // const OPENVIDU_SERVER_SECRET = 'ssafy';
 
-function Live() {
+function Live(props) {
   const navigate = useNavigate();
-  // const location = useLocation();
-  // const roomNumber = location.state.room;
+
+  const location = useLocation();
+  const roomNumber = location.state.roomNumber;
+  console.log(roomNumber);
   const chatRef = useRef();
 
   // 유저 정보, 이메일, role 불러와야함
@@ -87,6 +89,10 @@ function Live() {
   const [sendMsg, setSendMsg] = useState('');
   const [receiveMsg, setReceiveMsg] = useState([]);
   const [oneChat, setOneChat] = useState('');
+
+  const [image, setImage] = useState('dog.png');
+  const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('');
 
   useEffect(() => {
     window.addEventListener('beforeunload', onbeforeunload);
@@ -166,6 +172,14 @@ function Live() {
       .catch(error => {});
   };
 
+  const handleTitle = e => {
+    setTitle(e.target.value);
+  };
+
+  const handleCategory = e => {
+    setCategory(e.target.id);
+  };
+
   const switchCamera = () => {
     let OV = new OpenVidu();
 
@@ -217,6 +231,11 @@ function Live() {
 
     setSession(getOV.initSession());
     setOV(getOV);
+
+    // const liveInformation = {
+    //   'category':
+    // }
+    // axios.post(`${API_URL}`)
 
     // console.log(OV);
   };
@@ -375,9 +394,45 @@ function Live() {
         // <S.WaitingDiv>
         // <div id="join-dialog" className="jumbotron vertical-center">
         <S.WaitingDiv>
-          <S.Title>
-            <h1>화상채팅 참여하기</h1>
-          </S.Title>
+          <S.Header>Live 생성</S.Header>
+          <S.File>
+            <label htmlFor="file">
+              <S.FileUpload
+                className="btn-upload"
+                value={image}
+                // onChange={handleImage}
+              >
+                썸네일 업로드
+              </S.FileUpload>
+            </label>
+            <S.FileInput type="file" name="file" id="file" />
+          </S.File>
+          <S.Title2>
+            <S.TitleHeader>방 이름</S.TitleHeader>
+            {roomNumber ? (
+              <S.TitleInput type="text" value={roomNumber} disabled />
+            ) : null}
+            {/* <S.TitleInput type="text" value={roomNumber} disabled /> */}
+          </S.Title2>
+          <S.Category>
+            <S.CategoryHeader>카테고리 선택</S.CategoryHeader>
+            <input
+              type="radio"
+              id="dog"
+              name="category"
+              value={category}
+              onChange={handleCategory}
+            />
+            <label htmlFor="강아지">강아지</label>
+            <input
+              type="radio"
+              id="cat"
+              name="category"
+              value={category}
+              onChange={handleCategory}
+            />
+            <label htmlFor="고양이">고양이</label>
+          </S.Category>
           <S.JoinForm className="form-group" onSubmit={joinSession}>
             {/* <S.NameDiv>
               <label>참가자 이름</label>

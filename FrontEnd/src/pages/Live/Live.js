@@ -97,6 +97,8 @@ const SLiveShelter = styled.div`
 `;
 
 function Live() {
+  const today = new Date();
+  const payloadRoomNumber = today.getTime();
   const itemData = [
     {
       img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
@@ -193,7 +195,7 @@ function Live() {
       <SLiveHeader>
         <STitle>Live</STitle>
         {user.role === 'HOST' ? (
-          <Link to="/live/create">
+          <Link to="/livechat" state={{ roomNumber: payloadRoomNumber }}>
             <SLiveCreateButton>생성</SLiveCreateButton>
           </Link>
         ) : null}

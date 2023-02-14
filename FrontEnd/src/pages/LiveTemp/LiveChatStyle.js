@@ -159,12 +159,6 @@ export const VolumeOn = styled.img`
   height: 5vh;
 `;
 
-// export const MicOff = styled.img``;
-
-// export const MicOn = styled.img`
-//   margin: 4px 4px 0px 4px;
-// `;
-
 export const LeaveButton = styled.button`
   background-color: #1976d2;
   border: 1px solid #1976d2;
@@ -174,6 +168,48 @@ export const LeaveButton = styled.button`
   width: 15vw;
 `;
 
+export const Header = styled.div`
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 2rem;
+`;
+
+export const File = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin-top: 2rem;
+`;
+
+export const FileUpload = styled.div`
+  width: 150px;
+  height: 30px;
+  background: #fff;
+  border: 1px solid rgb(77, 77, 77);
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const FileInput = styled.input`
+  display: none;
+`;
+
+export const Title2 = styled.div`
+  margin-left: 2rem;
+`;
+
+export const TitleHeader = styled.div``;
+
+export const TitleInput = styled.input``;
+
+export const Category = styled.div`
+  margin-left: 2rem;
+`;
+
+export const CategoryHeader = styled.div``;
 /* 
 .stream-container {
 	padding: 0;
