@@ -7,9 +7,11 @@
 /* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable react/sort-comp */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react/no-unused-state */
+/* eslint-disable react/self-closing-comp */
 /* eslint-disable prefer-template */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/no-unresolved */
@@ -34,13 +36,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 // import styled from 'styled-components';
-import * as S from './VideoChatStyle';
+import * as S from './LiveChatStyle';
 import UserVideoComponent from './UserVideoComponent';
 import { userAtom } from '../../recoilState';
 // import TextChat from './TextChat';
 import API_URL from '../../api/api';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
+import ExitSign from '../../images/Video/ExitSign.png';
+import MicOff from '../../images/Video/MicOff.png';
+import MicOn from '../../images/Video/MicOn.png';
 
 // const APPLICATION_SERVER_URL = 'http://localhost:5000';
 
@@ -68,6 +73,7 @@ function Live() {
 
   const [publisher, setPublisher] = useState(undefined);
   const [host, setHost] = useState(undefined);
+  const [isMic, setIsMic] = useState(true);
 
   const [OV, setOV] = useState(null);
   const [isFrontCamera, setIsFrontCamera] = useState(false);
@@ -385,10 +391,10 @@ function Live() {
                 className="form-control"
                 type="text"
                 id="sessionId"
-                value={roomNumber}
+                // value={roomNumber}
                 onChange={handleChangeSessionId}
                 required
-                disabled
+                // disabled
               />
             </S.RoomNameDiv> */}
             <p className="text-center">
@@ -457,32 +463,49 @@ function Live() {
                 }
               })()}
 
-              <input
+              {/* <input
                 className="btn btn-large btn-success"
                 type="button"
                 id="buttonSwitchCamera"
                 onClick={switchCamera}
                 value="카메라 전환"
-              />
+              /> */}
             </S.div>
           )}
 
-          <div id="session-header">
-            {/* 메인 화면 제목 */}
-            {/* <h1 id="session-title">{mySessionId}</h1> */}
-            <input
-              className="btn btn-large btn-danger"
-              type="button"
-              id="buttonLeaveSession"
-              onClick={leaveSession}
-              value="화상채팅 나가기"
+          {/* <S.ControlDiv> */}
+          {/* <div onClick={leaveSession}>
+            <img
+              src={CallDisconnected}
+              alt="disconnected"
+              style={{ width: '10vw' }}
             />
-          </div>
+          </div> */}
+          {/* </S.ControlDiv> */}
         </div>
       ) : null}
 
       {session ? (
         <S.ChatBox>
+          <S.LeaveBox>
+            {/* <S.LeaveButton type="button" onClick={leaveSession}>
+              나가기
+            </S.LeaveButton> */}
+            <S.ExitSign src={ExitSign} alt="ExitSign" />
+            <div
+              onClick={() => {
+                publisher.publishAudio(!isMic);
+                setIsMic(!isMic);
+              }}
+            >
+              {isMic ? (
+                <MicOff src={MicOff} alt="MicOff" />
+              ) : (
+                <Mic src={MicOn} alt="MicOn" />
+              )}
+            </div>
+          </S.LeaveBox>
+
           <S.ChattingListBox ref={chatRef}>
             {receiveMsg.map((data, index) => (
               <S.Chat key={index}>
@@ -495,7 +518,7 @@ function Live() {
           <S.ChatForm>
             <form onSubmit={sendMessage}>
               <S.ChatInput type="text" onChange={handleMsg} value={sendMsg} />
-              <S.ChatButton type="submit">메시지 보내기</S.ChatButton>
+              <S.ChatButton type="submit">전송</S.ChatButton>
             </form>
           </S.ChatForm>
         </S.ChatBox>

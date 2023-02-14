@@ -1,5 +1,7 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable no-unused-vars */
+/* eslint-disable radix */
 import React, { useState } from 'react';
 import {
   Box,
