@@ -79,12 +79,6 @@ export const ChatBox = styled.div`
   justify-content: center;
 `;
 
-export const ChatForm = styled.div`
-  display: flex;
-  justify-content: space-around;
-  height: 10vh;
-`;
-
 export const ChattingListBox = styled.ul`
   height: 43vh;
   border: 1px solid black;
@@ -93,6 +87,12 @@ export const ChattingListBox = styled.ul`
   &::-webkit-scrollbar {
     display: none;
   }
+`;
+
+export const ChatForm = styled.div`
+  display: flex;
+  justify-content: space-around;
+  height: 10vh;
 `;
 
 export const ChatInput = styled.input`
@@ -107,6 +107,7 @@ export const ChatButton = styled.button`
   border: 1px solid #1976d2;
   border-radius: 10px;
   height: 5vh;
+  width: 5vw;
 `;
 
 export const Chat = styled.li`

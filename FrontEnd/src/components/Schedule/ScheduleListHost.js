@@ -6,6 +6,7 @@
 /* eslint-disable prefer-template */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable no-undef */
 
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
