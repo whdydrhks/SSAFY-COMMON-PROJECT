@@ -26,18 +26,22 @@ const SSearchBar = styled.div`
   margin-left: 0.5rem;
   margin-right: 0.5rem;
   /* background-color: rgba(180, 230, 230); */
+
 `;
 
 const SSearchCategory = styled.select`
   text-align: center;
   height: 2rem;
+  
 `;
 
 const SInput = styled.input`
   text-align: left;
 
   width: 49%;
+
 `;
+
 
 function TabPanel(props) {
   const { children, value, index } = props;
