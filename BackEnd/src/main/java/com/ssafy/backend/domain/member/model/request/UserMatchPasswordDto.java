@@ -14,7 +14,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UserMatchPasswordDto {
 
-	private String curPassword;
-	private String newPassword;
+	private String password;
 
 }
