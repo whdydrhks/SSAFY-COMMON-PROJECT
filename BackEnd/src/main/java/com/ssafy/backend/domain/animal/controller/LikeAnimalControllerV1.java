@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.backend.domain.animal.model.request.LikeAnimalRegistDto;
 import com.ssafy.backend.domain.animal.service.LikeAnimalService;
 
 import io.swagger.annotations.Api;
@@ -45,11 +47,12 @@ public class LikeAnimalControllerV1 {
 	public ResponseEntity<?> registerLikeAnimal(
 		@PathVariable(name = "userId") Long userId,
 		@PathVariable(name = "animalId") Long animalId,
-		@RequestParam(value = "expiredDate") String expiredDate,
+//		@RequestParam(value = "expiredDate") String expiredDate,
+		@RequestBody LikeAnimalRegistDto registDto,
 		HttpServletRequest request) {
 
 		return ResponseEntity
-			.ok(likeAnimalService.registerLikeAnimal(userId, animalId, expiredDate, request));
+			.ok(likeAnimalService.registerLikeAnimal(userId, animalId, registDto.getExpiredDate(), request));
 	}
 
 	//	@DeleteMapping("/user/{userId}/like/animal/{animalId}")

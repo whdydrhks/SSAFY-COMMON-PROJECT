@@ -21,6 +21,7 @@ import Animal from './pages/Animal/Animal';
 import AnimalCreateHost from './pages/Animal/AnimalCreateHost';
 import AnimalUpdateHost from './pages/Animal/AnimalUpdateHost';
 import AnimalDetail from './pages/Animal/AnimalDetail';
+import LikeAnimalEnrollHost from './pages/Animal/LikeAnimalEnrollHost';
 import Schedule from './pages/Schedule/Schedule';
 import Login from './pages/Account/Login';
 import SignUp from './pages/Account/SignUp';
@@ -36,6 +37,7 @@ import LiveCreateHost from './pages/Live/LiveCreateHost';
 import CreateSchedule from './components/Schedule/CreateSchedule';
 
 import LiveChat from './pages/LiveTemp/LiveChat';
+import LikeAnimal from './pages/Animal/LikeAnimal';
 
 const router = createBrowserRouter([
   {
@@ -77,6 +79,10 @@ const router = createBrowserRouter([
   {
     path: 'animal/update/:animalId',
     element: <AnimalUpdateHost />,
+  },
+  {
+    path: 'animal/LikeEnroll/:animalId',
+    element: <LikeAnimalEnrollHost />,
   },
   {
     path: '/schedule',
@@ -137,6 +143,10 @@ const router = createBrowserRouter([
   {
     path: '/createschedule',
     element: <CreateSchedule />,
+  },
+  {
+    path: '/likeanimal',
+    element: <LikeAnimal />,
   },
 ]);
 

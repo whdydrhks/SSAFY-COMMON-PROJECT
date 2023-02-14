@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/require-default-props */
 /* eslint-disable react/jsx-props-no-spreading */
 
@@ -8,9 +9,9 @@ import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-// import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
+import { userAtom } from '../../recoilState';
 import AnimalList from './AnimalList';
-// import { animalListState } from '../../recoilState';
 
 const STemp = styled(Tab)`
   width: 50%;
@@ -72,6 +73,7 @@ function a11yProps(index) {
 }
 
 function AnimalCategory() {
+  // const user = useRecoilValue(userAtom);
   const [value, setValue] = useState(0);
 
   // const [searchCategory, setSearchCategory] = useState('searchManageNumber');

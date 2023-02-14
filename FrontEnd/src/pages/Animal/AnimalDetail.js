@@ -241,6 +241,7 @@ function AnimalDetail() {
       </SNoteBox>
 
       <SButtonBox>
+        {/* 수정하기 */}
         <Link
           to={`/animal/update/${animal.animalId}`}
           style={{ textDecoration: 'none' }}
@@ -250,6 +251,22 @@ function AnimalDetail() {
             수정하기
           </SModifyButton>
         </Link>
+
+        {/* 관심동물 등록 버튼(HOST만 보임) */}
+        {userInfo.role === 'HOST' ? (
+          <Link
+            // to={`/animal/update/${animal.animalId}`}
+            to={`/animal/LikeEnroll/${animal.animalId}`}
+            style={{ textDecoration: 'none' }}
+            state={{ animalInformation: animal }}
+          >
+            <SModifyButton variant="contained" size="medium">
+              관심동물 등록
+            </SModifyButton>
+          </Link>
+        ) : null}
+
+        {/* 삭제하기 */}
         <SDeleteButton
           onClick={() => setIsModal(true)}
           variant="contained"
