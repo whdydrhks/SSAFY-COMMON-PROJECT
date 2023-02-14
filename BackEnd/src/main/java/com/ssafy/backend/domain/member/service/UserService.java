@@ -3,12 +3,10 @@ package com.ssafy.backend.domain.member.service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -313,7 +311,7 @@ public class UserService {
 	 */
 	private UserEntity validateAccount(Long userId, HttpServletRequest request) {
 
-		String tokenEmail = getEmailInAuthToken(request);
+		String tokenEmail = jwtUtil.getUserEmail(request);
 
 		UserEntity validateUser = userRepository.findByEmailAndExpiredLike(tokenEmail, "F")
 			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
@@ -349,40 +347,6 @@ public class UserService {
 			.ifPresent(e -> {
 				throw new ApiErrorException(ApiStatus.NICKNAME_DUPLICATION);
 			});
-	}
-
-	/**
-	 * 헤더의 Authorization 자리에 있는 AccessToken 정보를 가지고온다.
-	 *
-	 * @param
-	 * @return accessToken의 정보
-	 */
-	private String getAuthToken(HttpServletRequest request) {
-
-		return Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION))
-			.orElseThrow(() -> new ApiErrorException(ApiStatus.NOT_LOGGED_IN));
-	}
-
-	/**
-	 * 헤더의 Authorization 자리에 있는 AccessToken의 id 정보를 가지고온다.
-	 *
-	 * @param
-	 * @return String accessToken의 id 정보
-	 */
-	private String getIdInAuthToken(HttpServletRequest request) {
-
-		return jwtUtil.getUserId(getAuthToken(request));
-	}
-
-	/**
-	 * 헤더의 Authorization 자리에 있는 AccessToken의 email 정보를 가지고온다.
-	 *
-	 * @param
-	 * @return String accessToken의 email정보
-	 */
-	private String getEmailInAuthToken(HttpServletRequest request) {
-
-		return jwtUtil.getUserEmail(getAuthToken(request));
 	}
 
 }

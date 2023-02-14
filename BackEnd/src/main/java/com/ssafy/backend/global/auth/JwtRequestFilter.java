@@ -37,74 +37,81 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	private final CustomUserDetailsService customUserDetailsService;
 
 	@Override
-	protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
 		FilterChain filterChain) throws ServletException, IOException {
 
-		String accessJwt = null;
-		String accessEmail = null;
-		String refreshJwt = null;
-		String refreshEmail = null;
+		String accessJwt = null, refreshJwt = null, validateJwt = null;
+		String accessEmail = null, refreshEmail = null, validateEmail = null;
 
-		//		Cookie accessToken = cookieUtil.getCookie(httpServletRequest, jwtUtil.ACCESS_TOKEN);
-
-		String accessToken = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
+		// // 쿠키에서 accessToken을 사용할 때 가지고 오는 메소드. 사용하지 않고 http header AUTHORIZATION에서 가져올 것
+		// Cookie accessToken = cookieUtil.getCookie(httpServletRequest, jwtUtil.ACCESS_TOKEN);
 
 		try {
-			if (accessToken != null) {
-				accessJwt = accessToken;
+			accessJwt = jwtUtil.getAuthToken(request);
+			accessEmail = jwtUtil.getUserEmail(accessJwt);
 
-				//accessJwt = accessToken.getValue();
-				accessEmail = jwtUtil.getValue(accessJwt, jwtUtil.USER_EMAIL);
-			}
 			if (accessEmail != null) {
 				PrincipalDetails userDetails = (PrincipalDetails)customUserDetailsService
 					.loadUserByUsername(accessEmail);
 
 				if (jwtUtil.validateToken(accessJwt, userDetails)) {
-					UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+					UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities());
 
-					usernamePasswordAuthenticationToken
-						.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-					SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+					authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+					SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 				}
 			}
 		} catch (ExpiredJwtException e) {
-			Cookie refreshToken = cookieUtil.getCookie(httpServletRequest, jwtUtil.REFRESH_TOKEN);
-			if (refreshToken != null) {
-				refreshJwt = refreshToken.getValue();
+
+			Cookie refreshCookie = cookieUtil.getCookie(request, jwtUtil.REFRESH_TOKEN);
+
+			if (refreshCookie != null) {
+				refreshJwt = refreshCookie.getValue();
 			}
+
 		} catch (Exception e) {
 
 		}
 
+		// 원래 이런방식으로 reissue 재발급을 받지 않음. 프론트의 axios 단에서 인터셉트해서 분기 처리해주어야 함
+		// refresh token을 reissue 해주는 메소드
 		try {
 			if (refreshJwt != null) {
-				refreshEmail = jwtUtil.getValue(refreshJwt, jwtUtil.USER_EMAIL);
-				String serverJwt = redisUtil.getData(refreshEmail);
 
-				if (refreshEmail.equals(jwtUtil.getValue(serverJwt, jwtUtil.REFRESH_TOKEN))) {
+				refreshEmail = jwtUtil.getUserEmail(refreshJwt);
+				validateJwt = redisUtil.getData(refreshEmail);
+
+				if (validateJwt != null) {
+					validateEmail = jwtUtil.getUserEmail(validateJwt);
+				}
+
+				if (refreshEmail.equals(validateEmail)) {
 					PrincipalDetails userDetails = (PrincipalDetails)customUserDetailsService
 						.loadUserByUsername(refreshEmail);
 
-					UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+					UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities());
 
-					usernamePasswordAuthenticationToken
-						.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
-					SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+					authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+					SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
 					String newToken = jwtUtil.createAccessToken(userDetails.getUser());
 
 					//	Cookie newAccessToken = cookieUtil.createCookie(jwtUtil.ACCESS_TOKEN, newToken);
 					//	httpServletResponse.addCookie(newAccessToken);
-					httpServletResponse.setHeader(HttpHeaders.AUTHORIZATION, newToken);
+					response.setHeader(HttpHeaders.AUTHORIZATION, newToken);
 				}
 			}
+
 		} catch (ExpiredJwtException e) {
+
+		} catch (Exception e) {
 
 		}
 
-		filterChain.doFilter(httpServletRequest, httpServletResponse);
+		filterChain.doFilter(request, response);
 	}
 }
