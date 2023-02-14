@@ -51,7 +51,6 @@ public class AlarmService {
 	public ResponseSuccessDto<?> regist(AlarmRegistDto registDto, HttpServletRequest request) {
 		AlarmEntity alarm;
 		UserEntity findUser;
-		UserEntity findHost;
 		ShelterEntity findShelter;
 		Long alarmId = 0L;
 		switch (registDto.getAlarmType()) {
@@ -73,10 +72,7 @@ public class AlarmService {
 				findShelter = shelterRepository.findByIdAndExpiredLike(registDto.getReceiverId(), "F")
 					.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-				UserEntity User = userRepository.findByShelter(findShelter)
-					.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
-
-				alarm = registDto.toEntityUserToShelter(User);
+				alarm = registDto.toEntityUserToShelter(findShelter.getUser());
 
 				alarmId = alarmRepository.save(alarm).getId();
 				break;
