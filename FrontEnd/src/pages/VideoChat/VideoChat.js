@@ -83,6 +83,10 @@ function VideoChat() {
   const [receiveMsg, setReceiveMsg] = useState([]);
   const [oneChat, setOneChat] = useState('');
 
+  const [image, setImage] = useState('dog.png');
+  const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('');
+
   useEffect(() => {
     window.addEventListener('beforeunload', onbeforeunload);
     return () => {
