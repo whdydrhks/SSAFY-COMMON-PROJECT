@@ -4,6 +4,7 @@ import com.ssafy.backend.domain.animal.entity.AnimalEntity;
 import com.ssafy.backend.domain.member.entity.UserEntity;
 import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
 import com.ssafy.backend.global.common.entity.BaseTimeEntity;
+import com.ssafy.backend.global.file.entity.FileEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,14 +37,13 @@ public class AlarmEntity extends BaseTimeEntity {
     @Column(name = "alarm_type", nullable = false, length = 1)
     private int alarmType;
 
+    @Column(name = "day")
+    private String day;
+
     @Column(name = "time")
     private int time;
 
     @Column(name = "target_name", nullable = false)
     private String targetName;
-
-    @Column(name = "profile_image")
-    private String profileImage;
-
 
 }

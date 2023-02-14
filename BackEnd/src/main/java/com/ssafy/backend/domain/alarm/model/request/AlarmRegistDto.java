@@ -20,35 +20,35 @@ public class AlarmRegistDto {
 	private Long receiverId;
 	private String targetName;
 	private int alarmType;
+	private String day;
 	private int time;
 	private Long animalId;
 
-	public AlarmEntity toEntityShelterToUser(UserEntity user, String profileImage) {
+	public AlarmEntity toEntityShelterToUser(UserEntity user) {
 		return AlarmEntity.builder()
 			.receiver(user)
 			.targetName(this.targetName)
 			.alarmType(this.alarmType)
+			.day(this.day)
 			.time(this.time)
-			.profileImage(profileImage)
 			.build();
 	}
 
-	public AlarmEntity toEntityUserToShelter(UserEntity user, String profileImage) {
+	public AlarmEntity toEntityUserToShelter(UserEntity user) {
 		return AlarmEntity.builder()
 			.receiver(user)
 			.targetName(this.targetName)
 			.alarmType(this.alarmType)
+			.day(this.day)
 			.time(this.time)
-			.profileImage(profileImage)
 			.build();
 	}
 
-	public AlarmEntity toEntityAnimalToUser(UserEntity user, String profileImage) {
+	public AlarmEntity toEntityAnimalToUser(UserEntity user) {
 		return AlarmEntity.builder()
 			.receiver(user)
 			.targetName(this.targetName)
 			.alarmType(this.alarmType)
-			.profileImage(profileImage)
 			.build();
 	}
 }

@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,13 +64,7 @@ public class AlarmService {
 				findUser = userRepository.findByIdAndExpiredLike(registDto.getReceiverId(), "F")
 					.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-				findShelter = shelterRepository.findByName(registDto.getTargetName())
-					.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
-
-				findHost = findShelter.getUser();
-				String hostProfile = fileService.createDownloadUri(fileService.USER_SUB_PATH, findHost.getFile());
-
-				alarm = registDto.toEntityShelterToUser(findUser, hostProfile);
+				alarm = registDto.toEntityShelterToUser(findUser);
 
 				alarmId = alarmRepository.save(alarm).getId();
 				break;
@@ -80,10 +76,7 @@ public class AlarmService {
 				UserEntity User = userRepository.findByShelter(findShelter)
 					.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-				findUser = userRepository.findByNickname(registDto.getTargetName())
-					.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
-
-				alarm = registDto.toEntityUserToShelter(User, findUser.getProfileImage());
+				alarm = registDto.toEntityUserToShelter(User);
 
 				alarmId = alarmRepository.save(alarm).getId();
 				break;
@@ -91,13 +84,7 @@ public class AlarmService {
 				findUser = userRepository.findByIdAndExpiredLike(registDto.getReceiverId(), "F")
 					.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-				AnimalEntity findAnimal = animalRepository.findById(registDto.getAnimalId())
-					.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
-
-				String animalProfile = fileService.createDownloadUri(fileService.ANIMAL_SUB_PATH,
-					findAnimal.getFiles().iterator().next());
-
-				alarm = registDto.toEntityAnimalToUser(findUser, animalProfile);
+				alarm = registDto.toEntityAnimalToUser(findUser);
 
 				alarmId = alarmRepository.save(alarm).getId();
 				break;
@@ -121,7 +108,7 @@ public class AlarmService {
 		UserEntity loginUser = userRepository.findByIdAndExpiredLike(Long.valueOf(tokenId), "F")
 			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-		List<AlarmEntity> alarmList = alarmRepository.findAllByReceiver(loginUser);
+		List<AlarmEntity> alarmList = alarmRepository.findAllByReceiver(loginUser, Sort.by(Sort.Order.desc("createdDate")));
 
 		List<AlarmInfoDto> alarmInfos = alarmList
 			.stream()
@@ -171,7 +158,7 @@ public class AlarmService {
 		UserEntity loginUser = userRepository.findByIdAndExpiredLike(Long.valueOf(tokenId), "F")
 			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-		List<AlarmEntity> alarmList = alarmRepository.findAllByReceiver(loginUser);
+		List<AlarmEntity> alarmList = alarmRepository.findAllByReceiver(loginUser, Sort.by(Sort.Order.desc("createdDate")));
 
 		alarmRepository.deleteAll(alarmList);
 

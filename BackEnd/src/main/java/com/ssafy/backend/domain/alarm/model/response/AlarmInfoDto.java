@@ -15,7 +15,7 @@ public class AlarmInfoDto {
     private Long alarmId;
     private int alarmType;
     private String targetName;
-    private String profileImage;
+    private String day;
     private int time;
     private LocalDateTime createdDate;
 
@@ -24,7 +24,7 @@ public class AlarmInfoDto {
                 .alarmId(alarm.getId())
                 .alarmType(alarm.getAlarmType())
                 .targetName(alarm.getTargetName())
-                .profileImage(alarm.getProfileImage())
+                .day(alarm.getDay())
                 .time(alarm.getTime())
                 .createdDate(alarm.getCreatedDate())
                 .build();
