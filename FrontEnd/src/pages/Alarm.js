@@ -18,7 +18,7 @@ function Alarm() {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/alarm`, { headers: { Authrization: accessToken } })
+      .get(`${API_URL}/alarm`, { headers: { Authorization: accessToken } })
       .then(res => console.log(res));
   }, []);
 

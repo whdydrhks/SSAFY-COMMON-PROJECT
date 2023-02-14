@@ -55,15 +55,22 @@ function ScheduleListUser() {
   const [scheduleUser, setScheduleUser] = useRecoilState(scheduleAtom);
   const [dateList, setDateList] = useState([]);
 
-  const handleDeleteSchedule = (sId, idx) => {
+  const handleDeleteSchedule = (s, idx) => {
     if (window.confirm('해당 일정을삭제하시겠습니까?')) {
-      axios.delete(`${API_URL}/schedule/${sId}`, {
+      axios.delete(`${API_URL}/schedule/${s.scheduleId}`, {
         headers: { Authorization: accessToken },
       });
       scheduleRef.current[idx].style = 'display : none';
 
-      // navigate('/schedule');
-      // window.location.reload();
+      axios
+        .post(`${API_URL}/alarm`, {
+          type: 3,
+          animalId: null,
+          receiverId: s.userId,
+          targetName: s.shelterNickname,
+          time: s.time,
+        })
+        .then(res => console.log(res));
     }
   };
 
@@ -118,7 +125,7 @@ function ScheduleListUser() {
                   <SClickButton
                     bgColor="red"
                     onClick={() => {
-                      handleDeleteSchedule(schedule.scheduleId, index);
+                      handleDeleteSchedule(schedule, index);
                     }}
                   >
                     {' '}
@@ -130,7 +137,7 @@ function ScheduleListUser() {
                   <SClickButton
                     bgColor="red"
                     onClick={() => {
-                      handleDeleteSchedule(schedule.scheduleId, index);
+                      handleDeleteSchedule(schedule, index);
                     }}
                   >
                     {' '}

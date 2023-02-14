@@ -65,9 +65,12 @@ const STitle = styled.div`
   border-bottom: 5px solid #b9c4c4;
   padding: 1rem 2.5rem;
   background: #cedada;
+  background-color: white;
   margin-top: 1rem;
   margin-bottom: 1rem;
   text-align: center;
+  box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
+    rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
 `;
 
 const SMoreLink = styled(Link)`

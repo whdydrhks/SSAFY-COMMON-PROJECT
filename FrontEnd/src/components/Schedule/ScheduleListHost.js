@@ -116,12 +116,21 @@ function ScheduleListHost() {
     navigate('/videochat');
   };
 
-  const handleDeleteSchedule = (sId, index) => {
+  const handleDeleteSchedule = (s, index) => {
     if (window.confirm('일정을 삭제하시겠습니까?')) {
-      axios.delete(`${API_URL}/schedule/${sId}`, {
+      axios.delete(`${API_URL}/schedule/${s.scheduleId}`, {
         headers: { Authorization: accessToken },
       });
       timeRef.current[index].style = 'display :none';
+      axios
+        .post(`${API_URL}/alarm`, {
+          type: 3,
+          animalId: null,
+          receiverId: s.userId,
+          targetName: s.shelterNickname,
+          time: s.time,
+        })
+        .then(res => console.log(res));
     }
   };
 
@@ -198,7 +207,7 @@ function ScheduleListHost() {
                   <SClickButton
                     bgColor="red"
                     onClick={() => {
-                      handleDeleteSchedule(schedule.scheduleId, index);
+                      handleDeleteSchedule(schedule, index);
                     }}
                   >
                     {' '}
@@ -210,7 +219,7 @@ function ScheduleListHost() {
                   <SClickButton
                     bgColor="red"
                     onClick={() => {
-                      handleDeleteSchedule(schedule.scheduleId, index);
+                      handleDeleteSchedule(schedule, index);
                     }}
                   >
                     {' '}
