@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicInsert;
 
 import com.ssafy.backend.domain.animal.entity.AnimalEntity;
+import com.ssafy.backend.domain.live.entity.LiveEntity;
 import com.ssafy.backend.domain.member.entity.UserEntity;
 import com.ssafy.backend.global.common.entity.BaseTimeEntity;
 
@@ -38,6 +39,9 @@ public class FileEntity extends BaseTimeEntity {
 
 	@OneToOne(fetch = FetchType.LAZY, optional = true)
 	private UserEntity user;
+
+	@OneToOne(fetch = FetchType.LAZY, optional = true)
+	private LiveEntity live;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	private AnimalEntity animal;

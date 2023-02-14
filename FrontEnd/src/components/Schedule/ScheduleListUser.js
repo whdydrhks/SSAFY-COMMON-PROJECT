@@ -98,15 +98,14 @@ function ScheduleListUser() {
       });
       scheduleRef.current[idx].style = 'display : none';
 
-      axios
-        .post(`${API_URL}/alarm`, {
-          type: 3,
-          animalId: null,
-          receiverId: s.userId,
-          targetName: s.shelterNickname,
-          time: s.time,
-        })
-        .then(res => console.log(res));
+      axios.post(`${API_URL}/alarm`, {
+        alarmType: 4,
+        animalId: null,
+        day: s.day,
+        receiverId: s.shelterId,
+        targetName: s.userNickname,
+        time: s.time,
+      });
     }
   };
 

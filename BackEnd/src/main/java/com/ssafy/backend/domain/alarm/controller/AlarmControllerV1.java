@@ -30,7 +30,7 @@ public class AlarmControllerV1 {
 
     @PostMapping
     @ApiOperation(value = "알람 등록")
-    public ResponseEntity<?> registAlarm(AlarmRegistDto registDto, HttpServletRequest request){
+    public ResponseEntity<?> registAlarm(@RequestBody AlarmRegistDto registDto, HttpServletRequest request){
 
         return ResponseEntity.ok(alarmService.regist(registDto, request));
     }
@@ -38,7 +38,7 @@ public class AlarmControllerV1 {
 
     @DeleteMapping
     @ApiOperation(value = "알람 삭제")
-    public ResponseEntity<?> deleteAlarm(AlarmDeleteDto deleteDto, HttpServletRequest request){
+    public ResponseEntity<?> deleteAlarm(@RequestBody AlarmDeleteDto deleteDto, HttpServletRequest request){
 
         return ResponseEntity.ok(alarmService.delete(deleteDto, request));
     }

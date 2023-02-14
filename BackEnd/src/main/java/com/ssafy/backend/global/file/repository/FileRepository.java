@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ssafy.backend.domain.animal.entity.AnimalEntity;
+import com.ssafy.backend.domain.live.entity.LiveEntity;
 import com.ssafy.backend.domain.member.entity.UserEntity;
 import com.ssafy.backend.global.file.entity.FileEntity;
 
@@ -15,6 +16,10 @@ public interface FileRepository extends JpaRepository<FileEntity, Long> {
 	Optional<FileEntity> findByUser(UserEntity user);
 
 	Optional<FileEntity> findByUserAndExpiredLike(UserEntity user, String expired);
+
+	Optional<FileEntity> findByLive(LiveEntity live);
+
+	Optional<FileEntity> findByLiveAndExpiredLike(LiveEntity live, String expired);
 
 	List<FileEntity> findByAnimal(AnimalEntity animal);
 
@@ -37,6 +42,8 @@ public interface FileRepository extends JpaRepository<FileEntity, Long> {
 	void deleteById(Long id);
 
 	Long deleteByUser(UserEntity user);
+
+	Long deleteByLive(LiveEntity live);
 
 	Long deleteByAnimal(AnimalEntity animal);
 

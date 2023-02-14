@@ -1,5 +1,6 @@
 package com.ssafy.backend.domain.live.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,12 +9,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 
 import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
 import com.ssafy.backend.global.common.entity.BaseTimeEntity;
+import com.ssafy.backend.global.file.entity.FileEntity;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -47,9 +50,9 @@ public class LiveEntity extends BaseTimeEntity {
 	@Column(name = "category", nullable = false)
 	private String category;
 
-	@Column(name = "image")
-	private String image;
-
 	@Column(name = "room", nullable = false)
 	private String room;
+
+	@OneToOne(mappedBy = "live", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private FileEntity file;
 }
