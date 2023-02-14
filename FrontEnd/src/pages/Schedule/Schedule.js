@@ -1,5 +1,6 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable no-undef */
 
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';

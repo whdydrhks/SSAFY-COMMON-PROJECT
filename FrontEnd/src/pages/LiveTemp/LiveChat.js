@@ -7,9 +7,11 @@
 /* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable react/sort-comp */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react/no-unused-state */
+/* eslint-disable react/self-closing-comp */
 /* eslint-disable prefer-template */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/no-unresolved */
@@ -34,13 +36,20 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 // import styled from 'styled-components';
-import * as S from './VideoChatStyle';
+import * as S from './LiveChatStyle';
 import UserVideoComponent from './UserVideoComponent';
 import { userAtom } from '../../recoilState';
 // import TextChat from './TextChat';
 import API_URL from '../../api/api';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
+import ExitSign from '../../images/Video/ExitSign.png';
+import MicOff from '../../images/Video/MicOff.png';
+import MicOn from '../../images/Video/MicOn.png';
+import CamOff from '../../images/Video/CamOff.png';
+import CamOn from '../../images/Video/CamOn.png';
+import VolumeOff from '../../images/Video/VolumeOff.png';
+import VolumeOn from '../../images/Video/VolumeOn.png';
 
 // const APPLICATION_SERVER_URL = 'http://localhost:5000';
 
@@ -50,8 +59,10 @@ const APPLICATION_SERVER_URL = API_URL + '/openvidu';
 
 function Live() {
   const navigate = useNavigate();
-  // const location = useLocation();
-  // const roomNumber = location.state.room;
+
+  const location = useLocation();
+  const roomNumber = location.state.roomNumber;
+  console.log(roomNumber);
   const chatRef = useRef();
 
   // 유저 정보, 이메일, role 불러와야함
@@ -68,6 +79,9 @@ function Live() {
 
   const [publisher, setPublisher] = useState(undefined);
   const [host, setHost] = useState(undefined);
+  const [isMic, setIsMic] = useState(true);
+  const [isCam, setIsCam] = useState(true);
+  const [isVolume, setIsVolume] = useState(true);
 
   const [OV, setOV] = useState(null);
   const [isFrontCamera, setIsFrontCamera] = useState(false);
@@ -75,6 +89,10 @@ function Live() {
   const [sendMsg, setSendMsg] = useState('');
   const [receiveMsg, setReceiveMsg] = useState([]);
   const [oneChat, setOneChat] = useState('');
+
+  const [image, setImage] = useState('dog.png');
+  const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('');
 
   useEffect(() => {
     window.addEventListener('beforeunload', onbeforeunload);
@@ -154,6 +172,14 @@ function Live() {
       .catch(error => {});
   };
 
+  const handleTitle = e => {
+    setTitle(e.target.value);
+  };
+
+  const handleCategory = e => {
+    setCategory(e.target.id);
+  };
+
   const switchCamera = () => {
     let OV = new OpenVidu();
 
@@ -205,6 +231,11 @@ function Live() {
 
     setSession(getOV.initSession());
     setOV(getOV);
+
+    // const liveInformation = {
+    //   'category':
+    // }
+    // axios.post(`${API_URL}`)
 
     // console.log(OV);
   };
@@ -363,9 +394,45 @@ function Live() {
         // <S.WaitingDiv>
         // <div id="join-dialog" className="jumbotron vertical-center">
         <S.WaitingDiv>
-          <S.Title>
-            <h1>화상채팅 참여하기</h1>
-          </S.Title>
+          <S.Header>Live 생성</S.Header>
+          <S.File>
+            <label htmlFor="file">
+              <S.FileUpload
+                className="btn-upload"
+                value={image}
+                // onChange={handleImage}
+              >
+                썸네일 업로드
+              </S.FileUpload>
+            </label>
+            <S.FileInput type="file" name="file" id="file" />
+          </S.File>
+          <S.Title2>
+            <S.TitleHeader>방 이름</S.TitleHeader>
+            {roomNumber ? (
+              <S.TitleInput type="text" value={roomNumber} disabled />
+            ) : null}
+            {/* <S.TitleInput type="text" value={roomNumber} disabled /> */}
+          </S.Title2>
+          <S.Category>
+            <S.CategoryHeader>카테고리 선택</S.CategoryHeader>
+            <input
+              type="radio"
+              id="dog"
+              name="category"
+              value={category}
+              onChange={handleCategory}
+            />
+            <label htmlFor="강아지">강아지</label>
+            <input
+              type="radio"
+              id="cat"
+              name="category"
+              value={category}
+              onChange={handleCategory}
+            />
+            <label htmlFor="고양이">고양이</label>
+          </S.Category>
           <S.JoinForm className="form-group" onSubmit={joinSession}>
             {/* <S.NameDiv>
               <label>참가자 이름</label>
@@ -385,10 +452,10 @@ function Live() {
                 className="form-control"
                 type="text"
                 id="sessionId"
-                value={roomNumber}
+                // value={roomNumber}
                 onChange={handleChangeSessionId}
                 required
-                disabled
+                // disabled
               />
             </S.RoomNameDiv> */}
             <p className="text-center">
@@ -457,32 +524,75 @@ function Live() {
                 }
               })()}
 
-              <input
+              {/* <input
                 className="btn btn-large btn-success"
                 type="button"
                 id="buttonSwitchCamera"
                 onClick={switchCamera}
                 value="카메라 전환"
-              />
+              /> */}
             </S.div>
           )}
 
-          <div id="session-header">
-            {/* 메인 화면 제목 */}
-            {/* <h1 id="session-title">{mySessionId}</h1> */}
-            <input
-              className="btn btn-large btn-danger"
-              type="button"
-              id="buttonLeaveSession"
-              onClick={leaveSession}
-              value="화상채팅 나가기"
+          {/* <S.ControlDiv> */}
+          {/* <div onClick={leaveSession}>
+            <img
+              src={CallDisconnected}
+              alt="disconnected"
+              style={{ width: '10vw' }}
             />
-          </div>
+          </div> */}
+          {/* </S.ControlDiv> */}
         </div>
       ) : null}
 
       {session ? (
         <S.ChatBox>
+          <S.LeaveBox>
+            {/* <S.LeaveButton type="button" onClick={leaveSession}>
+              나가기
+            </S.LeaveButton> */}
+            <div onClick={leaveSession}>
+              <S.ExitSign src={ExitSign} alt="ExitSign" />
+            </div>
+            <div
+              onClick={() => {
+                publisher.publishAudio(!isMic);
+                setIsMic(!isMic);
+              }}
+            >
+              {isMic ? (
+                <S.MicOff src={MicOff} alt="MicOff" />
+              ) : (
+                <S.MicOn src={MicOn} alt="MicOn" />
+              )}
+            </div>
+            <div
+              onClick={() => {
+                subscriber.publishVideo(!isCam);
+                setIsCam(!isCam);
+              }}
+            >
+              {isCam ? (
+                <S.CamOff src={CamOff} alt="CamOff" />
+              ) : (
+                <S.CamOn src={CamOn} alt="CamOn" />
+              )}
+            </div>
+            <div
+              onClick={() => {
+                subscriber.publishAudio(!isVolume);
+                setIsAudio(!isVolume);
+              }}
+            >
+              {isVolume ? (
+                <S.VolumeOff src={VolumeOff} alt="VolumeOff" />
+              ) : (
+                <S.VolumeOn src={VolumeOn} alt="VolumeOn" />
+              )}
+            </div>
+          </S.LeaveBox>
+
           <S.ChattingListBox ref={chatRef}>
             {receiveMsg.map((data, index) => (
               <S.Chat key={index}>
@@ -495,7 +605,7 @@ function Live() {
           <S.ChatForm>
             <form onSubmit={sendMessage}>
               <S.ChatInput type="text" onChange={handleMsg} value={sendMsg} />
-              <S.ChatButton type="submit">메시지 보내기</S.ChatButton>
+              <S.ChatButton type="submit">전송</S.ChatButton>
             </form>
           </S.ChatForm>
         </S.ChatBox>

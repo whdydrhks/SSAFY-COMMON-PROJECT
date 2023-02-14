@@ -50,13 +50,30 @@ function Nav() {
           component={Link}
           to="/live"
         />
-
-        <SBottomNavigationAction
-          label="관심동물"
-          icon={<PetsIcon />}
-          component={Link}
-          to="/animal"
-        />
+        {!accessToken ? (
+          <SBottomNavigationAction
+            label="관심동물"
+            icon={<PetsIcon />}
+            component={Link}
+            to="/login"
+          />
+        ) : null}
+        {accessToken && user.role === 'HOST' ? (
+          <SBottomNavigationAction
+            label="동물관리"
+            icon={<PetsIcon />}
+            component={Link}
+            to="/animal"
+          />
+        ) : null}
+        {accessToken && user.role === 'USER' ? (
+          <SBottomNavigationAction
+            label="관심동물"
+            icon={<PetsIcon />}
+            component={Link}
+            to="/animal"
+          />
+        ) : null}
 
         <SBottomNavigationAction
           label="예약일정"

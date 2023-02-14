@@ -1,7 +1,11 @@
+/* eslint-disable no-return-assign */
+/* eslint-disable prefer-template */
+/* eslint-disable no-loop-func */
+/* eslint-disable array-callback-return */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -16,30 +20,23 @@ import {
   timetableShelterIdAtom,
   todayTimeAtom,
   dayTimeAtom,
+  scheduleAtom,
 } from '../../recoilState';
 
-const SContainer = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid grey;
-  border-bottom: 1px solid grey;
+const SImpossibleTitle = styled.div`
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 2rem;
 `;
 const STimeList = styled.div``;
 const STimeBox = styled.div`
   display: flex;
-  font-size: 2rem;
-  justify-content: space-between;
+  justify-content: space-around;
   background-color: white;
+  margin-bottom: 1.2rem;
 `;
 const STime = styled.div`
-  font-size: 2.5rem;
-  font-family: 'cafe24';
-`;
-const SNickName = styled.div`
-  font-size: 1.5rem;
-  font-family: 'cafe24';
+  font-size: 2rem;
 `;
 
 const SButtonDiv = styled.div`
@@ -86,15 +83,162 @@ function CreateSchedule() {
     slidesToScroll: 3,
   };
 
+  const buttonRef = useRef([]);
+  const tod = new Date();
+  const accessToken = getCookie('accessToken');
+  const [timetableShelterNickname, setTimetableShelterNickname] = useState('');
   const timetableShelterId = useRecoilValue(timetableShelterIdAtom);
   const [twoWeeks, setTwoWeeks] = useRecoilState(twoWeeksAtom);
   const [dayTime, setDayTime] = useRecoilState(dayTimeAtom);
+  const [clickDate, setClickDate] = useState(0);
   const [todayTimeArr, setTodayTimeArr] = useState([]);
+  const [scheduleHost, setScheduleHost] = useRecoilState(scheduleAtom);
+  const copyArr = [];
 
-  const handleClickDate = idx => {
-    const today = new Date();
-    const day = today.getDay();
-    setTodayTimeArr(dayTime[(day + idx) % 7].split(''));
+  const handleClickDate = (e, k) => {
+    setClickDate(e.target.value);
+    const initial = '000000000';
+
+    for (let i = 0; i < 14; i += 1) {
+      const today = new Date();
+      const next = new Date(today.setDate(today.getDate() + i));
+      const nextDate =
+        (next.getMonth() + 1).toString().padStart(2, '0') +
+        next.getDate().toString().padStart(2, '0');
+      const nextDay = next.getDay();
+      const last = nextDay;
+      const lastStr = nextDay.toString();
+
+      let t9 = '1';
+      let t10 = '1';
+      let t11 = '1';
+      let t12 = '1';
+      let t13 = '1';
+      let t14 = '1';
+      let t15 = '1';
+      let t16 = '1';
+      let t17 = '1';
+
+      if (dayTime[last][9] === '0') {
+        t9 = '0';
+      } else {
+        scheduleHost.map(schedule => {
+          if (schedule.day === nextDate && schedule.time === 9) {
+            t9 = '0';
+          }
+        });
+      }
+      if (dayTime[last][10] === '0') {
+        t10 = '0';
+      } else {
+        scheduleHost.map(schedule => {
+          if (schedule.day === nextDate && schedule.time === 10) {
+            t10 = '0';
+          }
+        });
+      }
+      if (dayTime[last][11] === '0') {
+        t11 = '0';
+      } else {
+        scheduleHost.map(schedule => {
+          if (schedule.day === nextDate && schedule.time === 11) {
+            t11 = '0';
+          }
+        });
+      }
+
+      if (dayTime[last][12] === '0') {
+        t12 = '0';
+      } else {
+        scheduleHost.map(schedule => {
+          if (schedule.day === nextDate && schedule.time === 12) {
+            t12 = '0';
+          }
+        });
+      }
+      if (dayTime[last][13] === '0') {
+        t13 = '0';
+      } else {
+        scheduleHost.map(schedule => {
+          if (schedule.day === nextDate && schedule.time === 13) {
+            t13 = '0';
+          }
+        });
+      }
+      if (dayTime[last][14] === '0') {
+        t14 = '0';
+      } else {
+        scheduleHost.map(schedule => {
+          if (schedule.day === nextDate && schedule.time === 14) {
+            t14 = '0';
+          }
+        });
+      }
+      if (dayTime[last][15] === '0') {
+        t15 = '0';
+      } else {
+        scheduleHost.map(schedule => {
+          if (schedule.day === nextDate && schedule.time === 15) {
+            t15 = '0';
+          }
+        });
+      }
+      if (dayTime[last][16] === '0') {
+        t16 = '0';
+      } else {
+        scheduleHost.map(schedule => {
+          if (schedule.day === nextDate && schedule.time === 16) {
+            t16 = '0';
+          }
+        });
+      }
+      if (dayTime[last][17] === '0') {
+        t17 = '0';
+      } else {
+        scheduleHost.map(schedule => {
+          if (schedule.day === nextDate && schedule.time === 17) {
+            t17 = '0';
+          }
+        });
+      }
+
+      copyArr.push(
+        initial +
+          t9 +
+          t10 +
+          t11 +
+          t12 +
+          t13 +
+          t14 +
+          t15 +
+          t16 +
+          t17 +
+          '000000' +
+          lastStr,
+      );
+    }
+    setTodayTimeArr(copyArr[k].split(''));
+  };
+
+  const handleCreateSchedule = idx => {
+    if (window.confirm('예약하시겠습니까?')) {
+      axios.post(
+        `${API_URL}/schedule/register`,
+        {
+          day: clickDate,
+          shelterNickname: timetableShelterNickname,
+          time: idx,
+        },
+        { headers: { Authorization: accessToken } },
+      );
+
+      axios
+        .get(`${API_URL}/schedule/shelters/${timetableShelterId}`)
+        .then(res => setScheduleHost(res.data.data));
+
+      buttonRef.current[idx].style = 'background-color:grey';
+      buttonRef.current[idx].innerText = '마감';
+    }
   };
 
   useEffect(() => {
@@ -109,9 +253,7 @@ function CreateSchedule() {
     setTwoWeeks(weeks);
 
     axios
-      .get(`${API_URL}/timetable/${timetableShelterId}`, {
-        shelterId: timetableShelterId,
-      })
+      .get(`${API_URL}/shelter/${timetableShelterId}/timetable`)
       .then(res =>
         setDayTime([
           res.data.data.sun,
@@ -123,16 +265,25 @@ function CreateSchedule() {
           res.data.data.sat,
         ]),
       );
+
+    axios
+      .get(`${API_URL}/shelter/${timetableShelterId}`)
+      .then(res => setTimetableShelterNickname(res.data.data.name));
+
+    axios
+      .get(`${API_URL}/schedule/shelters/${timetableShelterId}`)
+      .then(res => setScheduleHost(res.data.data));
   }, []);
 
   return (
     <>
       <Slider {...settings}>
         {twoWeeks.map((date, index) => (
-          <SButtonDiv key={index} onClick={() => handleClickDate(index)}>
+          <SButtonDiv key={index}>
             <SButton
               type="button"
               value={date.month.padStart(2, '0') + date.day.padStart(2, '0')}
+              onClick={e => handleClickDate(e, index)}
             >
               {date.month}월 {date.day}일
             </SButton>
@@ -140,37 +291,37 @@ function CreateSchedule() {
         ))}
       </Slider>
       <STimeList>
-        {todayTimeArr.map((item, index) =>
-          index >= 9 && index <= 17 ? (
-            <STimeBox>
-              <STime>
-                {index.toString().padStart(2, '0')}:00 ~{' '}
-                {(index + 1).toString().padStart(2, '0')}:00
-              </STime>
-              {item === '1' ? (
-                <SClickButton bgColor="green">예약하기</SClickButton>
-              ) : (
-                <SClickButton bgColor="grey" disabled>
-                  예약불가
-                </SClickButton>
-              )}
-            </STimeBox>
-          ) : null,
+        {clickDate ===
+        (tod.getMonth() + 1).toString().padStart(2, '0') +
+          tod.getDate().toString().padStart(2, '0') ? (
+          <SImpossibleTitle>당일 예약은 불가합니다.</SImpossibleTitle>
+        ) : (
+          <div>
+            {todayTimeArr.map((item, index) =>
+              index >= 9 && index <= 17 ? (
+                <STimeBox>
+                  <STime>
+                    {index.toString().padStart(2, '0')}:00 ~
+                    {(index + 1).toString().padStart(2, '0')}:00
+                  </STime>
+                  {item === '0' ? (
+                    <SClickButton bgColor="grey" disabled>
+                      마감
+                    </SClickButton>
+                  ) : (
+                    <SClickButton
+                      bgColor="green"
+                      onClick={() => handleCreateSchedule(index)}
+                      ref={el => (buttonRef.current[index] = el)}
+                    >
+                      예약
+                    </SClickButton>
+                  )}
+                </STimeBox>
+              ) : null,
+            )}
+          </div>
         )}
-        {/* {todaySchedule.map((schedule, index) => (
-          <STimeBox key={index}>
-            <SContainer>
-              <div>
-                <STime>
-                  {schedule.time.toString().padStart(2, '0')}:00 ~{' '}
-                  {(schedule.time + 1).toString().padStart(2, '0')}:00
-                </STime>
-                <SNickName>{schedule.userNickname}</SNickName>
-              </div>
-              <div>예약</div>
-            </SContainer>
-          </STimeBox>
-        ))} */}
       </STimeList>
     </>
   );

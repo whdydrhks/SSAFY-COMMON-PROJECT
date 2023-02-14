@@ -1,4 +1,6 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/prop-types */
 
 import React from 'react';
 // import axios from 'axios';

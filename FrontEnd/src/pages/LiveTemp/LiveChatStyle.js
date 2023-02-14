@@ -79,14 +79,8 @@ export const ChatBox = styled.div`
   justify-content: center;
 `;
 
-export const ChatForm = styled.div`
-  display: flex;
-  justify-content: space-around;
-  height: 10vh;
-`;
-
 export const ChattingListBox = styled.ul`
-  height: 43vh;
+  height: 45vh;
   border: 1px solid black;
   border-radius: 10px;
   overflow: scroll;
@@ -95,10 +89,16 @@ export const ChattingListBox = styled.ul`
   }
 `;
 
+export const ChatForm = styled.div`
+  display: flex;
+  justify-content: space-around;
+  height: 10vh;
+`;
+
 export const ChatInput = styled.input`
   border-radius: 10px;
   height: 5vh;
-  width: 19rem;
+  width: 80vw;
 `;
 
 export const ChatButton = styled.button`
@@ -107,6 +107,12 @@ export const ChatButton = styled.button`
   border: 1px solid #1976d2;
   border-radius: 10px;
   height: 5vh;
+  width: 15vw;
+`;
+
+export const Controller = styled.div`
+  display: flex;
+  justify-content: space-around;
 `;
 
 export const Chat = styled.li`
@@ -114,6 +120,96 @@ export const Chat = styled.li`
   margin: 3%;
 `;
 
+export const LeaveBox = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
+
+export const ExitSign = styled.img`
+  width: 10vw;
+`;
+
+export const MicOff = styled.img`
+  width: 10vw;
+  height: 5vh;
+`;
+
+export const MicOn = styled.img`
+  width: 10vw;
+  height: 5vh;
+`;
+
+export const CamOff = styled.img`
+  width: 10vw;
+  height: 5vh;
+`;
+
+export const CamOn = styled.img`
+  width: 10vw;
+  height: 5vh;
+`;
+
+export const VolumeOff = styled.img`
+  width: 10vw;
+  height: 5vh;
+`;
+
+export const VolumeOn = styled.img`
+  width: 10vw;
+  height: 5vh;
+`;
+
+export const LeaveButton = styled.button`
+  background-color: #1976d2;
+  border: 1px solid #1976d2;
+  border-radius: 10px;
+  color: white;
+  height: 5vh;
+  width: 15vw;
+`;
+
+export const Header = styled.div`
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 2rem;
+`;
+
+export const File = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin-top: 2rem;
+`;
+
+export const FileUpload = styled.div`
+  width: 150px;
+  height: 30px;
+  background: #fff;
+  border: 1px solid rgb(77, 77, 77);
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const FileInput = styled.input`
+  display: none;
+`;
+
+export const Title2 = styled.div`
+  margin-left: 2rem;
+`;
+
+export const TitleHeader = styled.div``;
+
+export const TitleInput = styled.input``;
+
+export const Category = styled.div`
+  margin-left: 2rem;
+`;
+
+export const CategoryHeader = styled.div``;
 /* 
 .stream-container {
 	padding: 0;

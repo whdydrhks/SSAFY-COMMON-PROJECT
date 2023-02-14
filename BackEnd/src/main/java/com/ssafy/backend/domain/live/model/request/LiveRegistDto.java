@@ -16,13 +16,13 @@ public class LiveRegistDto {
     private String image;
     private String room;
 
-    public LiveEntity toEntity(ShelterEntity shelter, String room){
+    public LiveEntity toEntity(ShelterEntity shelter){
         return LiveEntity.builder()
                 .shelter(shelter)
                 .title(this.title)
                 .category(this.category)
                 .image(this.image)
-                .room(room)
+                .room(this.room)
                 .build();
     }
 }

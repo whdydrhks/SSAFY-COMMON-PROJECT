@@ -57,10 +57,10 @@ public class FileService {
 	private String UPLOAD_DIR_PATH;
 
 	@Value("${file.upload.userPath}")
-	public String USER_SUB_PATH = "user";
+	public String USER_SUB_PATH;
 
 	@Value("${file.upload.animalPath}")
-	public String ANIMAL_SUB_PATH = "animal";
+	public String ANIMAL_SUB_PATH;
 
 	private FileEntity userDefault;
 	private FileEntity animalDefault;

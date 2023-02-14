@@ -41,6 +41,13 @@ import { userAtom } from '../../recoilState';
 import API_URL from '../../api/api';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
+import ExitSign from '../../images/Video/ExitSign.png';
+import MicOff from '../../images/Video/MicOff.png';
+import MicOn from '../../images/Video/MicOn.png';
+import CamOff from '../../images/Video/CamOff.png';
+import CamOn from '../../images/Video/CamOn.png';
+import VolumeOff from '../../images/Video/VolumeOff.png';
+import VolumeOn from '../../images/Video/VolumeOn.png';
 
 // const APPLICATION_SERVER_URL = 'http://localhost:5000';
 
@@ -66,6 +73,10 @@ function VideoChat() {
 
   const [myUserName, setMyUserName] = useState(nickname);
 
+  const [isMic, setIsMic] = useState(true);
+  const [isCam, setIsCam] = useState(true);
+  const [isVolume, setIsVolume] = useState(true);
+
   const [publisher, setPublisher] = useState(undefined);
   const [host, setHost] = useState(undefined);
 
@@ -75,6 +86,10 @@ function VideoChat() {
   const [sendMsg, setSendMsg] = useState('');
   const [receiveMsg, setReceiveMsg] = useState([]);
   const [oneChat, setOneChat] = useState('');
+
+  const [image, setImage] = useState('dog.png');
+  const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('');
 
   useEffect(() => {
     window.addEventListener('beforeunload', onbeforeunload);
@@ -123,6 +138,14 @@ function VideoChat() {
       getToken().then(sessionConnect);
     }
   }, [session]);
+
+  const handleTitle = e => {
+    setTitle(e.target.value);
+  };
+
+  const handleCategory = e => {
+    setCategory(e.target.id);
+  };
 
   const sessionConnect = token => {
     session
@@ -444,32 +467,76 @@ function VideoChat() {
                 }
               })()}
 
-              <input
+              {/* <input
                 className="btn btn-large btn-success"
                 type="button"
                 id="buttonSwitchCamera"
                 onClick={switchCamera}
                 value="카메라 전환"
-              />
+              /> */}
             </S.div>
           ) : null}
 
-          <div id="session-header">
-            {/* 메인 화면 제목 */}
-            {/* <h1 id="session-title">{mySessionId}</h1> */}
-            <input
+          {/* <div id="session-header"> */}
+          {/* 메인 화면 제목 */}
+          {/* <h1 id="session-title">{mySessionId}</h1> */}
+          {/* <input
               className="btn btn-large btn-danger"
               type="button"
               id="buttonLeaveSession"
               onClick={leaveSession}
               value="화상채팅 나가기"
-            />
-          </div>
+            /> */}
+          {/* </div> */}
         </div>
       ) : null}
 
       {session ? (
         <S.ChatBox>
+          <S.LeaveBox>
+            {/* <S.LeaveButton type="button" onClick={leaveSession}>
+              나가기
+            </S.LeaveButton> */}
+            <div onClick={leaveSession}>
+              <S.ExitSign src={ExitSign} alt="ExitSign" />
+            </div>
+            <div
+              onClick={() => {
+                publisher.publishAudio(!isMic);
+                setIsMic(!isMic);
+              }}
+            >
+              {isMic ? (
+                <S.MicOff src={MicOff} alt="MicOff" />
+              ) : (
+                <S.MicOn src={MicOn} alt="MicOn" />
+              )}
+            </div>
+            <div
+              onClick={() => {
+                subscriber.publishVideo(!isCam);
+                setIsCam(!isCam);
+              }}
+            >
+              {isCam ? (
+                <S.CamOff src={CamOff} alt="CamOff" />
+              ) : (
+                <S.CamOn src={CamOn} alt="CamOn" />
+              )}
+            </div>
+            <div
+              onClick={() => {
+                subscriber.publishAudio(!isVolume);
+                setIsAudio(!isVolume);
+              }}
+            >
+              {isVolume ? (
+                <S.VolumeOff src={VolumeOff} alt="VolumeOff" />
+              ) : (
+                <S.VolumeOn src={VolumeOn} alt="VolumeOn" />
+              )}
+            </div>
+          </S.LeaveBox>
           <S.ChattingListBox ref={chatRef}>
             {receiveMsg.map((data, index) => (
               <S.Chat key={index}>
