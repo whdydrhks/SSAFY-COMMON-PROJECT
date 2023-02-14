@@ -1,15 +1,17 @@
 package com.ssafy.backend.domain.sample.service;
 
+import java.time.LocalDateTime;
+
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
-import com.ssafy.backend.domain.animal.entity.LikeAnimalEntity;
-import com.ssafy.backend.domain.animal.repository.LikeAnimalRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.backend.domain.animal.entity.AnimalEntity;
+import com.ssafy.backend.domain.animal.entity.LikeAnimalEntity;
 import com.ssafy.backend.domain.animal.repository.AnimalRepository;
+import com.ssafy.backend.domain.animal.repository.LikeAnimalRepository;
 import com.ssafy.backend.domain.live.entity.LiveEntity;
 import com.ssafy.backend.domain.live.repository.LiveRepository;
 import com.ssafy.backend.domain.member.entity.UserEntity;
@@ -24,9 +26,6 @@ import com.ssafy.backend.global.file.entity.FileEntity;
 import com.ssafy.backend.global.file.repository.FileRepository;
 
 import lombok.RequiredArgsConstructor;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -54,6 +53,16 @@ public class dummyCreate {
 		FileEntity file = FileEntity.builder()
 			.originName("default_profile")
 			.storeName("default_profile")
+			.contentType("image/png")
+			.extension("png")
+			.build();
+
+		fileRepository.save(file);
+
+		// 기본 라이브 이미지 생성
+		file = FileEntity.builder()
+			.originName("default_live")
+			.storeName("default_live")
 			.contentType("image/png")
 			.extension("png")
 			.build();
@@ -181,7 +190,6 @@ public class dummyCreate {
 
 		LiveEntity live = LiveEntity.builder()
 			//			.id(1L)
-			.image("string")
 			.category("개")
 			.title("111")
 			.room("1")
@@ -191,7 +199,6 @@ public class dummyCreate {
 
 		LiveEntity live1 = LiveEntity.builder()
 			//			.id(5L)
-			.image("string")
 			.category("개")
 			.title("555")
 			.room("5")
@@ -201,7 +208,6 @@ public class dummyCreate {
 
 		LiveEntity live2 = LiveEntity.builder()
 			//			.id(3L)
-			.image("string")
 			.category("개")
 			.title("333")
 			.room("3")
@@ -211,7 +217,6 @@ public class dummyCreate {
 
 		LiveEntity live13 = LiveEntity.builder()
 			//			.id(2L)
-			.image("string")
 			.category("개")
 			.title("222")
 			.room("2")
@@ -221,7 +226,6 @@ public class dummyCreate {
 
 		LiveEntity live14 = LiveEntity.builder()
 			//			.id(4L)
-			.image("string")
 			.category("개")
 			.title("441")
 			.room("4")
@@ -231,55 +235,55 @@ public class dummyCreate {
 
 		LocalDateTime localDateTime = LocalDateTime.of(2023, 02, 14, 11, 24, 55);
 		LikeAnimalEntity like = LikeAnimalEntity.builder()
-				.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
-				.animal(animalRepository.findByIdAndExpiredLike(10L, "F").get())
-				.expiredDate(localDateTime)
-				.build();
+			.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
+			.animal(animalRepository.findByIdAndExpiredLike(10L, "F").get())
+			.expiredDate(localDateTime)
+			.build();
 
 		likeAnimalRepository.save(like);
 
 		LocalDateTime localDateTime1 = LocalDateTime.of(2023, 02, 14, 11, 55, 55);
 		LikeAnimalEntity like1 = LikeAnimalEntity.builder()
-				.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
-				.animal(animalRepository.findByIdAndExpiredLike(1L, "F").get())
-				.expiredDate(localDateTime1)
-				.build();
+			.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
+			.animal(animalRepository.findByIdAndExpiredLike(1L, "F").get())
+			.expiredDate(localDateTime1)
+			.build();
 
 		likeAnimalRepository.save(like1);
 
 		LocalDateTime localDateTime2 = LocalDateTime.of(2023, 02, 14, 11, 36, 55);
 		LikeAnimalEntity like2 = LikeAnimalEntity.builder()
-				.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
-				.animal(animalRepository.findByIdAndExpiredLike(5L, "F").get())
-				.expiredDate(localDateTime2)
-				.build();
+			.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
+			.animal(animalRepository.findByIdAndExpiredLike(5L, "F").get())
+			.expiredDate(localDateTime2)
+			.build();
 
 		likeAnimalRepository.save(like2);
 
 		LocalDateTime localDateTime3 = LocalDateTime.of(2023, 02, 14, 11, 59, 59);
 		LikeAnimalEntity like3 = LikeAnimalEntity.builder()
-				.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
-				.animal(animalRepository.findByIdAndExpiredLike(6L, "F").get())
-				.expiredDate(localDateTime3)
-				.build();
+			.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
+			.animal(animalRepository.findByIdAndExpiredLike(6L, "F").get())
+			.expiredDate(localDateTime3)
+			.build();
 
 		likeAnimalRepository.save(like3);
 
 		LocalDateTime localDateTime4 = LocalDateTime.of(2023, 02, 14, 10, 36, 55);
 		LikeAnimalEntity like4 = LikeAnimalEntity.builder()
-				.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
-				.animal(animalRepository.findByIdAndExpiredLike(3L, "F").get())
-				.expiredDate(localDateTime4)
-				.build();
+			.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
+			.animal(animalRepository.findByIdAndExpiredLike(3L, "F").get())
+			.expiredDate(localDateTime4)
+			.build();
 
 		likeAnimalRepository.save(like4);
 
 		LocalDateTime localDateTime5 = LocalDateTime.of(2023, 02, 14, 12, 36, 55);
 		LikeAnimalEntity like5 = LikeAnimalEntity.builder()
-				.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
-				.animal(animalRepository.findByIdAndExpiredLike(2L, "F").get())
-				.expiredDate(localDateTime5)
-				.build();
+			.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
+			.animal(animalRepository.findByIdAndExpiredLike(2L, "F").get())
+			.expiredDate(localDateTime5)
+			.build();
 
 		likeAnimalRepository.save(like5);
 

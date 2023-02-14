@@ -107,6 +107,7 @@ file:
     basicPath: /upload_test/images
     userPath: user
     animalPath: animal
+    livePath: live
 
 jwt:
   header: Authorization

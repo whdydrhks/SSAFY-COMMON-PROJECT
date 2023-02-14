@@ -29,6 +29,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.ssafy.backend.domain.animal.entity.AnimalEntity;
 import com.ssafy.backend.domain.animal.repository.AnimalRepository;
+import com.ssafy.backend.domain.live.entity.LiveEntity;
+import com.ssafy.backend.domain.live.repository.LiveRepository;
 import com.ssafy.backend.domain.member.entity.UserEntity;
 import com.ssafy.backend.domain.member.repository.UserRepository;
 import com.ssafy.backend.global.common.model.response.ResponseSuccessDto;
@@ -50,6 +52,7 @@ public class FileService {
 	private final ResponseUtil responseUtil;
 
 	private final FileRepository fileRepository;
+	private final LiveRepository liveRepository;
 	private final UserRepository userRepository;
 	private final AnimalRepository animalRepository;
 
@@ -62,8 +65,8 @@ public class FileService {
 	@Value("${file.upload.animalPath}")
 	public String ANIMAL_SUB_PATH;
 
-	private FileEntity userDefault;
-	private FileEntity animalDefault;
+	@Value("${file.upload.livePath}")
+	public String LIVE_SUB_PATH;
 
 	@Transactional
 	public String uploadUserFile(
@@ -119,9 +122,50 @@ public class FileService {
 		storeFile(source, USER_SUB_PATH, fileName, storeName);
 
 		fileRepository.save(uploadFile);
-		System.out.println("=============3");
 
 		return createDownloadUri(USER_SUB_PATH, uploadFile);
+	}
+
+	@Transactional
+	public String uploadLiveFile(
+		Long liveId,
+		MultipartFile source,
+		HttpServletRequest request) {
+
+		LiveEntity fileLive = liveRepository.findById(liveId)
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+
+		// GNU/Linux, Windows에서는 문제 없음
+		// MAC은 Normalizer를 추가로 사용해 NFC형태로 정규화 해야함
+		String fileOriginName = StringUtils.cleanPath(source.getOriginalFilename());
+
+		String fileName = StringUtils.stripFilenameExtension(fileOriginName);
+		String fileExt = StringUtils.getFilenameExtension(fileOriginName).toLowerCase();
+		String fileType = URLConnection.guessContentTypeFromName(fileOriginName);
+
+		LocalDateTime now = LocalDateTime.now();
+		String timeStamp = now.format(DateTimeFormatter.ofPattern("yyMMdd_HHmmssSSS"));
+
+		String storeName = timeStamp + "_" + Integer.toHexString(fileName.hashCode());
+
+		log.info("fileOriginName : " + fileOriginName
+			+ "\nfileName : " + fileName
+			+ "\nfileType : " + fileExt
+			+ "\nstoreName : " + storeName);
+
+		FileEntity uploadFile = FileEntity.builder()
+			.live(fileLive)
+			.originName(fileName)
+			.extension(fileExt)
+			.contentType(fileType)
+			.storeName(storeName)
+			.build();
+
+		storeFile(source, LIVE_SUB_PATH, fileName, storeName);
+
+		fileRepository.save(uploadFile);
+
+		return createDownloadUri(LIVE_SUB_PATH, uploadFile);
 	}
 
 	@Transactional
@@ -179,6 +223,8 @@ public class FileService {
 			fileDownloadUri = uploadUserFile(id, file, request);
 		} else if ("animal".equals(category)) {
 			fileDownloadUri = uploadAnimalFile(id, file, request);
+		} else if ("live".equals(category)) {
+			fileDownloadUri = uploadLiveFile(id, file, request);
 		} else {
 			throw new FileErrorException(ApiStatus.FILE_INVALID_PATH);
 		}
@@ -204,6 +250,11 @@ public class FileService {
 			fileDownloadUriList = files
 				.stream()
 				.map(file -> uploadAnimalFile(id, file, request))
+				.collect(Collectors.toList());
+		} else if ("live".equals(category)) {
+			fileDownloadUriList = files
+				.stream()
+				.map(file -> uploadLiveFile(id, file, request))
 				.collect(Collectors.toList());
 		} else {
 			throw new FileErrorException(ApiStatus.FILE_INVALID_PATH);
@@ -304,9 +355,26 @@ public class FileService {
 
 		// 사용자 이미지를 찾지 못하면 userDefault 이미지를 불러옴
 		FileEntity findFile = fileRepository.findByUserAndExpiredLike(findUser, "F")
-			.orElse(fileRepository.findByStoreName("default_profile").get());
+			.orElseGet(() -> fileRepository.findByStoreName("default_profile").get());
 
 		String fileDownloadUri = createDownloadUri(USER_SUB_PATH, findFile);
+
+		return responseUtil.buildSuccessResponse(fileDownloadUri);
+	}
+
+	@Transactional
+	public ResponseSuccessDto<?> getFilesByLive(
+		Long liveId,
+		HttpServletRequest request) {
+
+		LiveEntity findLive = liveRepository.findById(liveId)
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+
+		// 라이브 이미지를 찾지 못하면 liveDefault 이미지를 불러옴
+		FileEntity findFile = fileRepository.findByLiveAndExpiredLike(findLive, "F")
+			.orElseGet(() -> fileRepository.findByStoreName("default_live").get());
+
+		String fileDownloadUri = createDownloadUri(LIVE_SUB_PATH, findFile);
 
 		return responseUtil.buildSuccessResponse(fileDownloadUri);
 	}
@@ -371,6 +439,8 @@ public class FileService {
 				file = fileRepository.findByStoreName("default_profile").get();
 			} else if (ANIMAL_SUB_PATH.equals(subPath)) {
 				file = fileRepository.findByStoreName("default_animal").get();
+			} else if (LIVE_SUB_PATH.equals(subPath)) {
+				file = fileRepository.findByStoreName("default_live").get();
 			} else {
 				throw new FileErrorException(ApiStatus.FILE_INVALID_PATH);
 			}
