@@ -498,11 +498,11 @@ function Live() {
                 setIsMic(!isMic);
               }}
             >
-              {isMic ? (
+              {/* {isMic ? (
                 <MicOff src={MicOff} alt="MicOff" />
               ) : (
                 <Mic src={MicOn} alt="MicOn" />
-              )}
+              )} */}
             </div>
           </S.LeaveBox>
 
