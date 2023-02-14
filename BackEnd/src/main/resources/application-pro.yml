@@ -112,12 +112,12 @@ jwt:
   header: Authorization
   secret: d1659096d8c5bd34c2e96fdb235c123afccf23450af0870d95813d820c0dd44661507fe41d5a12c5b796299d260f314d9a5bdca31050fc00a2a4b44c9d31f93c
   validity-second:
-#    # test1
-#    access: 120
-#    refresh: 240
-#    # test2 - no used refresh
-   access: 3600
-   refresh: 3600
-#    # service
-#    access: 300
-#    refresh: 172800
+    #    # test1
+    #    access: 30
+    #    refresh: 120
+    #    # test2 - no used refresh
+    #    access: 3600
+    #    refresh: 3600
+    # service
+    access: 600
+    refresh: 172800

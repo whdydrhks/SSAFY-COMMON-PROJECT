@@ -323,7 +323,7 @@ public class FileService {
 		List<FileEntity> findFiles = fileRepository.findByAnimalAndExpiredLike(findAnimal, "F");
 
 		if (findFiles.isEmpty()) {
-			findFiles = Arrays.asList(fileRepository.findByStoreName("default_profile").get());
+			findFiles = Arrays.asList(fileRepository.findByStoreName("default_animal").get());
 		}
 
 		List<?> fileDownloadUriList = findFiles
