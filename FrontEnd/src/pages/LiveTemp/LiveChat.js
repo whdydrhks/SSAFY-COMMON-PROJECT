@@ -238,6 +238,11 @@ function Live() {
     // axios.post(`${API_URL}`)
 
     // console.log(OV);
+    // const liveData = {
+    //   'category': category,
+    //   'image'
+    // }
+    // axios.post(`${API_URL}/live`)
   };
 
   const sendMessage = e => {
