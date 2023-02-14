@@ -50,6 +50,7 @@ import CamOff from '../../images/Video/CamOff.png';
 import CamOn from '../../images/Video/CamOn.png';
 import VolumeOff from '../../images/Video/VolumeOff.png';
 import VolumeOn from '../../images/Video/VolumeOn.png';
+import { getCookie } from '../Account/cookie';
 
 // const APPLICATION_SERVER_URL = 'http://localhost:5000';
 
@@ -58,6 +59,7 @@ const APPLICATION_SERVER_URL = API_URL + '/openvidu';
 // const OPENVIDU_SERVER_SECRET = 'ssafy';
 
 function Live() {
+  const accessToken = getCookie('accessToken');
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -90,9 +92,11 @@ function Live() {
   const [receiveMsg, setReceiveMsg] = useState([]);
   const [oneChat, setOneChat] = useState('');
 
-  const [image, setImage] = useState('dog.png');
+  const [image, setImage] = useState('');
+  const [preview, setPreview] = useState('');
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
+  const [roomName, setRoomName] = useState('');
 
   useEffect(() => {
     window.addEventListener('beforeunload', onbeforeunload);
@@ -172,14 +176,30 @@ function Live() {
       .catch(error => {});
   };
 
-  const handleTitle = e => {
-    setTitle(e.target.value);
-  };
+  // const handleTitle = e => {
+  //   setTitle(e.target.value);
+  // };
 
   const handleCategory = e => {
     setCategory(e.target.id);
   };
 
+  const handleRoomName = e => {
+    setRoomName(e.target.value);
+  };
+
+  const handleImages = e => {
+    // console.log(e.target.files, '1');
+
+    setImage(e.target.files);
+    console.log('########################');
+    console.log(image);
+    const tempPreview = URL.createObjectURL(e.target.files[0]);
+    // console.log('@@@@@@@@@@@@@@@@@@@@@@@');
+    // console.log(tempPreview, '2');
+    setPreview(tempPreview);
+    // console.log(preview);
+  };
   const switchCamera = () => {
     let OV = new OpenVidu();
 
@@ -227,6 +247,28 @@ function Live() {
   const deleteSubscriber = streamManager => {};
 
   const joinSession = () => {
+    const liveData = {
+      category: category,
+      room: roomNumber.toString(),
+      title: roomName,
+    };
+    const thumbnailData = new FormData();
+    Object.values(image).forEach(image => {
+      thumbnailData.append('file', image);
+    });
+    if (role === 'HOST') {
+      axios
+        .post(`${API_URL}/live`, liveData, {
+          headers: { Authorization: accessToken },
+        })
+        .then(res => {
+          axios
+            .post(`${API_URL}/live/${res.data.data}/image`, thumbnailData, {
+              headers: { 'Content-Type': 'multipart/form-data' },
+            })
+            .then(() => console.log('성공'));
+        });
+    }
     const getOV = new OpenVidu();
 
     setSession(getOV.initSession());
@@ -238,6 +280,11 @@ function Live() {
     // axios.post(`${API_URL}`)
 
     // console.log(OV);
+    // const liveData = {
+    //   'category': category,
+    //   'image'
+    // }
+    // axios.post(`${API_URL}/live`)
   };
 
   const sendMessage = e => {
@@ -395,25 +442,41 @@ function Live() {
         // <div id="join-dialog" className="jumbotron vertical-center">
         <S.WaitingDiv>
           <S.Header>Live 생성</S.Header>
-          <S.File>
+          <S.FileUploadButton variant="contained" component="label">
+            파일 업로드
+            <input
+              type="file"
+              hidden
+              onChange={handleImages}
+              multiple="multiple"
+              accept="image/*"
+            />
+          </S.FileUploadButton>
+          {/* <S.File>
             <label htmlFor="file">
-              <S.FileUpload
-                className="btn-upload"
-                value={image}
-                // onChange={handleImage}
-              >
+              <S.FileUpload className="btn-upload" value={image}>
                 썸네일 업로드
               </S.FileUpload>
             </label>
-            <S.FileInput type="file" name="file" id="file" />
-          </S.File>
+            <S.FileInput
+              type="file"
+              name="file"
+              id="file"
+              onChange={handleImage}
+            />
+          </S.File> */}
+          {preview ? <img src={preview} alt="Thumbnail" /> : null}
           <S.Title2>
-            <S.TitleHeader>방 이름</S.TitleHeader>
+            {/* <S.TitleHeader>방 이름</S.TitleHeader>
             {roomNumber ? (
               <S.TitleInput type="text" value={roomNumber} disabled />
-            ) : null}
+            ) : null} */}
             {/* <S.TitleInput type="text" value={roomNumber} disabled /> */}
           </S.Title2>
+          <div>
+            <p>방 제목</p>
+            <S.RoomName type="text" onChange={handleRoomName} />
+          </div>
           <S.Category>
             <S.CategoryHeader>카테고리 선택</S.CategoryHeader>
             <input

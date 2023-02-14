@@ -1,16 +1,17 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/require-default-props */
 /* eslint-disable react/jsx-props-no-spreading */
 
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+// import axios from 'axios';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
+import { userAtom } from '../../recoilState';
 import AnimalList from './AnimalList';
-import { animalListState } from '../../recoilState';
 
 const STemp = styled(Tab)`
   width: 50%;
@@ -19,25 +20,25 @@ const STemp = styled(Tab)`
   /* color: rgba(180, 230, 230);   */
 `;
 
-const SSearchBar = styled.div`
-  display: flex;
-  justify-content: space-around;
-  margin-top: 1rem;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-  /* background-color: rgba(180, 230, 230); */
-`;
+// const SSearchBar = styled.div`
+//   display: flex;
+//   justify-content: space-around;
+//   margin-top: 1rem;
+//   margin-left: 0.5rem;
+//   margin-right: 0.5rem;
+/* background-color: rgba(180, 230, 230); */
+// `;
 
-const SSearchCategory = styled.select`
-  text-align: center;
-  height: 2rem;
-`;
+// const SSearchCategory = styled.select`
+//   text-align: center;
+//   height: 2rem;
+// `;
 
-const SInput = styled.input`
-  text-align: left;
+// const SInput = styled.input`
+//   text-align: left;
 
-  width: 49%;
-`;
+//   width: 49%;
+// `;
 
 function TabPanel(props) {
   const { children, value, index } = props;
@@ -72,39 +73,41 @@ function a11yProps(index) {
 }
 
 function AnimalCategory() {
+  // const user = useRecoilValue(userAtom);
   const [value, setValue] = useState(0);
 
-  const [searchCategory, setSearchCategory] = useState('searchManageNumber');
-  const [searchValue, setSearchValue] = useState('');
-  const [animalList, setAnimalList] = useRecoilState(animalListState);
-
-  const handleSearchCategory = e => {
-    setSearchCategory(e.target.value);
-  };
+  // const [searchCategory, setSearchCategory] = useState('searchManageNumber');
+  // const [searchValue, setSearchValue] = useState('');
+  // const [animalList, setAnimalList] = useRecoilState(animalListState);
 
   const handleChange = (event, newValue) => {
+    console.log(event, newValue);
     setValue(newValue);
   };
 
-  const handleSearchValue = e => {
-    setSearchValue(e.target.value);
-  };
+  // const handleSearchCategory = e => {
+  //   setSearchCategory(e.target.value);
+  // };
 
-  console.log(animalList);
+  // const handleSearchValue = e => {
+  //   setSearchValue(e.target.value);
+  // };
 
-  const url = 'api';
-  const search = async () => {
-    axios
-      .get(url, {
-        params: {
-          searchCategory,
-          searchValue,
-        },
-      })
-      .then(res => {
-        setAnimalList(res);
-      });
-  };
+  // console.log(animalList);
+
+  // const url = 'api';
+  // const search = async () => {
+  //   axios
+  //     .get(url, {
+  //       params: {
+  //         searchCategory,
+  //         searchValue,
+  //       },
+  //     })
+  //     .then(res => {
+  //       setAnimalList(res);
+  //     });
+  // };
   return (
     <Box sx={{ width: '100%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -119,7 +122,7 @@ function AnimalCategory() {
       </Box>
 
       {/* 검색 카테고리 */}
-      <SSearchBar>
+      {/* <SSearchBar>
         <SSearchCategory onChange={handleSearchCategory}>
           <option value="searchManageNumber">관리 번호</option>
           <option value="searchName">이름</option>
@@ -165,13 +168,13 @@ function AnimalCategory() {
         <button type="button" onClick={search}>
           검색
         </button>
-      </SSearchBar>
+      </SSearchBar> */}
 
       <TabPanel value={value} index={0}>
-        <AnimalList expired="false" />
+        <AnimalList expired="F" />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <AnimalList expired="true" />
+        <AnimalList expired="T" />
       </TabPanel>
     </Box>
   );

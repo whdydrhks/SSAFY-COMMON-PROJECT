@@ -50,6 +50,7 @@ function Nav() {
           component={Link}
           to="/live"
         />
+        {/* 관심동물  or 동물관리 */}
         {!accessToken ? (
           <SBottomNavigationAction
             label="관심동물"
@@ -58,6 +59,7 @@ function Nav() {
             to="/login"
           />
         ) : null}
+
         {accessToken && user.role === 'HOST' ? (
           <SBottomNavigationAction
             label="동물관리"

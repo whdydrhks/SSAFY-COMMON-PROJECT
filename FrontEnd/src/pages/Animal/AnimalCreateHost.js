@@ -134,10 +134,11 @@ function AnimalCreateHost() {
   };
 
   const handleImages = e => {
+    console.log(e.target);
     setImages(e.target.files);
     const imageLists = e.target.files;
     let imageUrlLists = [...previews];
-
+    console.log(imageLists[0]);
     for (let i = 0; i < imageLists.length; i += 1) {
       const currentImageUrl = URL.createObjectURL(imageLists[i]);
       imageUrlLists.push(currentImageUrl);

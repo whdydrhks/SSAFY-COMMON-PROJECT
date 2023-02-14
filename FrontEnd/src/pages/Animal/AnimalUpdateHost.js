@@ -75,7 +75,7 @@ const SButton = styled(Button)`
 `;
 
 function AnimalUpdateHost() {
-  const navigate = useNavigate;
+  const navigate = useNavigate();
   const animalId = useParams();
   const location = useLocation();
   const animal = location.state.animalInformation;
@@ -185,9 +185,9 @@ function AnimalUpdateHost() {
   };
 
   const updateAnimal = e => {
-    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+    // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
     e.preventDefault();
-    console.log('##########################################');
+    // console.log('##########################################');
     const fileData = new FormData();
 
     const variables = {
@@ -205,7 +205,7 @@ function AnimalUpdateHost() {
       fileData.append('files', addimage);
     });
 
-    console.log(fileData);
+    // console.log(fileData);
 
     axios
       .put(
@@ -222,9 +222,13 @@ function AnimalUpdateHost() {
           headers: { 'Content-Type': 'multipart/form-data' },
         },
       )
-      .then(() => console.log('파일 수정완료'));
+      .then(() => {
+        // navigate('/');
+        console.log('파일 수정완료');
+      });
     // console.log(variables[0].animalId);
-    navigate(`/animal/${variables[0].animalId}`);
+    // navigate(`/animal/${variables[0].animalId}`);
+    navigate('/animal');
   };
 
   return (
