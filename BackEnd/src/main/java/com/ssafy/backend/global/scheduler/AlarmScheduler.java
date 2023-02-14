@@ -96,6 +96,8 @@ public class AlarmScheduler {
                         .build();
 
                 alarmList.add(alarm);
+
+                likeAnimalRepository.delete(likeAnimal);
             }
             else{
                 break;
