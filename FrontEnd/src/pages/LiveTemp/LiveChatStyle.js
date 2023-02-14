@@ -80,7 +80,7 @@ export const ChatBox = styled.div`
 `;
 
 export const ChattingListBox = styled.ul`
-  height: 40vh;
+  height: 45vh;
   border: 1px solid black;
   border-radius: 10px;
   overflow: scroll;
@@ -122,15 +122,41 @@ export const Chat = styled.li`
 
 export const LeaveBox = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
 `;
 
-export const ExitSign = styled.img``;
+export const ExitSign = styled.img`
+  width: 10vw;
+`;
 
-export const MicOff = styled.img``;
+export const MicOff = styled.img`
+  width: 10vw;
+  height: 5vh;
+`;
 
 export const MicOn = styled.img`
-  margin: 4px;
+  width: 10vw;
+  height: 5vh;
+`;
+
+export const CamOff = styled.img`
+  width: 10vw;
+  height: 5vh;
+`;
+
+export const CamOn = styled.img`
+  width: 10vw;
+  height: 5vh;
+`;
+
+export const VolumeOff = styled.img`
+  width: 10vw;
+  height: 5vh;
+`;
+
+export const VolumeOn = styled.img`
+  width: 10vw;
+  height: 5vh;
 `;
 
 export const LeaveButton = styled.button`
@@ -142,6 +168,48 @@ export const LeaveButton = styled.button`
   width: 15vw;
 `;
 
+export const Header = styled.div`
+  font-size: 2rem;
+  text-align: center;
+  margin-top: 2rem;
+`;
+
+export const File = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin-top: 2rem;
+`;
+
+export const FileUpload = styled.div`
+  width: 150px;
+  height: 30px;
+  background: #fff;
+  border: 1px solid rgb(77, 77, 77);
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const FileInput = styled.input`
+  display: none;
+`;
+
+export const Title2 = styled.div`
+  margin-left: 2rem;
+`;
+
+export const TitleHeader = styled.div``;
+
+export const TitleInput = styled.input``;
+
+export const Category = styled.div`
+  margin-left: 2rem;
+`;
+
+export const CategoryHeader = styled.div``;
 /* 
 .stream-container {
 	padding: 0;

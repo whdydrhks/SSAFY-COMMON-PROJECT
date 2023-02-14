@@ -46,6 +46,10 @@ import Nav from '../../components/common/Nav';
 import ExitSign from '../../images/Video/ExitSign.png';
 import MicOff from '../../images/Video/MicOff.png';
 import MicOn from '../../images/Video/MicOn.png';
+import CamOff from '../../images/Video/CamOff.png';
+import CamOn from '../../images/Video/CamOn.png';
+import VolumeOff from '../../images/Video/VolumeOff.png';
+import VolumeOn from '../../images/Video/VolumeOn.png';
 
 // const APPLICATION_SERVER_URL = 'http://localhost:5000';
 
@@ -53,10 +57,12 @@ const APPLICATION_SERVER_URL = API_URL + '/openvidu';
 // const APPLICATION_SERVER_URL = 'https://i8b209.p.ssafy.io:9999/api/v1/openvidu';
 // const OPENVIDU_SERVER_SECRET = 'ssafy';
 
-function Live() {
+function Live(props) {
   const navigate = useNavigate();
-  // const location = useLocation();
-  // const roomNumber = location.state.room;
+
+  const location = useLocation();
+  const roomNumber = location.state.roomNumber;
+  console.log(roomNumber);
   const chatRef = useRef();
 
   // 유저 정보, 이메일, role 불러와야함
@@ -74,6 +80,8 @@ function Live() {
   const [publisher, setPublisher] = useState(undefined);
   const [host, setHost] = useState(undefined);
   const [isMic, setIsMic] = useState(true);
+  const [isCam, setIsCam] = useState(true);
+  const [isVolume, setIsVolume] = useState(true);
 
   const [OV, setOV] = useState(null);
   const [isFrontCamera, setIsFrontCamera] = useState(false);
@@ -81,6 +89,10 @@ function Live() {
   const [sendMsg, setSendMsg] = useState('');
   const [receiveMsg, setReceiveMsg] = useState([]);
   const [oneChat, setOneChat] = useState('');
+
+  const [image, setImage] = useState('dog.png');
+  const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('');
 
   useEffect(() => {
     window.addEventListener('beforeunload', onbeforeunload);
@@ -160,6 +172,14 @@ function Live() {
       .catch(error => {});
   };
 
+  const handleTitle = e => {
+    setTitle(e.target.value);
+  };
+
+  const handleCategory = e => {
+    setCategory(e.target.id);
+  };
+
   const switchCamera = () => {
     let OV = new OpenVidu();
 
@@ -211,6 +231,11 @@ function Live() {
 
     setSession(getOV.initSession());
     setOV(getOV);
+
+    // const liveInformation = {
+    //   'category':
+    // }
+    // axios.post(`${API_URL}`)
 
     // console.log(OV);
   };
@@ -369,9 +394,45 @@ function Live() {
         // <S.WaitingDiv>
         // <div id="join-dialog" className="jumbotron vertical-center">
         <S.WaitingDiv>
-          <S.Title>
-            <h1>화상채팅 참여하기</h1>
-          </S.Title>
+          <S.Header>Live 생성</S.Header>
+          <S.File>
+            <label htmlFor="file">
+              <S.FileUpload
+                className="btn-upload"
+                value={image}
+                // onChange={handleImage}
+              >
+                썸네일 업로드
+              </S.FileUpload>
+            </label>
+            <S.FileInput type="file" name="file" id="file" />
+          </S.File>
+          <S.Title2>
+            <S.TitleHeader>방 이름</S.TitleHeader>
+            {roomNumber ? (
+              <S.TitleInput type="text" value={roomNumber} disabled />
+            ) : null}
+            {/* <S.TitleInput type="text" value={roomNumber} disabled /> */}
+          </S.Title2>
+          <S.Category>
+            <S.CategoryHeader>카테고리 선택</S.CategoryHeader>
+            <input
+              type="radio"
+              id="dog"
+              name="category"
+              value={category}
+              onChange={handleCategory}
+            />
+            <label htmlFor="강아지">강아지</label>
+            <input
+              type="radio"
+              id="cat"
+              name="category"
+              value={category}
+              onChange={handleCategory}
+            />
+            <label htmlFor="고양이">고양이</label>
+          </S.Category>
           <S.JoinForm className="form-group" onSubmit={joinSession}>
             {/* <S.NameDiv>
               <label>참가자 이름</label>
@@ -491,18 +552,44 @@ function Live() {
             {/* <S.LeaveButton type="button" onClick={leaveSession}>
               나가기
             </S.LeaveButton> */}
-            <S.ExitSign src={ExitSign} alt="ExitSign" />
+            <div onClick={leaveSession}>
+              <S.ExitSign src={ExitSign} alt="ExitSign" />
+            </div>
             <div
               onClick={() => {
                 publisher.publishAudio(!isMic);
                 setIsMic(!isMic);
               }}
             >
-              {/* {isMic ? (
-                <MicOff src={MicOff} alt="MicOff" />
+              {isMic ? (
+                <S.MicOff src={MicOff} alt="MicOff" />
               ) : (
-                <Mic src={MicOn} alt="MicOn" />
-              )} */}
+                <S.MicOn src={MicOn} alt="MicOn" />
+              )}
+            </div>
+            <div
+              onClick={() => {
+                subscriber.publishVideo(!isCam);
+                setIsCam(!isCam);
+              }}
+            >
+              {isCam ? (
+                <S.CamOff src={CamOff} alt="CamOff" />
+              ) : (
+                <S.CamOn src={CamOn} alt="CamOn" />
+              )}
+            </div>
+            <div
+              onClick={() => {
+                subscriber.publishAudio(!isVolume);
+                setIsAudio(!isVolume);
+              }}
+            >
+              {isVolume ? (
+                <S.VolumeOff src={VolumeOff} alt="VolumeOff" />
+              ) : (
+                <S.VolumeOn src={VolumeOn} alt="VolumeOn" />
+              )}
             </div>
           </S.LeaveBox>
 
