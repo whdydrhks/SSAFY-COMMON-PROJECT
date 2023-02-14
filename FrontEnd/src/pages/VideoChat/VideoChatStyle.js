@@ -115,6 +115,54 @@ export const Chat = styled.li`
   margin: 3%;
 `;
 
+export const LeaveButton = styled.button`
+  background-color: #1976d2;
+  border: 1px solid #1976d2;
+  border-radius: 10px;
+  color: white;
+  height: 5vh;
+  width: 15vw;
+`;
+
+export const LeaveBox = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
+
+export const ExitSign = styled.img`
+  width: 10vw;
+`;
+
+export const MicOff = styled.img`
+  width: 10vw;
+  height: 5vh;
+`;
+
+export const MicOn = styled.img`
+  width: 10vw;
+  height: 5vh;
+`;
+
+export const CamOff = styled.img`
+  width: 10vw;
+  height: 5vh;
+`;
+
+export const CamOn = styled.img`
+  width: 10vw;
+  height: 5vh;
+`;
+
+export const VolumeOff = styled.img`
+  width: 10vw;
+  height: 5vh;
+`;
+
+export const VolumeOn = styled.img`
+  width: 10vw;
+  height: 5vh;
+`;
+
 /* 
 .stream-container {
 	padding: 0;

@@ -470,6 +470,50 @@ function VideoChat() {
 
       {session ? (
         <S.ChatBox>
+          <S.LeaveBox>
+            {/* <S.LeaveButton type="button" onClick={leaveSession}>
+              나가기
+            </S.LeaveButton> */}
+            <div onClick={leaveSession}>
+              <S.ExitSign src={ExitSign} alt="ExitSign" />
+            </div>
+            <div
+              onClick={() => {
+                publisher.publishAudio(!isMic);
+                setIsMic(!isMic);
+              }}
+            >
+              {isMic ? (
+                <S.MicOff src={MicOff} alt="MicOff" />
+              ) : (
+                <S.MicOn src={MicOn} alt="MicOn" />
+              )}
+            </div>
+            <div
+              onClick={() => {
+                subscriber.publishVideo(!isCam);
+                setIsCam(!isCam);
+              }}
+            >
+              {isCam ? (
+                <S.CamOff src={CamOff} alt="CamOff" />
+              ) : (
+                <S.CamOn src={CamOn} alt="CamOn" />
+              )}
+            </div>
+            <div
+              onClick={() => {
+                subscriber.publishAudio(!isVolume);
+                setIsAudio(!isVolume);
+              }}
+            >
+              {isVolume ? (
+                <S.VolumeOff src={VolumeOff} alt="VolumeOff" />
+              ) : (
+                <S.VolumeOn src={VolumeOn} alt="VolumeOn" />
+              )}
+            </div>
+          </S.LeaveBox>
           <S.ChattingListBox ref={chatRef}>
             {receiveMsg.map((data, index) => (
               <S.Chat key={index}>

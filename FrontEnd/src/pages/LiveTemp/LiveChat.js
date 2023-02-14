@@ -46,6 +46,10 @@ import Nav from '../../components/common/Nav';
 import ExitSign from '../../images/Video/ExitSign.png';
 import MicOff from '../../images/Video/MicOff.png';
 import MicOn from '../../images/Video/MicOn.png';
+import CamOff from '../../images/Video/CamOff.png';
+import CamOn from '../../images/Video/CamOn.png';
+import VolumeOff from '../../images/Video/VolumeOff.png';
+import VolumeOn from '../../images/Video/VolumeOn.png';
 
 // const APPLICATION_SERVER_URL = 'http://localhost:5000';
 
@@ -74,6 +78,8 @@ function Live() {
   const [publisher, setPublisher] = useState(undefined);
   const [host, setHost] = useState(undefined);
   const [isMic, setIsMic] = useState(true);
+  const [isCam, setIsCam] = useState(true);
+  const [isVolume, setIsVolume] = useState(true);
 
   const [OV, setOV] = useState(null);
   const [isFrontCamera, setIsFrontCamera] = useState(false);
@@ -491,7 +497,9 @@ function Live() {
             {/* <S.LeaveButton type="button" onClick={leaveSession}>
               나가기
             </S.LeaveButton> */}
-            <S.ExitSign src={ExitSign} alt="ExitSign" />
+            <div onClick={leaveSession}>
+              <S.ExitSign src={ExitSign} alt="ExitSign" />
+            </div>
             <div
               onClick={() => {
                 publisher.publishAudio(!isMic);
@@ -499,9 +507,33 @@ function Live() {
               }}
             >
               {isMic ? (
-                <MicOff src={MicOff} alt="MicOff" />
+                <S.MicOff src={MicOff} alt="MicOff" />
               ) : (
-                <Mic src={MicOn} alt="MicOn" />
+                <S.MicOn src={MicOn} alt="MicOn" />
+              )}
+            </div>
+            <div
+              onClick={() => {
+                subscriber.publishVideo(!isCam);
+                setIsCam(!isCam);
+              }}
+            >
+              {isCam ? (
+                <S.CamOff src={CamOff} alt="CamOff" />
+              ) : (
+                <S.CamOn src={CamOn} alt="CamOn" />
+              )}
+            </div>
+            <div
+              onClick={() => {
+                subscriber.publishAudio(!isVolume);
+                setIsAudio(!isVolume);
+              }}
+            >
+              {isVolume ? (
+                <S.VolumeOff src={VolumeOff} alt="VolumeOff" />
+              ) : (
+                <S.VolumeOn src={VolumeOn} alt="VolumeOn" />
               )}
             </div>
           </S.LeaveBox>
