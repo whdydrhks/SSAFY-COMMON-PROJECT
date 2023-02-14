@@ -1,6 +1,7 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-vars */
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useRecoilState } from 'recoil';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -53,7 +54,16 @@ const SButton = styled.button`
 
 function Alarm() {
   const accessToken = getCookie('accessToken');
+  const alarmRef = useRef([]);
   const [alarmList, setAlarmList] = useRecoilState(alarmAtom);
+
+  const handleDeleteAlarm = (a, idx) => {
+    axios.delete(`${API_URL}/alarm`, {
+      headers: { Authorization: accessToken },
+      data: { alarmId: a.alarmId },
+    });
+    alarmRef.current[idx].style = 'display : none';
+  };
 
   useEffect(() => {
     axios
@@ -66,7 +76,7 @@ function Alarm() {
       <Header />
       <SContainer>
         {alarmList.map((alarm, index) => (
-          <SAlarm key={index}>
+          <SAlarm key={index} ref={el => (alarmRef.current[index] = el)}>
             {alarm.alarmType === 1 ? (
               <SAlarmcontainer>
                 <SImg>이미지</SImg>
@@ -81,7 +91,7 @@ function Alarm() {
                     {alarm.createdDate.substring(11, 16)}
                   </STime>
                 </SContent>
-                <SButton>
+                <SButton onClick={() => handleDeleteAlarm(alarm, index)}>
                   <CloseIcon />
                 </SButton>
               </SAlarmcontainer>
@@ -100,7 +110,7 @@ function Alarm() {
                     {alarm.createdDate.substring(11, 16)}
                   </STime>
                 </SContent>
-                <SButton>
+                <SButton onClick={() => handleDeleteAlarm(alarm, index)}>
                   <CloseIcon />
                 </SButton>
               </SAlarmcontainer>
@@ -118,7 +128,7 @@ function Alarm() {
                     {alarm.createdDate.substring(11, 16)}
                   </STime>
                 </SContent>
-                <SButton>
+                <SButton onClick={() => handleDeleteAlarm(alarm, index)}>
                   <CloseIcon />
                 </SButton>
               </SAlarmcontainer>
@@ -136,7 +146,7 @@ function Alarm() {
                     {alarm.createdDate.substring(11, 16)}
                   </STime>
                 </SContent>
-                <SButton>
+                <SButton onClick={() => handleDeleteAlarm(alarm, index)}>
                   <CloseIcon />
                 </SButton>
               </SAlarmcontainer>
@@ -154,7 +164,7 @@ function Alarm() {
                     {alarm.createdDate.substring(11, 16)}
                   </STime>
                 </SContent>
-                <SButton>
+                <SButton onClick={() => handleDeleteAlarm(alarm, index)}>
                   <CloseIcon />
                 </SButton>
               </SAlarmcontainer>
