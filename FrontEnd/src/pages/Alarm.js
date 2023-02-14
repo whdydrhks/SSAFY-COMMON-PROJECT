@@ -12,34 +12,42 @@ import { alarmAtom } from '../recoilState';
 import API_URL from '../api/api';
 
 const SContainer = styled.div``;
-const SAlarm = styled.div``;
+const SAlarm = styled.div`
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+`;
 const SAlarmcontainer = styled.div`
   width: 100%;
-  height: 10vh;
-  margin-bottom: 0.5rem;
-  background-color: beige;
+  height: 12vh;
+  margin-bottom: 0.1rem;
   display: flex;
-  justify-content: space-between;
+  position: relative;
 `;
 const SImg = styled.div`
   width: 24%;
   background-color: black;
 `;
 const SContent = styled.div`
-  div {
-    text-align: left;
-  }
+  width: 68%;
+  margin-left: 1rem;
 `;
 const SType = styled.div`
   margin-top: 1rem;
   font-size: 1.2rem;
   font-weight: bold;
+  text-align: left;
 `;
-const SText = styled.div``;
-const STime = styled.div``;
+const SText = styled.div`
+  text-align: left;
+  margin-top: 0.5rem;
+`;
+const STime = styled.div`
+  text-align: right;
+  font-style: italic;
+  font-weight: bolder;
+`;
 const SButton = styled.button`
-  background-color: beige;
-  border: none;
+  border: 0;
+  background-color: transparent;
   padding: 0 1rem;
 `;
 
@@ -63,13 +71,16 @@ function Alarm() {
               <SAlarmcontainer>
                 <SImg>이미지</SImg>
                 <SContent>
-                  <SType>오늘 예약 일정이 있습니다.</SType>
+                  <SType>오늘 일정이 있습니다.</SType>
                   <SText>
-                    {alarm.targetName}과의 일정이 {alarm.time}시에
+                    {alarm.targetName}과의 일정이 오늘 {alarm.time}시에
                     예정되어있습니다.
                   </SText>
+                  <STime>
+                    {alarm.createdDate.substring(0, 10)}{' '}
+                    {alarm.createdDate.substring(11, 16)}
+                  </STime>
                 </SContent>
-                <STime>sdf</STime>
                 <SButton>
                   <CloseIcon />
                 </SButton>
@@ -79,13 +90,16 @@ function Alarm() {
               <SAlarmcontainer>
                 <SImg>이미지</SImg>
                 <SContent>
-                  <SType>오늘 예약 일정이 있습니다.</SType>
+                  <SType>오늘 일정이 있습니다.</SType>
                   <SText>
-                    {alarm.targetName}과의 일정이 {alarm.time}시에
+                    {alarm.targetName}과의 일정이 오늘 {alarm.time}시에
                     예정되어있습니다.
                   </SText>
+                  <STime>
+                    {alarm.createdDate.substring(0, 10)}{' '}
+                    {alarm.createdDate.substring(11, 16)}
+                  </STime>
                 </SContent>
-                <STime>sdf</STime>
                 <SButton>
                   <CloseIcon />
                 </SButton>
@@ -99,8 +113,11 @@ function Alarm() {
                   <SText>
                     {alarm.targetName}과의 {alarm.time}시 일정이 취소되었습니다.
                   </SText>
+                  <STime>
+                    {alarm.createdDate.substring(0, 10)}{' '}
+                    {alarm.createdDate.substring(11, 16)}
+                  </STime>
                 </SContent>
-                <STime>sdf</STime>
                 <SButton>
                   <CloseIcon />
                 </SButton>
@@ -114,8 +131,11 @@ function Alarm() {
                   <SText>
                     {alarm.targetName}과의 {alarm.time}시 일정이 취소되었습니다.
                   </SText>
+                  <STime>
+                    {alarm.createdDate.substring(0, 10)}{' '}
+                    {alarm.createdDate.substring(11, 16)}
+                  </STime>
                 </SContent>
-                <STime>sdf</STime>
                 <SButton>
                   <CloseIcon />
                 </SButton>
@@ -129,8 +149,11 @@ function Alarm() {
                   <SText>
                     {alarm.targetName}의 입양 모집이 종료되었습니다.
                   </SText>
+                  <STime>
+                    {alarm.createdDate.substring(0, 10)}{' '}
+                    {alarm.createdDate.substring(11, 16)}
+                  </STime>
                 </SContent>
-                <STime>sdf</STime>
                 <SButton>
                   <CloseIcon />
                 </SButton>
