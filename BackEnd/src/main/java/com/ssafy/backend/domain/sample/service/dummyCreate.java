@@ -3,6 +3,8 @@ package com.ssafy.backend.domain.sample.service;
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
+import com.ssafy.backend.domain.animal.entity.LikeAnimalEntity;
+import com.ssafy.backend.domain.animal.repository.LikeAnimalRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,9 @@ import com.ssafy.backend.global.file.repository.FileRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class dummyCreate {
@@ -38,6 +43,7 @@ public class dummyCreate {
 	private final TimetableRepository timetableRepository;
 	private final ScheduleRepository scheduleRepository;
 	private final LiveRepository liveRepository;
+	private final LikeAnimalRepository likeAnimalRepository;
 
 	// 테스트용 더미 데이터 생성용
 	@Transactional
@@ -222,6 +228,60 @@ public class dummyCreate {
 			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
 			.build();
 		liveRepository.save(live14);
+
+		LocalDateTime localDateTime = LocalDateTime.of(2023, 02, 14, 11, 24, 55);
+		LikeAnimalEntity like = LikeAnimalEntity.builder()
+				.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
+				.animal(animalRepository.findByIdAndExpiredLike(10L, "F").get())
+				.expiredDate(localDateTime)
+				.build();
+
+		likeAnimalRepository.save(like);
+
+		LocalDateTime localDateTime1 = LocalDateTime.of(2023, 02, 14, 11, 55, 55);
+		LikeAnimalEntity like1 = LikeAnimalEntity.builder()
+				.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
+				.animal(animalRepository.findByIdAndExpiredLike(1L, "F").get())
+				.expiredDate(localDateTime1)
+				.build();
+
+		likeAnimalRepository.save(like1);
+
+		LocalDateTime localDateTime2 = LocalDateTime.of(2023, 02, 14, 11, 36, 55);
+		LikeAnimalEntity like2 = LikeAnimalEntity.builder()
+				.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
+				.animal(animalRepository.findByIdAndExpiredLike(5L, "F").get())
+				.expiredDate(localDateTime2)
+				.build();
+
+		likeAnimalRepository.save(like2);
+
+		LocalDateTime localDateTime3 = LocalDateTime.of(2023, 02, 14, 11, 59, 59);
+		LikeAnimalEntity like3 = LikeAnimalEntity.builder()
+				.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
+				.animal(animalRepository.findByIdAndExpiredLike(6L, "F").get())
+				.expiredDate(localDateTime3)
+				.build();
+
+		likeAnimalRepository.save(like3);
+
+		LocalDateTime localDateTime4 = LocalDateTime.of(2023, 02, 14, 10, 36, 55);
+		LikeAnimalEntity like4 = LikeAnimalEntity.builder()
+				.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
+				.animal(animalRepository.findByIdAndExpiredLike(3L, "F").get())
+				.expiredDate(localDateTime4)
+				.build();
+
+		likeAnimalRepository.save(like4);
+
+		LocalDateTime localDateTime5 = LocalDateTime.of(2023, 02, 14, 12, 36, 55);
+		LikeAnimalEntity like5 = LikeAnimalEntity.builder()
+				.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
+				.animal(animalRepository.findByIdAndExpiredLike(2L, "F").get())
+				.expiredDate(localDateTime5)
+				.build();
+
+		likeAnimalRepository.save(like5);
 
 	}
 
