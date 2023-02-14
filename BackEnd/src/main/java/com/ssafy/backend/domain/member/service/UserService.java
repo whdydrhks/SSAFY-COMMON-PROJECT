@@ -15,9 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.backend.domain.member.entity.UserEntity;
 import com.ssafy.backend.domain.member.model.request.UserMatchPasswordDto;
-import com.ssafy.backend.domain.member.model.request.UserPasswordDto;
 import com.ssafy.backend.domain.member.model.request.UserRegisterDto;
 import com.ssafy.backend.domain.member.model.request.UserUpdateDto;
+import com.ssafy.backend.domain.member.model.request.UserUpdatePasswordDto;
 import com.ssafy.backend.domain.member.model.response.UserHostInfoDto;
 import com.ssafy.backend.domain.member.model.response.UserInfoDto;
 import com.ssafy.backend.domain.member.repository.UserRepository;
@@ -135,17 +135,17 @@ public class UserService {
 	 */
 	public ResponseSuccessDto<?> updatePassword(
 		Long userId,
-		UserMatchPasswordDto matchPasswordDto,
+		UserUpdatePasswordDto updatePasswordDto,
 		HttpServletRequest request) {
 
 		UserEntity findUser = validateAccount(userId, request);
 
 		Map<String, Object> res = new HashMap<>();
 
-		res.put("matchResult", passwordEncoder.matches(matchPasswordDto.getCurPassword(), findUser.getPassword()));
+		res.put("matchResult", passwordEncoder.matches(updatePasswordDto.getCurPassword(), findUser.getPassword()));
 
 		if ((boolean)res.get("matchResult")) {
-			findUser.setPassword(passwordEncoder.encode(matchPasswordDto.getNewPassword()));
+			findUser.setPassword(passwordEncoder.encode(updatePasswordDto.getNewPassword()));
 
 			userRepository.save(findUser);
 
@@ -294,14 +294,14 @@ public class UserService {
 	 */
 	public ResponseSuccessDto<?> checkPassword(
 		Long userId,
-		UserPasswordDto passwordDto,
+		UserMatchPasswordDto matchPasswordDto,
 		HttpServletRequest request) {
 
 		UserEntity findUser = validateAccount(userId, request);
 
 		Map<String, Object> res = new HashMap<>();
 
-		res.put("passwordMatch", passwordEncoder.matches(passwordDto.getPassword(), findUser.getPassword()));
+		res.put("passwordMatch", passwordEncoder.matches(matchPasswordDto.getPassword(), findUser.getPassword()));
 
 		return responseUtil.buildSuccessResponse(res);
 	}

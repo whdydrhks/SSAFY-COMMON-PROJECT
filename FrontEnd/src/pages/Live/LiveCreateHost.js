@@ -99,6 +99,7 @@ function LiveCreateHost() {
         </label>
         <SFileInput type="file" name="file" id="file" />
       </SFile>
+
       <STitle>
         <STitleHeader>방 이름</STitleHeader>
         <STitleInput type="text" value={title} onChange={handleTitle} />
