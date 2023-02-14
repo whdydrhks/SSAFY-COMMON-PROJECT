@@ -323,7 +323,7 @@ public class FileService {
 		List<FileEntity> findFiles = fileRepository.findByAnimalAndExpiredLike(findAnimal, "F");
 
 		if (findFiles.isEmpty()) {
-			findFiles = Arrays.asList(fileRepository.findByStoreName("default_profile").get());
+			findFiles = Arrays.asList(fileRepository.findByStoreName("default_animal").get());
 		}
 
 		List<?> fileDownloadUriList = findFiles
@@ -366,6 +366,16 @@ public class FileService {
 	 */
 	@Transactional
 	public String createDownloadUri(String subPath, FileEntity file) {
+		if (file == null) {
+			if (USER_SUB_PATH.equals(subPath)) {
+				file = fileRepository.findByStoreName("default_profile").get();
+			} else if (ANIMAL_SUB_PATH.equals(subPath)) {
+				file = fileRepository.findByStoreName("default_animal").get();
+			} else {
+				throw new FileErrorException(ApiStatus.FILE_INVALID_PATH);
+			}
+		}
+
 		return ServletUriComponentsBuilder.fromCurrentContextPath()
 			.path("/v1/file")
 			.path("/download").path("/" + subPath)

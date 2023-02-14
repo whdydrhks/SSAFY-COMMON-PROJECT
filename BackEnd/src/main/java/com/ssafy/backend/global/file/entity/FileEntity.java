@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
@@ -35,7 +36,7 @@ public class FileEntity extends BaseTimeEntity {
 	@Column(name = "file_id", columnDefinition = "INT UNSIGNED")
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = true)
+	@OneToOne(fetch = FetchType.LAZY, optional = true)
 	private UserEntity user;
 
 	@ManyToOne(fetch = FetchType.LAZY, optional = true)
