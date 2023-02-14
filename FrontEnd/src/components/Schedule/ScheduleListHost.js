@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-unused-vars */
@@ -6,7 +7,7 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-props-no-spreading */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -91,6 +92,7 @@ function ScheduleListHost() {
     slidesToScroll: 3,
   };
 
+  const timeRef = useRef([]);
   const navigate = useNavigate();
   const today = new Date();
   const todayDate =
@@ -114,7 +116,14 @@ function ScheduleListHost() {
     navigate('/videochat');
   };
 
-  const handleDeleteSchedule = () => {};
+  const handleDeleteSchedule = (sId, index) => {
+    if (window.confirm('일정을 삭제하시겠습니까?')) {
+      axios.delete(`${API_URL}/schedule/${sId}`, {
+        headers: { Authorization: accessToken },
+      });
+      timeRef.current[index].style = 'display :none';
+    }
+  };
 
   useEffect(() => {
     const weeks = [];
@@ -150,7 +159,7 @@ function ScheduleListHost() {
       <STimeList>
         {todaySchedule.map((schedule, index) => (
           <STimeBox key={index}>
-            <SContainer>
+            <SContainer ref={el => (timeRef.current[index] = el)}>
               <div>
                 <STime>
                   {schedule.time.toString().padStart(2, '0')}:00 ~{' '}
@@ -189,7 +198,7 @@ function ScheduleListHost() {
                   <SClickButton
                     bgColor="red"
                     onClick={() => {
-                      handleDeleteSchedule(schedule.scheduleId);
+                      handleDeleteSchedule(schedule.scheduleId, index);
                     }}
                   >
                     {' '}
@@ -201,7 +210,7 @@ function ScheduleListHost() {
                   <SClickButton
                     bgColor="red"
                     onClick={() => {
-                      handleDeleteSchedule(schedule.scheduleId);
+                      handleDeleteSchedule(schedule.scheduleId, index);
                     }}
                   >
                     {' '}

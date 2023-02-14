@@ -1,10 +1,11 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable prefer-const */
 /* eslint-disable no-lone-blocks */
 /* eslint-disable array-callback-return */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/no-array-index-key */
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import '../../styles/slick-theme.css';
@@ -43,6 +44,8 @@ const SClickButton = styled.button`
 `;
 
 function ScheduleListUser() {
+  const scheduleRef = useRef([]);
+  const navigate = useNavigate();
   const today = new Date();
   const todayDate =
     (today.getMonth() + 1).toString().padStart(2, '0') +
@@ -52,12 +55,14 @@ function ScheduleListUser() {
   const [scheduleUser, setScheduleUser] = useRecoilState(scheduleAtom);
   const [dateList, setDateList] = useState([]);
 
-  const handleDeleteSchedule = sId => {
+  const handleDeleteSchedule = (sId, idx) => {
     if (window.confirm('해당 일정을삭제하시겠습니까?')) {
       axios.delete(`${API_URL}/schedule/${sId}`, {
         headers: { Authorization: accessToken },
       });
-      // navigate('/');
+      scheduleRef.current[idx].style = 'display : none';
+
+      // navigate('/schedule');
       // window.location.reload();
     }
   };
@@ -95,9 +100,12 @@ function ScheduleListUser() {
       {dateList.map(item => (
         <SDate>
           {item}
-          {scheduleUser.map(schedule =>
+          {scheduleUser.map((schedule, index) =>
             schedule.day === item ? (
-              <STimeTable key={schedule.room}>
+              <STimeTable
+                key={index}
+                ref={el => (scheduleRef.current[index] = el)}
+              >
                 <div>
                   <STime>
                     {schedule.time.toString().padStart(2, '0')}:00 ~{' '}
@@ -110,7 +118,7 @@ function ScheduleListUser() {
                   <SClickButton
                     bgColor="red"
                     onClick={() => {
-                      handleDeleteSchedule(scheduleUser.scheduleId);
+                      handleDeleteSchedule(schedule.scheduleId, index);
                     }}
                   >
                     {' '}
@@ -122,7 +130,7 @@ function ScheduleListUser() {
                   <SClickButton
                     bgColor="red"
                     onClick={() => {
-                      handleDeleteSchedule(scheduleUser.scheduleId);
+                      handleDeleteSchedule(schedule.scheduleId, index);
                     }}
                   >
                     {' '}

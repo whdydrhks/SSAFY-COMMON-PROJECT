@@ -235,6 +235,7 @@ const liveListAtom = atom({
 const timetableShelterIdAtom = atom({
   key: 'timetableShelterIdAtom',
   default: '',
+  effects_UNSTABLE: [persistAtom],
 });
 
 export {

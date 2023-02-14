@@ -1,10 +1,11 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable prefer-template */
 /* eslint-disable no-loop-func */
 /* eslint-disable array-callback-return */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -82,6 +83,7 @@ function CreateSchedule() {
     slidesToScroll: 3,
   };
 
+  const buttonRef = useRef([]);
   const tod = new Date();
   const accessToken = getCookie('accessToken');
   const [timetableShelterNickname, setTimetableShelterNickname] = useState('');
@@ -229,6 +231,13 @@ function CreateSchedule() {
         },
         { headers: { Authorization: accessToken } },
       );
+
+      axios
+        .get(`${API_URL}/schedule/shelters/${timetableShelterId}`)
+        .then(res => setScheduleHost(res.data.data));
+
+      buttonRef.current[idx].style = 'background-color:grey';
+      buttonRef.current[idx].innerText = '마감';
     }
   };
 
@@ -303,6 +312,7 @@ function CreateSchedule() {
                     <SClickButton
                       bgColor="green"
                       onClick={() => handleCreateSchedule(index)}
+                      ref={el => (buttonRef.current[index] = el)}
                     >
                       예약
                     </SClickButton>

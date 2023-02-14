@@ -190,7 +190,7 @@ function Live() {
   return (
     <>
       <Header />
-      {/* <SLiveHeader>
+      <SLiveHeader>
         <STitle>Live</STitle>
         {user.role === 'HOST' ? (
           <Link to="/live/create">
@@ -212,8 +212,8 @@ function Live() {
             </SLiveItem>
           </Link>
         ))}
-      </SLiveContainer> */}
-      <SContainer>
+      </SLiveContainer>
+      {/* <SContainer>
         <ImageList sx={{ width: 0.9, height: 0.9 }}>
           <ImageListItem key="Subheader" cols={2}>
             <STitle>라이브</STitle>
@@ -241,7 +241,7 @@ function Live() {
             </ImageListItem>
           ))}
         </ImageList>
-      </SContainer>
+      </SContainer> */}
       {/* <ImageList sx={{ width: 1, height: 1 }}>
         {itemData.map(item => (
           <ImageListItem key={item.img}>
