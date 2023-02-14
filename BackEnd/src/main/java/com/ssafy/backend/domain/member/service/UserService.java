@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.backend.domain.member.entity.UserEntity;
+import com.ssafy.backend.domain.member.model.request.UserMatchPasswordDto;
+import com.ssafy.backend.domain.member.model.request.UserPasswordDto;
 import com.ssafy.backend.domain.member.model.request.UserRegisterDto;
 import com.ssafy.backend.domain.member.model.request.UserUpdateDto;
 import com.ssafy.backend.domain.member.model.response.UserHostInfoDto;
@@ -133,18 +135,17 @@ public class UserService {
 	 */
 	public ResponseSuccessDto<?> updatePassword(
 		Long userId,
-		String oldPassword,
-		String newPassword,
+		UserMatchPasswordDto matchPasswordDto,
 		HttpServletRequest request) {
 
 		UserEntity findUser = validateAccount(userId, request);
 
 		Map<String, Object> res = new HashMap<>();
 
-		res.put("matchResult", passwordEncoder.matches(oldPassword, findUser.getPassword()));
+		res.put("matchResult", passwordEncoder.matches(matchPasswordDto.getCurPassword(), findUser.getPassword()));
 
 		if ((boolean)res.get("matchResult")) {
-			findUser.setPassword(passwordEncoder.encode(newPassword));
+			findUser.setPassword(passwordEncoder.encode(matchPasswordDto.getNewPassword()));
 
 			userRepository.save(findUser);
 
@@ -293,14 +294,14 @@ public class UserService {
 	 */
 	public ResponseSuccessDto<?> checkPassword(
 		Long userId,
-		String password,
+		UserPasswordDto passwordDto,
 		HttpServletRequest request) {
 
 		UserEntity findUser = validateAccount(userId, request);
 
 		Map<String, Object> res = new HashMap<>();
 
-		res.put("passwordMatch", passwordEncoder.matches(password, findUser.getPassword()));
+		res.put("passwordMatch", passwordEncoder.matches(passwordDto.getPassword(), findUser.getPassword()));
 
 		return responseUtil.buildSuccessResponse(res);
 	}
