@@ -182,7 +182,7 @@ function Live() {
   const handleClickLive = id => {
     setTimetableShelterId(id);
   };
-
+  console.log(liveList);
   useEffect(() => {
     axios.get(`${API_URL}/live/all`).then(res => {
       setLiveList(res.data.data);

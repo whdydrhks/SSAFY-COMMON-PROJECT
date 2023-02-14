@@ -188,10 +188,12 @@ function Live() {
     setRoomName(e.target.value);
   };
 
-  const handleImage = e => {
+  const handleImages = e => {
     // console.log(e.target.files, '1');
 
-    setImage(e.target.files[0]);
+    setImage(e.target.files);
+    console.log('########################');
+    console.log(image);
     const tempPreview = URL.createObjectURL(e.target.files[0]);
     // console.log('@@@@@@@@@@@@@@@@@@@@@@@');
     // console.log(tempPreview, '2');
@@ -250,15 +252,21 @@ function Live() {
       room: roomNumber.toString(),
       title: roomName,
     };
+    const thumbnailData = new FormData();
+    Object.values(image).forEach(image => {
+      thumbnailData.append('file', image);
+    });
     if (role === 'HOST') {
-      console.log('###############################');
       axios
         .post(`${API_URL}/live`, liveData, {
           headers: { Authorization: accessToken },
         })
         .then(res => {
-          console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-          console.log(res);
+          axios
+            .post(`${API_URL}/live/${res.data.data}/image`, thumbnailData, {
+              headers: { 'Content-Type': 'multipart/form-data' },
+            })
+            .then(() => console.log('성공'));
         });
     }
     const getOV = new OpenVidu();
@@ -439,8 +447,8 @@ function Live() {
             <input
               type="file"
               hidden
-              onChange={handleImage}
-              // multiple="multiple"
+              onChange={handleImages}
+              multiple="multiple"
               accept="image/*"
             />
           </S.FileUploadButton>
