@@ -19,7 +19,7 @@ function Alarm() {
   useEffect(() => {
     axios
       .get(`${API_URL}/alarm`, { headers: { Authorization: accessToken } })
-      .then(res => console.log(res));
+      .then(res => setAlarmList(res.data.data));
   }, []);
 
   return (
@@ -27,7 +27,7 @@ function Alarm() {
       <Header />
       <SContainer>
         {alarmList.map((alarm, index) => (
-          <SAlarm key={index}>{alarm}</SAlarm>
+          <SAlarm key={index}>{alarm.alarmType}</SAlarm>
         ))}
       </SContainer>
       <Nav />
