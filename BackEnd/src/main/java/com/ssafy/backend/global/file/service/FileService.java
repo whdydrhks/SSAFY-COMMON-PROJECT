@@ -57,10 +57,10 @@ public class FileService {
 	private String UPLOAD_DIR_PATH;
 
 	@Value("${file.upload.userPath}")
-	public String USER_SUB_PATH = "user";
+	public String USER_SUB_PATH;
 
 	@Value("${file.upload.animalPath}")
-	public String ANIMAL_SUB_PATH = "animal";
+	public String ANIMAL_SUB_PATH;
 
 	private FileEntity userDefault;
 	private FileEntity animalDefault;
@@ -366,6 +366,16 @@ public class FileService {
 	 */
 	@Transactional
 	public String createDownloadUri(String subPath, FileEntity file) {
+		if (file == null) {
+			if (USER_SUB_PATH.equals(subPath)) {
+				file = fileRepository.findByStoreName("default_profile").get();
+			} else if (ANIMAL_SUB_PATH.equals(subPath)) {
+				file = fileRepository.findByStoreName("default_animal").get();
+			} else {
+				throw new FileErrorException(ApiStatus.FILE_INVALID_PATH);
+			}
+		}
+
 		return ServletUriComponentsBuilder.fromCurrentContextPath()
 			.path("/v1/file")
 			.path("/download").path("/" + subPath)
