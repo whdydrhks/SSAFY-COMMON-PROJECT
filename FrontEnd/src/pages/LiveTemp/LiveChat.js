@@ -57,7 +57,7 @@ const APPLICATION_SERVER_URL = API_URL + '/openvidu';
 // const APPLICATION_SERVER_URL = 'https://i8b209.p.ssafy.io:9999/api/v1/openvidu';
 // const OPENVIDU_SERVER_SECRET = 'ssafy';
 
-function Live(props) {
+function Live() {
   const navigate = useNavigate();
 
   const location = useLocation();

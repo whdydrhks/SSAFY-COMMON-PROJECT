@@ -73,6 +73,10 @@ function VideoChat() {
 
   const [myUserName, setMyUserName] = useState(nickname);
 
+  const [isMic, setIsMic] = useState(true);
+  const [isCam, setIsCam] = useState(true);
+  const [isVolume, setIsVolume] = useState(true);
+
   const [publisher, setPublisher] = useState(undefined);
   const [host, setHost] = useState(undefined);
 
@@ -82,6 +86,10 @@ function VideoChat() {
   const [sendMsg, setSendMsg] = useState('');
   const [receiveMsg, setReceiveMsg] = useState([]);
   const [oneChat, setOneChat] = useState('');
+
+  const [image, setImage] = useState('dog.png');
+  const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('');
 
   useEffect(() => {
     window.addEventListener('beforeunload', onbeforeunload);
@@ -130,6 +138,14 @@ function VideoChat() {
       getToken().then(sessionConnect);
     }
   }, [session]);
+
+  const handleTitle = e => {
+    setTitle(e.target.value);
+  };
+
+  const handleCategory = e => {
+    setCategory(e.target.id);
+  };
 
   const sessionConnect = token => {
     session
@@ -451,27 +467,27 @@ function VideoChat() {
                 }
               })()}
 
-              <input
+              {/* <input
                 className="btn btn-large btn-success"
                 type="button"
                 id="buttonSwitchCamera"
                 onClick={switchCamera}
                 value="카메라 전환"
-              />
+              /> */}
             </S.div>
           ) : null}
 
-          <div id="session-header">
-            {/* 메인 화면 제목 */}
-            {/* <h1 id="session-title">{mySessionId}</h1> */}
-            <input
+          {/* <div id="session-header"> */}
+          {/* 메인 화면 제목 */}
+          {/* <h1 id="session-title">{mySessionId}</h1> */}
+          {/* <input
               className="btn btn-large btn-danger"
               type="button"
               id="buttonLeaveSession"
               onClick={leaveSession}
               value="화상채팅 나가기"
-            />
-          </div>
+            /> */}
+          {/* </div> */}
         </div>
       ) : null}
 
