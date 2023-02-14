@@ -210,6 +210,8 @@ export const Category = styled.div`
 `;
 
 export const CategoryHeader = styled.div``;
+
+export const RoomName = styled.input``;
 /* 
 .stream-container {
 	padding: 0;

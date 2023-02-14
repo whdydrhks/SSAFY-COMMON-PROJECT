@@ -50,6 +50,7 @@ import CamOff from '../../images/Video/CamOff.png';
 import CamOn from '../../images/Video/CamOn.png';
 import VolumeOff from '../../images/Video/VolumeOff.png';
 import VolumeOn from '../../images/Video/VolumeOn.png';
+import { getCookie } from '../Account/cookie';
 
 // const APPLICATION_SERVER_URL = 'http://localhost:5000';
 
@@ -58,6 +59,7 @@ const APPLICATION_SERVER_URL = API_URL + '/openvidu';
 // const OPENVIDU_SERVER_SECRET = 'ssafy';
 
 function Live() {
+  const accessToken = getCookie('accessToken');
   const navigate = useNavigate();
 
   const location = useLocation();
@@ -93,6 +95,7 @@ function Live() {
   const [image, setImage] = useState('dog.png');
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
+  const [roomName, setRoomName] = useState('');
 
   useEffect(() => {
     window.addEventListener('beforeunload', onbeforeunload);
@@ -172,14 +175,17 @@ function Live() {
       .catch(error => {});
   };
 
-  const handleTitle = e => {
-    setTitle(e.target.value);
-  };
+  // const handleTitle = e => {
+  //   setTitle(e.target.value);
+  // };
 
   const handleCategory = e => {
     setCategory(e.target.id);
   };
 
+  const handleRoomName = e => {
+    setRoomName(e.target.value);
+  };
   const switchCamera = () => {
     let OV = new OpenVidu();
 
@@ -227,6 +233,22 @@ function Live() {
   const deleteSubscriber = streamManager => {};
 
   const joinSession = () => {
+    const liveData = {
+      category: category,
+      room: roomNumber.toString(),
+      title: roomName,
+    };
+    if (role === 'HOST') {
+      console.log('###############################');
+      axios
+        .post(`${API_URL}/live`, liveData, {
+          headers: { Authorization: accessToken },
+        })
+        .then(res => {
+          console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+          console.log(res);
+        });
+    }
     const getOV = new OpenVidu();
 
     setSession(getOV.initSession());
@@ -413,12 +435,16 @@ function Live() {
             <S.FileInput type="file" name="file" id="file" />
           </S.File>
           <S.Title2>
-            <S.TitleHeader>방 이름</S.TitleHeader>
+            {/* <S.TitleHeader>방 이름</S.TitleHeader>
             {roomNumber ? (
               <S.TitleInput type="text" value={roomNumber} disabled />
-            ) : null}
+            ) : null} */}
             {/* <S.TitleInput type="text" value={roomNumber} disabled /> */}
           </S.Title2>
+          <div>
+            <p>방 제목</p>
+            <S.RoomName type="text" onChange={handleRoomName} />
+          </div>
           <S.Category>
             <S.CategoryHeader>카테고리 선택</S.CategoryHeader>
             <input
