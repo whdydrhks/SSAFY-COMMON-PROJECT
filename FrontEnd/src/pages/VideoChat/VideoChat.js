@@ -41,6 +41,13 @@ import { userAtom } from '../../recoilState';
 import API_URL from '../../api/api';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
+import ExitSign from '../../images/Video/ExitSign.png';
+import MicOff from '../../images/Video/MicOff.png';
+import MicOn from '../../images/Video/MicOn.png';
+import CamOff from '../../images/Video/CamOff.png';
+import CamOn from '../../images/Video/CamOn.png';
+import VolumeOff from '../../images/Video/VolumeOff.png';
+import VolumeOn from '../../images/Video/VolumeOn.png';
 
 // const APPLICATION_SERVER_URL = 'http://localhost:5000';
 
