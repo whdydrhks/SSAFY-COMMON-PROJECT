@@ -92,7 +92,8 @@ function Live() {
   const [receiveMsg, setReceiveMsg] = useState([]);
   const [oneChat, setOneChat] = useState('');
 
-  const [image, setImage] = useState('dog.png');
+  const [image, setImage] = useState('');
+  const [preview, setPreview] = useState('');
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
   const [roomName, setRoomName] = useState('');
@@ -185,6 +186,17 @@ function Live() {
 
   const handleRoomName = e => {
     setRoomName(e.target.value);
+  };
+
+  const handleImage = e => {
+    // console.log(e.target.files, '1');
+
+    setImage(e.target.files[0]);
+    const tempPreview = URL.createObjectURL(e.target.files[0]);
+    // console.log('@@@@@@@@@@@@@@@@@@@@@@@');
+    // console.log(tempPreview, '2');
+    setPreview(tempPreview);
+    // console.log(preview);
   };
   const switchCamera = () => {
     let OV = new OpenVidu();
@@ -422,18 +434,30 @@ function Live() {
         // <div id="join-dialog" className="jumbotron vertical-center">
         <S.WaitingDiv>
           <S.Header>Live 생성</S.Header>
-          <S.File>
+          <S.FileUploadButton variant="contained" component="label">
+            파일 업로드
+            <input
+              type="file"
+              hidden
+              onChange={handleImage}
+              // multiple="multiple"
+              accept="image/*"
+            />
+          </S.FileUploadButton>
+          {/* <S.File>
             <label htmlFor="file">
-              <S.FileUpload
-                className="btn-upload"
-                value={image}
-                // onChange={handleImage}
-              >
+              <S.FileUpload className="btn-upload" value={image}>
                 썸네일 업로드
               </S.FileUpload>
             </label>
-            <S.FileInput type="file" name="file" id="file" />
-          </S.File>
+            <S.FileInput
+              type="file"
+              name="file"
+              id="file"
+              onChange={handleImage}
+            />
+          </S.File> */}
+          {preview ? <img src={preview} alt="Thumbnail" /> : null}
           <S.Title2>
             {/* <S.TitleHeader>방 이름</S.TitleHeader>
             {roomNumber ? (
