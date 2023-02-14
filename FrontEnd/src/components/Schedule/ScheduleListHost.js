@@ -117,21 +117,26 @@ function ScheduleListHost() {
     navigate('/videochat');
   };
 
+  console.log(scheduleHost);
+
   const handleDeleteSchedule = (s, index) => {
     if (window.confirm('일정을 삭제하시겠습니까?')) {
       axios.delete(`${API_URL}/schedule/${s.scheduleId}`, {
         headers: { Authorization: accessToken },
       });
       timeRef.current[index].style = 'display :none';
-      axios
-        .post(`${API_URL}/alarm`, {
-          type: 3,
-          animalId: null,
+
+      axios.post(
+        `${API_URL}/alarm`,
+        {
+          alarmType: 3,
+          day: s.day,
           receiverId: s.userId,
           targetName: s.shelterNickname,
           time: s.time,
-        })
-        .then(res => console.log(res));
+        },
+        { headers: { Authorization: accessToken } },
+      );
     }
   };
 
