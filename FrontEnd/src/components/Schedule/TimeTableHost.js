@@ -176,7 +176,7 @@ function TimeTableHost() {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/timetable/${shelterId}`, { shelterId })
+      .get(`${API_URL}/shelter/${shelterId}/timetable`, { shelterId })
       .then(res =>
         setDayTime([
           res.data.data.sun,
@@ -274,7 +274,9 @@ function TimeTableHost() {
 
   const handleSetDayTimeButton = () => {
     handleSetDayTime();
-    axios.put(`${API_URL}/timetable/${shelterId}`, { days: newDayTime });
+    axios.put(`${API_URL}/shelter/${shelterId}/timetable`, {
+      dayString: newDayTime,
+    });
     setDayTime(newDayTime);
     // axios
     //   .get(`${API_URL}/timetable/${shelterId}`, { shelterId })
