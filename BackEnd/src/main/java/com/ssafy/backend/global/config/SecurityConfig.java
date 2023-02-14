@@ -53,6 +53,7 @@ public class SecurityConfig {
 			.antMatchers("/*/live", "/*/live/**").permitAll()
 			.antMatchers("/*/alarm", "/*/alarm/**").permitAll()
 			.antMatchers("/*/like/**").permitAll()
+			.antMatchers("/*/file/**").permitAll()
 			.antMatchers("/*/timetable/**").permitAll()
 			.antMatchers("/*/schedule/**").permitAll()
 			.antMatchers("/*/openvidu/**").permitAll()
