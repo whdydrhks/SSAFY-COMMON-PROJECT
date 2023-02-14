@@ -33,14 +33,10 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class AlarmScheduler {
 
-    @Value("${file.upload.animalPath}")
-    private String ANIMAL_SUB_PATH;
-
     private final AlarmRepository alarmRepository;
     private final ScheduleRepository scheduleRepository;
     private final LikeAnimalRepository likeAnimalRepository;
     private final FileService fileService;
-
 
     // 매일 새벽1시마다 당일 예약 알람 생성
     @Async
@@ -74,12 +70,9 @@ public class AlarmScheduler {
                     .build();
 
             alarmList.add(shelterAlarm);
-
         }
-
         alarmRepository.saveAll(alarmList);
     }
-
 
     // 매 시간마다 동물 만료 알람 생성
     @Async
