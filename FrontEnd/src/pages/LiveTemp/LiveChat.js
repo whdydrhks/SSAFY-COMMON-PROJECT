@@ -7,9 +7,11 @@
 /* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/destructuring-assignment */
+/* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable react/sort-comp */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react/no-unused-state */
+/* eslint-disable react/self-closing-comp */
 /* eslint-disable prefer-template */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/no-unresolved */
@@ -34,13 +36,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 // import styled from 'styled-components';
-import * as S from './VideoChatStyle';
+import * as S from './LiveChatStyle';
 import UserVideoComponent from './UserVideoComponent';
 import { userAtom } from '../../recoilState';
 // import TextChat from './TextChat';
 import API_URL from '../../api/api';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
+import ExitSign from '../../images/Video/ExitSign.png';
+import MicOff from '../../images/Video/MicOff.png';
+import MicOn from '../../images/Video/MicOn.png';
 
 // const APPLICATION_SERVER_URL = 'http://localhost:5000';
 
@@ -48,10 +53,10 @@ const APPLICATION_SERVER_URL = API_URL + '/openvidu';
 // const APPLICATION_SERVER_URL = 'https://i8b209.p.ssafy.io:9999/api/v1/openvidu';
 // const OPENVIDU_SERVER_SECRET = 'ssafy';
 
-function VideoChat() {
+function Live() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const roomNumber = location.state.room;
+  // const location = useLocation();
+  // const roomNumber = location.state.room;
   const chatRef = useRef();
 
   // 유저 정보, 이메일, role 불러와야함
@@ -68,6 +73,7 @@ function VideoChat() {
 
   const [publisher, setPublisher] = useState(undefined);
   const [host, setHost] = useState(undefined);
+  const [isMic, setIsMic] = useState(true);
 
   const [OV, setOV] = useState(null);
   const [isFrontCamera, setIsFrontCamera] = useState(false);
@@ -141,6 +147,8 @@ function VideoChat() {
         publisher.subscribeToRemote();
         session.publish(publisher);
         setPublisher(publisher);
+        console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+        console.log(publisher);
         if (role === 'USER') {
           setUser(publisher);
         }
@@ -259,7 +267,6 @@ function VideoChat() {
     if (role === 'HOST') {
       if (session) {
         session.disconnect();
-        navigate('/');
       }
     }
     if (role === 'USER' && session) {
@@ -271,6 +278,7 @@ function VideoChat() {
     setUser(undefined);
     setMyUserName(nickname);
     setHost(undefined);
+    navigate('/');
   };
 
   const getToken = () => {
@@ -383,10 +391,10 @@ function VideoChat() {
                 className="form-control"
                 type="text"
                 id="sessionId"
-                value={roomNumber}
+                // value={roomNumber}
                 onChange={handleChangeSessionId}
                 required
-                disabled
+                // disabled
               />
             </S.RoomNameDiv> */}
             <p className="text-center">
@@ -414,62 +422,90 @@ function VideoChat() {
                   case 'HOST':
                     return (
                       <>
-                        <S.SmallCamera>
-                          <UserVideoComponent streamManager={host} />
-                        </S.SmallCamera>
-                        {user === undefined ? (
-                          <S.WaitingMessageBox>
-                            <S.WaitingMessage>
-                              상대방의 입장을 기다리는 중입니다.
-                            </S.WaitingMessage>
-                          </S.WaitingMessageBox>
-                        ) : (
-                          <div>
-                            <UserVideoComponent streamManager={user} />
-                          </div>
-                        )}
+                        <UserVideoComponent streamManager={host} />
                       </>
                     );
+                  case 'USER':
+                    return (
+                      <>
+                        <UserVideoComponent streamManager={host} />
+                      </>
+                    );
+                }
+              })()}
+
+              {/* <input
+                className="btn btn-large btn-success"
+                type="button"
+                id="buttonSwitchCamera"
+                onClick={switchCamera}
+                value="카메라 전환"
+              /> */}
+            </S.div>
+          ) : (
+            // 세션 있고 호스트가 없는 경우
+            <S.div id="main-video" className="col-md-6">
+              {(() => {
+                switch (role) {
                   case 'USER':
                     return (
                       <>
                         <S.SmallCamera>
                           <UserVideoComponent streamManager={user} />
                         </S.SmallCamera>
-                        <div>
-                          <UserVideoComponent streamManager={host} />
-                        </div>
+                        <S.WaitingMessageBox>
+                          <S.WaitingMessage>
+                            상대방의 입장을 기다리는 중입니다.
+                          </S.WaitingMessage>
+                        </S.WaitingMessageBox>
                       </>
                     );
                 }
               })()}
 
-              <input
+              {/* <input
                 className="btn btn-large btn-success"
                 type="button"
                 id="buttonSwitchCamera"
                 onClick={switchCamera}
                 value="카메라 전환"
-              />
+              /> */}
             </S.div>
-          ) : null}
+          )}
 
-          <div id="session-header">
-            {/* 메인 화면 제목 */}
-            {/* <h1 id="session-title">{mySessionId}</h1> */}
-            <input
-              className="btn btn-large btn-danger"
-              type="button"
-              id="buttonLeaveSession"
-              onClick={leaveSession}
-              value="화상채팅 나가기"
+          {/* <S.ControlDiv> */}
+          {/* <div onClick={leaveSession}>
+            <img
+              src={CallDisconnected}
+              alt="disconnected"
+              style={{ width: '10vw' }}
             />
-          </div>
+          </div> */}
+          {/* </S.ControlDiv> */}
         </div>
       ) : null}
 
       {session ? (
         <S.ChatBox>
+          <S.LeaveBox>
+            {/* <S.LeaveButton type="button" onClick={leaveSession}>
+              나가기
+            </S.LeaveButton> */}
+            <S.ExitSign src={ExitSign} alt="ExitSign" />
+            <div
+              onClick={() => {
+                publisher.publishAudio(!isMic);
+                setIsMic(!isMic);
+              }}
+            >
+              {isMic ? (
+                <MicOff src={MicOff} alt="MicOff" />
+              ) : (
+                <Mic src={MicOn} alt="MicOn" />
+              )}
+            </div>
+          </S.LeaveBox>
+
           <S.ChattingListBox ref={chatRef}>
             {receiveMsg.map((data, index) => (
               <S.Chat key={index}>
@@ -482,7 +518,7 @@ function VideoChat() {
           <S.ChatForm>
             <form onSubmit={sendMessage}>
               <S.ChatInput type="text" onChange={handleMsg} value={sendMsg} />
-              <S.ChatButton type="submit">메시지 보내기</S.ChatButton>
+              <S.ChatButton type="submit">전송</S.ChatButton>
             </form>
           </S.ChatForm>
         </S.ChatBox>
@@ -492,4 +528,4 @@ function VideoChat() {
   );
 }
 
-export default VideoChat;
+export default Live;

@@ -54,7 +54,14 @@ const SFileUploadButton = styled(Button)`
 
 const SPreviewCard = styled(Grid)`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+`;
+
+const SPreviewImg = styled.img`
+  width: 10rem;
+  margin-bottom: 1rem;
 `;
 
 const SSubmit = styled.div`
@@ -90,6 +97,24 @@ function AnimalUpdateHost() {
   const [previews, setPreviews] = useState([]);
 
   const [imgPreview, setImgPreview] = useState('');
+  const [addImgPreview, setAddImgPreview] = useState('');
+
+  const [animalImages, setAnimalImages] = useState([]);
+
+  const [addImages, setAddImages] = useState([]);
+
+  const getImages = () => {
+    axios
+      .get(`${API_URL}/shelter/${shelterId}/animal/${animal.animalId}/image`)
+      .then(res => {
+        setImgPreview(res.data.data);
+        // console.log('#########################');
+        // console.log(res.data.data);
+      });
+  };
+  useEffect(() => {
+    getImages();
+  }, []);
 
   const handleAdoption = e => {
     setAdoption(e.target.value);
@@ -127,10 +152,10 @@ function AnimalUpdateHost() {
     setNote(e.target.value);
   };
 
-  const handleImages = e => {
-    setImages(e.target.files);
+  const handleAddImages = e => {
+    setAddImages(e.target.files);
     const imageLists = e.target.files;
-    let imageUrlLists = [...previews];
+    let imageUrlLists = [...addImgPreview];
 
     for (let i = 0; i < imageLists.length; i += 1) {
       const currentImageUrl = URL.createObjectURL(imageLists[i]);
@@ -141,48 +166,63 @@ function AnimalUpdateHost() {
       imageUrlLists = imageUrlLists.slice(0, 10);
     }
 
-    setPreviews(imageUrlLists);
+    setAddImgPreview(imageUrlLists);
   };
 
-  const handlePreviewList = e => {
-    // console.log(e.target.name);
-    const temp = [...images];
-    const temp2 = [...previews];
+  const handleDeletePreview = e => {
+    // console.log(e.target.id);
+    axios.delete(e.target.id).then(res => console.log(res));
+    const temp = [...imgPreview];
     temp.splice(e.target.name, 1);
-    // console.log(temp);
-    temp2.splice(e.target.name, 1);
-    // console.log(temp2);
-    setImages(temp);
-    setPreviews(temp2);
+    setImgPreview(temp);
+  };
+
+  const handleDeleteAddPreview = e => {
+    const temp = [...addImgPreview];
+    console.log(temp);
+    temp.splice(e.target.name, 1);
+    setAddImgPreview(temp);
   };
 
   const updateAnimal = e => {
+    console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
     e.preventDefault();
-    // console.log(e);
-    const formData = new FormData();
+    console.log('##########################################');
+    const fileData = new FormData();
 
-    formData.append('image', images);
-    const variables = [
-      {
-        adoption,
-        name,
-        breed,
-        age,
-        gender,
-        weight,
-        neuter,
-        note,
-      },
-    ];
+    const variables = {
+      adoption,
+      age,
+      breed,
+      gender,
+      name,
+      neuter,
+      note,
+      weight,
+    };
 
-    formData.append(
-      'data',
-      new Blob([JSON.stringify(variables)], { type: 'application/json' }),
-    );
-    axios.put(
-      `${API_URL}/shelter/${shelterId}/animal/${animalId.animalId}`,
-      formData,
-    );
+    Object.values(addImages).forEach(addimage => {
+      fileData.append('files', addimage);
+    });
+
+    console.log(fileData);
+
+    axios
+      .put(
+        `${API_URL}/shelter/${shelterId}/animal/${animalId.animalId}`,
+        variables,
+      )
+      .then(() => console.log('데이터 수정완료'));
+
+    axios
+      .post(
+        `${API_URL}/shelter/${shelterId}/animal/${animalId.animalId}/image`,
+        fileData,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        },
+      )
+      .then(() => console.log('파일 수정완료'));
     // console.log(variables[0].animalId);
     navigate(`/animal/${variables[0].animalId}`);
   };
@@ -347,11 +387,32 @@ function AnimalUpdateHost() {
               {/* 사진 */}
               <Grid item xs={12}>
                 <STypography component="h6" variant="body2">
-                  사진
+                  기존 사진
                 </STypography>
                 <Box sx={{ flexGrow: 1 }}>
-                  <Grid container spacing={2}>
-                    {previews.map((image, imageId) => (
+                  <Grid container spacing={1}>
+                    {/* <SPreviewContainer> */}
+                    {Object.values(imgPreview).map((image, imageId) => (
+                      <SPreviewCard item xs={6}>
+                        <SPreviewImg
+                          src={image}
+                          alt={`${image}-${imageId}`}
+                          // style={{ width: '10rem' }}
+                        />
+                        <Button
+                          type="button"
+                          onClick={handleDeletePreview}
+                          name={`${imageId}`}
+                          variant="contained"
+                          color="error"
+                          id={image}
+                        >
+                          삭제
+                        </Button>
+                      </SPreviewCard>
+                    ))}
+                    {/* </SPreviewContainer> */}
+                    {/* {imgPreview.map((image, imageId) => (
                       <SPreviewCard item xs={6}>
                         <img
                           src={image}
@@ -368,14 +429,14 @@ function AnimalUpdateHost() {
                           삭제
                         </Button>
                       </SPreviewCard>
-                    ))}
+                    ))} */}
                   </Grid>
                 </Box>
               </Grid>
             </Grid>
 
             {/* 사진 업로드 */}
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <STemp>
                 <SFileUploadButton variant="contained" component="label">
                   파일 업로드
@@ -388,12 +449,54 @@ function AnimalUpdateHost() {
                   />
                 </SFileUploadButton>
               </STemp>
+            </Grid> */}
+
+            {/* 추가되는 파일 미리보기 */}
+            <Grid item xs={12}>
+              <STypography component="h6" variant="body2">
+                추가될 사진
+              </STypography>
+              <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={2}>
+                  {Object.values(addImgPreview).map((image, imageId) => (
+                    <SPreviewCard item xs={6}>
+                      <SPreviewImg
+                        src={image}
+                        alt={`${image}-${imageId}`}
+                        style={{ width: '10rem' }}
+                      />
+                      <Button
+                        type="button"
+                        onClick={handleDeleteAddPreview}
+                        name={`${imageId}`}
+                        variant="contained"
+                        color="error"
+                      >
+                        삭제
+                      </Button>
+                    </SPreviewCard>
+                  ))}
+                </Grid>
+              </Box>
+            </Grid>
+
+            <Grid item xs={12}>
+              <STemp>
+                <SFileUploadButton variant="contained" component="label">
+                  파일 추가 업로드
+                  <input
+                    type="file"
+                    hidden
+                    onChange={handleAddImages}
+                    multiple="multiple"
+                    accept="image/*"
+                  />
+                </SFileUploadButton>
+              </STemp>
             </Grid>
 
             <SSubmit>
-              <SButton type="submit" variant="contained" component="label">
-                동물 수정하기
-              </SButton>
+              <button type="submit">동물 수정하기</button>
             </SSubmit>
           </form>
         </Box>

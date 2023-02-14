@@ -1,17 +1,18 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable prefer-const */
 /* eslint-disable no-lone-blocks */
 /* eslint-disable array-callback-return */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/no-array-index-key */
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import '../../styles/slick-theme.css';
 import '../../styles/slick.css';
 import { Button, Switch } from '@mui/material';
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { scheduleAtom } from '../../recoilState';
+import { scheduleAtom, userAtom } from '../../recoilState';
 import API_URL from '../../api/api';
 import { getCookie } from '../../pages/Account/cookie';
 
@@ -43,21 +44,33 @@ const SClickButton = styled.button`
 `;
 
 function ScheduleListUser() {
+  const scheduleRef = useRef([]);
+  const navigate = useNavigate();
   const today = new Date();
   const todayDate =
     (today.getMonth() + 1).toString().padStart(2, '0') +
     today.getDate().toString().padStart(2, '0');
   const accessToken = getCookie('accessToken');
+  const user = useRecoilValue(userAtom);
   const [scheduleUser, setScheduleUser] = useRecoilState(scheduleAtom);
   const [dateList, setDateList] = useState([]);
 
-  const handleDeleteSchedule = sId => {
+  const handleDeleteSchedule = (s, idx) => {
     if (window.confirm('해당 일정을삭제하시겠습니까?')) {
-      axios.delete(`${API_URL}/schedule/${sId}`, {
+      axios.delete(`${API_URL}/schedule/${s.scheduleId}`, {
         headers: { Authorization: accessToken },
       });
-      // navigate('/');
-      // window.location.reload();
+      scheduleRef.current[idx].style = 'display : none';
+
+      axios
+        .post(`${API_URL}/alarm`, {
+          type: 3,
+          animalId: null,
+          receiverId: s.userId,
+          targetName: s.shelterNickname,
+          time: s.time,
+        })
+        .then(res => console.log(res));
     }
   };
 
@@ -68,28 +81,22 @@ function ScheduleListUser() {
   useEffect(() => {
     let list = [];
 
-    axios
-      .get(`${API_URL}/schedule/users`, {
-        headers: {
-          Authorization: accessToken,
-        },
-      })
-      .then(res => {
-        res.data.data.map(item => {
-          if (
-            Number(item.day) >=
-              Number(
-                (today.getMonth() + 1).toString().padStart(2, '0') +
-                  today.getDate().toString().padStart(2, '0'),
-              ) &&
-            !list.includes(item.day)
-          ) {
-            list.push(item.day);
-          }
-        });
-        setDateList(() => list);
-        setScheduleUser(res.data.data);
+    axios.get(`${API_URL}/schedule/users/${user.userId}`).then(res => {
+      res.data.data.map(item => {
+        if (
+          Number(item.day) >=
+            Number(
+              (today.getMonth() + 1).toString().padStart(2, '0') +
+                today.getDate().toString().padStart(2, '0'),
+            ) &&
+          !list.includes(item.day)
+        ) {
+          list.push(item.day);
+        }
       });
+      setDateList(() => list);
+      setScheduleUser(res.data.data);
+    });
   }, []);
 
   console.log('sc', scheduleUser);
@@ -100,9 +107,12 @@ function ScheduleListUser() {
       {dateList.map(item => (
         <SDate>
           {item}
-          {scheduleUser.map(schedule =>
+          {scheduleUser.map((schedule, index) =>
             schedule.day === item ? (
-              <STimeTable key={schedule.room}>
+              <STimeTable
+                key={index}
+                ref={el => (scheduleRef.current[index] = el)}
+              >
                 <div>
                   <STime>
                     {schedule.time.toString().padStart(2, '0')}:00 ~{' '}
@@ -115,7 +125,7 @@ function ScheduleListUser() {
                   <SClickButton
                     bgColor="red"
                     onClick={() => {
-                      handleDeleteSchedule(scheduleUser.scheduleId);
+                      handleDeleteSchedule(schedule, index);
                     }}
                   >
                     {' '}
@@ -127,7 +137,7 @@ function ScheduleListUser() {
                   <SClickButton
                     bgColor="red"
                     onClick={() => {
-                      handleDeleteSchedule(scheduleUser.scheduleId);
+                      handleDeleteSchedule(schedule, index);
                     }}
                   >
                     {' '}
@@ -139,11 +149,8 @@ function ScheduleListUser() {
                   <Link
                     to={{
                       pathname: '/videochat',
-                      state: {
-                        room: schedule.room,
-                        nickname: schedule.userNickname,
-                      },
                     }}
+                    state={{ room: schedule.room }}
                   >
                     <SClickButton
                       bgColor="green"

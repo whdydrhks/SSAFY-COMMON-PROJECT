@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ssafy.backend.domain.member.model.request.UserMatchPasswordDto;
 import com.ssafy.backend.domain.member.model.request.UserRegisterDto;
 import com.ssafy.backend.domain.member.model.request.UserUpdateDto;
+import com.ssafy.backend.domain.member.model.request.UserUpdatePasswordDto;
 import com.ssafy.backend.domain.member.service.UserService;
 import com.ssafy.backend.global.file.service.FileService;
 
@@ -107,23 +109,22 @@ public class UserControllerV1 {
 	@ApiOperation(value = "비밀번호 검사")
 	public ResponseEntity<?> checkPassword(
 		@PathVariable(name = "userId") Long userId,
-		@RequestParam(name = "password") String password,
+		@RequestBody UserMatchPasswordDto matchPasswordDto,
 		HttpServletRequest request) {
 
 		return ResponseEntity
-			.ok(userService.checkPassword(userId, password, request));
+			.ok(userService.checkPassword(userId, matchPasswordDto, request));
 	}
 
 	@PutMapping("/{userId}/password")
 	@ApiOperation(value = "비밀번호 수정")
 	public ResponseEntity<?> updatePassword(
 		@PathVariable(name = "userId") Long userId,
-		@RequestParam(name = "curPassword") String curPassword,
-		@RequestParam(name = "newPassword") String newPassword,
+		@RequestBody UserUpdatePasswordDto updatePasswordDto,
 		HttpServletRequest request) {
 
 		return ResponseEntity
-			.ok(userService.updatePassword(userId, curPassword, newPassword, request));
+			.ok(userService.updatePassword(userId, updatePasswordDto, request));
 	}
 
 	@GetMapping("/{userId}/image")

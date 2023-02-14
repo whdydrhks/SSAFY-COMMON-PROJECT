@@ -1,5 +1,7 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable no-unused-vars */
+/* eslint-disable radix */
 import React, { useState } from 'react';
 import {
   Box,
@@ -23,9 +25,13 @@ import API_URL from '../../api/api';
 const SH1 = styled.h1`
   font-size: 2rem;
   font-family: 'cafe24';
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
   margin-left: 1rem;
   /* margin-bottom: 1rem; */
+`;
+
+const SContainer = styled(Container)`
+  /* margin-bottom: 5rem; */
 `;
 
 const STemp = styled.div`
@@ -42,12 +48,14 @@ const SFileUploadButton = styled(Button)`
 
 const SPreviewCard = styled(Grid)`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
 `;
 
-const SSubmit = styled.div`
-  margin-top: 2rem;
-  text-align: right;
+const SPreviewImg = styled.img`
+  width: 10rem;
+  margin-bottom: 1rem;
 `;
 
 const STypography = styled(Typography)`
@@ -55,10 +63,10 @@ const STypography = styled(Typography)`
   margin-bottom: 1rem;
 `;
 
-const SButton = styled(Button)`
-  font-family: 'cafe24';
-  font-size: 1.5rem;
-`;
+// const SButton = styled(Button)`
+//   font-family: 'cafe24';
+//   font-size: 1.5rem;
+// `;
 
 function AnimalCreateHost() {
   const navigate = useNavigate();
@@ -85,6 +93,7 @@ function AnimalCreateHost() {
   const [note, setNote] = useState('');
   const [images, setImages] = useState([]);
   const [previews, setPreviews] = useState([]);
+  const [animalId, setAnimalId] = useState(undefined);
 
   // const [imgPreview, setImgPreview] = useState('');
 
@@ -97,7 +106,7 @@ function AnimalCreateHost() {
   };
 
   const handleAge = e => {
-    setAge(e.target.value);
+    setAge(parseInt(e.target.value));
   };
 
   const handleGender = e => {
@@ -109,7 +118,7 @@ function AnimalCreateHost() {
   };
 
   const handleWeight = e => {
-    setWeight(e.target.value);
+    setWeight(parseInt(e.target.value));
   };
 
   const handleNeuter = e => {
@@ -155,37 +164,42 @@ function AnimalCreateHost() {
 
   const addAnimal = e => {
     e.preventDefault();
-    // console.log(e);
-    const formData = new FormData();
+    console.log(e.target);
+    const fileData = new FormData();
+    const variables = {
+      age,
+      breed,
+      gender,
+      manageCode,
+      name,
+      neuter,
+      note,
+      weight,
+    };
 
-    formData.append('image', images);
-    const variables = [
-      {
-        age,
-        breed,
-        gender,
-        manageCode,
-        name,
-        neuter,
-        note,
-        weight,
-      },
-    ];
+    Object.values(images).forEach(image => {
+      fileData.append('files', image);
+    });
 
-    formData.append(
-      'data',
-      new Blob([JSON.stringify(variables)], { type: 'application/json' }),
-    );
-    axios.post(`${API_URL}/shelter/${shelterId}/animal`, formData);
-    // console.log(variables[0].animalId);
-    navigate(`/animal/${variables[0].animalId}`);
+    axios
+      .post(`${API_URL}/shelter/${shelterId}/animal`, variables)
+      .then(res => {
+        axios.post(
+          `${API_URL}/shelter/${shelterId}/animal/${res.data.data}/image`,
+          fileData,
+          {
+            headers: { 'Content-Type': 'multipart/form-data' },
+          },
+        );
+        navigate('/animal');
+      });
   };
 
   return (
     <>
       <Header />
       <SH1>동물 등록</SH1>
-      <Container component="main" maxWidth="xs">
+      <SContainer component="main" maxWidth="xs">
         <Box
           sx={{
             marginTop: 8,
@@ -317,7 +331,7 @@ function AnimalCreateHost() {
                 <Grid container spacing={2}>
                   {previews.map((image, imageId) => (
                     <SPreviewCard item xs={6}>
-                      <img
+                      <SPreviewImg
                         src={image}
                         alt={`${image}-${imageId}`}
                         style={{ width: '10rem' }}
@@ -351,14 +365,11 @@ function AnimalCreateHost() {
               </STemp>
             </Grid>
 
-            <SSubmit>
-              <SButton type="submit" variant="contained" component="label">
-                동물 등록하기
-              </SButton>
-            </SSubmit>
+            <button type="submit">동물 등록하기</button>
+            {/* </SSubmit> */}
           </form>
         </Box>
-      </Container>
+      </SContainer>
 
       <Nav />
     </>

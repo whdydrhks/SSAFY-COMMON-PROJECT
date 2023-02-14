@@ -80,7 +80,7 @@ export const ChatBox = styled.div`
 `;
 
 export const ChattingListBox = styled.ul`
-  height: 43vh;
+  height: 40vh;
   border: 1px solid black;
   border-radius: 10px;
   overflow: scroll;
@@ -98,7 +98,7 @@ export const ChatForm = styled.div`
 export const ChatInput = styled.input`
   border-radius: 10px;
   height: 5vh;
-  width: 19rem;
+  width: 80vw;
 `;
 
 export const ChatButton = styled.button`
@@ -107,12 +107,39 @@ export const ChatButton = styled.button`
   border: 1px solid #1976d2;
   border-radius: 10px;
   height: 5vh;
-  width: 5vw;
+  width: 15vw;
+`;
+
+export const Controller = styled.div`
+  display: flex;
+  justify-content: space-around;
 `;
 
 export const Chat = styled.li`
   font-size: 1.5rem;
   margin: 3%;
+`;
+
+export const LeaveBox = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+export const ExitSign = styled.img``;
+
+export const MicOff = styled.img``;
+
+export const MicOn = styled.img`
+  margin: 4px;
+`;
+
+export const LeaveButton = styled.button`
+  background-color: #1976d2;
+  border: 1px solid #1976d2;
+  border-radius: 10px;
+  color: white;
+  height: 5vh;
+  width: 15vw;
 `;
 
 /* 
