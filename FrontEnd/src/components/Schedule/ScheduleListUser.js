@@ -149,11 +149,8 @@ function ScheduleListUser() {
                   <Link
                     to={{
                       pathname: '/videochat',
-                      state: {
-                        room: schedule.room,
-                        nickname: schedule.userNickname,
-                      },
                     }}
+                    state={{ room: schedule.room }}
                   >
                     <SClickButton
                       bgColor="green"

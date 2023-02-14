@@ -48,10 +48,10 @@ const APPLICATION_SERVER_URL = API_URL + '/openvidu';
 // const APPLICATION_SERVER_URL = 'https://i8b209.p.ssafy.io:9999/api/v1/openvidu';
 // const OPENVIDU_SERVER_SECRET = 'ssafy';
 
-function VideoChat() {
+function Live() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const roomNumber = location.state.room;
+  // const location = useLocation();
+  // const roomNumber = location.state.room;
   const chatRef = useRef();
 
   // 유저 정보, 이메일, role 불러와야함
@@ -141,6 +141,8 @@ function VideoChat() {
         publisher.subscribeToRemote();
         session.publish(publisher);
         setPublisher(publisher);
+        console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+        console.log(publisher);
         if (role === 'USER') {
           setUser(publisher);
         }
@@ -259,7 +261,6 @@ function VideoChat() {
     if (role === 'HOST') {
       if (session) {
         session.disconnect();
-        navigate('/');
       }
     }
     if (role === 'USER' && session) {
@@ -271,6 +272,7 @@ function VideoChat() {
     setUser(undefined);
     setMyUserName(nickname);
     setHost(undefined);
+    navigate('/');
   };
 
   const getToken = () => {
@@ -414,31 +416,42 @@ function VideoChat() {
                   case 'HOST':
                     return (
                       <>
-                        <S.SmallCamera>
-                          <UserVideoComponent streamManager={host} />
-                        </S.SmallCamera>
-                        {user === undefined ? (
-                          <S.WaitingMessageBox>
-                            <S.WaitingMessage>
-                              상대방의 입장을 기다리는 중입니다.
-                            </S.WaitingMessage>
-                          </S.WaitingMessageBox>
-                        ) : (
-                          <div>
-                            <UserVideoComponent streamManager={user} />
-                          </div>
-                        )}
+                        <UserVideoComponent streamManager={host} />
                       </>
                     );
+                  case 'USER':
+                    return (
+                      <>
+                        <UserVideoComponent streamManager={host} />
+                      </>
+                    );
+                }
+              })()}
+
+              {/* <input
+                className="btn btn-large btn-success"
+                type="button"
+                id="buttonSwitchCamera"
+                onClick={switchCamera}
+                value="카메라 전환"
+              /> */}
+            </S.div>
+          ) : (
+            // 세션 있고 호스트가 없는 경우
+            <S.div id="main-video" className="col-md-6">
+              {(() => {
+                switch (role) {
                   case 'USER':
                     return (
                       <>
                         <S.SmallCamera>
                           <UserVideoComponent streamManager={user} />
                         </S.SmallCamera>
-                        <div>
-                          <UserVideoComponent streamManager={host} />
-                        </div>
+                        <S.WaitingMessageBox>
+                          <S.WaitingMessage>
+                            상대방의 입장을 기다리는 중입니다.
+                          </S.WaitingMessage>
+                        </S.WaitingMessageBox>
                       </>
                     );
                 }
@@ -452,7 +465,7 @@ function VideoChat() {
                 value="카메라 전환"
               />
             </S.div>
-          ) : null}
+          )}
 
           <div id="session-header">
             {/* 메인 화면 제목 */}
@@ -492,4 +505,4 @@ function VideoChat() {
   );
 }
 
-export default VideoChat;
+export default Live;
