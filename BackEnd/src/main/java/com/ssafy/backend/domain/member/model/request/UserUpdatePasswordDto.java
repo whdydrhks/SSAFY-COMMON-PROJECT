@@ -12,8 +12,9 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class UserPasswordDto {
+public class UserUpdatePasswordDto {
 
-	private String password;
+	private String curPassword;
+	private String newPassword;
 
 }
