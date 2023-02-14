@@ -167,6 +167,11 @@ const timetableShelterIdAtom = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+const likeAnimalAtom = atom({
+  key: 'likeAnimalAtom',
+  default: [],
+});
+
 export {
   animalState,
   authStateAtom,
@@ -186,4 +191,5 @@ export {
   alarmAtom,
   liveListAtom,
   timetableShelterIdAtom,
+  likeAnimalAtom,
 };
