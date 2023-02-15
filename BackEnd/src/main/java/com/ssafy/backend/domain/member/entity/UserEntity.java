@@ -65,10 +65,6 @@ public class UserEntity extends BaseTimeEntity {
 	@Column(name = "nickname", nullable = false, unique = true, length = 20)
 	private String nickname;
 
-	@Column(name = "profile_img", nullable = false)
-	@ColumnDefault("'default.png'")
-	private String profileImage;
-
 	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private ShelterEntity shelter;
 

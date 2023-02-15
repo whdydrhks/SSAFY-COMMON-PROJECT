@@ -29,6 +29,7 @@ OPENVIDU_URL: https://i8b209.p.ssafy.io:8445
 OPENVIDU_SECRET: ssafy
 
 spring:
+
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -49,8 +50,8 @@ spring:
       ddl-auto: create
     properties:
       hibernate:
-        show-sql: true
-        format_sql: true
+        show-sql: false
+        format_sql: false
     generate-ddl: true
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -106,6 +107,7 @@ spring:
       
 file:
   domain: https://localhost:9999/api/
+  initDummy: dummy
   upload:
     basicPath: /upload_test/images
     userPath: user

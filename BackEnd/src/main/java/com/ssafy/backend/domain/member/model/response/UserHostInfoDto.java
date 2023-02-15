@@ -29,7 +29,6 @@ public class UserHostInfoDto extends UserInfoDto {
 			.name(user.getName())
 			.phoneNumber(user.getPhoneNumber())
 			.nickname(user.getNickname())
-			.thumnailImage(user.getProfileImage())
 			.createdDate(user.getCreatedDate())
 			.updatedDate(user.getUpdatedDate())
 			.build();

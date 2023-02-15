@@ -40,7 +40,6 @@ public class UserUpdateDto {
 			.name(this.getName())
 			.phoneNumber(this.getPhoneNumber())
 			.nickname(this.getNickname())
-			.profileImage(entity.getProfileImage())
 			.expired(entity.getExpired())
 			.createdDate(entity.getCreatedDate())
 			.build();
