@@ -17,14 +17,15 @@ import { dayTimeAtom, todayTimeAtom, userAtom } from '../../recoilState';
 
 const SButtonDiv = styled.div`
   text-align: center;
+  width: 100%;
   margin-bottom: 0.5rem;
 `;
 
 const SButton = styled.button`
-  width: 90%;
+  width: 100%;
   background-color: white;
   border: none;
-  font-size: 1.7em;
+  font-size: 1.5rem;
   font-family: mainFont;
   color: grey;
   /* border: 1px solid gray; */
