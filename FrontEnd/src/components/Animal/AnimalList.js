@@ -43,15 +43,15 @@ const SSearchCategory = styled.select`
   height: 2rem;
   border: 1px solid gray;
   border-radius: 5px;
-  width:6rem;
+  width:25%;
   font-family: mainFont;
   font-size: 1rem;
 `;
 
 const SInput = styled.input`
   text-align: left;
-  width: 10rem;
-  height: 2.9vh;
+  width: 45%;
+  height: 1.9rem;
   border: 1px solid gray;
   border-radius: 5px;
   margin-right: 2%;
@@ -67,7 +67,7 @@ const SButtton = styled.button`
    border: 0px solid ;
    background-color: #9500ae;
    color: white;
-   width: 3rem;
+   width: 20%;
    height: 1.9rem;
    font-family: mainFont;
    font-size: 1.2rem;
