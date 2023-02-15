@@ -64,7 +64,7 @@ const SAnimalItem = styled.div`
   margin-top: 1rem;
   margin-bottom: 1rem;
   flex-basis: 270px;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   width: 100%;
   font-family: mainFont;
 
