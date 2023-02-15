@@ -82,7 +82,7 @@ const SLiveContentBox = styled.div`
   justify-content: space-between;
   background-color: beige;
 `;
-const SLiveImg = styled.div``;
+const SLiveImg = styled.img``;
 
 const SLiveTitle = styled.div`
   font-size: 1.2rem;
@@ -194,6 +194,7 @@ function Live() {
   useEffect(async () => {
     await axios.get(`${API_URL}/live/all`).then(res => {
       setLiveList(res.data.data);
+      console.log(res.data.data);
     });
   }, []);
 
@@ -210,10 +211,10 @@ function Live() {
       </SLiveHeader>
       <SLiveContainer>
         {liveList.map((live, index) => (
-          <Link to="/createschedule" key={index} state={live}>
+          <Link to="/livechat" key={index} state={live} state2={live.room}>
             <SLiveItem onClick={() => handleClickLive(live.shelterId)}>
               <SLiveImgBox>
-                <SLiveImg>{live.imagge}</SLiveImg>
+                <img src={live.thumbnailImage} alt="liveThumbnail" />
               </SLiveImgBox>
               <SLiveContentBox>
                 <SLiveTitle>{live.title}</SLiveTitle>
