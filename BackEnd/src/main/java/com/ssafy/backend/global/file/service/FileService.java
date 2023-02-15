@@ -449,6 +449,11 @@ public class FileService {
 			}
 		}
 
+		// 프론트 요구에 맞춰서 수정 문제 생겨도 모름...
+		if (file.getStoreName().equals("default_profile")) {
+			return "profileImgdefault.png";
+		}
+
 		// return ServletUriComponentsBuilder.fromCurrentContextPath()
 		return ServletUriComponentsBuilder.fromPath(DOMAIN_PATH)
 			.path("/v1/file")

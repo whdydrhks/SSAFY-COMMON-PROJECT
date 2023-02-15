@@ -65,6 +65,11 @@ public class UserEntity extends BaseTimeEntity {
 	@Column(name = "nickname", nullable = false, unique = true, length = 20)
 	private String nickname;
 
+	// 프로필 이미지를 숫자 아바타로 받을 것
+	@Column(name = "profileImage", nullable = false)
+	@ColumnDefault("'0'")
+	private int profileImage;
+
 	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private ShelterEntity shelter;
 

@@ -17,14 +17,15 @@ import { dayTimeAtom, todayTimeAtom, userAtom } from '../../recoilState';
 
 const SButtonDiv = styled.div`
   text-align: center;
+  width: 100%;
   margin-bottom: 0.5rem;
 `;
 
 const SButton = styled.button`
-  width: 90%;
+  width: 100%;
   background-color: white;
   border: none;
-  font-size: 1.7em;
+  font-size: 1.5rem;
   font-family: mainFont;
   color: grey;
   /* border: 1px solid gray; */
@@ -46,11 +47,11 @@ const SContainer = styled.div`
   justify-content: right;
 `;
 const SClickButton = styled.button`
-  width: 5.5rem;
-  height: 2.7rem;
+  width: 30%;
+  height: 2.5rem;
   border: none;
   margin-top: 1rem;
-  font-size: 1.5rem;
+  font-size: 1rem;
   /* align-items: right; */
   border-radius: 10px;
   font-family: mainFont;

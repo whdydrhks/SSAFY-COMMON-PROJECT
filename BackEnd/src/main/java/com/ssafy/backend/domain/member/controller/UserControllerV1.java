@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.backend.domain.member.model.request.UserMatchPasswordDto;
 import com.ssafy.backend.domain.member.model.request.UserRegisterDto;
@@ -37,18 +36,18 @@ public class UserControllerV1 {
 	private final FileService fileService;
 
 	@GetMapping
-	@ApiOperation(value = "사용자 조회")
+	@ApiOperation(value = "사용자 조회. 키워드가 없으면 모든 사용자 전체 조회")
 	public ResponseEntity<?> userShelter(
-		@RequestParam(value = "keyword", required = true) String keyword,
+		@RequestParam(value = "keyword", required = false) String keyword,
 		@RequestParam(value = "pageNo", defaultValue = "1", required = false) int page,
 		@RequestParam(value = "sort", required = false) String sort,
 		@RequestParam(value = "limit", required = false) String limit,
 		HttpServletRequest request) {
 
-		//		if (keyword == null || keyword.isEmpty()) {
-		//			return ResponseEntity
-		//				.ok(userService.getInfoAll());
-		//		}
+		if (keyword == null || keyword.isEmpty()) {
+			return ResponseEntity
+				.ok(userService.getInfoAll());
+		}
 
 		return ResponseEntity
 			.ok(userService.searchInfoByNickname(keyword));
@@ -127,25 +126,26 @@ public class UserControllerV1 {
 			.ok(userService.updatePassword(userId, updatePasswordDto, request));
 	}
 
-	@GetMapping("/{userId}/image")
-	@ApiOperation(value = "사용자 이미지 조회")
-	public ResponseEntity<?> getFilesByUser(
-		@PathVariable("userId") Long userId,
-		HttpServletRequest request) {
-
-		return ResponseEntity
-			.ok(fileService.getFilesByUser(userId, request));
-	}
-
-	@PostMapping("/{userId}/image")
-	@ApiOperation(value = "사용자 이미지 등록")
-	public ResponseEntity<?> uploadFilesByUser(
-		@PathVariable("userId") Long userId,
-		@RequestParam("file") MultipartFile image,
-		HttpServletRequest request) {
-
-		return ResponseEntity
-			.ok(fileService.uploadFile("user", userId, image, request));
-	}
+	//	// 서비스 기능 변경으로 인해 사용하지 않음
+	//	@GetMapping("/{userId}/image")
+	//	@ApiOperation(value = "사용자 이미지 조회")
+	//	public ResponseEntity<?> getFilesByUser(
+	//		@PathVariable("userId") Long userId,
+	//		HttpServletRequest request) {
+	//
+	//		return ResponseEntity
+	//			.ok(fileService.getFilesByUser(userId, request));
+	//	}
+	//
+	//	@PostMapping("/{userId}/image")
+	//	@ApiOperation(value = "사용자 이미지 등록")
+	//	public ResponseEntity<?> uploadFilesByUser(
+	//		@PathVariable("userId") Long userId,
+	//		@RequestParam("file") MultipartFile image,
+	//		HttpServletRequest request) {
+	//
+	//		return ResponseEntity
+	//			.ok(fileService.uploadFile("user", userId, image, request));
+	//	}
 
 }
