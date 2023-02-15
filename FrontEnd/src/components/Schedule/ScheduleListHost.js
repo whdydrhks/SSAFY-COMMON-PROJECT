@@ -36,14 +36,11 @@ const SButtonDiv = styled.div`
 `;
 
 const SButton = styled.button`
-  width: 90%;
-  height: 4vh;
+  width: 100%;
   background-color: white;
   border: none;
-  font-size: 1.7em;
-  border-radius: 10px;
+  font-size: 1.3rem;
   font-family: mainFont;
-  color: grey;
   /* border: 1px solid gray; */
   color: black;
   border-radius: 40px;

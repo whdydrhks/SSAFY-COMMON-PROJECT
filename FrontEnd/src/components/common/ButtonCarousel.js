@@ -6,7 +6,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import '../../styles/slick-theme.css';
 import '../../styles/slick.css';
-import '../../styles/cafe24.css';
 import './ButtonCarousel.css';
 import Slider from 'react-slick';
 
