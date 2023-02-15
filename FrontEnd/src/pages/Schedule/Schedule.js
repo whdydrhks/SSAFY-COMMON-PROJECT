@@ -24,7 +24,7 @@ const STemp = styled(Tab)`
   /* border: 1px solid black;
   border-radius: 10px 10px 0px 0px; */
   font-family: mainFont!important;
-  font-size: 1.8rem;
+  font-size: 1.8rem !important;
   color:black;
 `;
 
