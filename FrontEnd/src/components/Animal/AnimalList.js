@@ -50,7 +50,7 @@ const SSearchCategory = styled.select`
 
 const SInput = styled.input`
   text-align: left;
-  width: 46%;
+  width: 45%;
   height: 1.9rem;
   border: 1px solid gray;
   border-radius: 5px;
