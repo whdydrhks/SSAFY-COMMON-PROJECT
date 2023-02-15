@@ -21,6 +21,8 @@
 /* eslint-disable default-case */
 /* eslint-disable no-undef */
 /* eslint-disable no-shadow */
+/* eslint-disable block-scoped-var */
+/* eslint-disable no-redeclare */
 /* eslint-disable no-var */
 /* eslint-disable vars-on-top */
 /* eslint-disable arrow-body-style */
@@ -64,13 +66,22 @@ function Live() {
   const navigate = useNavigate();
 
   const location = useLocation();
-  console.log(location);
+  // console.log(location);
   const roomNumber = location.state.roomNumber;
-  console.log(roomNumber);
+  // console.log(roomNumber);
   const chatRef = useRef();
-
   // 유저 정보, 이메일, role 불러와야함
-  const { nickname, email, role } = useRecoilValue(userAtom);
+
+  if (accessToken) {
+    var { nickname, email, role } = useRecoilValue(userAtom);
+  } else {
+    var nickname = 'anonymous';
+    var role = 'USER';
+  }
+
+  // console.log(nickname);
+  // console.log(role);
+
   const [session, setSession] = useState(undefined);
   const [user, setUser] = useState(undefined);
   const [hostSessionName, setHostSessionName] = useState('ssafy1');
@@ -516,6 +527,20 @@ function Live() {
                     </S.JoinForm>
                   </>
                 );
+              default:
+                return (
+                  <>
+                    <S.JoinForm className="form-group" onSubmit={joinSession}>
+                      <p className="text-center">
+                        <S.JoinDiv>
+                          <S.JoinButton type="button" onClick={joinSession}>
+                            방 입장하기
+                          </S.JoinButton>
+                        </S.JoinDiv>
+                      </p>
+                    </S.JoinForm>
+                  </>
+                );
             }
           })()}
         </div>
@@ -577,32 +602,31 @@ function Live() {
           {/* <h1 id="session-title">방 번호 : {roomNumber}</h1> */}
 
           {host !== undefined ? (
-            <S.div id="main-video" className="col-md-6">
-              {(() => {
-                switch (role) {
-                  case 'HOST':
-                    return (
-                      <>
-                        <UserVideoComponent streamManager={host} />
-                      </>
-                    );
-                  case 'USER':
-                    return (
-                      <>
-                        <UserVideoComponent streamManager={host} />
-                      </>
-                    );
-                }
-              })()}
+            // <S.div id="main-video" className="col-md-6">
+            //   {(() => {
+            //     switch (role) {
+            //       case 'HOST':
+            //         return (
+            //           <>
+            //             <UserVideoComponent streamManager={host} />
+            //           </>
+            //         );
+            //       case 'USER':
+            //         return (
+            //           <>
+            //             <UserVideoComponent streamManager={host} />
+            //           </>
+            //         );
+            //       default:
+            //         return (
+            //           <>
+            //             <UserVideoComponent streamManager={host} />
+            //           </>
+            //         );
+            //     }
+            //   })()}
 
-              {/* <input
-                className="btn btn-large btn-success"
-                type="button"
-                id="buttonSwitchCamera"
-                onClick={switchCamera}
-                value="카메라 전환"
-              /> */}
-            </S.div>
+            <UserVideoComponent streamManager={host} />
           ) : (
             // 세션 있고 호스트가 없는 경우
             <S.div id="main-video" className="col-md-6">
@@ -702,15 +726,60 @@ function Live() {
           </S.ChattingListBox>
 
           {/* 채팅창 */}
-          <S.ChatForm>
+          {(() => {
+            switch (role) {
+              case 'HOST':
+                return (
+                  <S.ChatForm>
+                    <form onSubmit={sendMessage}>
+                      <S.ChatInput
+                        type="text"
+                        onChange={handleMsg}
+                        value={sendMsg}
+                      />
+                      <S.ChatButton type="submit">전송</S.ChatButton>
+                    </form>
+                  </S.ChatForm>
+                );
+              // case 'USER':
+              //   return (
+              //     <S.ChatForm>
+              //       <form onSubmit={sendMessage}>
+              //         <S.ChatInput
+              //           type="text"
+              //           onChange={handleMsg}
+              //           value={sendMsg}
+              //         />
+              //         <S.ChatButton type="submit">전송</S.ChatButton>
+              //       </form>
+              //     </S.ChatForm>
+              //   );
+              default:
+                return (
+                  <S.ChatForm>
+                    <form onSubmit={sendMessage}>
+                      <S.ChatInput
+                        type="text"
+                        onChange={handleMsg}
+                        placeholder="채팅을 하시려면 로그인을 해주세요."
+                        value={sendMsg}
+                        disabled
+                      />
+                      <S.ChatButton type="submit">전송</S.ChatButton>
+                    </form>
+                  </S.ChatForm>
+                );
+            }
+          })()}
+          {/* <S.ChatForm>
             <form onSubmit={sendMessage}>
               <S.ChatInput type="text" onChange={handleMsg} value={sendMsg} />
               <S.ChatButton type="submit">전송</S.ChatButton>
             </form>
-          </S.ChatForm>
+          </S.ChatForm> */}
         </S.ChatBox>
       ) : null}
-      {role === 'USER' ? <CreateSchedule /> : null}
+      {nickname !== 'anonymous' && role === 'USER' ? <CreateSchedule /> : null}
       <Nav />
     </S.VideoChatRoot>
   );
