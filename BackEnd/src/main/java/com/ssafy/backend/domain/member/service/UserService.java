@@ -19,9 +19,9 @@ import com.ssafy.backend.domain.member.model.request.UserUpdatePasswordDto;
 import com.ssafy.backend.domain.member.model.response.UserHostInfoDto;
 import com.ssafy.backend.domain.member.model.response.UserInfoDto;
 import com.ssafy.backend.domain.member.repository.UserRepository;
-import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
 import com.ssafy.backend.global.common.model.response.ResponseSuccessDto;
 import com.ssafy.backend.global.error.exception.ApiErrorException;
+import com.ssafy.backend.global.file.service.FileService;
 import com.ssafy.backend.global.util.JwtUtil;
 import com.ssafy.backend.global.util.ResponseUtil;
 import com.ssafy.backend.global.util.enums.ApiStatus;
@@ -38,6 +38,8 @@ public class UserService {
 
 	private final JwtUtil jwtUtil;
 	private final ResponseUtil responseUtil;
+
+	private final FileService fileService;
 
 	private final UserRepository userRepository;
 
@@ -184,7 +186,9 @@ public class UserService {
 
 		List<UserInfoDto> userInfos = findUsers
 			.stream()
-			.map(UserInfoDto::of)
+			.map(findUser -> {
+				return UserInfoDto.of(findUser, fileService.createDownloadUri("user", findUser.getFile()));
+			})
 			.collect(Collectors.toList());
 
 		return responseUtil.buildSuccessResponse(userInfos);
@@ -205,12 +209,13 @@ public class UserService {
 
 		ResponseSuccessDto<UserInfoDto> resp;
 
-		UserInfoDto infoDto = UserInfoDto.of(findUser);
+		UserInfoDto infoDto = UserInfoDto.of(findUser, fileService.createDownloadUri("user", findUser.getFile()));
 		resp = responseUtil.buildSuccessResponse(infoDto);
 
 		// host일 때 반환되는 dto
 		if (findUser.getRole().equals(Role.HOST.getName())) {
-			UserHostInfoDto hostInfoDto = UserHostInfoDto.of(findUser);
+			UserHostInfoDto hostInfoDto = UserHostInfoDto.of(findUser,
+				fileService.createDownloadUri("user", findUser.getFile()));
 			resp = responseUtil.buildSuccessResponse(hostInfoDto);
 		}
 
@@ -229,7 +234,7 @@ public class UserService {
 		UserEntity findUser = userRepository.findByEmailAndExpiredLike(userEmail, "F")
 			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-		UserInfoDto infoDto = UserInfoDto.of(findUser);
+		UserInfoDto infoDto = UserInfoDto.of(findUser, fileService.createDownloadUri("user", findUser.getFile()));
 
 		ResponseSuccessDto<UserInfoDto> resp = responseUtil
 			.buildSuccessResponse(infoDto);
@@ -249,7 +254,7 @@ public class UserService {
 		UserEntity findUser = userRepository.findByNicknameAndExpiredLike(userNickname, "F")
 			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-		UserInfoDto infoDto = UserInfoDto.of(findUser);
+		UserInfoDto infoDto = UserInfoDto.of(findUser, fileService.createDownloadUri("user", findUser.getFile()));
 
 		ResponseSuccessDto<UserInfoDto> resp = responseUtil
 			.buildSuccessResponse(infoDto);
@@ -275,10 +280,12 @@ public class UserService {
 
 		List<UserInfoDto> userInfos = findUsers
 			.stream()
-			.map(UserInfoDto::of)
+			.map(findUser -> {
+				return UserInfoDto.of(findUser, fileService.createDownloadUri("user", findUser.getFile()));
+			})
 			.collect(Collectors.toList());
 
-		ResponseSuccessDto<List<ShelterEntity>> resp = responseUtil
+		ResponseSuccessDto<List<UserInfoDto>> resp = responseUtil
 			.buildSuccessResponse(userInfos);
 
 		return resp;
