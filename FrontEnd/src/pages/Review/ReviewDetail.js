@@ -1,3 +1,5 @@
+/* eslint-disable import/no-useless-path-segments */
+
 import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { Button } from '@mui/material';
@@ -7,6 +9,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
+import { getCookie } from '../../pages/Account/cookie';
 // import ImageCarousel from '../../components/common/ImageCarousel';
 // import { title, content, note } from '../../images/index';
 import { title, content } from '../../images/index';
@@ -118,7 +121,6 @@ const SButtonBox = styled.div`
 `;
 
 const SModifyButton = styled(Button)`
-  font-family: 'cafe24';
   border-radius: 10px;
   margin-right: 1rem;
   box-shadow: 2px 2px 2px 2px gray;
@@ -158,7 +160,12 @@ const SModalMessage = styled.div`
   font-size: 24px;
 `;
 
+const SCommentTitleBox = styled.h1`
+  font-size: large;
+`;
+
 function ReviewDetail() {
+  const accessToken = getCookie('accessToken');
   // Review 작성자의 nickname 불러오기
   const userInfo = useRecoilValue(userAtom);
   const commentNickname = userInfo.nickname;
@@ -306,8 +313,12 @@ function ReviewDetail() {
         </SModalBlock>
       </Modal>
       <hr />
-      <div>댓글</div>
-      <ReviewComment />
+      {accessToken ? (
+        <>
+          <SCommentTitleBox>댓글</SCommentTitleBox>
+          <ReviewComment />
+        </>
+      ) : null}
       <Nav />
     </>
   );
