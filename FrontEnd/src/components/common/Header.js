@@ -19,7 +19,7 @@ import API_URL from '../../api/api';
 const SAppBar = styled(AppBar)`
   position: fixed;
   padding: 4px;
-  background-color: rgba(217,217,243,1);
+  background-color: rgba(217,217,243,1)!important;
   a {
     text-decoration: none;
     color: white;
