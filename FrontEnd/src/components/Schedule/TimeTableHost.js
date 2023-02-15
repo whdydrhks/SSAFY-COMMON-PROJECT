@@ -17,51 +17,62 @@ import { dayTimeAtom, todayTimeAtom, userAtom } from '../../recoilState';
 
 const SButtonDiv = styled.div`
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
 `;
 
 const SButton = styled.button`
-  width: 80%;
-  height: 5vh;
-  background-color: rgba(180, 210, 210, 0.8);
+  width: 90%;
+  background-color: white;
   border: none;
-  font-size: 1.2rem;
-  border-radius: 10px;
-  font-family: 'cafe24';
+  font-size: 1.7em;
+  font-family: mainFont;
   color: grey;
+  /* border: 1px solid gray; */
+  color: black;
+  border-radius: 40px;
   &:active,
   &:hover {
     color: black;
-    background-color: rgba(180, 230, 230);
+    background-color: rgba(217,217,243,1);
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   }
 `;
 const SSwitch = styled(Switch)`
   margin-right: 2rem;
 `;
+
+const SContainer = styled.div`
+  display: flex;
+  justify-content: right;
+`;
 const SClickButton = styled.button`
   width: 5.5rem;
-  height: 3.5vh;
+  height: 2.7rem;
   border: none;
-  font-size: 1.2rem;
+  margin-top: 1rem;
+  font-size: 1.5rem;
   /* align-items: right; */
   border-radius: 10px;
-  font-family: 'cafe24';
+  font-family: mainFont;
   color: black;
+  margin-right: 1rem;
   background-color: rgba(150, 120, 210, 0.2);
 `;
 
 const STimeList = styled.div``;
 const STimeBox = styled.div`
-  height: 7vh;
+  height: 6.7vh;
   display: flex;
   align-items: center;
   font-size: 2rem;
   justify-content: space-between;
-  background-color: rgba(180, 210, 210, 0.2);
+  font-family: mainFont;
+  border-bottom: 1px rgba(0,0,0,0.2) solid;
 `;
 const STime = styled.div`
-  font-family: 'cafe24';
   padding-left: 1.5rem;
+  font-family: mainFont;
+  border-radius: 10px;
 `;
 
 function TimeTableHost() {
@@ -328,79 +339,92 @@ function TimeTableHost() {
       <STimeList>
         <STimeBox>
           {/* {dayTime[9]} */}
-          <STime>09:00 ~ 10:00</STime>
+          <STime>&nbsp;&nbsp;&nbsp;09:00 ~ 10:00</STime>
           <SSwitch
             checked={todayTime[9] === '1' ? true : false}
             onChange={handleNineChange}
             inputProps={{ 'aria-label': 'controlled' }}
+            defaultChecked color="secondary"
           />
         </STimeBox>
         <STimeBox>
-          <STime>10:00 ~ 11:00</STime>
+          <STime>&nbsp;&nbsp;&nbsp;10:00 ~ 11:00</STime>
           <SSwitch
             checked={todayTime[10] === '1' ? true : false}
             onChange={handleTenChange}
             inputProps={{ 'aria-label': 'controlled' }}
+            defaultChecked color="secondary"
           />
         </STimeBox>
         <STimeBox>
-          <STime>11:00 ~ 12:00</STime>
+          <STime>&nbsp;&nbsp;&nbsp;11:00&nbsp;~&nbsp;12:00</STime>
           <SSwitch
             checked={todayTime[11] === '1' ? true : false}
             onChange={handleElevenChange}
             inputProps={{ 'aria-label': 'controlled' }}
+            defaultChecked color="secondary"
           />
         </STimeBox>
         <STimeBox>
-          <STime>12:00 ~ 13:00</STime>
+          <STime>&nbsp;&nbsp;&nbsp;12:00 ~ 13:00</STime>
           <SSwitch
             checked={todayTime[12] === '1' ? true : false}
             onChange={handleTwelveChange}
             inputProps={{ 'aria-label': 'controlled' }}
+            defaultChecked color="secondary"
           />
         </STimeBox>
         <STimeBox>
-          <STime>13:00 ~ 14:00</STime>
+          <STime>&nbsp;&nbsp;&nbsp;13:00 ~ 14:00</STime>
           <SSwitch
             checked={todayTime[13] === '1' ? true : false}
             onChange={handleThirteenChange}
             inputProps={{ 'aria-label': 'controlled' }}
+            defaultChecked color="secondary"
           />
         </STimeBox>
         <STimeBox>
-          <STime>14:00 ~ 15:00</STime>
+          <STime>&nbsp;&nbsp;&nbsp;14:00 ~ 15:00</STime>
           <SSwitch
             checked={todayTime[14] === '1' ? true : false}
             onChange={handleFourteenChange}
             inputProps={{ 'aria-label': 'controlled' }}
+            defaultChecked color="secondary"
           />
         </STimeBox>
         <STimeBox>
-          <STime>15:00 ~ 16:00</STime>
+          <STime>&nbsp;&nbsp;&nbsp;15:00 ~ 16:00</STime>
           <SSwitch
             checked={todayTime[15] === '1' ? true : false}
             onChange={handleFifteenChange}
+            textColor="secondary"
+            indicatorColor="secondary"
             inputProps={{ 'aria-label': 'controlled' }}
+            defaultChecked color="secondary"
           />
         </STimeBox>
         <STimeBox>
-          <STime>16:00 ~ 17:00</STime>
+          <STime>&nbsp;&nbsp;&nbsp;16:00 ~ 17:00</STime>
           <SSwitch
             checked={todayTime[16] === '1' ? true : false}
             onChange={handleSixteenChange}
             inputProps={{ 'aria-label': 'controlled' }}
+            defaultChecked color="secondary"
           />
         </STimeBox>
         <STimeBox>
-          <STime>17:00 ~ 18:00</STime>
+          <STime>&nbsp;&nbsp;&nbsp;17:00 ~ 18:00</STime>
           <SSwitch
             checked={todayTime[17] === '1' ? true : false}
             onChange={handleSeventeenChange}
             inputProps={{ 'aria-label': 'controlled' }}
+            defaultChecked color="secondary"
           />
         </STimeBox>
       </STimeList>
+      <SContainer>
       <SClickButton onClick={handleSetDayTimeButton}>적용하기</SClickButton>
+      </SContainer>
     </>
   );
 }

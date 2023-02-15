@@ -12,6 +12,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import { useRecoilValue } from 'recoil';
 import { userAtom } from '../../recoilState';
 import { getCookie } from '../../pages/Account/cookie';
+import "../../styles/fonts.css";
 
 const SBox = styled(Box)`
   position: fixed;
@@ -23,26 +24,31 @@ const SBox = styled(Box)`
 `;
 
 const SBottomNavigationAction = styled(BottomNavigationAction)`
-  font-family: 'cafe24';
+  font-family: mainFont;
 `;
 
-const SBottomNav = styled(BottomNavigation)`
-  display: flex;
-  justify-content: space-between;
-`;
+// const SBottomNav = styled(BottomNavigation)`
+//   display: flex;
+//   justify-content: space-between;
+// `;
 
 function Nav() {
+  const [value, setValue] = React.useState(0);
   const accessToken = getCookie('accessToken');
   const user = useRecoilValue(userAtom);
   return (
     <SBox>
-      <SBottomNav showLabels>
+      <BottomNavigation showLabels value={value}
+  onChange={(event, newValue) => {
+    setValue(newValue);
+        }}>
+      
         <SBottomNavigationAction
           label="Home"
           icon={<HomeIcon />}
           component={Link}
-          to="/"
-        />
+            to="/"
+          />
 
         <SBottomNavigationAction
           label="라이브"
@@ -98,7 +104,7 @@ function Nav() {
             to={`/mypage/${user.userId}`}
           />
         )}
-      </SBottomNav>
+      </BottomNavigation>
     </SBox>
   );
 }

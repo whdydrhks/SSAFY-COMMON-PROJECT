@@ -64,7 +64,7 @@ public class LiveService extends BaseTimeEntity {
     @Transactional
     public ResponseSuccessDto<?> getLiveAll(){
         Sort sortDate = Sort.by(
-                Sort.Order.asc("createdDate")
+                Sort.Order.desc("createdDate")
         );
         List<LiveEntity> findLive = liveRepository.findAll(sortDate);
 

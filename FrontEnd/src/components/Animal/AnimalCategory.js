@@ -12,12 +12,16 @@ import Box from '@mui/material/Box';
 import { useRecoilValue } from 'recoil';
 import { userAtom } from '../../recoilState';
 import AnimalList from './AnimalList';
+import "../../styles/fonts.css"
 
 const STemp = styled(Tab)`
   width: 50%;
-  border: 1px solid black;
-  border-radius: 10px 10px 0px 0px;
+  /* border: 1px solid black; */
+  /* border-radius: 10px 10px 0px 0px; */
   /* color: rgba(180, 230, 230);   */
+  font-family: mainFont;
+  font-size: 1.8rem;
+  color:black;
 `;
 
 // const SSearchBar = styled.div`
@@ -39,7 +43,6 @@ const STemp = styled(Tab)`
 
 //   width: 49%;
 // `;
-
 
 function TabPanel(props) {
   const { children, value, index } = props;
@@ -114,7 +117,9 @@ function AnimalCategory() {
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs
           value={value}
+          textColor="secondary"
           onChange={handleChange}
+          indicatorColor="secondary"
           aria-label="basic tabs example"
         >
           <STemp label="입양중" {...a11yProps(0)} />

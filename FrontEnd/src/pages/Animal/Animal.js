@@ -3,16 +3,19 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import Icon from '@mui/material/Icon';
 import { useRecoilValue } from 'recoil';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 import AnimalCategory from '../../components/Animal/AnimalCategory';
 import { userAtom } from '../../recoilState';
-import LikeAnimal from './LikeAnimal';
+import LikeAnimal from './LikeAnimal'
+import "../../styles/fonts.css"
 
 const Sh1 = styled.h1`
   font-size: 2rem;
   margin-top: 1rem;
+  font-family: mainFont;
   // margin-left: 1rem;
 `;
 
@@ -26,8 +29,9 @@ const STitle = styled.div`
 `;
 
 const SCreateButton = styled(Button)`
-  border-radius: 10px;
-  margin-top: 1rem;
+  border-radius: 100%;
+  width: 100%;
+  margin-top: 0.7rem;
   /* margin-right: 1rem; */
 `;
 
@@ -40,10 +44,10 @@ function Animal() {
       {user.role === 'HOST' ? (
         <>
           <STitle>
-            <Sh1>관리 동물</Sh1>
-            <Link to="/animal/create" style={{ textDecoration: 'none' }}>
-              <SCreateButton variant="contained" size="medium">
-                동물 등록
+            <Sh1>관리목록</Sh1>
+            <Link to="/animal/create" style={{ textDecorSation: 'none' }}>
+              <SCreateButton  size="small">
+              <Icon color="secondary" sx={{ fontSize: 30 }}>add_circle</Icon>
               </SCreateButton>
             </Link>
           </STitle>
