@@ -48,7 +48,7 @@ const SButtonDiv = styled.div`
 `;
 
 const SButton = styled.button`
-  width: 100%;
+  width: 90%;
   background-color: white;
   border: none;
   font-size: 1.3rem;
