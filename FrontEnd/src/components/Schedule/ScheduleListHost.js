@@ -119,10 +119,6 @@ const SClickButton = styled.button`
   background-color: ${props => props.bgColor};
 `;
 
-const SImg = styled.img`
-  width: 20%;
-`;
-
 function ScheduleListHost() {
   const settings = {
     arrows: false,
@@ -231,37 +227,37 @@ function ScheduleListHost() {
               </div>
               <SSContainer>
                 {schedule.userProfileImage === 0 ? (
-                  <SImg src={profileImgDefault} />
+                  <img src={profileImgDefault} />
                 ) : null}
                 {schedule.userProfileImage === 1 ? (
-                  <SImg src={profileImg1} />
+                  <img src={profileImg1} />
                 ) : null}
                 {schedule.userProfileImage === 2 ? (
-                  <SImg src={profileImg2} />
+                  <img src={profileImg2} />
                 ) : null}
                 {schedule.userProfileImage === 3 ? (
-                  <SImg src={profileImg3} />
+                  <img src={profileImg3} />
                 ) : null}
                 {schedule.userProfileImage === 4 ? (
-                  <SImg src={profileImg4} />
+                  <img src={profileImg4} />
                 ) : null}
                 {schedule.userProfileImage === 5 ? (
-                  <SImg src={profileImg5} />
+                  <img src={profileImg5} />
                 ) : null}
                 {schedule.userProfileImage === 6 ? (
-                  <SImg src={profileImg6} />
+                  <img src={profileImg6} />
                 ) : null}
                 {schedule.userProfileImage === 7 ? (
-                  <SImg src={profileImg7} />
+                  <img src={profileImg7} />
                 ) : null}
                 {schedule.userProfileImage === 8 ? (
-                  <SImg src={profileImg8} />
+                  <img src={profileImg8} />
                 ) : null}
                 {schedule.userProfileImage === 9 ? (
-                  <SImg src={profileImg9} />
+                  <img src={profileImg9} />
                 ) : null}
                 {schedule.userProfileImage === 10 ? (
-                  <SImg src={profileImg10} />
+                  <img src={profileImg10} />
                 ) : null}
                 <SNickName>{schedule.userNickname}</SNickName>
                 <div>
