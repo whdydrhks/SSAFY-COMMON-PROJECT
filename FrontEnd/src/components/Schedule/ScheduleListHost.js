@@ -48,10 +48,10 @@ const SButtonDiv = styled.div`
 `;
 
 const SButton = styled.button`
-  width: 90%;
+  width: 100%;
   background-color: white;
   border: none;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-family: mainFont;
   /* border: 1px solid gray; */
   color: black;
@@ -73,6 +73,7 @@ const SContainer = styled.div`
   /* border-top: 1px solid grey; */
   /* border-bottom: 1px solid grey; */
   background-color: rgba(242, 244, 246, 1);
+  margin-bottom: 1%;
   border-radius: 30px;
   font-family: mainFont;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
@@ -120,7 +121,7 @@ const SNickName = styled.div`
 `;
 
 const SClickButton = styled.button`
-  width: 50%;
+  width: 100%;
   height: 3vh;
   border: none;
   font-size: 1.4rem;
