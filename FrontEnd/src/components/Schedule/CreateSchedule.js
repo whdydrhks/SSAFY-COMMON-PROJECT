@@ -291,37 +291,37 @@ function CreateSchedule() {
         ))}
       </Slider>
       <STimeList>
-        {clickDate ===
+        {/* {clickDate ===
         (tod.getMonth() + 1).toString().padStart(2, '0') +
           tod.getDate().toString().padStart(2, '0') ? (
           <SImpossibleTitle>당일 예약은 불가합니다.</SImpossibleTitle>
-        ) : (
-          <div>
-            {todayTimeArr.map((item, index) =>
-              index >= 9 && index <= 17 ? (
-                <STimeBox>
-                  <STime>
-                    {index.toString().padStart(2, '0')}:00 ~
-                    {(index + 1).toString().padStart(2, '0')}:00
-                  </STime>
-                  {item === '0' ? (
-                    <SClickButton bgColor="grey" disabled>
-                      마감
-                    </SClickButton>
-                  ) : (
-                    <SClickButton
-                      bgColor="green"
-                      onClick={() => handleCreateSchedule(index)}
-                      ref={el => (buttonRef.current[index] = el)}
-                    >
-                      예약
-                    </SClickButton>
-                  )}
-                </STimeBox>
-              ) : null,
-            )}
-          </div>
-        )}
+        ) : ( */}
+        <div>
+          {todayTimeArr.map((item, index) =>
+            index >= 9 && index <= 17 ? (
+              <STimeBox>
+                <STime>
+                  {index.toString().padStart(2, '0')}:00 ~
+                  {(index + 1).toString().padStart(2, '0')}:00
+                </STime>
+                {item === '0' ? (
+                  <SClickButton bgColor="grey" disabled>
+                    마감
+                  </SClickButton>
+                ) : (
+                  <SClickButton
+                    bgColor="green"
+                    onClick={() => handleCreateSchedule(index)}
+                    ref={el => (buttonRef.current[index] = el)}
+                  >
+                    예약
+                  </SClickButton>
+                )}
+              </STimeBox>
+            ) : null,
+          )}
+        </div>
+        {/* )} */}
       </STimeList>
     </>
   );
