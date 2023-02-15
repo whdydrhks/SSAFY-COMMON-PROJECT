@@ -4,7 +4,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 
 import axios from 'axios';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
@@ -178,13 +178,21 @@ function Live() {
   const [timetableShelterId, setTimetableShelterId] = useRecoilState(
     timetableShelterIdAtom,
   );
+  const [thumbnailImages, setThumbnailImages] = useState([]);
+  const [lifeInfo, setLifeInfo] = useState([]);
 
+  // const [liveInfo,setLiveInfo] = useState([]);
+
+  // tempLiveInfo.forEach(liveId => {
+  //   axios.get(`${API_URL}/${liveId}/image`).then(res => tempImgList.push(res));
+  // });
+  // console.log(tempImgList);
   const handleClickLive = id => {
     setTimetableShelterId(id);
   };
-  console.log(liveList);
-  useEffect(() => {
-    axios.get(`${API_URL}/live/all`).then(res => {
+  // console.log(liveList);
+  useEffect(async () => {
+    await axios.get(`${API_URL}/live/all`).then(res => {
       setLiveList(res.data.data);
     });
   }, []);
@@ -205,7 +213,7 @@ function Live() {
           <Link to="/createschedule" key={index} state={live}>
             <SLiveItem onClick={() => handleClickLive(live.shelterId)}>
               <SLiveImgBox>
-                <SLiveImg>{live.image}</SLiveImg>
+                <SLiveImg>{live.imagge}</SLiveImg>
               </SLiveImgBox>
               <SLiveContentBox>
                 <SLiveTitle>{live.title}</SLiveTitle>

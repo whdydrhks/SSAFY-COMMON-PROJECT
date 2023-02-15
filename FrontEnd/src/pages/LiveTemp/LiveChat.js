@@ -79,6 +79,7 @@ function Live() {
 
   const [myUserName, setMyUserName] = useState(nickname);
 
+  const [liveId, setLiveId] = useState(undefined);
   const [publisher, setPublisher] = useState(undefined);
   const [host, setHost] = useState(undefined);
   const [isMic, setIsMic] = useState(true);
@@ -262,6 +263,7 @@ function Live() {
           headers: { Authorization: accessToken },
         })
         .then(res => {
+          setLiveId(res.data.data);
           axios
             .post(`${API_URL}/live/${res.data.data}/image`, thumbnailData, {
               headers: { 'Content-Type': 'multipart/form-data' },
@@ -273,18 +275,6 @@ function Live() {
 
     setSession(getOV.initSession());
     setOV(getOV);
-
-    // const liveInformation = {
-    //   'category':
-    // }
-    // axios.post(`${API_URL}`)
-
-    // console.log(OV);
-    // const liveData = {
-    //   'category': category,
-    //   'image'
-    // }
-    // axios.post(`${API_URL}/live`)
   };
 
   const sendMessage = e => {
@@ -350,6 +340,14 @@ function Live() {
     setUser(undefined);
     setMyUserName(nickname);
     setHost(undefined);
+    axios.delete(`${API_URL}/live`, {
+      data: {
+        liveId: liveId,
+      },
+      headers: {
+        Authorization: accessToken,
+      },
+    });
     navigate('/');
   };
 
