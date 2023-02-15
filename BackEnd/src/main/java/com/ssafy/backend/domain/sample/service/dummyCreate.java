@@ -153,7 +153,7 @@ public class dummyCreate {
 		scheduleRepository.save(schedule);
 
 		ScheduleEntity schedule1 = ScheduleEntity.builder()
-			.day("0214")
+			.day("0216")
 			.time(11)
 			.room("2")
 			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
