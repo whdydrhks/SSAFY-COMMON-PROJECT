@@ -211,7 +211,7 @@ function Live() {
       </SLiveHeader>
       <SLiveContainer>
         {liveList.map((live, index) => (
-          <Link to="/livechat" key={index} state={live} state2={live.room}>
+          <Link to="/livechat" key={index} state={{ roomNumber: live.room }}>
             <SLiveItem onClick={() => handleClickLive(live.shelterId)}>
               <SLiveImgBox>
                 <img src={live.thumbnailImage} alt="liveThumbnail" />
