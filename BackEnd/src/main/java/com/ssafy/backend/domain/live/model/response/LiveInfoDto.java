@@ -24,6 +24,9 @@ public class LiveInfoDto {
 	private String title;
 	private String category;
 	private String room;
+
+	private String thumnailImage;
+
 	private LocalDateTime createdDate;
 
 	public static LiveInfoDto of(LiveEntity live) {
@@ -34,6 +37,20 @@ public class LiveInfoDto {
 			.title(live.getTitle())
 			.category(live.getCategory())
 			.room(live.getRoom())
+			.thumnailImage("null")
+			.createdDate(live.getCreatedDate())
+			.build();
+	}
+
+	public static LiveInfoDto of(LiveEntity live, String thumnailImage) {
+		return LiveInfoDto.builder()
+			.liveId(live.getId())
+			.shelterId(live.getShelter().getId())
+			.shelterName((live.getShelter().getName()))
+			.title(live.getTitle())
+			.category(live.getCategory())
+			.room(live.getRoom())
+			.thumnailImage(thumnailImage)
 			.createdDate(live.getCreatedDate())
 			.build();
 	}

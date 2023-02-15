@@ -23,7 +23,8 @@ public class UserInfoDto extends BaseTimeDto {
 	private String name;
 	private String phoneNumber;
 	private String nickname;
-	private String profileImage;
+
+	private String thumnailImage;
 
 	public static UserInfoDto of(UserEntity user) {
 		return UserInfoDto.builder()
@@ -32,7 +33,20 @@ public class UserInfoDto extends BaseTimeDto {
 			.name(user.getName())
 			.phoneNumber(user.getPhoneNumber())
 			.nickname(user.getNickname())
-			.profileImage(user.getProfileImage())
+			.thumnailImage(user.getProfileImage())
+			.createdDate(user.getCreatedDate())
+			.updatedDate(user.getUpdatedDate())
+			.build();
+	}
+
+	public static UserInfoDto of(UserEntity user, String thumnailImage) {
+		return UserInfoDto.builder()
+			.userId(user.getId())
+			.email(user.getEmail())
+			.name(user.getName())
+			.phoneNumber(user.getPhoneNumber())
+			.nickname(user.getNickname())
+			.thumnailImage(thumnailImage)
 			.createdDate(user.getCreatedDate())
 			.updatedDate(user.getUpdatedDate())
 			.build();
