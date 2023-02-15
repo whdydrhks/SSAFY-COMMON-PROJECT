@@ -45,7 +45,7 @@ const SSearchCategory = styled.select`
   border-radius: 5px;
   width:25%;
   font-family: mainFont;
-  font-size: 1rem;
+  font-size: 0.9rem;
 `;
 
 const SInput = styled.input`
@@ -58,7 +58,7 @@ const SInput = styled.input`
   background-color: #ffffff;
   outline: none;
   font-family: mainFont;
-  font-size: 1rem;
+  font-size: 0.9rem;
 `;
 
 const SButtton = styled.button`
@@ -70,7 +70,7 @@ const SButtton = styled.button`
    width: 20%;
    height: 1.9rem;
    font-family: mainFont;
-   font-size: 1rem;
+   font-size: 0.9rem;
 `;
 
 function AnimalList(props) {
