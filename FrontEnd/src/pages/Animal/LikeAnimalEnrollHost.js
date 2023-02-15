@@ -47,6 +47,11 @@ const SBox = styled.div`
   flex-direction: column;
 `;
 
+const SButton = styled(Button)`
+  background-color: white;
+  /* border: none; */
+`;
+
 function LikeAnimalEnrollHost() {
   const location = useLocation();
   const accessToken = getCookie('accessToken');
@@ -142,9 +147,9 @@ function LikeAnimalEnrollHost() {
       sec;
     // const expiredDate
     const animalId = location.state.animalInformation.animalId;
-    console.log(animalId);
-    console.log(userId);
-    console.log(typeof expiredDate);
+    console.log('animalId : ', animalId);
+    console.log('userId : ', userId);
+    // console.log(typeof expiredDate);
     axios
       .post(
         `${API_URL}/user/${userId}/like/animal/${animalId}`,
@@ -170,8 +175,6 @@ function LikeAnimalEnrollHost() {
         <SSearchBar>
           <SSearchCategory onChange={handleSearchCategory}>
             <option value="searchNickname">닉네임</option>
-            {/* <option value="searchName">이름</option> */}
-            {/* <option value="searchPhoneNumver">전화번호</option> */}
           </SSearchCategory>
           {(() => {
             switch (searchCategory) {
@@ -183,22 +186,6 @@ function LikeAnimalEnrollHost() {
                     placeholder="닉네임을 입력해 주세요."
                   />
                 );
-              // case 'searchName':
-              //   return (
-              //     <SInput
-              //       type="text"
-              //       onChange={handleSearchValue}
-              //       placeholder="이름을 입력해 주세요."
-              //     />
-              //   );
-              // case 'searchPhoneNumver':
-              //   return (
-              //     <SInput
-              //       type="text"
-              //       onChange={handleSearchValue}
-              //       placeholder="전화번호를 입력해 주세요."
-              //     />
-              //   );
               default:
                 return (
                   <SInput
@@ -217,9 +204,9 @@ function LikeAnimalEnrollHost() {
         {/* userNickname 에서 값 뽑아오기 */}
         <SBox>
           {userNickname.map((Item, index) => (
-            <button onClick={onStayClick} key={index} value={Item.nickname}>
+            <SButton onClick={onStayClick} key={index} value={Item.nickname}>
               {Item.nickname}
-            </button>
+            </SButton>
           ))}
         </SBox>
         {/* User 선택 후 적용 Button */}

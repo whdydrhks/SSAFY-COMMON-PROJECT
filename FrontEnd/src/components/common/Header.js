@@ -73,6 +73,7 @@ function Header() {
               Authorization: accessToken,
             },
           },
+          { withCredentials: true, validateStatus: false },
         )
         .then(() => {
           removeCookie('accessToken');

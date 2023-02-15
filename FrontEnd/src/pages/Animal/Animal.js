@@ -8,7 +8,7 @@ import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 import AnimalCategory from '../../components/Animal/AnimalCategory';
 import { userAtom } from '../../recoilState';
-import LikeAnimal from './LikeAnimal';
+import LikeAnimalList from './LikeAnimal';
 
 const Sh1 = styled.h1`
   font-size: 2rem;
@@ -50,7 +50,7 @@ function Animal() {
           <AnimalCategory />
         </>
       ) : (
-        <LikeAnimal />
+        <LikeAnimalList />
       )}
 
       <Nav />

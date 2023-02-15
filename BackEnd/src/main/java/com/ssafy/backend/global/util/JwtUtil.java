@@ -252,6 +252,11 @@ public class JwtUtil {
 		return jwt;
 	}
 
+	// redis DB에  토큰을 받아오는 메소드
+	public String getRefreshToken(String userEmail) {
+		return redisUtil.getData(userEmail);
+	}
+
 	// redis DB에 들어있는 토큰을 새로 갱신하는 메소드
 	public void updateRefreshToken(String userEmail, String token) {
 

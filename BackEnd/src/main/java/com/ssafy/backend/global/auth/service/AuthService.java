@@ -76,16 +76,17 @@ public class AuthService {
 
 		String tokenEmail = jwtUtil.getUserEmail(request);
 
-		Cookie refreshToken = cookieUtil.deleteCookie(cookieUtil.getCookie(request, jwtUtil.REFRESH_TOKEN));
-		ResponseCookie refreshCookie = cookieUtil.toResponseCookie(refreshToken);
+		System.out.println("\ntoken email : " + tokenEmail);
+
+		// 로컬에 남아있는 refresh 토큰을 삭제하지 않아도 redis 상에서 삭제되기만 하면 로그아웃 처리 된 것과 다름 없음
+		// reissue가 동작하지 않을 것
+
+		// refresh token 정보를 받아올 수 있는지 테스트
+		System.out.println("\ntoken cookie : " + cookieUtil.getCookie(request, jwtUtil.REFRESH_TOKEN));
 
 		jwtUtil.deleteRefreshToken(tokenEmail);
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.set(HttpHeaders.SET_COOKIE, refreshCookie.toString());
-
 		return ResponseEntity.ok()
-			.headers(headers)
 			.body(responseUtil.buildSuccessResponse("Logout Success"));
 	}
 
