@@ -1,8 +1,12 @@
+/* eslint-disable prefer-template */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable no-unused-vars */
 /* eslint-disable prefer-destructuring */
 import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import Modal from 'react-modal';
-import { Button } from '@mui/material';
+// import Modal from 'react-modal';
+import { Button, Box, Typography, TextField } from '@mui/material';
+import Modal from '@mui/material/Modal';
 import axios from 'axios';
 import styled from 'styled-components';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -20,7 +24,19 @@ import {
 } from '../../images/index';
 import API_URL from '../../api/api';
 import { userAtom } from '../../recoilState';
+import { getCookie } from '../Account/cookie';
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 const STitle = styled.div`
   font-size: 2rem;
   /* margin-top: 2rem; */
@@ -128,45 +144,54 @@ const SModifyButton = styled(Button)`
 `;
 
 const SDeleteButton = styled(Button)`
-  background-color: red;
+  background-color: red !important;
   border-radius: 10px;
   box-shadow: 2px 2px 2px 2px gray;
 `;
 
-const SModalBlock = styled.div`
+const SModalDiv = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
+  align-items: center;
 `;
 
-const SButtonBlock = styled.div`
+const SNicknameDiv = styled.div`
   display: flex;
-  justify-content: center;
   justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 `;
 
-const SModalDeletebutton = styled(Button)`
-  font-size: 2rem;
+const SNickname = styled.button`
+  border: 1px solid black;
+  border-radius: 10px 10px 10px 10px;
+  padding: 0.8rem;
+  margin: 1rem;
+  &:hover {
+    color: blue;
+  }
 `;
 
-const SModalCancelbutton = styled(Button)`
-  font-size: 2rem;
-`;
+const SButton = styled.button``;
 
-const SModalMessage = styled.div`
-  font-size: 24px;
-`;
 function AnimalDetail() {
+  const accessToken = getCookie('accessToken');
+  const [searchNicknameKeyword, setSearchNicknameKeyword] = useState('');
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const navigate = useNavigate();
   const location = useLocation();
   const userInfo = useRecoilValue(userAtom);
   const shelterId = userInfo.shelterId;
-  // console.log(location.state);
+  const [users, setUsers] = useState([]);
+  const [clickNickname, setClickNickname] = useState('');
   const key = [manageCode, name, breed, gender, weight, neuter];
   const korKey = ['관리 번호', '이름', '품종', '성별', '체중', '중성화 여부'];
-  // console.log(location);
-  const { animal } = location.state;
-  // animal 은 객체임
+
+  const animal = location.state.animal;
+  console.log(animal);
+
   const animalInformation = [
     { manageCode: animal.manageCode },
     { name: animal.name },
@@ -177,41 +202,87 @@ function AnimalDetail() {
   ];
   const [animalImages, setAnimalImages] = useState([]);
 
+  const handleAdoptButton = () => {
+    let userId;
+    users.forEach(user => {
+      if (user.nickname === clickNickname) {
+        userId = user.userId;
+      }
+    });
+    const today = new Date();
+    const nxtToday = new Date(today.setDate(today.getDate() + 7));
+    const year = nxtToday.getFullYear().toString();
+    const month = (nxtToday.getMonth() + 1).toString().padStart(2, '0');
+    const hour = nxtToday.getHours().toString().padStart(2, '0');
+    const min = nxtToday.getMinutes().toString().padStart(2, '0');
+    const sec = nxtToday.getSeconds().toString().padStart(2, '0');
+    const day = nxtToday.getDate().toString().padStart(2, '0');
+    const expiredDate =
+      year + '-' + month + '-' + day + ' ' + hour + ':' + min + ':' + sec;
+
+    const animalId = animal.animalId;
+    // console.log(animalId);
+    // console.log(userId);
+    // console.log(expiredDate);
+    // console.log(location);
+    // console.log(accessToken);
+
+    axios
+      .post(
+        `${API_URL}/user/${userId}/like/animal/${animalId}`,
+        { expiredDate },
+        { headers: { Authorization: accessToken } },
+      )
+      .then(res => console.log(res));
+    // navigate(`/animal/${animalId}`);
+  };
+
+  const handleSearchNickname = async () => {
+    await axios
+      .get(`${API_URL}/user`, { params: { keyword: searchNicknameKeyword } })
+      .then(res => {
+        setUsers(res.data.data);
+      });
+  };
+
   const getAnimalImage = async () => {
     await axios
       .get(`${API_URL}/shelter/${shelterId}/animal/${animal.animalId}/image`)
       .then(res => {
         setAnimalImages(res.data.data);
-        // console.log('###################');
-        // console.log(res.data.data);
-        // console.log('###################');
       });
+  };
+
+  const handleKeyword = e => {
+    setSearchNicknameKeyword(e.target.value);
   };
 
   useEffect(() => {
     getAnimalImage();
   }, []);
 
-  const [isModal, setIsModal] = useState(false);
-
-  const handleModal = () => {
-    setIsModal(false);
+  const onStayClick = e => {
+    setClickNickname(e.target.value);
   };
+
   const handleDeleteAnimal = () => {
     // navigate 핸들러 함수 최하단으로 내려야함
-    axios.delete(`${API_URL}/shelter/${shelterId}/animal/${animal.animalId}`, {
-      data: {
-        shelterId: {},
-        animalID: animal.animalId,
-      },
-    });
-    navigate(`/animal`);
+    if (window.confirm('등록된 동물을 삭제하시겠습니까?')) {
+      axios.delete(
+        `${API_URL}/shelter/${shelterId}/animal/${animal.animalId}`,
+        {
+          data: {
+            shelterId: {},
+            animalId: animal.animalId,
+          },
+        },
+      );
+    }
   };
 
   return (
     <>
       <Header />
-
       <STitle>동물 정보</STitle>
       {animalImages ? (
         <ImageCarousel page="AnimalDetail" animalImages={animalImages} />
@@ -241,91 +312,76 @@ function AnimalDetail() {
       </SNoteBox>
 
       <SButtonBox>
-        {/* 수정하기 */}
-        <Link
-          to={`/animal/update/${animal.animalId}`}
-          style={{ textDecoration: 'none' }}
-          state={{ animalInformation: animal }}
-        >
-          <SModifyButton variant="contained" size="medium">
-            수정하기
-          </SModifyButton>
-        </Link>
-
-        {/* 관심동물 등록 버튼(HOST만 보임) */}
         {userInfo.role === 'HOST' ? (
           <Link
-            // to={`/animal/update/${animal.animalId}`}
-            to={`/animal/LikeEnroll/${animal.animalId}`}
+            to={`/animal/update/${animal.animalId}`}
             style={{ textDecoration: 'none' }}
             state={{ animalInformation: animal }}
           >
             <SModifyButton variant="contained" size="medium">
-              관심동물 등록
+              수정하기
             </SModifyButton>
           </Link>
         ) : null}
+        {/* 수정하기 */}
+
+        {userInfo.role === 'HOST' ? (
+          <div>
+            <SModifyButton
+              variant="contained"
+              size="medium"
+              onClick={handleOpen}
+            >
+              관심동물 등록
+            </SModifyButton>
+
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                  <SModalDiv>
+                    <TextField
+                      id="standard-basic"
+                      label="닉네임 입력"
+                      variant="standard"
+                      onChange={handleKeyword}
+                    />
+                    <Button onClick={handleSearchNickname}>검색</Button>
+                  </SModalDiv>
+                </Typography>
+                <SNicknameDiv>
+                  {users.map((user, i) => (
+                    <SNickname
+                      key={i}
+                      onClick={onStayClick}
+                      value={user.nickname}
+                    >
+                      {user.nickname}
+                    </SNickname>
+                  ))}
+                </SNicknameDiv>
+                <SButton onClick={handleAdoptButton}>등록</SButton>
+              </Box>
+            </Modal>
+          </div>
+        ) : null}
 
         {/* 삭제하기 */}
-        <SDeleteButton
-          onClick={() => setIsModal(true)}
-          variant="contained"
-          size="medium"
-        >
-          삭제하기
-        </SDeleteButton>
+
+        {userInfo.role === 'HOST' ? (
+          <SDeleteButton
+            onClick={handleDeleteAnimal}
+            variant="contained"
+            size="medium"
+          >
+            삭제하기
+          </SDeleteButton>
+        ) : null}
       </SButtonBox>
-      <Modal
-        isOpen={isModal}
-        onRequestClose={() => setIsModal(false)}
-        style={{
-          overlay: {
-            display: 'flex',
-            justifyContent: 'center',
-            alignItem: 'center',
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'rgba(255, 255, 255, 0.75)',
-          },
-          content: {
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            position: 'relative',
-            top: '25rem',
-            left: 0,
-            right: 0,
-            bottom: 0,
-            width: '50%',
-            height: '10%',
-            border: '1px solid #ccc',
-            background: '#fff',
-            overflow: 'auto',
-            WebkitOverflowScrolling: 'touch',
-            borderRadius: '4px',
-            outline: 'none',
-            padding: '20px',
-            boxShadow: '5px 5px 5px 5px gray',
-          },
-        }}
-      >
-        <SModalBlock>
-          <SModalMessage>삭제하시겠습니까?</SModalMessage>
-          <SButtonBlock>
-            <SModalDeletebutton onClick={handleDeleteAnimal} type="button">
-              삭제
-            </SModalDeletebutton>
-            <SModalCancelbutton onClick={handleModal} type="button">
-              취소
-            </SModalCancelbutton>
-          </SButtonBlock>
-        </SModalBlock>
-      </Modal>
 
       <Nav />
     </>
