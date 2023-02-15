@@ -40,7 +40,7 @@ const SSearchBar = styled.div`
 const SSearchCategory = styled.select`
   text-align: center;
   margin-right: 2%;
-  height: 2rem;
+  height: 2.2rem;
   border: 1px solid gray;
   border-radius: 5px;
   width:25%;
@@ -68,7 +68,7 @@ const SButtton = styled.button`
    background-color: #9500ae;
    color: white;
    width: 20%;
-   height: 1.9rem;
+   height: 2.15rem;
    font-family: mainFont;
    font-size: 0.9rem;
 `;

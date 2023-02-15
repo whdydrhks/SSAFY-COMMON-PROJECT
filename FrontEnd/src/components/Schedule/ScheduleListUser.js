@@ -15,30 +15,24 @@ import { useRecoilValue, useRecoilState } from 'recoil';
 import { scheduleAtom, userAtom } from '../../recoilState';
 import API_URL from '../../api/api';
 import { getCookie } from '../../pages/Account/cookie';
+import '../../styles/fonts.css';
 
 const SContainer = styled.div``;
 const SDate = styled.div`
-  font-size: 2rem;
+  font-size: 1.6rem;
   margin: 2rem 1rem;
+  font-family: mainFont;
 `;
 const SMainDate = styled.div`
   margin-left: 1rem;
   font-weight: bolder;
+  font-family: mainFont;
 `;
 const STitle = styled.div`
-  width: 30%;
-  font-size: 1.6rem;
-  margin: auto;
-  border-radius: 15px 15px 15px 0;
-  border-bottom: 1px solid #b9c4c4;
-  padding: 1rem 2.5rem;
-  background: #cedada;
-  background-color: white;
+  font-size: 2rem;
   margin-top: 1rem;
-  margin-bottom: 1rem;
-  text-align: center;
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
-    rgba(17, 17, 26, 0.05) 0px 8px 32px;
+  font-family: mainFont;
+  margin-left: 1rem;
 `;
 
 const SItem = styled.div``;
@@ -51,6 +45,7 @@ const STimeTable = styled.div`
   background-color: rgba(0, 0, 0, 0.04);
   margin: 1rem 0;
   padding: 1rem;
+  font-family: mainFont;
   /* border-bottom: 1px solid grey; */
   border-radius: 12px;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
@@ -59,15 +54,18 @@ const STime = styled.div`
   font-size: 1.8rem;
   font-weight: bold;
   margin-bottom: 0.5rem;
+  font-family: mainFont;
 `;
 const SLine = styled.div`
   width: 110%;
   border: 0.01rem solid rgba(0, 0, 0, 0.3);
   margin-bottom: 0.5rem;
+  font-family: mainFont;
 `;
 const SShelter = styled.div`
   /* margin-left: 1rem; */
   font-size: 1.6rem;
+  font-family: mainFont;
 `;
 const SClickButton = styled.button`
   width: 7rem;
@@ -75,6 +73,7 @@ const SClickButton = styled.button`
   border: none;
   font-size: 1.2rem;
   border-radius: 100px;
+  font-family: mainFont;
   color: white;
   background-color: ${props => props.bgColor};
 `;
@@ -143,7 +142,7 @@ function ScheduleListUser() {
       {dateList.map(item => (
         <SDate>
           <SMainDate>
-            {Number(item.substring(0, 2))}월{Number(item.substring(2, 4))}일
+            {Number(item.substring(0, 2))}월 {Number(item.substring(2, 4))}일
           </SMainDate>
           {scheduleUser.map((schedule, index) =>
             schedule.day === item ? (

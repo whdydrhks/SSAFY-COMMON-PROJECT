@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable no-return-assign */
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-expressions */
@@ -12,7 +13,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import '../../styles/slick-theme.css';
 import '../../styles/slick.css';
 import Slider from 'react-slick';
@@ -26,7 +27,18 @@ import {
 } from '../../recoilState';
 import API_URL from '../../api/api';
 import { getCookie } from '../../pages/Account/cookie';
-import "../../styles/fonts.css"
+import '../../styles/fonts.css';
+import profileImgDefault from '../../images/profile/profileImgDefault.png';
+import profileImg1 from '../../images/profile/profileImg1.png';
+import profileImg2 from '../../images/profile/profileImg2.png';
+import profileImg3 from '../../images/profile/profileImg3.png';
+import profileImg4 from '../../images/profile/profileImg4.png';
+import profileImg5 from '../../images/profile/profileImg5.png';
+import profileImg6 from '../../images/profile/profileImg6.png';
+import profileImg7 from '../../images/profile/profileImg7.png';
+import profileImg8 from '../../images/profile/profileImg8.png';
+import profileImg9 from '../../images/profile/profileImg9.png';
+import profileImg10 from '../../images/profile/profileImg10.png';
 
 const SButtonDiv = styled.div`
   text-align: center;
@@ -36,7 +48,7 @@ const SButtonDiv = styled.div`
 `;
 
 const SButton = styled.button`
-  width: 100%;
+  width: 90%;
   background-color: white;
   border: none;
   font-size: 1.3rem;
@@ -47,62 +59,83 @@ const SButton = styled.button`
   &:active,
   &:hover {
     color: black;
-    background-color: rgba(217,217,243,1);
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    background-color: rgba(217, 217, 243, 1);
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   }
 `;
 const SContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: left;
+  align-items: left;
   /* border-top: 1px solid grey; */
   /* border-bottom: 1px solid grey; */
-  background-color: rgba(244,240,230,1);
-  border-radius: 45px;
+  background-color: rgba(242, 244, 246, 1);
+  border-radius: 30px;
   font-family: mainFont;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 `;
 const SSContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-around;
-  align-items: flex-end;
+  align-items: center;
   /* border-top: 1px solid grey; */
   /* border-bottom: 1px solid grey; */
   /* background-color: yellow; */
   /* border-radius: 50px; */
   font-family: mainFont;
 `;
+const SSSContainer = styled.div`
+  width: 100%;
+  display: flex;
+`;
+const SSSButtonDiv = styled.div`
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  margin-right: 1rem;
+`;
 const STimeList = styled.div``;
 const STimeBox = styled.div`
-  font-size: 2rem;
   justify-content: space-between;
   background-color: white;
   font-family: mainFont;
 `;
 const STime = styled.div`
-  font-size: 3rem;
+  margin-left: 1rem;
+  width: 100%;
+  font-size: 2rem;
   font-weight: bold;
   font-family: mainFont;
 `;
 const SNickName = styled.div`
-  font-size: 1.4rem;
+  font-size: 1rem;
   font-family: mainFont;
-  margin-bottom: 0.3rem;
+  margin-left: 0.7rem;
+  margin-top: 0.3rem;
+  margin-bottom: 0.5rem;
 `;
 
 const SClickButton = styled.button`
-  width: 5.5rem;
-  height: 3.5vh;
+  width: 50%;
+  height: 3vh;
   border: none;
   font-size: 1.4rem;
   font-family: mainFont;
   color: white;
-  margin-left: 4rem;
   border-radius: 45px;
+  margin-bottom: 0.5rem;
   background-color: ${props => props.bgColor};
+`;
+
+const SImg = styled.img`
+  margin-left: 1.2rem;
+  width: 15%;
+  border-radius: 100%;
+  margin-bottom: 0.5rem;
 `;
 
 function ScheduleListHost() {
@@ -131,13 +164,13 @@ function ScheduleListHost() {
   const [todaySchedule, setTodaySchedule] = useRecoilState(todayScheduleAtom);
   const [isClickDate, setIsClickDate] = useRecoilState(todayAtom);
 
-  const handleDateClick =  (event,index) => {
-     setIsClickDate(() => event.target.value);
+  const handleDateClick = (event, index) => {
+    setIsClickDate(() => event.target.value);
     setTodaySchedule(() =>
       scheduleHost.filter(schedule => schedule.day === event.target.value),
     );
     // dareRef.current = index;
-    // dateRef.current.style = 
+    // dateRef.current.style =
     //   'color : green'
   };
 
@@ -192,12 +225,11 @@ function ScheduleListHost() {
             <SButton
               type="button"
               value={date.month.padStart(2, '0') + date.day.padStart(2, '0')}
-                onClick={(e) => handleDateClick(e, index)}
-                // ref={dateRef}
-            ><motion.div
-            whileTap={{ scale: 0.7 }}>
+              onClick={e => handleDateClick(e, index)}
+              // ref={dateRef}
+            >
               {date.month}월 {date.day}일
-              </motion.div></SButton>
+            </SButton>
           </SButtonDiv>
         ))}
       </Slider>
@@ -207,64 +239,100 @@ function ScheduleListHost() {
             <SContainer ref={el => (timeRef.current[index] = el)}>
               <div>
                 <STime>
-                  {schedule.time.toString().padStart(2, '0')}&nbsp;:&nbsp;00 &nbsp;~&nbsp;{' '}
-                  {(schedule.time + 1).toString().padStart(2, '0')}&nbsp;:&nbsp;00
+                  {schedule.time.toString().padStart(2, '0')}:00 &nbsp;~&nbsp;{' '}
+                  {(schedule.time + 1).toString().padStart(2, '0')}
+                  :00
                 </STime>
               </div>
               <SSContainer>
-                <SNickName>{schedule.userNickname}</SNickName>
-              <div>
-                {/* 클릭한 날이 오늘이면서 시간이 동일하다면 Live */}
-                {todayDate === isClickDate &&
-                today.getHours() === schedule.time ? (
-                  <Link
-                    to={{
-                      pathname: '/videochat',
-                    }}
-                    state={{ room: schedule.room }}
-                  >
-                    <SClickButton
-                      bgColor="green"
-                      onClick={handleVideoChatClick}
+                <SSSContainer>
+                  {schedule.userProfileImage === 0 ? (
+                    <SImg src={profileImgDefault} />
+                  ) : null}
+                  {schedule.userProfileImage === 1 ? (
+                    <SImg src={profileImg1} />
+                  ) : null}
+                  {schedule.userProfileImage === 2 ? (
+                    <SImg src={profileImg2} />
+                  ) : null}
+                  {schedule.userProfileImage === 3 ? (
+                    <SImg src={profileImg3} />
+                  ) : null}
+                  {schedule.userProfileImage === 4 ? (
+                    <SImg src={profileImg4} />
+                  ) : null}
+                  {schedule.userProfileImage === 5 ? (
+                    <SImg src={profileImg5} />
+                  ) : null}
+                  {schedule.userProfileImage === 6 ? (
+                    <SImg src={profileImg6} />
+                  ) : null}
+                  {schedule.userProfileImage === 7 ? (
+                    <SImg src={profileImg7} />
+                  ) : null}
+                  {schedule.userProfileImage === 8 ? (
+                    <SImg src={profileImg8} />
+                  ) : null}
+                  {schedule.userProfileImage === 9 ? (
+                    <SImg src={profileImg9} />
+                  ) : null}
+                  {schedule.userProfileImage === 10 ? (
+                    <SImg src={profileImg10} />
+                  ) : null}
+                  <SNickName>{schedule.userNickname}</SNickName>
+                </SSSContainer>
+                <SSSButtonDiv>
+                  {/* 클릭한 날이 오늘이면서 시간이 동일하다면 Live */}
+                  {todayDate === isClickDate &&
+                  today.getHours() === schedule.time ? (
+                    <Link
+                      to={{
+                        pathname: '/videochat',
+                      }}
+                      state={{ room: schedule.room }}
                     >
-                      L&nbsp;i&nbsp;v&nbsp;e
+                      <SClickButton
+                        bgColor="green"
+                        onClick={handleVideoChatClick}
+                      >
+                        L&nbsp;i&nbsp;v&nbsp;e
+                      </SClickButton>
+                    </Link>
+                  ) : null}
+                  {/* 클릭한 날이 오늘이면서 시간이 지났으면 완료 */}
+                  {todayDate === isClickDate &&
+                  today.getHours() > schedule.time ? (
+                    <SClickButton bgColor="grey" disabled>
+                      완&nbsp;&nbsp;료
                     </SClickButton>
-                  </Link>
-                ) : null}
-                {/* 클릭한 날이 오늘이면서 시간이 지났으면 완료 */}
-                {todayDate === isClickDate &&
-                today.getHours() > schedule.time ? (
-                  <SClickButton bgColor="grey" disabled>
-                    완&nbsp;&nbsp;료
-                  </SClickButton>
-                ) : null}
-                {/* 클릭한 날이 오늘이면서 아직 시간이 지나지 않았으면 취소 */}
-                {todayDate === isClickDate &&
-                today.getHours() < schedule.time ? (
-                  <SClickButton
-                    bgColor="red"
-                    onClick={() => {
-                      handleDeleteSchedule(schedule, index);
-                    }}
-                  >
-                    {' '}
-                    취&nbsp;&nbsp;소
-                  </SClickButton>
-                ) : null}
-                {/* 날짜가 다르다면 취소 */}
-                {todayDate !== isClickDate ? (
-                  <SClickButton
-                    bgColor="red"
-                    onClick={() => {
-                      handleDeleteSchedule(schedule, index);
-                    }}
-                  >
-                    {' '}
-                    취&nbsp;&nbsp;소
-                  </SClickButton>
-                ) : null}
-                </div>
-                </SSContainer>
+                  ) : null}
+                  {/* 클릭한 날이 오늘이면서 아직 시간이 지나지 않았으면 취소 */}
+                  {todayDate === isClickDate &&
+                  today.getHours() < schedule.time ? (
+                    <SClickButton
+                      bgColor="red"
+                      onClick={() => {
+                        handleDeleteSchedule(schedule, index);
+                      }}
+                    >
+                      {' '}
+                      취&nbsp;&nbsp;소
+                    </SClickButton>
+                  ) : null}
+                  {/* 날짜가 다르다면 취소 */}
+                  {todayDate !== isClickDate ? (
+                    <SClickButton
+                      bgColor="red"
+                      onClick={() => {
+                        handleDeleteSchedule(schedule, index);
+                      }}
+                    >
+                      {' '}
+                      취&nbsp;&nbsp;소
+                    </SClickButton>
+                  ) : null}
+                </SSSButtonDiv>
+              </SSContainer>
             </SContainer>
           </STimeBox>
         ))}

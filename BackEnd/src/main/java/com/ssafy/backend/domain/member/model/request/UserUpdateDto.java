@@ -21,12 +21,15 @@ public class UserUpdateDto {
 	private String phoneNumber;
 	private String nickname;
 
+	private int profileImage;
+
 	public UserEntity toEntity() {
 
 		return UserEntity.builder()
 			.name(this.name)
 			.phoneNumber(this.phoneNumber)
 			.nickname(this.nickname)
+			.profileImage(this.profileImage)
 			.build();
 	}
 
@@ -40,6 +43,7 @@ public class UserUpdateDto {
 			.name(this.getName())
 			.phoneNumber(this.getPhoneNumber())
 			.nickname(this.getNickname())
+			.profileImage(this.getProfileImage())
 			.expired(entity.getExpired())
 			.createdDate(entity.getCreatedDate())
 			.build();

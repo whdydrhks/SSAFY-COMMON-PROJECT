@@ -9,8 +9,8 @@ import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 import AnimalCategory from '../../components/Animal/AnimalCategory';
 import { userAtom } from '../../recoilState';
-import LikeAnimal from './LikeAnimal'
-import "../../styles/fonts.css"
+import LikeAnimal from './LikeAnimal';
+import '../../styles/fonts.css';
 
 const Sh1 = styled.h1`
   font-size: 2rem;
@@ -46,8 +46,13 @@ function Animal() {
           <STitle>
             <Sh1>관리목록</Sh1>
             <Link to="/animal/create" style={{ textDecorSation: 'none' }}>
-              <SCreateButton  size="small">
-              <Icon color="secondary" sx={{ fontSize: 30, alignContent: 'center' }}>add_circle</Icon>
+              <SCreateButton size="small">
+                <Icon
+                  color="secondary"
+                  sx={{ fontSize: 40, alignContent: 'center' }}
+                >
+                  add_circle
+                </Icon>
               </SCreateButton>
             </Link>
           </STitle>
