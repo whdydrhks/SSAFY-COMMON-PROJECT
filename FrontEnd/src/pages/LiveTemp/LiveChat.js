@@ -38,6 +38,7 @@ import { useRecoilValue } from 'recoil';
 // import styled from 'styled-components';
 import * as S from './LiveChatStyle';
 import UserVideoComponent from './UserVideoComponent';
+import CreateSchedule from '../../components/Schedule/CreateSchedule';
 import { userAtom } from '../../recoilState';
 // import TextChat from './TextChat';
 import API_URL from '../../api/api';
@@ -250,7 +251,7 @@ function Live() {
 
   const joinSession = () => {
     const liveData = {
-      category: category,
+      category: 'none',
       room: roomNumber.toString(),
       title: roomName,
     };
@@ -458,13 +459,19 @@ function Live() {
                           accept="image/*"
                         />
                       </S.FileUploadButton>
-                      {preview ? <img src={preview} alt="Thumbnail" /> : null}
+                      {preview ? (
+                        <img
+                          src={preview}
+                          alt="Thumbnail"
+                          style={{ width: '30%' }}
+                        />
+                      ) : null}
                       <S.Title2></S.Title2>
                       <div>
                         <p>방 제목</p>
                         <S.RoomName type="text" onChange={handleRoomName} />
                       </div>
-                      <S.Category>
+                      {/* <S.Category>
                         <S.CategoryHeader>카테고리 선택</S.CategoryHeader>
                         <input
                           type="radio"
@@ -482,7 +489,7 @@ function Live() {
                           onChange={handleCategory}
                         />
                         <label htmlFor="고양이">고양이</label>
-                      </S.Category>
+                      </S.Category> */}
                       <S.JoinForm className="form-group" onSubmit={joinSession}>
                         <p className="text-center">
                           <S.JoinDiv>
@@ -703,6 +710,7 @@ function Live() {
           </S.ChatForm>
         </S.ChatBox>
       ) : null}
+      {role === 'USER' ? <CreateSchedule /> : null}
       <Nav />
     </S.VideoChatRoot>
   );
