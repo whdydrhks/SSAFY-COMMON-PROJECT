@@ -81,7 +81,7 @@ public class LiveControllerV1 {
 		@PathVariable("liveId") Long liveId,
 		@RequestParam("file") MultipartFile image,
 		HttpServletRequest request) {
-
+		
 		return ResponseEntity
 			.ok(fileService.uploadFile("live", liveId, image, request));
 	}

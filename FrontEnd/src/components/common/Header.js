@@ -12,8 +12,8 @@ import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { userAtom } from '../../recoilState';
 import { getCookie, removeCookie } from '../../pages/Account/cookie';
 import helloIcon from '../../images/logo/logo.png';
-import API_URL from '../../api/api';
 import "../../styles/fonts.css"
+import API_URL from '../../api/api';
 
 
 const SAppBar = styled(AppBar)`
@@ -80,6 +80,7 @@ function Header() {
               Authorization: accessToken,
             },
           },
+          { withCredentials: true, validateStatus: false },
         )
         .then(() => {
           removeCookie('accessToken');

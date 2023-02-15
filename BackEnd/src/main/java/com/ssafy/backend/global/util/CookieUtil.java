@@ -22,14 +22,14 @@ public class CookieUtil {
 		cookie.setMaxAge((int)TOKEN_VALIDATION_SECOND);
 		cookie.setPath("/");
 		cookie.setSecure(true);
-		cookie.setHttpOnly(true);
+		cookie.setHttpOnly(false);
 
 		return cookie;
 	}
 
-	// 쿠키를 제거하는 메소드. MaxAge를 0으로 만들어서 쿠키를 바로 만료시킨다.
+	// 쿠키를 제거하는 메소드. MaxAge를 10으로 만들어서 쿠키를 만료시킨다.
 	public Cookie deleteCookie(Cookie cookie) {
-		cookie.setMaxAge(0);
+		cookie.setMaxAge(10);
 
 		return cookie;
 	}
@@ -57,6 +57,7 @@ public class CookieUtil {
 			.path(cookie.getPath())
 			.secure(cookie.getSecure())
 			.httpOnly(cookie.isHttpOnly())
+			.sameSite("none")
 			.build();
 	}
 
