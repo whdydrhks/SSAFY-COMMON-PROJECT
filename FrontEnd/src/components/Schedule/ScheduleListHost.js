@@ -73,7 +73,7 @@ const SContainer = styled.div`
   /* border-top: 1px solid grey; */
   /* border-bottom: 1px solid grey; */
   background-color: rgba(242, 244, 246, 1);
-  margin-bottom: 1%;
+  margin-bottom: 5%;
   border-radius: 30px;
   font-family: mainFont;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
@@ -96,7 +96,7 @@ const SSSContainer = styled.div`
 const SSSButtonDiv = styled.div`
   display: flex;
   justify-content: end;
-  width: 100%;
+  /* width: 100%; */
   margin-right: 1rem;
 `;
 const STimeList = styled.div``;
@@ -121,7 +121,7 @@ const SNickName = styled.div`
 `;
 
 const SClickButton = styled.button`
-  width: 100%;
+  width: 6rem;
   height: 3vh;
   border: none;
   font-size: 1.4rem;
@@ -296,7 +296,7 @@ function ScheduleListHost() {
                         bgColor="green"
                         onClick={handleVideoChatClick}
                       >
-                        L&nbsp;i&nbsp;v&nbsp;e
+                        라&nbsp;이&nbsp;브
                       </SClickButton>
                     </Link>
                   ) : null}
