@@ -63,6 +63,7 @@ function Live() {
   const navigate = useNavigate();
 
   const location = useLocation();
+  console.log(location);
   const roomNumber = location.state.roomNumber;
   console.log(roomNumber);
   const chatRef = useRef();
@@ -253,6 +254,8 @@ function Live() {
       room: roomNumber.toString(),
       title: roomName,
     };
+    console.log(liveData.room);
+    console.log('@@@@@@@@@@@@@');
     const thumbnailData = new FormData();
     Object.values(image).forEach(image => {
       thumbnailData.append('file', image);
@@ -435,9 +438,83 @@ function Live() {
   return (
     <S.VideoChatRoot>
       <Header />
+
       {session === undefined ? (
-        // <S.WaitingDiv>
-        // <div id="join-dialog" className="jumbotron vertical-center">
+        <div>
+          {(() => {
+            switch (role) {
+              case 'HOST':
+                return (
+                  <>
+                    <S.WaitingDiv>
+                      <S.Header>Live 생성</S.Header>
+                      <S.FileUploadButton variant="contained" component="label">
+                        파일 업로드
+                        <input
+                          type="file"
+                          hidden
+                          onChange={handleImages}
+                          multiple="multiple"
+                          accept="image/*"
+                        />
+                      </S.FileUploadButton>
+                      {preview ? <img src={preview} alt="Thumbnail" /> : null}
+                      <S.Title2></S.Title2>
+                      <div>
+                        <p>방 제목</p>
+                        <S.RoomName type="text" onChange={handleRoomName} />
+                      </div>
+                      <S.Category>
+                        <S.CategoryHeader>카테고리 선택</S.CategoryHeader>
+                        <input
+                          type="radio"
+                          id="dog"
+                          name="category"
+                          value={category}
+                          onChange={handleCategory}
+                        />
+                        <label htmlFor="강아지">강아지</label>
+                        <input
+                          type="radio"
+                          id="cat"
+                          name="category"
+                          value={category}
+                          onChange={handleCategory}
+                        />
+                        <label htmlFor="고양이">고양이</label>
+                      </S.Category>
+                      <S.JoinForm className="form-group" onSubmit={joinSession}>
+                        <p className="text-center">
+                          <S.JoinDiv>
+                            <S.JoinButton type="button" onClick={joinSession}>
+                              방 입장하기
+                            </S.JoinButton>
+                          </S.JoinDiv>
+                        </p>
+                      </S.JoinForm>
+                    </S.WaitingDiv>
+                  </>
+                );
+              case 'USER':
+                return (
+                  <>
+                    <S.JoinForm className="form-group" onSubmit={joinSession}>
+                      <p className="text-center">
+                        <S.JoinDiv>
+                          <S.JoinButton type="button" onClick={joinSession}>
+                            방 입장하기
+                          </S.JoinButton>
+                        </S.JoinDiv>
+                      </p>
+                    </S.JoinForm>
+                  </>
+                );
+            }
+          })()}
+        </div>
+      ) : null}
+
+      {/* {session === undefined ? (
         <S.WaitingDiv>
           <S.Header>Live 생성</S.Header>
           <S.FileUploadButton variant="contained" component="label">
@@ -450,27 +527,8 @@ function Live() {
               accept="image/*"
             />
           </S.FileUploadButton>
-          {/* <S.File>
-            <label htmlFor="file">
-              <S.FileUpload className="btn-upload" value={image}>
-                썸네일 업로드
-              </S.FileUpload>
-            </label>
-            <S.FileInput
-              type="file"
-              name="file"
-              id="file"
-              onChange={handleImage}
-            />
-          </S.File> */}
           {preview ? <img src={preview} alt="Thumbnail" /> : null}
-          <S.Title2>
-            {/* <S.TitleHeader>방 이름</S.TitleHeader>
-            {roomNumber ? (
-              <S.TitleInput type="text" value={roomNumber} disabled />
-            ) : null} */}
-            {/* <S.TitleInput type="text" value={roomNumber} disabled /> */}
-          </S.Title2>
+          <S.Title2></S.Title2>
           <div>
             <p>방 제목</p>
             <S.RoomName type="text" onChange={handleRoomName} />
@@ -495,30 +553,6 @@ function Live() {
             <label htmlFor="고양이">고양이</label>
           </S.Category>
           <S.JoinForm className="form-group" onSubmit={joinSession}>
-            {/* <S.NameDiv>
-              <label>참가자 이름</label>
-              <input
-                className="form-control"
-                type="text"
-                id="userName"
-                value={myUserName}
-                onChange={handleChangeUserName}
-                required
-                disabled
-              />
-            </S.NameDiv>
-            <S.RoomNameDiv>
-              <label>방 제목</label>
-              <input
-                className="form-control"
-                type="text"
-                id="sessionId"
-                // value={roomNumber}
-                onChange={handleChangeSessionId}
-                required
-                // disabled
-              />
-            </S.RoomNameDiv> */}
             <p className="text-center">
               <S.JoinDiv>
                 <S.JoinButton type="button" onClick={joinSession}>
@@ -528,9 +562,7 @@ function Live() {
             </p>
           </S.JoinForm>
         </S.WaitingDiv>
-      ) : // </div>
-      // </S.WaitingDiv>
-      null}
+      ) : null} */}
 
       {session !== undefined ? (
         <div id="session">
