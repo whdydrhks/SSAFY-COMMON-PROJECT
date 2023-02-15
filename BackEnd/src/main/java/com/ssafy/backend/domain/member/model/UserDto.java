@@ -24,7 +24,6 @@ public class UserDto {
 	private String name;
 	private String phoneNumber;
 	private String nickname;
-	private String profileImage;
 	private String expired;
 
 	private LocalDateTime createdDate;
@@ -40,7 +39,6 @@ public class UserDto {
 			.name(user.getName())
 			.phoneNumber(user.getPhoneNumber())
 			.nickname(user.getNickname())
-			.profileImage(user.getProfileImage())
 			.expired(user.getExpired())
 			.createdDate(user.getCreatedDate())
 			.updatedDate(user.getCreatedDate())
@@ -56,7 +54,6 @@ public class UserDto {
 			.name(this.name)
 			.phoneNumber(this.phoneNumber)
 			.nickname(this.nickname)
-			.profileImage(this.profileImage)
 			.expired(this.expired)
 			.createdDate(this.createdDate)
 			.updatedDate(this.createdDate)

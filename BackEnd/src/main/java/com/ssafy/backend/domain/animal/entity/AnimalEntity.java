@@ -53,7 +53,7 @@ public class AnimalEntity extends BaseTimeEntity {
 	@Column(name = "manage_code", nullable = false, unique = true)
 	private String manageCode;
 
-	@Column(name = "name", nullable = false, unique = true, length = 50)
+	@Column(name = "name", nullable = false, length = 50)
 	private String name;
 
 	//	@Column(name = "thumbnail_image", nullable = false)

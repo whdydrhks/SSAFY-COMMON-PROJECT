@@ -1,18 +1,18 @@
 package com.ssafy.backend.domain.sample.service;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
+import org.apache.commons.csv.CSVRecord;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.backend.domain.animal.entity.AnimalEntity;
-import com.ssafy.backend.domain.animal.entity.LikeAnimalEntity;
 import com.ssafy.backend.domain.animal.repository.AnimalRepository;
 import com.ssafy.backend.domain.animal.repository.LikeAnimalRepository;
-import com.ssafy.backend.domain.live.entity.LiveEntity;
 import com.ssafy.backend.domain.live.repository.LiveRepository;
 import com.ssafy.backend.domain.member.entity.UserEntity;
 import com.ssafy.backend.domain.member.repository.UserRepository;
@@ -24,6 +24,7 @@ import com.ssafy.backend.domain.timetable.entity.TimetableEntity;
 import com.ssafy.backend.domain.timetable.repository.TimetableRepository;
 import com.ssafy.backend.global.file.entity.FileEntity;
 import com.ssafy.backend.global.file.repository.FileRepository;
+import com.ssafy.backend.global.util.CSVUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,7 +32,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class dummyCreate {
 
+	@Value("${file.initDummy}")
+	private String DUMMY_DIR;
+
 	private final PasswordEncoder passwordEncoder;
+
+	private final CSVUtil csvUtil;
 
 	private final FileRepository fileRepository;
 
@@ -80,213 +86,86 @@ public class dummyCreate {
 		fileRepository.save(file);
 
 		// 멤버 생성
-		for (int i = 1; i <= 15; i++) {
-			String name = "사용자_" + String.format("%03d", i);
+		List<CSVRecord> userRecords = csvUtil.readClasspathCSV(DUMMY_DIR, "user.csv");
+		for (int i = 0; i < userRecords.size(); i++) {
+			CSVRecord rec = userRecords.get(i);
 			UserEntity user = UserEntity.builder()
-				.email("user" + i + "@gmail.com")
-				.password(passwordEncoder.encode("user" + i))
-				.name(name)
-				.phoneNumber("010-" + String.format("%04d", i) + "-1234")
-				.nickname("닉네임" + i)
-				.role(i == 1 ? "ADMIN" : (i <= 6 ? "HOST" : "USER")) // 1 번 어드민, 2 ~ 6번 호스트, 나머지 유저
+				.id(Long.valueOf(rec.get(0)))
+				.email(rec.get(1))
+				.password(passwordEncoder.encode(rec.get(2)))
+				.role(rec.get(3))
+				.name(rec.get(4))
+				.phoneNumber(rec.get(5))
+				.nickname(rec.get(6))
 				.build();
 			userRepository.save(user);
 		}
 
-		for (int i = 1; i <= 5; i++) {
-			// 보호소 생성
-			String name = "보호소_" + String.format("%03d", i);
+		// 보호소 생성
+		List<CSVRecord> shelterRecords = csvUtil.readClasspathCSV(DUMMY_DIR, "shelter.csv");
+		for (int i = 0; i < shelterRecords.size(); i++) {
+			CSVRecord rec = shelterRecords.get(i);
 			ShelterEntity shelter = ShelterEntity.builder()
-				.user(userRepository.findByIdAndExpiredLike(i + 1L, "F").get())
-				.name(name)
-				.url("https://www." + name + ".com")
-				.introduce(name + "의 소개글 입니다.")
-				.telNumber("010-1234-" + String.format("%04d", i))
-				.postCode("111111")
-				.address("00시 00구 00대로 " + i)
+				.id(Long.valueOf(rec.get(0)))
+				.user(userRepository.findByIdAndExpiredLike(Long.valueOf(rec.get(1)), "F").get())
+				.name(rec.get(2))
+				.url(rec.get(3))
+				.introduce(rec.get(4))
+				.telNumber(rec.get(5))
+				.postCode(rec.get(6))
+				.address(rec.get(7))
 				.build();
 			shelterRepository.save(shelter);
 
 			// 타임테이블 생성
+			// .week("000000000:padding/000000000:9to17/000000:padding/0:week")
 			TimetableEntity timetable = TimetableEntity.builder()
-				.shelter(shelterRepository.findByIdAndExpiredLike(Long.valueOf(i), "F").get())
-				.sun("0000000000000000000000000")
+				.shelter(shelterRepository.findByIdAndExpiredLike(Long.valueOf(rec.get(0)), "F").get())
+				.sun("0000000011111111100000000")
 				.mon("0000000000000000000000001")
-				.tue("0000000000000000000000002")
-				.wed("0000000000000000000000003")
-				.thr("0000000000000000000000004")
-				.fri("0000000000000000000000005")
-				.sat("0000000000000000000000006")
+				.tue("0000000000001111100000002")
+				.wed("0000000011111110000000003")
+				.thr("0000000011111111000000004")
+				.fri("0000000011001111100000005")
+				.sat("0000000011111111100000006")
 				.build();
 			timetableRepository.save(timetable);
 		}
 
-		//		System.out.println(shelterRepository.findById(1L).get().toString());
-
 		// 동물 생성
-		for (int i = 1; i <= 20; i++) {
-			String name = (i % 2 == 0 ? "멍멍이" : "뭉뭉이") + String.format("%03d", i);
-			String gender = i % 2 == 0 ? "M" : "F";
+		List<CSVRecord> animalRecords = csvUtil.readClasspathCSV(DUMMY_DIR, "animal.csv");
+		for (int i = 0; i < animalRecords.size(); i++) {
+			CSVRecord rec = animalRecords.get(i);
 			AnimalEntity animal = AnimalEntity.builder()
-				.shelter(shelterRepository.findByIdAndExpiredLike(i % 3 + 1L, "F").get())
-				.manageCode("23-02-" + gender + "-" + String.format("%04d", i))
-				.name(name)
-				.breed(i % 2 == 0 ? "골드 리트리버" : "포메라니안")
-				.age(i % 10 + 1)
-				.weight(i % 5 + 5)
-				.gender(gender)
-				.neuter("T")
+				.id(Long.valueOf(rec.get(0)))
+				.shelter(shelterRepository.findByIdAndExpiredLike(Long.valueOf(rec.get(1)), "F").get())
+				.manageCode(rec.get(2))
+				.name(rec.get(3))
+				.breed(rec.get(4))
+				.age(Integer.valueOf(rec.get(5)))
+				.weight(Integer.valueOf(rec.get(6)))
+				.gender(rec.get(7))
+				.neuter(rec.get(8))
+				.adoption(rec.get(9))
+				.note(rec.get(10))
 				.build();
 			animalRepository.save(animal);
 		}
 
-		//		System.out.println(shelterRepository.findById(1L).get().toString());
-
-		ScheduleEntity schedule = ScheduleEntity.builder()
-			.day("0214")
-			.time(10)
-			.room("1")
-			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
-			.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
-			.build();
-
-		scheduleRepository.save(schedule);
-
-		ScheduleEntity schedule1 = ScheduleEntity.builder()
-			.day("0214")
-			.time(11)
-			.room("2")
-			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
-			.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
-			.build();
-		scheduleRepository.save(schedule1);
-
-		ScheduleEntity schedule2 = ScheduleEntity.builder()
-			.day("0214")
-			.time(8)
-			.room("3")
-			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
-			.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
-			.build();
-		scheduleRepository.save(schedule2);
-
-		ScheduleEntity schedule3 = ScheduleEntity.builder()
-			.day("0214")
-			.time(5)
-			.room("4")
-			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
-			.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
-			.build();
-		scheduleRepository.save(schedule3);
-
-		ScheduleEntity schedule4 = ScheduleEntity.builder()
-			.day("0215")
-			.time(17)
-			.room("5")
-			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
-			.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
-			.build();
-		scheduleRepository.save(schedule4);
-
-		LiveEntity live = LiveEntity.builder()
-			//			.id(1L)
-			.category("개")
-			.title("111")
-			.room("1")
-			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
-			.build();
-		liveRepository.save(live);
-
-		LiveEntity live1 = LiveEntity.builder()
-			//			.id(5L)
-			.category("개")
-			.title("555")
-			.room("5")
-			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
-			.build();
-		liveRepository.save(live1);
-
-		LiveEntity live2 = LiveEntity.builder()
-			//			.id(3L)
-			.category("개")
-			.title("333")
-			.room("3")
-			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
-			.build();
-		liveRepository.save(live2);
-
-		LiveEntity live13 = LiveEntity.builder()
-			//			.id(2L)
-			.category("개")
-			.title("222")
-			.room("2")
-			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
-			.build();
-		liveRepository.save(live13);
-
-		LiveEntity live14 = LiveEntity.builder()
-			//			.id(4L)
-			.category("개")
-			.title("441")
-			.room("4")
-			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
-			.build();
-		liveRepository.save(live14);
-
-		LocalDateTime localDateTime = LocalDateTime.of(2023, 02, 14, 11, 24, 55);
-		LikeAnimalEntity like = LikeAnimalEntity.builder()
-			.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
-			.animal(animalRepository.findByIdAndExpiredLike(10L, "F").get())
-			.expiredDate(localDateTime)
-			.build();
-
-		likeAnimalRepository.save(like);
-
-		LocalDateTime localDateTime1 = LocalDateTime.of(2023, 02, 14, 11, 55, 55);
-		LikeAnimalEntity like1 = LikeAnimalEntity.builder()
-			.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
-			.animal(animalRepository.findByIdAndExpiredLike(1L, "F").get())
-			.expiredDate(localDateTime1)
-			.build();
-
-		likeAnimalRepository.save(like1);
-
-		LocalDateTime localDateTime2 = LocalDateTime.of(2023, 02, 14, 11, 36, 55);
-		LikeAnimalEntity like2 = LikeAnimalEntity.builder()
-			.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
-			.animal(animalRepository.findByIdAndExpiredLike(5L, "F").get())
-			.expiredDate(localDateTime2)
-			.build();
-
-		likeAnimalRepository.save(like2);
-
-		LocalDateTime localDateTime3 = LocalDateTime.of(2023, 02, 14, 11, 59, 59);
-		LikeAnimalEntity like3 = LikeAnimalEntity.builder()
-			.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
-			.animal(animalRepository.findByIdAndExpiredLike(6L, "F").get())
-			.expiredDate(localDateTime3)
-			.build();
-
-		likeAnimalRepository.save(like3);
-
-		LocalDateTime localDateTime4 = LocalDateTime.of(2023, 02, 14, 10, 36, 55);
-		LikeAnimalEntity like4 = LikeAnimalEntity.builder()
-			.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
-			.animal(animalRepository.findByIdAndExpiredLike(3L, "F").get())
-			.expiredDate(localDateTime4)
-			.build();
-
-		likeAnimalRepository.save(like4);
-
-		LocalDateTime localDateTime5 = LocalDateTime.of(2023, 02, 14, 12, 36, 55);
-		LikeAnimalEntity like5 = LikeAnimalEntity.builder()
-			.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
-			.animal(animalRepository.findByIdAndExpiredLike(2L, "F").get())
-			.expiredDate(localDateTime5)
-			.build();
-
-		likeAnimalRepository.save(like5);
-
+		// 스케줄 생성
+		List<CSVRecord> scheduleRecords = csvUtil.readClasspathCSV(DUMMY_DIR, "schedule.csv");
+		for (int i = 0; i < scheduleRecords.size(); i++) {
+			CSVRecord rec = scheduleRecords.get(i);
+			ScheduleEntity schedule = ScheduleEntity.builder()
+				.id(Long.valueOf(rec.get(0)))
+				.shelter(shelterRepository.findByIdAndExpiredLike(Long.valueOf(rec.get(1)), "F").get())
+				.user(userRepository.findByIdAndExpiredLike(Long.valueOf(rec.get(2)), "F").get())
+				.day(rec.get(3))
+				.time(Integer.valueOf(rec.get(4)))
+				.room(rec.get(5))
+				.build();
+			scheduleRepository.save(schedule);
+		}
 	}
 
 }
