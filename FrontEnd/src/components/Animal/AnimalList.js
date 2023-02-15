@@ -15,6 +15,7 @@ import { useRecoilValue } from 'recoil';
 import { animalListState, userAtom } from '../../recoilState';
 import AnimalItem from './AnimalItem';
 import API_URL from '../../api/api';
+import "../../styles/fonts.css"
 
 const SLink = styled(Link)`
   margin: 0 auto;
@@ -22,24 +23,54 @@ const SLink = styled(Link)`
   text-decoration: none;
 `;
 
+const SForm = styled.form`
+  width: 100%;
+  margin-left:0.5rem;
+  
+`;
+
 const SSearchBar = styled.div`
   display: flex;
+  width: 100%;
   justify-content: space-around;
-  margin-top: 1rem;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
+  margin-bottom: 1rem;
   /* background-color: rgba(180, 230, 230); */
 `;
 
 const SSearchCategory = styled.select`
   text-align: center;
+  margin-right: 2%;
   height: 2rem;
+  border: 1px solid gray;
+  border-radius: 5px;
+  width:6rem;
+  font-family: mainFont;
+  font-size: 1rem;
 `;
 
 const SInput = styled.input`
   text-align: left;
+  width: 10rem;
+  height: 2.9vh;
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin-right: 2%;
+  background-color: #ffffff;
+  outline: none;
+  font-family: mainFont;
+  font-size: 1rem;
+`;
 
-  width: 49%;
+const SButtton = styled.button`
+   border-radius: 5px;
+   outline: none;
+   border: 0px solid ;
+   background-color: #9500ae;
+   color: white;
+   width: 3rem;
+   height: 1.9rem;
+   font-family: mainFont;
+   font-size: 1.2rem;
 `;
 
 function AnimalList(props) {
@@ -140,7 +171,8 @@ function AnimalList(props) {
     <div>
       {/* 검색 카테고리 */}
       <SSearchBar>
-        <form onSubmit={search}>
+        <SForm onSubmit={search}>
+        {/* <form onSubmit={search}> */}
           <SSearchCategory onChange={handleSearchCategory}>
             <option value="searchManageNumber">관리 번호</option>
             <option value="searchName">이름</option>
@@ -182,9 +214,9 @@ function AnimalList(props) {
                 );
             }
           })()}
-
-          <button type="submit">검색</button>
-        </form>
+          <SButtton type='submit'>검색</SButtton> 
+          {/* </form> */}
+          </SForm>
       </SSearchBar>
       {animalList ? (
         <>

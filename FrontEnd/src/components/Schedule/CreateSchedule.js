@@ -13,8 +13,8 @@ import '../../styles/slick-theme.css';
 import '../../styles/slick.css';
 import Slider from 'react-slick';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import API_URL from '../../api/api';
 import { getCookie } from '../../pages/Account/cookie';
+import API_URL from '../../api/api';
 import {
   twoWeeksAtom,
   timetableShelterIdAtom,
@@ -22,11 +22,13 @@ import {
   dayTimeAtom,
   scheduleAtom,
 } from '../../recoilState';
+import "../../styles/fonts.css"
 
 const SImpossibleTitle = styled.div`
   font-size: 2rem;
   text-align: center;
   margin-top: 2rem;
+  font-family: mainFont;
 `;
 const STimeList = styled.div``;
 const STimeBox = styled.div`
@@ -42,6 +44,7 @@ const STime = styled.div`
 const SButtonDiv = styled.div`
   text-align: center;
   margin-bottom: 1.5rem;
+  font-family: mainFont;
 `;
 
 const SButton = styled.button`
@@ -51,7 +54,7 @@ const SButton = styled.button`
   border: none;
   font-size: 1.2rem;
   border-radius: 10px;
-  font-family: 'cafe24';
+  font-family: mainFont;
   color: grey;
   &:active,
   &:hover {
@@ -66,7 +69,7 @@ const SClickButton = styled.button`
   border: none;
   font-size: 1.2rem;
   border-radius: 10px;
-  font-family: 'cafe24';
+  font-family: mainFont;
   color: white;
   background-color: ${props => props.bgColor};
 `;
