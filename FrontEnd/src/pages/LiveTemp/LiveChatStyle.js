@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import '../../styles/fonts.css';
 import { Button } from '@mui/material';
 
 export const VideoChatRoot = styled.div`
@@ -20,7 +21,11 @@ export const JoinForm = styled.form`
   margin: 5%;
 `;
 
-export const WaitingDiv = styled.div``;
+export const WaitingDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
 
 export const NameDiv = styled.div`
   display: flex;
@@ -41,14 +46,22 @@ export const JoinDiv = styled.div`
   justify-content: center;
 `;
 
-export const JoinButton = styled.button`
-  background-color: #3f51b5;
-  border-radius: 5px;
-  border: 1px solid #3f51b5;
-  text-decoration: none;
+export const JoinButton = styled(Button)`
+  font-size: 1rem;
+  font-family: mainFont;
+  /* background-color: secondary; */
+  margin-top: 5%;
+  margin-left: 35%;
+  margin-right: 35%;
+  margin-bottom: 5%;
   color: white;
-  width: 40%;
-  height: 8vh;
+  border: none;
+  border-radius: 10px;
+  height: 5vh;
+  /* border: none; */
+  /* width: 40%; */
+  /* height: 8vh; */
+  font-family: mainFont;
   /* font-size: 32px; */
 `;
 
@@ -171,10 +184,21 @@ export const LeaveButton = styled.button`
 
 export const Header = styled.div`
   font-size: 2rem;
-  text-align: center;
+  font-family: mainFont;
+  text-align: left;
   margin-top: 2rem;
+  margin-left: 5%;
+  margin-bottom: 20%;
 `;
 
+export const ImgCenter = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+export const ThumbnailImage = styled.img`
+  width: 30vw;
+`;
 // export const File = styled.div`
 //   display: flex;
 //   justify-content: space-around;
@@ -199,9 +223,17 @@ export const Header = styled.div`
 // `;
 
 export const FileUploadButton = styled(Button)`
-  font-family: 'cafe24';
-  text-align: left;
-  margin-top: 1rem;
+  font-size: 1rem;
+  font-family: mainFont;
+  /* background-color: secondary; */
+  margin-top: 5%;
+  margin-left: 35%;
+  margin-right: 35%;
+  margin-bottom: 5%;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  height: 5vh;
 `;
 
 export const Title2 = styled.div`

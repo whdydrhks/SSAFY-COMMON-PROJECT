@@ -198,8 +198,6 @@ function Live() {
         publisher.subscribeToRemote();
         session.publish(publisher);
         setPublisher(publisher);
-        console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-        console.log(publisher);
         if (role === 'USER') {
           setUser(publisher);
         }
@@ -227,8 +225,6 @@ function Live() {
     // console.log(e.target.files, '1');
 
     setImage(e.target.files);
-    console.log('########################');
-    console.log(image);
     const tempPreview = URL.createObjectURL(e.target.files[0]);
     // console.log('@@@@@@@@@@@@@@@@@@@@@@@');
     // console.log(tempPreview, '2');
@@ -287,8 +283,6 @@ function Live() {
       room: roomNumber.toString(),
       title: roomName,
     };
-    console.log(liveData.room);
-    console.log('@@@@@@@@@@@@@');
     const thumbnailData = new FormData();
     Object.values(image).forEach(image => {
       thumbnailData.append('file', image);
@@ -336,8 +330,13 @@ function Live() {
   };
 
   const streamCreated = event => {
+    console.log('##################################################');
     const subscriber = session.subscribe(event.stream, undefined);
     const subRole = JSON.parse(event.stream.connection.data).clientRole;
+    console.log(
+      '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ 아래는 subrole',
+    );
+    console.log(subRole);
     if (role === 'HOST' && subRole === 'USER') {
       setUser(subscriber);
     } else if (role === 'USER' && subRole === 'HOST') {
@@ -388,7 +387,9 @@ function Live() {
   };
 
   const getToken = () => {
-    return createSession(mySessionId).then(sessionId => createToken(sessionId));
+    return createSession(mySessionId).then(sessionId => {
+      createToken(sessionId);
+    });
   };
 
   const createSession = sessionId => {
@@ -405,6 +406,7 @@ function Live() {
           },
         })
         .then(response => {
+          console.log(response);
           resolve(response.data);
         })
         .catch(response => {
@@ -530,29 +532,37 @@ function Live() {
               case 'USER':
                 return (
                   <>
-                    <S.JoinForm className="form-group" onSubmit={joinSession}>
-                      <p className="text-center">
-                        <S.JoinDiv>
-                          <S.JoinButton type="button" onClick={joinSession}>
-                            방 입장하기
-                          </S.JoinButton>
-                        </S.JoinDiv>
-                      </p>
-                    </S.JoinForm>
+                    <p className="text-center">
+                      <S.JoinDiv>
+                        <S.JoinButton
+                          type="button"
+                          variant="contained"
+                          component="label"
+                          onClick={joinSession}
+                          color="secondary"
+                        >
+                          방 입장하기
+                        </S.JoinButton>
+                      </S.JoinDiv>
+                    </p>
                   </>
                 );
               default:
                 return (
                   <>
-                    <S.JoinForm className="form-group" onSubmit={joinSession}>
-                      <p className="text-center">
-                        <S.JoinDiv>
-                          <S.JoinButton type="button" onClick={joinSession}>
-                            방 입장하기
-                          </S.JoinButton>
-                        </S.JoinDiv>
-                      </p>
-                    </S.JoinForm>
+                    <p className="text-center">
+                      <S.JoinDiv>
+                        <S.JoinButton
+                          type="button"
+                          variant="contained"
+                          component="label"
+                          onClick={joinSession}
+                          color="secondary"
+                        >
+                          방 입장하기
+                        </S.JoinButton>
+                      </S.JoinDiv>
+                    </p>
                   </>
                 );
             }
