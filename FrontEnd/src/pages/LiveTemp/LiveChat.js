@@ -530,15 +530,29 @@ function Live() {
               case 'USER':
                 return (
                   <>
-                    <S.JoinForm className="form-group" onSubmit={joinSession}>
-                      <p className="text-center">
-                        <S.JoinDiv>
-                          <S.JoinButton type="button" onClick={joinSession}>
-                            방 입장하기
-                          </S.JoinButton>
-                        </S.JoinDiv>
-                      </p>
-                    </S.JoinForm>
+                    <S.JoinButton
+                      type="button"
+                      variant="contained"
+                      component="label"
+                      onClick={joinSession}
+                      color="secondary"
+                      style={{ marginTop: '10%' }}
+                    >
+                      방 입장하기
+                    </S.JoinButton>
+                    {/* <S.JoinForm className="form-group" onSubmit={joinSession}> */}
+                    {/* <p className="text-center">
+                      <S.JoinDiv>
+                        <S.JoinButton
+                          type="button"
+                          onClick={joinSession}
+                          color="secondary"
+                        >
+                          방 입장하기
+                        </S.JoinButton>
+                      </S.JoinDiv>
+                    </p> */}
+                    {/* </S.JoinForm> */}
                   </>
                 );
               default:
@@ -707,7 +721,7 @@ function Live() {
             </div>
             <div
               onClick={() => {
-                subscriber.publishVideo(!isCam);
+                publisher.publishVideo(!isCam);
                 setIsCam(!isCam);
               }}
             >
@@ -719,8 +733,8 @@ function Live() {
             </div>
             <div
               onClick={() => {
-                subscriber.publishAudio(!isVolume);
-                setIsAudio(!isVolume);
+                publisher.publishAudio(!isVolume);
+                setIsVolume(!isVolume);
               }}
             >
               {isVolume ? (

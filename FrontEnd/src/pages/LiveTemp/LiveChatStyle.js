@@ -53,8 +53,8 @@ export const JoinButton = styled(Button)`
   margin-top: 5%;
   margin-left: 35%;
   margin-right: 35%;
-  margin-bottom: 5%;
-  color: white;
+  margin-bottom: 5%;z
+  /* color: white; */
   border: none;
   border-radius: 10px;
   height: 5vh;
@@ -116,9 +116,9 @@ export const ChatInput = styled.input`
 `;
 
 export const ChatButton = styled.button`
-  background-color: #1976d2;
+  background-color: #9500ae;
   color: white;
-  border: 1px solid #1976d2;
+  border: 1px solid #9500ae;
   border-radius: 10px;
   height: 5vh;
   width: 15vw;
