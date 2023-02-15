@@ -26,6 +26,7 @@ public class ScheduleInfoDto {
 	private String day;
 	// private int state;
 	private int time;
+	private int userProfileImage;
 	private String room;
 
 	public static ScheduleInfoDto of(ScheduleEntity schedule) {
@@ -39,6 +40,7 @@ public class ScheduleInfoDto {
 				// .state(schedule.getState())
 				.time(schedule.getTime())
 				.room(schedule.getRoom())
+				.userProfileImage(schedule.getUser().getProfileImage())
 				.build();
 	}
 
