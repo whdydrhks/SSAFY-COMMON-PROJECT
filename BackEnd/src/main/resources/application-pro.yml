@@ -103,7 +103,7 @@ spring:
       max-request-size: 20MB
       
 file:
-  domain: https://i8b209.p.ssafy.io/api/
+  domain: https://i8b209.p.ssafy.io:9999/api/
   upload:
     basicPath: /upload_test/images
     userPath: user
