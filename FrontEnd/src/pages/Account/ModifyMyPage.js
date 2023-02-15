@@ -38,13 +38,19 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: '80%',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
 };
 
+const SImageHeader = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
 const SImage = styled.img`
   width: 50px;
   height: 50px;
@@ -52,9 +58,15 @@ const SImage = styled.img`
   margin: 0.5rem;
 `;
 
+const SImg = styled.img`
+  width: 50%;
+  border-radius: 100%;
+  margin: 1rem;
+`;
+
 const SImageContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   flex-wrap: wrap;
 `;
 const SImageDiv = styled.button`
@@ -62,7 +74,16 @@ const SImageDiv = styled.button`
   background-color: white;
 `;
 
-const SButton = styled.button``;
+const SButtonDiv = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const SButton = styled(Button)`
+  align-items: center;
+  font-size: 1rem;
+  background-color: #f2f4f6;
+`;
 
 // const SLinkList = styled.div`
 //   display: flex;
@@ -86,8 +107,9 @@ function ModifyMyPage() {
   const clickProfileImg = i => {
     setUser({
       ...user,
-      profileImage: i,
+      profileImage: i + 1,
     });
+    setOpen(false);
   };
 
   const handleName = event => {
@@ -146,7 +168,19 @@ function ModifyMyPage() {
   return (
     <>
       <Header />
-      <div>
+      <SImageHeader>
+        {user.profileImage === 0 ? <SImg src={profileImgDefault} /> : null}
+        {user.profileImage === 1 ? <SImg src={profileImg1} /> : null}
+        {user.profileImage === 2 ? <SImg src={profileImg2} /> : null}
+        {user.profileImage === 3 ? <SImg src={profileImg3} /> : null}
+        {user.profileImage === 4 ? <SImg src={profileImg4} /> : null}
+        {user.profileImage === 5 ? <SImg src={profileImg5} /> : null}
+        {user.profileImage === 6 ? <SImg src={profileImg6} /> : null}
+        {user.profileImage === 7 ? <SImg src={profileImg7} /> : null}
+        {user.profileImage === 8 ? <SImg src={profileImg8} /> : null}
+        {user.profileImage === 9 ? <SImg src={profileImg9} /> : null}
+        {user.profileImage === 10 ? <SImg src={profileImg10} /> : null}
+
         <Button onClick={handleOpen}>아바타 선택하기</Button>
         <Modal
           open={open}
@@ -171,8 +205,7 @@ function ModifyMyPage() {
             </Typography>
           </Box>
         </Modal>
-      </div>
-      <SImage />
+      </SImageHeader>
       <List>
         <ListItem>
           <ListItemAvatar>
@@ -220,9 +253,11 @@ function ModifyMyPage() {
         </ListItem>
       </List>
 
-      <Button onClick={handleModifyUserInfo} variant="body2">
-        수정
-      </Button>
+      <SButtonDiv>
+        <SButton onClick={handleModifyUserInfo} variant="body2">
+          수정
+        </SButton>
+      </SButtonDiv>
 
       <Nav />
     </>
