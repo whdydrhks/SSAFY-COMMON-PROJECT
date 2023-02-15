@@ -105,6 +105,7 @@ spring:
       max-request-size: 20MB
       
 file:
+  domain: http://localhost:9999/api/
   upload:
     basicPath: /upload_test/images
     userPath: user

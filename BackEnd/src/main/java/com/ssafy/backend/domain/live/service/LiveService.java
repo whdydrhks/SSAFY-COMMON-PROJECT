@@ -1,5 +1,16 @@
 package com.ssafy.backend.domain.live.service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.ssafy.backend.domain.live.entity.LiveEntity;
 import com.ssafy.backend.domain.live.model.request.LiveDeleteDto;
 import com.ssafy.backend.domain.live.model.request.LiveRegistDto;
@@ -12,114 +23,111 @@ import com.ssafy.backend.domain.shelter.repository.ShelterRepository;
 import com.ssafy.backend.global.common.entity.BaseTimeEntity;
 import com.ssafy.backend.global.common.model.response.ResponseSuccessDto;
 import com.ssafy.backend.global.error.exception.ApiErrorException;
+import com.ssafy.backend.global.file.service.FileService;
 import com.ssafy.backend.global.util.JwtUtil;
 import com.ssafy.backend.global.util.ResponseUtil;
 import com.ssafy.backend.global.util.enums.ApiStatus;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpHeaders;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class LiveService extends BaseTimeEntity {
 
-    private final ResponseUtil responseUtil;
-    private final JwtUtil jwtUtil;
-    private final ShelterRepository shelterRepository;
-    private final LiveRepository liveRepository;
-    private final UserRepository userRepository;
+	private final FileService fileService;
 
-    @Transactional
-    public ResponseSuccessDto<?> registLive(LiveRegistDto registDto, HttpServletRequest request){
+	private final ResponseUtil responseUtil;
+	private final JwtUtil jwtUtil;
+	private final ShelterRepository shelterRepository;
+	private final LiveRepository liveRepository;
+	private final UserRepository userRepository;
 
-        String token = Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION))
-                .orElseThrow(() -> new ApiErrorException(ApiStatus.UNAUTHORIZED));
+	@Transactional
+	public ResponseSuccessDto<?> registLive(LiveRegistDto registDto, HttpServletRequest request) {
 
-        String tokenId = jwtUtil.getUserId(token);
+		String token = Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION))
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.UNAUTHORIZED));
 
-        UserEntity loginUser = userRepository.findByIdAndExpiredLike(Long.valueOf( tokenId), "F")
-                .orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+		String tokenId = jwtUtil.getUserId(token);
 
-        ShelterEntity findShelter = shelterRepository.findByUser(loginUser)
-                .orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+		UserEntity loginUser = userRepository.findByIdAndExpiredLike(Long.valueOf(tokenId), "F")
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-        LiveEntity live = registDto.toEntity(findShelter);
+		ShelterEntity findShelter = shelterRepository.findByUser(loginUser)
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-        Long liveId = liveRepository.save(live).getId();
+		LiveEntity live = registDto.toEntity(findShelter);
 
-        ResponseSuccessDto<Long> resp = responseUtil
-                .buildSuccessResponse(liveId);
+		Long liveId = liveRepository.save(live).getId();
 
-        return resp;
-    }
+		ResponseSuccessDto<Long> resp = responseUtil
+			.buildSuccessResponse(liveId);
 
-    @Transactional
-    public ResponseSuccessDto<?> getLiveAll(){
-        Sort sortDate = Sort.by(
-                Sort.Order.asc("createdDate")
-        );
-        List<LiveEntity> findLive = liveRepository.findAll(sortDate);
+		return resp;
+	}
 
-        List<LiveInfoDto> liveInfos = findLive
-                .stream()
-                .map(LiveInfoDto::of)
-                .collect(Collectors.toList());
+	@Transactional
+	public ResponseSuccessDto<?> getLiveAll() {
+		Sort sortDate = Sort.by(
+			Sort.Order.asc("createdDate"));
 
-        ResponseSuccessDto<List<LiveInfoDto>> resp = responseUtil
-                .buildSuccessResponse(liveInfos);
+		List<LiveEntity> findLives = liveRepository.findAll(sortDate);
 
-        return resp;
-    }
+		List<LiveInfoDto> liveInfos = findLives
+			.stream()
+			.map(findLive -> {
+				return LiveInfoDto.of(findLive, fileService.createDownloadUri("live", findLive.getFile()));
+			})
+			.collect(Collectors.toList());
 
-    @Transactional
-    public ResponseSuccessDto<?> getLive(Long liveId){
-        LiveEntity findLive = liveRepository.findById(liveId)
-                .orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+		ResponseSuccessDto<List<LiveInfoDto>> resp = responseUtil
+			.buildSuccessResponse(liveInfos);
 
-        LiveInfoDto liveInfo = LiveInfoDto.of(findLive);
+		return resp;
+	}
 
-        ResponseSuccessDto<LiveInfoDto> resp = responseUtil
-                .buildSuccessResponse(liveInfo);
+	@Transactional
+	public ResponseSuccessDto<?> getLive(Long liveId) {
+		LiveEntity findLive = liveRepository.findById(liveId)
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-        return resp;
+		LiveInfoDto liveInfo = LiveInfoDto.of(findLive, fileService.createDownloadUri("live", findLive.getFile()));
 
-    }
+		ResponseSuccessDto<LiveInfoDto> resp = responseUtil
+			.buildSuccessResponse(liveInfo);
 
-    @Transactional
-    public ResponseSuccessDto<?> deleteLive(LiveDeleteDto deleteDto, HttpServletRequest request){
+		return resp;
 
-        String token = Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION))
-                .orElseThrow(() -> new ApiErrorException(ApiStatus.UNAUTHORIZED));
+	}
 
-        String tokenId = jwtUtil.getUserId(token);
+	@Transactional
+	public ResponseSuccessDto<?> deleteLive(LiveDeleteDto deleteDto, HttpServletRequest request) {
 
-        UserEntity loginUser = userRepository.findByIdAndExpiredLike(Long.valueOf( tokenId), "F")
-                .orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+		String token = Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION))
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.UNAUTHORIZED));
 
-        ShelterEntity findShelter = shelterRepository.findByUser(loginUser)
-                .orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+		String tokenId = jwtUtil.getUserId(token);
 
-        LiveEntity findLive = liveRepository.findById(deleteDto.getLiveId())
-                .orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+		UserEntity loginUser = userRepository.findByIdAndExpiredLike(Long.valueOf(tokenId), "F")
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-        if(findLive.getShelter().getId() != findShelter.getId()){
-            throw new ApiErrorException(ApiStatus.BAD_REQUEST);
-        }
+		ShelterEntity findShelter = shelterRepository.findByUser(loginUser)
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-        liveRepository.deleteById(findLive.getId());
+		LiveEntity findLive = liveRepository.findById(deleteDto.getLiveId())
+			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
-        ResponseSuccessDto resp = responseUtil
-                .buildSuccessResponse(null);
+		if (findLive.getShelter().getId() != findShelter.getId()) {
+			throw new ApiErrorException(ApiStatus.BAD_REQUEST);
+		}
 
-        return resp;
-    }
+		liveRepository.deleteById(findLive.getId());
+
+		ResponseSuccessDto resp = responseUtil
+			.buildSuccessResponse(null);
+
+		return resp;
+	}
 
 }

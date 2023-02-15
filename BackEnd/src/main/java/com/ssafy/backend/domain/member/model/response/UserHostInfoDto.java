@@ -29,7 +29,22 @@ public class UserHostInfoDto extends UserInfoDto {
 			.name(user.getName())
 			.phoneNumber(user.getPhoneNumber())
 			.nickname(user.getNickname())
-			.profileImage(user.getProfileImage())
+			.thumnailImage(user.getProfileImage())
+			.createdDate(user.getCreatedDate())
+			.updatedDate(user.getUpdatedDate())
+			.build();
+	}
+
+	public static UserHostInfoDto of(UserEntity user, String thumnailImage) {
+		return UserHostInfoDto.builder()
+			.shelterId(user.getShelter().getId())
+			.shelterName(user.getShelter().getName())
+			.userId(user.getId())
+			.email(user.getEmail())
+			.name(user.getName())
+			.phoneNumber(user.getPhoneNumber())
+			.nickname(user.getNickname())
+			.thumnailImage(thumnailImage)
 			.createdDate(user.getCreatedDate())
 			.updatedDate(user.getUpdatedDate())
 			.build();

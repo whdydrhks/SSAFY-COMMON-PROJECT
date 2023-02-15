@@ -68,6 +68,9 @@ public class FileService {
 	@Value("${file.upload.livePath}")
 	public String LIVE_SUB_PATH;
 
+	@Value("${file.domain}")
+	public String DOMAIN_PATH;
+
 	@Transactional
 	public String uploadUserFile(
 		Long userId,
@@ -446,7 +449,8 @@ public class FileService {
 			}
 		}
 
-		return ServletUriComponentsBuilder.fromCurrentContextPath()
+		// return ServletUriComponentsBuilder.fromCurrentContextPath()
+		return ServletUriComponentsBuilder.fromPath(DOMAIN_PATH)
 			.path("/v1/file")
 			.path("/download").path("/" + subPath)
 			.path("/" + file.getStoreName()).path("." + file.getExtension())
