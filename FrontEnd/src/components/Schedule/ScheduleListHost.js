@@ -39,7 +39,7 @@ const SButton = styled.button`
   width: 100%;
   background-color: white;
   border: none;
-  font-size: 1.5em;
+  font-size: 1.3rem;
   font-family: mainFont;
   /* border: 1px solid gray; */
   color: black;

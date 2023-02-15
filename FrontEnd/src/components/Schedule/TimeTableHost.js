@@ -47,11 +47,11 @@ const SContainer = styled.div`
   justify-content: right;
 `;
 const SClickButton = styled.button`
-  width: 5.5rem;
-  height: 2.7rem;
+  width: 30%;
+  height: 2.5rem;
   border: none;
   margin-top: 1rem;
-  font-size: 1.5rem;
+  font-size: 1rem;
   /* align-items: right; */
   border-radius: 10px;
   font-family: mainFont;
