@@ -122,7 +122,7 @@ const SNickName = styled.div`
 
 const SClickButton = styled.button`
   width: 6rem;
-  height: 3vh;
+  height: 4vh;
   border: none;
   font-size: 1.4rem;
   font-family: mainFont;
