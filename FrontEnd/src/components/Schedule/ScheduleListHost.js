@@ -12,7 +12,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import '../../styles/slick-theme.css';
 import '../../styles/slick.css';
 import Slider from 'react-slick';
@@ -26,7 +26,7 @@ import {
 } from '../../recoilState';
 import API_URL from '../../api/api';
 import { getCookie } from '../../pages/Account/cookie';
-import "../../styles/fonts.css"
+import '../../styles/fonts.css';
 
 const SButtonDiv = styled.div`
   text-align: center;
@@ -47,28 +47,29 @@ const SButton = styled.button`
   &:active,
   &:hover {
     color: black;
-    background-color: rgba(217,217,243,1);
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    background-color: rgba(217, 217, 243, 1);
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   }
 `;
 const SContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: left;
+  align-items: left;
   /* border-top: 1px solid grey; */
   /* border-bottom: 1px solid grey; */
-  background-color: rgba(244,240,230,1);
-  border-radius: 45px;
+  background-color: rgba(242, 244, 246, 1);
+  border-radius: 30px;
   font-family: mainFont;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 `;
 const SSContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-around;
-  align-items: flex-end;
+  justify-content: space-between;
   /* border-top: 1px solid grey; */
   /* border-bottom: 1px solid grey; */
   /* background-color: yellow; */
@@ -77,24 +78,25 @@ const SSContainer = styled.div`
 `;
 const STimeList = styled.div``;
 const STimeBox = styled.div`
-  font-size: 2rem;
   justify-content: space-between;
   background-color: white;
   font-family: mainFont;
 `;
 const STime = styled.div`
-  font-size: 3rem;
+  margin-left: 1rem;
+  width: 100%;
+  font-size: 2rem;
   font-weight: bold;
   font-family: mainFont;
 `;
 const SNickName = styled.div`
-  font-size: 1.4rem;
+  font-size: 1rem;
   font-family: mainFont;
   margin-bottom: 0.3rem;
 `;
 
 const SClickButton = styled.button`
-  width: 5.5rem;
+  width: 40%;
   height: 3.5vh;
   border: none;
   font-size: 1.4rem;
@@ -131,13 +133,13 @@ function ScheduleListHost() {
   const [todaySchedule, setTodaySchedule] = useRecoilState(todayScheduleAtom);
   const [isClickDate, setIsClickDate] = useRecoilState(todayAtom);
 
-  const handleDateClick =  (event,index) => {
-     setIsClickDate(() => event.target.value);
+  const handleDateClick = (event, index) => {
+    setIsClickDate(() => event.target.value);
     setTodaySchedule(() =>
       scheduleHost.filter(schedule => schedule.day === event.target.value),
     );
     // dareRef.current = index;
-    // dateRef.current.style = 
+    // dateRef.current.style =
     //   'color : green'
   };
 
@@ -192,12 +194,11 @@ function ScheduleListHost() {
             <SButton
               type="button"
               value={date.month.padStart(2, '0') + date.day.padStart(2, '0')}
-                onClick={(e) => handleDateClick(e, index)}
-                // ref={dateRef}
-            ><motion.div
-            whileTap={{ scale: 0.7 }}>
+              onClick={e => handleDateClick(e, index)}
+              // ref={dateRef}
+            >
               {date.month}월 {date.day}일
-              </motion.div></SButton>
+            </SButton>
           </SButtonDiv>
         ))}
       </Slider>
@@ -207,64 +208,65 @@ function ScheduleListHost() {
             <SContainer ref={el => (timeRef.current[index] = el)}>
               <div>
                 <STime>
-                  {schedule.time.toString().padStart(2, '0')}&nbsp;:&nbsp;00 &nbsp;~&nbsp;{' '}
-                  {(schedule.time + 1).toString().padStart(2, '0')}&nbsp;:&nbsp;00
+                  {schedule.time.toString().padStart(2, '0')}:00 &nbsp;~&nbsp;{' '}
+                  {(schedule.time + 1).toString().padStart(2, '0')}
+                  :00
                 </STime>
               </div>
               <SSContainer>
                 <SNickName>{schedule.userNickname}</SNickName>
-              <div>
-                {/* 클릭한 날이 오늘이면서 시간이 동일하다면 Live */}
-                {todayDate === isClickDate &&
-                today.getHours() === schedule.time ? (
-                  <Link
-                    to={{
-                      pathname: '/videochat',
-                    }}
-                    state={{ room: schedule.room }}
-                  >
-                    <SClickButton
-                      bgColor="green"
-                      onClick={handleVideoChatClick}
+                <div>
+                  {/* 클릭한 날이 오늘이면서 시간이 동일하다면 Live */}
+                  {todayDate === isClickDate &&
+                  today.getHours() === schedule.time ? (
+                    <Link
+                      to={{
+                        pathname: '/videochat',
+                      }}
+                      state={{ room: schedule.room }}
                     >
-                      L&nbsp;i&nbsp;v&nbsp;e
+                      <SClickButton
+                        bgColor="green"
+                        onClick={handleVideoChatClick}
+                      >
+                        L&nbsp;i&nbsp;v&nbsp;e
+                      </SClickButton>
+                    </Link>
+                  ) : null}
+                  {/* 클릭한 날이 오늘이면서 시간이 지났으면 완료 */}
+                  {todayDate === isClickDate &&
+                  today.getHours() > schedule.time ? (
+                    <SClickButton bgColor="grey" disabled>
+                      완&nbsp;&nbsp;료
                     </SClickButton>
-                  </Link>
-                ) : null}
-                {/* 클릭한 날이 오늘이면서 시간이 지났으면 완료 */}
-                {todayDate === isClickDate &&
-                today.getHours() > schedule.time ? (
-                  <SClickButton bgColor="grey" disabled>
-                    완&nbsp;&nbsp;료
-                  </SClickButton>
-                ) : null}
-                {/* 클릭한 날이 오늘이면서 아직 시간이 지나지 않았으면 취소 */}
-                {todayDate === isClickDate &&
-                today.getHours() < schedule.time ? (
-                  <SClickButton
-                    bgColor="red"
-                    onClick={() => {
-                      handleDeleteSchedule(schedule, index);
-                    }}
-                  >
-                    {' '}
-                    취&nbsp;&nbsp;소
-                  </SClickButton>
-                ) : null}
-                {/* 날짜가 다르다면 취소 */}
-                {todayDate !== isClickDate ? (
-                  <SClickButton
-                    bgColor="red"
-                    onClick={() => {
-                      handleDeleteSchedule(schedule, index);
-                    }}
-                  >
-                    {' '}
-                    취&nbsp;&nbsp;소
-                  </SClickButton>
-                ) : null}
+                  ) : null}
+                  {/* 클릭한 날이 오늘이면서 아직 시간이 지나지 않았으면 취소 */}
+                  {todayDate === isClickDate &&
+                  today.getHours() < schedule.time ? (
+                    <SClickButton
+                      bgColor="red"
+                      onClick={() => {
+                        handleDeleteSchedule(schedule, index);
+                      }}
+                    >
+                      {' '}
+                      취&nbsp;&nbsp;소
+                    </SClickButton>
+                  ) : null}
+                  {/* 날짜가 다르다면 취소 */}
+                  {todayDate !== isClickDate ? (
+                    <SClickButton
+                      bgColor="red"
+                      onClick={() => {
+                        handleDeleteSchedule(schedule, index);
+                      }}
+                    >
+                      {' '}
+                      취&nbsp;&nbsp;소
+                    </SClickButton>
+                  ) : null}
                 </div>
-                </SSContainer>
+              </SSContainer>
             </SContainer>
           </STimeBox>
         ))}

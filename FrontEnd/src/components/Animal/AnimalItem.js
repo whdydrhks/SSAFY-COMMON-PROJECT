@@ -1,15 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion';
 import helloIcon from '../../images/logo/helloIcon.png';
 // import gaejookee from '../../images/dummy/gaejookee.png';
 import cat1 from '../../images/dummy/cat1.png';
 import nameIcon from '../../images/AnimalDetail/name.png';
 import manageCodeIcon from '../../images/AnimalDetail/manageCode.png';
-import breedIcon from '../../images/AnimalDetail/breed.png'
-import "../../styles/fonts.css";
-
+import breedIcon from '../../images/AnimalDetail/breed.png';
+import '../../styles/fonts.css';
 
 const SDetail = styled.div`
   display: flex;
@@ -18,7 +17,8 @@ const SDetail = styled.div`
   margin-bottom: 5%;
   border-radius: 5%;
   /* background-color: rgba(244,240,230,0.7); */
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 `;
 
 const SHr = styled.div`
@@ -67,7 +67,6 @@ const SAnimalItem = styled.div`
   font-size: 1.2rem;
   width: 100%;
   font-family: mainFont;
-
 `;
 
 const SNoteImg = styled.img`
@@ -82,26 +81,29 @@ const SNoteImg = styled.img`
 function AnimalItem({ item }) {
   return (
     <motion.div
-    className="swiper-slide"
-    whileHover={{ scale: 1.12 }}
-    transition={{ type: "spring", stiffness: 45 }}>
+      className="swiper-slide"
+      whileHover={{ scale: 1.12 }}
+      transition={{ type: 'spring', stiffness: 45 }}
+    >
       <SDetail>
         <SAnimalImage src={cat1} alt="준비중" onError={helloIcon} />
         <SItemContainer>
           <SAnimalItem>
-            <SNoteImg src={manageCodeIcon}/>
+            <SNoteImg src={manageCodeIcon} />
             {item.manageCode}
           </SAnimalItem>
           <SAnimalItem>
-            <SNoteImg src={nameIcon} />{item.name} [{item.age}살]</SAnimalItem>
+            <SNoteImg src={nameIcon} />
+            {item.name} [{item.age}살]
+          </SAnimalItem>
           <SAnimalItem>
-            <SNoteImg src={breedIcon}/>
+            <SNoteImg src={breedIcon} />
             {item.breed}
-            </SAnimalItem>
+          </SAnimalItem>
         </SItemContainer>
       </SDetail>
       <SHr />
-      </motion.div>
+    </motion.div>
   );
 }
 

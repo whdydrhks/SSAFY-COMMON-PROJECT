@@ -12,7 +12,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import { useRecoilValue } from 'recoil';
 import { userAtom } from '../../recoilState';
 import { getCookie } from '../../pages/Account/cookie';
-import "../../styles/fonts.css";
+import '../../styles/fonts.css';
 
 const SBox = styled(Box)`
   position: fixed;
@@ -38,17 +38,19 @@ function Nav() {
   const user = useRecoilValue(userAtom);
   return (
     <SBox>
-      <BottomNavigation showLabels value={value}
-  onChange={(event, newValue) => {
-    setValue(newValue);
-        }}>
-      
+      <BottomNavigation
+        showLabels
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+      >
         <SBottomNavigationAction
           label="Home"
           icon={<HomeIcon />}
           component={Link}
-            to="/"
-          />
+          to="/"
+        />
 
         <SBottomNavigationAction
           label="라이브"
