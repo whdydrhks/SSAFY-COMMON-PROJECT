@@ -43,7 +43,8 @@ public class UserHostInfoDto extends UserInfoDto {
 			.name(user.getName())
 			.phoneNumber(user.getPhoneNumber())
 			.nickname(user.getNickname())
-			.thumnailImage(thumnailImage)
+			//.thumnailImage(thumnailImage)
+			.profileImage(thumnailImage)
 			.createdDate(user.getCreatedDate())
 			.updatedDate(user.getUpdatedDate())
 			.build();

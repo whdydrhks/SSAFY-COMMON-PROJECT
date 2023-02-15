@@ -24,7 +24,8 @@ public class UserInfoDto extends BaseTimeDto {
 	private String phoneNumber;
 	private String nickname;
 
-	private String thumnailImage;
+	//	private String thumnailImage;
+	private String profileImage;
 
 	public static UserInfoDto of(UserEntity user) {
 		return UserInfoDto.builder()
@@ -45,7 +46,8 @@ public class UserInfoDto extends BaseTimeDto {
 			.name(user.getName())
 			.phoneNumber(user.getPhoneNumber())
 			.nickname(user.getNickname())
-			.thumnailImage(thumnailImage)
+			//.thumnailImage(thumnailImage)
+			.profileImage(thumnailImage)
 			.createdDate(user.getCreatedDate())
 			.updatedDate(user.getUpdatedDate())
 			.build();
