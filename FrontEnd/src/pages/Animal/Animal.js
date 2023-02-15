@@ -47,7 +47,7 @@ function Animal() {
             <Sh1>관리목록</Sh1>
             <Link to="/animal/create" style={{ textDecorSation: 'none' }}>
               <SCreateButton  size="small">
-              <Icon color="secondary" sx={{ fontSize: 30 }}>add_circle</Icon>
+              <Icon color="secondary" sx={{ fontSize: 30, alignContent: 'center' }}>add_circle</Icon>
               </SCreateButton>
             </Link>
           </STitle>
