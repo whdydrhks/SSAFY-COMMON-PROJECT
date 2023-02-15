@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable no-return-assign */
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-expressions */
@@ -27,6 +28,17 @@ import {
 import API_URL from '../../api/api';
 import { getCookie } from '../../pages/Account/cookie';
 import '../../styles/fonts.css';
+import profileImgDefault from '../../images/profile/profileImgDefault.png';
+import profileImg1 from '../../images/profile/profileImg1.png';
+import profileImg2 from '../../images/profile/profileImg2.png';
+import profileImg3 from '../../images/profile/profileImg3.png';
+import profileImg4 from '../../images/profile/profileImg4.png';
+import profileImg5 from '../../images/profile/profileImg5.png';
+import profileImg6 from '../../images/profile/profileImg6.png';
+import profileImg7 from '../../images/profile/profileImg7.png';
+import profileImg8 from '../../images/profile/profileImg8.png';
+import profileImg9 from '../../images/profile/profileImg9.png';
+import profileImg10 from '../../images/profile/profileImg10.png';
 
 const SButtonDiv = styled.div`
   text-align: center;
@@ -214,6 +226,39 @@ function ScheduleListHost() {
                 </STime>
               </div>
               <SSContainer>
+                {schedule.userProfileImage === 0 ? (
+                  <img src={profileImgDefault} />
+                ) : null}
+                {schedule.userProfileImage === 1 ? (
+                  <img src={profileImg1} />
+                ) : null}
+                {schedule.userProfileImage === 2 ? (
+                  <img src={profileImg2} />
+                ) : null}
+                {schedule.userProfileImage === 3 ? (
+                  <img src={profileImg3} />
+                ) : null}
+                {schedule.userProfileImage === 4 ? (
+                  <img src={profileImg4} />
+                ) : null}
+                {schedule.userProfileImage === 5 ? (
+                  <img src={profileImg5} />
+                ) : null}
+                {schedule.userProfileImage === 6 ? (
+                  <img src={profileImg6} />
+                ) : null}
+                {schedule.userProfileImage === 7 ? (
+                  <img src={profileImg7} />
+                ) : null}
+                {schedule.userProfileImage === 8 ? (
+                  <img src={profileImg8} />
+                ) : null}
+                {schedule.userProfileImage === 9 ? (
+                  <img src={profileImg9} />
+                ) : null}
+                {schedule.userProfileImage === 10 ? (
+                  <img src={profileImg10} />
+                ) : null}
                 <SNickName>{schedule.userNickname}</SNickName>
                 <div>
                   {/* 클릭한 날이 오늘이면서 시간이 동일하다면 Live */}

@@ -40,9 +40,10 @@ import '../../styles/fonts.css';
 //   justify-content: center;
 //   align-items: center;
 // `;
+
 const SImg = styled.img`
   width: 50%;
-  border-radius: 100%;
+  border-radius: 50%;
   margin: 1rem;
 `;
 const SLinkList = styled.div`
