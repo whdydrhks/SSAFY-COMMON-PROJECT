@@ -1,10 +1,30 @@
 /* eslint-disable consistent-return */
 
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { userAtom } from '../../recoilState';
 // import styled from 'styled-components';
 // import { commentListState } from '../../recoilState';
+
+const ScommentContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 0 1rem;
+`;
+
+const SCommentBox = styled.span`
+  width: 80%;
+  display: flex;
+  align-items: flex-start;
+
+  /* flex-direction: column; */
+`;
+
+const SCommentUserNickname = styled.span`
+  display: flex;
+  align-items: flex-end;
+`;
 
 function ReviewComment() {
   // comment 작성시 댓글 저장
@@ -37,10 +57,10 @@ function ReviewComment() {
       <ul>
         {commentList.map(value => (
           <li>
-            <div>
-              <span>{value}</span>
-              <span> {commentNickname}</span>
-            </div>
+            <ScommentContainer>
+              <SCommentBox>{value}</SCommentBox>
+              <SCommentUserNickname> {commentNickname}</SCommentUserNickname>
+            </ScommentContainer>
           </li>
         ))}
       </ul>

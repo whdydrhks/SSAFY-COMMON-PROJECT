@@ -14,57 +14,89 @@ import ImageCarousel from '../components/common/ImageCarousel';
 import ReviewList from '../components/Review/ReviewList';
 
 // 1976d2
-const SContainer = styled.div`
-  width: 100%;
+const SLiveContainer = styled.div`
+  flex-direction: column;
+  height: 20rem;
+  margin: auto;
+  margin-bottom: 2.5rem;
+  display: flex;
+  text-align: right;
+  border: 1px solid black;
+  border-radius: 15px;
+`;
+
+const SLiveVideoBox = styled.div`
   height: 100%;
-  margin-top: 2rem;
-  background-color: lightgray;
-  border-radius: 20px 20px 0 0;
-  padding-top: 0.5rem;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  border-radius: 0 0 15px 15px;
 `;
 
 const STitleBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 1rem;
   color: #195190;
+  margin-top: 1rem;
 `;
 
-const SLiveItem = styled.div`
+const SShelterNicknameBox = styled.div`
+  /* width: 50%; */
+  /* text-align: center; */
+  align-items: flex-end;
+  margin-right: 1rem;
+`;
+
+const SDivideLine = styled.div`
   background-color: white;
   border: 1px solid lightgray;
   border-left: none;
   border-right: none;
+  border-bottom: none;
 `;
 
 const SReviewItem = styled.div`
   background-color: white;
-  border: 1px solid lightgray;
-  border-left: none;
-  border-right: none;
+  /* border: 1px solid lightgray; */
+  /* border-left: none; */
+  /* border-right: none; */
 `;
 
-const SLive = styled.div`
+const SLiveTitleBox = styled.div`
+  font-size: 1.5rem;
+  margin-left: 1rem;
+  text-align: center;
+  display: flex;
+  align-items: flex-start;
+  width: 5rem;
+`;
+
+const SLiveInfoBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-radius: 15px 15px 0 0;
+`;
+
+const SReviewBox = styled.div`
   width: 80%;
   margin: 0 auto;
   margin-top: 2rem;
-`;
-
-const SReview = styled.div`
-  width: 80%;
-  margin: 0 auto;
-  margin-top: 2rem;
+  margin-bottom: 2rem;
 `;
 
 const STitle = styled.div`
   width: 30%;
   font-size: 1.6rem;
   margin: auto;
+  margin-left: 1rem;
   border-radius: 15px 15px 15px 0;
-  border-bottom: 1px solid #b9c4c4;
+  /* border-bottom: 1px solid #b9c4c4;  */
   padding: 1rem 2.5rem;
-  background: #cedada;
+  /* background: #cedada; */
   background-color: white;
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -74,35 +106,50 @@ const STitle = styled.div`
 `;
 
 const SMoreLink = styled(Link)`
+  display: flex;
+  justify-content: flex-end;
+  align-items: right;
+  margin-right: 1rem;
+  margin-bottom: 2.5rem;
   font-size: 1.2rem;
   text-decoration: none;
   color: #195190;
   cursor: pointer;
 `;
 
-const SBox = styled.div`
-  margin-left: 2rem;
-  margin-right: 2rem;
-`;
-
 function Home() {
   return (
     <>
       <Header />
-      <STitle>라이브</STitle>
+      <STitleBox>
+        <STitle>라이브</STitle>
+      </STitleBox>
+      {/* <SMoreLink to="/live">더 보기 &gt;</SMoreLink> */}
+
       <SMoreLink to="/live">더 보기 &gt;</SMoreLink>
-      <SLiveItem>
-        <SLive>
-          <ImageCarousel page="Home" />
-        </SLive>
-      </SLiveItem>
+      {/* <SLiveItem> */}
+      <SLiveContainer>
+        <ImageCarousel page="Home" />
+        <SLiveInfoBox>
+          <SLiveTitleBox>방제목</SLiveTitleBox>
+          <SShelterNicknameBox>Shelter Nickname</SShelterNicknameBox>
+        </SLiveInfoBox>
+        <SLiveVideoBox>동영상 들어갈 곳</SLiveVideoBox>
+      </SLiveContainer>
+      {/* </SLiveItem> */}
       {/* <SLine /> */}
-      <STitle>입양 후기</STitle>
+
+      {/* SDivideLine은 회색 구분선 */}
+      <SDivideLine>
+        <STitleBox>
+          <STitle>입양 후기</STitle>
+        </STitleBox>
+      </SDivideLine>
       <SMoreLink to="/review">더 보기 &gt;</SMoreLink>
       <SReviewItem>
-        <SReview>
+        <SReviewBox>
           <ReviewList />
-        </SReview>
+        </SReviewBox>
       </SReviewItem>
       <Nav />
     </>
