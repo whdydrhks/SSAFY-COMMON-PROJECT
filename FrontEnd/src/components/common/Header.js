@@ -11,12 +11,15 @@ import axios from 'axios';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { userAtom } from '../../recoilState';
 import { getCookie, removeCookie } from '../../pages/Account/cookie';
-import helloIcon from '../../images/logo/helloIcon.png';
+import helloIcon from '../../images/logo/logo.png';
+import "../../styles/fonts.css"
 import API_URL from '../../api/api';
+
 
 const SAppBar = styled(AppBar)`
   position: fixed;
   padding: 4px;
+  background-color: rgba(217,217,243,1);
   a {
     text-decoration: none;
     color: white;
@@ -28,6 +31,7 @@ const SHomeLogo = styled.div`
   a {
     display: flex;
     align-items: center;
+    color:black;
   }
 `;
 const SIconDiv = styled.div`
@@ -39,8 +43,10 @@ const SIconDiv = styled.div`
 `;
 const SAlarmIcon = styled(NotificationsActiveIcon)`
   margin-right: 2rem;
+  color:black;
 `;
 const SLogout = styled(LogoutSharpIcon)`
+  color:black;
   cursor: pointer;
 `;
 const SImg = styled.img`
@@ -48,7 +54,8 @@ const SImg = styled.img`
   margin-right: 0.5rem;
 `;
 const SHello = styled.span`
-  font-size: 1.3rem;
+  font-size: 2rem;
+  font-family: mainFont;
 `;
 
 const SLink = styled(Link)`

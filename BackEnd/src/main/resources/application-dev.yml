@@ -125,5 +125,5 @@ jwt:
     #    access: 3600
     #    refresh: 3600
     # service
-    access: 6000
+    access: 60000
     refresh: 172800

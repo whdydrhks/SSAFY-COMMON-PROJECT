@@ -17,11 +17,15 @@ import Nav from '../../components/common/Nav';
 import TimeTableHost from '../../components/Schedule/TimeTableHost';
 import ScheduleListHost from '../../components/Schedule/ScheduleListHost';
 import ScheduleListUser from '../../components/Schedule/ScheduleListUser';
+import "../../styles/fonts.css"
 
 const STemp = styled(Tab)`
   width: 50%;
-  border: 1px solid black;
-  border-radius: 10px 10px 0px 0px;
+  /* border: 1px solid black;
+  border-radius: 10px 10px 0px 0px; */
+  font-family: mainFont;
+  font-size: 1.8rem;
+  color:black;
 `;
 
 function TabPanel(props) {
@@ -81,7 +85,9 @@ function Schedule() {
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs
                 value={value}
+                textColor="secondary"
                 onChange={handleChange}
+                indicatorColor="secondary"
                 aria-label="basic tabs example"
               >
                 <STemp label="예약관리" {...a11yProps(0)} />

@@ -95,7 +95,7 @@ const SNoteImg = styled.img`
   margin-right: 1rem; */
 `;
 
-function LikeAnimalList() {
+function LikeAnimal() {
   const accessToken = getCookie('accessToken');
   const user = useRecoilValue(userAtom);
   const [likeAnimal, setLikeAnimal] = useState([]);
@@ -170,4 +170,4 @@ function LikeAnimalList() {
 //   item: null,
 // };
 
-export default LikeAnimalList;
+export default LikeAnimal;
