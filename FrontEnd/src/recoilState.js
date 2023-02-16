@@ -2,6 +2,12 @@ import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom } = recoilPersist();
+
+const navAtom = atom({
+  key: 'navAtom',
+  default: 0,
+});
+
 const authStateAtom = atom({
   key: 'authStateAtom',
   default: false,
@@ -178,6 +184,7 @@ const likeAnimalAtom = atom({
 });
 
 export {
+  navAtom,
   animalState,
   authStateAtom,
   userAtom,

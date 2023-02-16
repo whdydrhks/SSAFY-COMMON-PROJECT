@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-undef */
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
@@ -9,10 +10,19 @@ import VideocamIcon from '@mui/icons-material/Videocam';
 import PetsIcon from '@mui/icons-material/Pets';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import PersonIcon from '@mui/icons-material/Person';
-import { useRecoilValue } from 'recoil';
-import { userAtom } from '../../recoilState';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { getCookie } from '../../pages/Account/cookie';
 import '../../styles/fonts.css';
+import { userAtom, navAtom } from '../../recoilState';
+
+const SBottomNavigationAction = styled(BottomNavigationAction)`
+  color: black;
+  background-color: #f5f7fa;
+
+  &.Mui-selected {
+    color: #9c27b0;
+  }
+`;
 
 const SBox = styled(Box)`
   position: fixed;
@@ -20,12 +30,14 @@ const SBox = styled(Box)`
   right: 0;
   bottom: 0;
   height: 4rem;
-  background-color: white;
+  background-color: #f5f7fa;
+  box-shadow: 0px -5px 3px -3px lightgray;
 `;
 
-const SBottomNavigationAction = styled(BottomNavigationAction)`
-  font-family: mainFont;
-`;
+// const SBottomNavigationAction = styled(BottomNavigationAction)`
+//   font-family: mainFont;
+//   color: black;
+// `;
 
 // const SBottomNav = styled(BottomNavigation)`
 //   display: flex;
@@ -33,9 +45,9 @@ const SBottomNavigationAction = styled(BottomNavigationAction)`
 // `;
 
 function Nav() {
-  const [value, setValue] = React.useState(0);
-  const accessToken = getCookie('accessToken');
+  const [value, setValue] = useRecoilState(navAtom);
   const user = useRecoilValue(userAtom);
+  const accessToken = getCookie('accessToken');
   return (
     <SBox>
       <BottomNavigation
