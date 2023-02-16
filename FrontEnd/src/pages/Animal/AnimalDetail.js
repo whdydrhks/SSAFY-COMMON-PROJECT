@@ -230,7 +230,9 @@ const SSearchButton = styled.button`
   height: 4vh;
 `;
 
-const SButton = styled.button``;
+const SAdoptionButton = styled.button`
+  border-radius: 10px;
+`;
 
 function AnimalDetail() {
   const accessToken = getCookie('accessToken');
@@ -450,7 +452,9 @@ function AnimalDetail() {
           >
             삭제하기
           </SDeleteButton>
-        ) : null}
+        ) : (
+          <SAdoptionButton>입양하기</SAdoptionButton>
+        )}
       </SButtonBox>
 
       <Nav />
