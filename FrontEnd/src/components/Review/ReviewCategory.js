@@ -9,13 +9,19 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { useRecoilState } from 'recoil';
+import { Button } from '@mui/material';
+
 import ReviewList from './ReviewList';
 import { reviewListState } from '../../recoilState';
 
 const STemp = styled(Tab)`
   width: 50%;
-  border: 1px solid black;
-  border-radius: 10px 10px 0px 0px;
+  /* border: 1px solid black; */
+  /* border-radius: 10px 10px 0px 0px; */
+  /* color: rgba(180, 230, 230);   */
+  font-family: mainFont !important;
+  font-size: 1.8rem !important;
+  color: black;
 `;
 
 const SSearchBar = styled.div`
@@ -28,11 +34,38 @@ const SSearchBar = styled.div`
 
 const SSearchCategory = styled.select`
   text-align: center;
-  height: 3rem;
+  margin-right: 2%;
+  height: 2rem;
+  border: 1px solid gray;
+  border-radius: 5px;
+  width: 25%;
+  font-family: mainFont;
+  font-size: 0.9rem;
 `;
 
 const SInput = styled.input`
-  width: 50%;
+  text-align: left;
+  width: 45%;
+  height: 1.9rem;
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin-right: 2%;
+  background-color: #ffffff;
+  outline: none;
+  font-family: mainFont;
+  font-size: 0.9rem;
+`;
+
+const SButton = styled(Button)`
+  border-radius: 5px;
+  outline: none;
+  border: 0px solid;
+  background-color: #9500ae;
+  color: white;
+  width: 20%;
+  height: 1.9rem;
+  font-family: mainFont;
+  font-size: 0.9rem;
 `;
 
 function TabPanel(props) {
@@ -105,6 +138,8 @@ function ReviewCategory() {
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs
           value={value}
+          textColor="secondary"
+          indicatorColor="secondary"
           onChange={handleChange}
           aria-label="basic tabs example"
         >
@@ -148,9 +183,9 @@ function ReviewCategory() {
           }
         })()}
 
-        <button type="button" onClick={search}>
+        <SButton variant="contained" type="button" onClick={search}>
           검색
-        </button>
+        </SButton>
       </SSearchBar>
 
       <TabPanel value={value} index={0}>

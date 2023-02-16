@@ -1,7 +1,12 @@
 package com.ssafy.backend.domain.alarm.model.request;
 
-import lombok.*;
-import org.springframework.context.annotation.Bean;
+import io.swagger.annotations.ApiParam;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -10,6 +15,7 @@ import org.springframework.context.annotation.Bean;
 @AllArgsConstructor
 public class AlarmDeleteDto {
 
-    private Long alarmId;
+	@ApiParam(name = "알람 식별 번호")
+	private Long alarmId;
 
 }

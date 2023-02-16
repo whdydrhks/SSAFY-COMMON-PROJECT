@@ -49,7 +49,7 @@ function Animal() {
               <SCreateButton size="small">
                 <Icon
                   color="secondary"
-                  sx={{ fontSize: 30, alignContent: 'center' }}
+                  sx={{ fontSize: 40, alignContent: 'center' }}
                 >
                   add_circle
                 </Icon>

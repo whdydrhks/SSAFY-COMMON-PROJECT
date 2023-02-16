@@ -7,6 +7,11 @@ const authStateAtom = atom({
   default: false,
 });
 
+const roomNumberAtom = atom({
+  key: ' roomNumberAtom',
+  default: '',
+});
+
 const userAtom = atom({
   key: 'userAtom',
   default: {
@@ -75,7 +80,7 @@ const dateListAtom = atom({
 
 const todayAtom = atom({
   key: 'todayAtom',
-  default: '',
+  default: '0216',
 });
 
 const reviewListState = atom({
@@ -184,6 +189,7 @@ export {
   todayTimeAtom,
   scheduleAtom,
   reviewListState,
+  roomNumberAtom,
   commentListState,
   todayScheduleAtom,
   todayAtom,

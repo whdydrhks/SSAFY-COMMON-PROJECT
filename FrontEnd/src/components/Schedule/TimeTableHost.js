@@ -17,10 +17,14 @@ import { useRecoilValue, useRecoilState } from 'recoil';
 import API_URL from '../../api/api';
 import { dayTimeAtom, todayTimeAtom, userAtom } from '../../recoilState';
 
+const SSlider = styled(Slider)`
+  margin-left: 1rem;
+  margin-right: 1rem;
+`;
+
 const SButtonDiv = styled.div`
   text-align: center;
   width: 100%;
-  margin-bottom: 0.5rem;
   /* background-color: yellow; */
 `;
 
@@ -80,12 +84,15 @@ const STime = styled.div`
   border-radius: 10px;
 `;
 const SStartText = styled.div`
+  font-size: 1.6rem;
+  text-align: center;
   font-family: mainFont;
+  margin-top: 40%;
 `;
 
 function TimeTableHost() {
   const settings = {
-    arrows: false,
+    arrows: true,
     autoplay: false,
     centerPadding: '10px',
     dots: false,
@@ -303,7 +310,7 @@ function TimeTableHost() {
   console.log('date', dateState);
   return (
     <>
-      <Slider {...settings}>
+      <SSlider {...settings}>
         {days.map((item, index) => (
           <SButtonDiv key={index}>
             {index === dateState ? (
@@ -377,7 +384,7 @@ function TimeTableHost() {
             )}
           </SButtonDiv>
         ))}
-      </Slider>
+      </SSlider>
       {dateState !== undefined ? (
         <>
           <STimeList>

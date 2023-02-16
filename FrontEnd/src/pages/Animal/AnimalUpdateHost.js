@@ -14,6 +14,7 @@ import {
   Grid,
   Button,
   MenuItem,
+  ButtonGroup,
 } from '@mui/material';
 import axios from 'axios';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
@@ -23,33 +24,61 @@ import Nav from '../../components/common/Nav';
 import Header from '../../components/common/Header';
 import API_URL from '../../api/api';
 import { userAtom, animalState } from '../../recoilState';
+import '../../styles/fonts.css';
+
+const SBasicButton = styled(Button)`
+  font-family: mainFont;
+  height: 4vh;
+  margin-top: 5%;
+  text-align: center;
+  font-size: 1rem;
+`;
+
+const SDeleteButton = styled(Button)`
+  font-family: mainFont;
+  height: 4vh;
+  margin-top: 5%;
+  text-align: center;
+  font-size: 1rem;
+`;
 
 const SButtonDiv = styled.div`
   display: flex;
   justify-content: space-around;
+  font-family: mainFont;
 `;
 
 const SH1 = styled.h1`
   font-size: 2rem;
-  font-family: 'cafe24';
+  font-family: mainFont;
   margin-left: 1rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 `;
 
 const STemp = styled.div`
   display: flex;
-  justify-content: left;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  font-family: mainFont;
 `;
 
 const STypography = styled(Typography)`
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  /* margin-top: 1rem; */
+  /* margin-bottom: 0.5rem; */
+  font-family: mainFont;
 `;
 
 const SFileUploadButton = styled(Button)`
-  font-family: 'cafe24';
-  text-align: left;
-  margin-top: 1rem;
+  margin-top: 5%;
+  font-family: mainFont;
+  text-align: center;
+  width: 50%;
+  font-size: 1rem;
+  height: 4vh;
+  /* margin-top: 1rem; */
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 `;
 
 const SPreviewCard = styled(Grid)`
@@ -57,20 +86,32 @@ const SPreviewCard = styled(Grid)`
   flex-direction: column;
   align-items: center;
   width: 50%;
+  font-family: mainFont;
 `;
 
 const SPreviewImg = styled.img`
   width: 10rem;
-  margin-bottom: 1rem;
+  font-family: mainFont;
+  /* margin-bottom: 1rem; */
 `;
 
-const SSubmit = styled.div`
-  margin-top: 2rem;
-  text-align: right;
+const SSubmit = styled.button`
+  margin-top: 5%;
+  font-family: mainFont;
+  text-align: center;
+  width: 50%;
+  color: white;
+  background-color: #9c27b0;
+  border: none;
+  font-size: 1rem;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  border-radius: 5px;
+  height: 4vh;
 `;
 
 const SButton = styled(Button)`
-  font-family: 'cafe24';
+  font-family: mainFont;
   font-size: 1.5rem;
 `;
 
@@ -247,9 +288,9 @@ function AnimalUpdateHost() {
             <Grid container spacing={2}>
               {/* 입양 상태 */}
               <Grid item xs={12}>
-                <Typography component="h6" variant="body2">
+                <STypography component="h6" variant="body2">
                   입양 상태
-                </Typography>
+                </STypography>
                 <TextField
                   select
                   value={adoption}
@@ -403,7 +444,7 @@ function AnimalUpdateHost() {
                           alt={`${image}-${imageId}`}
                           // style={{ width: '10rem' }}
                         />
-                        <Button
+                        <SBasicButton
                           type="button"
                           onClick={handleDeletePreview}
                           name={`${imageId}`}
@@ -412,7 +453,7 @@ function AnimalUpdateHost() {
                           id={image}
                         >
                           삭제
-                        </Button>
+                        </SBasicButton>
                       </SPreviewCard>
                     ))}
                     {/* </SPreviewContainer> */}
@@ -469,7 +510,7 @@ function AnimalUpdateHost() {
                         alt={`${image}-${imageId}`}
                         style={{ width: '10rem' }}
                       />
-                      <Button
+                      <SDeleteButton
                         type="button"
                         onClick={handleDeleteAddPreview}
                         name={`${imageId}`}
@@ -477,7 +518,7 @@ function AnimalUpdateHost() {
                         color="error"
                       >
                         삭제
-                      </Button>
+                      </SDeleteButton>
                     </SPreviewCard>
                   ))}
                 </Grid>
@@ -487,7 +528,7 @@ function AnimalUpdateHost() {
             <Grid item xs={12}>
               <STemp>
                 <SFileUploadButton variant="contained" component="label">
-                  파일 추가 업로드
+                  파일추가
                   <input
                     type="file"
                     hidden
@@ -496,12 +537,9 @@ function AnimalUpdateHost() {
                     accept="image/*"
                   />
                 </SFileUploadButton>
+                <SSubmit type="submit">수정하기</SSubmit>
               </STemp>
             </Grid>
-
-            <SSubmit>
-              <button type="submit">동물 수정하기</button>
-            </SSubmit>
           </form>
         </Box>
       </Container>

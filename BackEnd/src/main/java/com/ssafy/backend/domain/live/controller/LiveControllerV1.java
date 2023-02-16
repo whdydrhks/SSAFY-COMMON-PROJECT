@@ -20,6 +20,7 @@ import com.ssafy.backend.global.file.service.FileService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -68,7 +69,7 @@ public class LiveControllerV1 {
 	@GetMapping("/{liveId}/image")
 	@ApiOperation(value = "라이브 이미지 조회")
 	public ResponseEntity<?> getFilesByUser(
-		@PathVariable("liveId") Long liveId,
+		@ApiParam(value = "라이브 식별 번호") @PathVariable("liveId") Long liveId,
 		HttpServletRequest request) {
 
 		return ResponseEntity
@@ -78,10 +79,10 @@ public class LiveControllerV1 {
 	@PostMapping("/{liveId}/image")
 	@ApiOperation(value = "라이브 이미지 등록")
 	public ResponseEntity<?> uploadFilesByUser(
-		@PathVariable("liveId") Long liveId,
+		@ApiParam(value = "라이브 식별 번호") @PathVariable("liveId") Long liveId,
 		@RequestParam("file") MultipartFile image,
 		HttpServletRequest request) {
-		
+
 		return ResponseEntity
 			.ok(fileService.uploadFile("live", liveId, image, request));
 	}

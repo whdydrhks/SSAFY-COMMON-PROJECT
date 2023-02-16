@@ -2,6 +2,7 @@ package com.ssafy.backend.domain.sample.service;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
 import org.apache.commons.csv.CSVRecord;
@@ -52,7 +53,7 @@ public class dummyCreate_csv {
 
 	// 테스트용 더미 데이터 생성용
 	@Transactional
-	//	@PostConstruct // 이거 주석 풀면 더미 생성이 동작할 것
+	@PostConstruct // 이거 주석 풀면 더미 생성이 동작할 것
 	public void testInitializing() {
 
 		// 기본 유저 이미지 생성

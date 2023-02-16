@@ -2,12 +2,15 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/require-default-props */
 /* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
@@ -20,8 +23,13 @@ import Nav from '../../components/common/Nav';
 import {
   liveListAtom,
   timetableShelterIdAtom,
+  roomNumberAtom,
   userAtom,
 } from '../../recoilState';
+import '../../styles/fonts.css';
+import CreateLive from '../../images/Video/CreateLive.png';
+import cat1 from '../../images/dummy/cat1.png';
+import * as S from './LiveStyle';
 
 const SContainer = styled.div`
   ul {
@@ -31,12 +39,14 @@ const SContainer = styled.div`
 
 const SLiveHeader = styled.div`
   display: flex;
-  padding: 2rem;
+  padding: 1.5rem;
   justify-content: space-between;
+  font-family: mainFont;
 `;
 
 const STitle = styled.div`
-  width: 30%;
+  font-size: 2.4rem;
+  /* width: 30%;
   font-size: 1.6rem;
   margin: auto;
   border-radius: 15px 15px 15px 0;
@@ -45,15 +55,17 @@ const STitle = styled.div`
   background: #cedada;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  text-align: center;
+  text-align: center; */
 `;
-const SLiveCreateButton = styled.button`
-  background-color: green;
+const SLiveCreateImg = styled.img`
+  height: 2rem;
+  color: red;
+  /* background-color: green;
   height: 2.5rem;
   border: 1px solid green;
   border-radius: 15%;
   font-size: 1.1rem;
-  color: white;
+  color: white; */
 `;
 
 const SLiveContainer = styled.div`
@@ -96,6 +108,12 @@ const SLiveShelter = styled.div`
   text-align: right;
 `;
 
+const SLink = styled(Link)`
+  padding: 3% 5% 3% 5%;
+  color: black;
+  text-decoration: none;
+`;
+
 function Live() {
   const today = new Date();
   const payloadRoomNumber = today.getTime();
@@ -107,6 +125,7 @@ function Live() {
   );
   const [thumbnailImages, setThumbnailImages] = useState([]);
   const [lifeInfo, setLifeInfo] = useState([]);
+  const [roomNumberInfo, setRoomNumberInfo] = useRecoilState(roomNumberAtom);
 
   // const [liveInfo,setLiveInfo] = useState([]);
 
@@ -121,91 +140,43 @@ function Live() {
   useEffect(async () => {
     await axios.get(`${API_URL}/live/all`).then(res => {
       setLiveList(res.data.data);
-      console.log(res.data.data);
-      console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@');
     });
   }, []);
+
+  const saveRoomNumber = l => {
+    console.log(l.room);
+    setRoomNumberInfo(l.room);
+    // setRoomNumberAtom
+  };
 
   return (
     <>
       <Header />
       <SLiveHeader>
-        <STitle>Live</STitle>
+        <STitle>라이브</STitle>
         {user.role === 'HOST' ? (
           <Link to="/livechat" state={{ roomNumber: payloadRoomNumber }}>
-            <SLiveCreateButton>생성</SLiveCreateButton>
+            <SLiveCreateImg src={CreateLive} alt="CreateLive" />
           </Link>
         ) : null}
       </SLiveHeader>
-      {/* <SLiveContainer>
+      <S.LiveListContainer>
         {liveList.map((live, index) => (
-          <Link to="/livechat" key={index} state={{ roomNumber: live.room }}>
-            <SLiveItem onClick={() => handleClickLive(live.shelterId)}>
-              <SLiveImgBox>
-                <div>{live.thumbnailImage}</div>
-                <img
-                  src={live.thumnailImage}
-                  alt="liveThumbnail"
-                  style={{ width: '100%', height: '100%' }}
-                />
-              </SLiveImgBox>
-              <SLiveContentBox>
-                <SLiveTitle>{live.title}</SLiveTitle>
-                <SLiveShelter>{live.shelterName}</SLiveShelter>
-              </SLiveContentBox>
-            </SLiveItem>
-          </Link>
+          <SLink to="/livechat" key={index} state={{ roomNumber: live.room }}>
+            <S.LiveItemContainer
+              className={live.room}
+              onClick={() => saveRoomNumber(live)}
+            >
+              <S.LiveImage src={cat1} alt="ThumbnailImage" />
+              <S.LiveInformationContainer>
+                <S.LiveTitle>{live.title}</S.LiveTitle>
+                <S.ShelterName>{live.shelterName}</S.ShelterName>
+              </S.LiveInformationContainer>
+            </S.LiveItemContainer>
+          </SLink>
         ))}
-      </SLiveContainer> */}
-      <SContainer>
-        <ImageList sx={{ width: 0.9, height: 0.9 }}>
-          {/* <ImageListItem key="Subheader" cols={2}> */}
-          {/* <STitle>라이브</STitle> */}
-          {/* </ImageListItem> */}
-          {liveList.map((item, index) => (
-            <Link to="/livechat" key={index} state={{ roomNumber: item.room }}>
-              <ImageListItem key={item.img} style={{ width: '40vw' }}>
-                <img
-                  src={item.thumnailImage}
-                  srcSet={item.thumnailImage}
-                  alt={item.title}
-                  loading="lazy"
-                  style={{ width: '40vw', height: '20vh' }}
-                />
-                <ImageListItemBar
-                  title={item.title}
-                  subtitle={item.shelterName}
-                  actionIcon={
-                    <IconButton
-                      sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                      aria-label={`info about ${item.title}`}
-                    >
-                      {/* <InfoIcon /> */}
-                    </IconButton>
-                  }
-                />
-              </ImageListItem>
-            </Link>
-          ))}
-        </ImageList>
-      </SContainer>
-      {/* <ImageList sx={{ width: 1, height: 1 }}>
-        {liveList.map(item => (
-          <ImageListItem key={item.thumnail}>
-            <img
-              src={item.thumnailImage}
-              srcSet={item.thumnailImage}
-              alt="temp"
-              loading="lazy"
-            />
-            <ImageListItemBar
-              title={item.title}
-              subtitle={<span>by: {item.shelterName}</span>}
-              position="below"
-            />
-          </ImageListItem>
-        ))}
-      </ImageList> */}
+      </S.LiveListContainer>
+
       <Nav />
     </>
   );

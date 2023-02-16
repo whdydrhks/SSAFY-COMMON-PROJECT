@@ -1,5 +1,6 @@
 package com.ssafy.backend.domain.member.model.request;
 
+import io.swagger.annotations.ApiParam;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +15,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UserUpdatePasswordDto {
 
+	@ApiParam(name = "현재 비밀번호")
 	private String curPassword;
+	@ApiParam(name = "새로운 비밀번호")
 	private String newPassword;
 
 }
