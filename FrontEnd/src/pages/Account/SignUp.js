@@ -139,6 +139,7 @@ function SignUp() {
                 이메일
               </Typography>
               <TextField
+                color="secondary"
                 required
                 fullWidth
                 id="email"
@@ -160,6 +161,7 @@ function SignUp() {
                     component="h6"
                     variant="body1"
                     style={{ color: 'green' }}
+                    color="secondary"
                   >
                     이메일 형식이 준수합니다.
                   </Typography>
@@ -167,6 +169,7 @@ function SignUp() {
                 </div>
               ) : (
                 <Typography
+                  color="secondary"
                   component="h6"
                   variant="body1"
                   style={{ color: 'red' }}
@@ -180,6 +183,7 @@ function SignUp() {
                 비밀번호
               </Typography>
               <TextField
+                color="secondary"
                 required
                 fullWidth
                 name="password"
@@ -214,6 +218,7 @@ function SignUp() {
                 비밀번호 확인
               </Typography>
               <TextField
+                color="secondary"
                 required
                 fullWidth
                 name="chkPassword"
@@ -249,6 +254,7 @@ function SignUp() {
                 이름
               </Typography>
               <TextField
+                color="secondary"
                 required
                 fullWidth
                 id="name"
@@ -264,6 +270,7 @@ function SignUp() {
                 닉네임
               </Typography>
               <TextField
+                color="secondary"
                 required
                 fullWidth
                 id="nickname"
@@ -282,6 +289,7 @@ function SignUp() {
                 핸드폰 번호
               </Typography>
               <TextField
+                color="secondary"
                 required
                 fullWidth
                 id="phoneNumber"
@@ -324,6 +332,7 @@ function SignUp() {
             </Grid>
           </Grid>
           <Button
+            color="secondary"
             type="submit"
             fullWidth
             variant="contained"

@@ -78,6 +78,7 @@ public class LikeAnimalService {
 		UserEntity findUser = userRepository.findByIdAndExpiredLike(userId, "F")
 			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
+		// 이미 등록된 관심동물은 등록 하지않는다.
 		if(likeAnimalRepository.findByUserAndAnimal(findUser, findAnimal) != null){
 			throw new ApiErrorException(ApiStatus.DUPLICATION);
 		}
