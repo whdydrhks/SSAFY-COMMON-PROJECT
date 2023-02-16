@@ -42,7 +42,7 @@ import { TextField } from '@mui/material';
 import * as S from './LiveChatStyle';
 import UserVideoComponent from './UserVideoComponent';
 import CreateSchedule from '../../components/Schedule/CreateSchedule';
-import { userAtom } from '../../recoilState';
+import { userAtom, roomNumberAtom } from '../../recoilState';
 // import TextChat from './TextChat';
 import API_URL from '../../api/api';
 import Header from '../../components/common/Header';
@@ -87,10 +87,20 @@ function Live() {
   const navigate = useNavigate();
 
   const location = useLocation();
-  // console.log(location);
-  const tempRoomNumber = location.state.roomNumber;
-  const temp2 = tempRoomNumber.toString();
-  const roomNumber = temp2.substring(10, 14);
+  // console.log(location);\
+
+  // const tempRoomNumber = location.state.roomNumber;
+  // const temp2 = tempRoomNumber.toString();
+  // const roomNumber = temp2.substring(10, 14);
+
+  var roomNumber = useRecoilValue(roomNumberAtom);
+
+  if (!roomNumber) {
+    var tempRoomNumber = location.state.roomNumber;
+    var temp2 = tempRoomNumber.toString();
+    var roomNumber = temp2.substring(10, 14);
+  }
+
   if (roomNumber) {
     console.log(roomNumber);
   }
@@ -111,7 +121,12 @@ function Live() {
   const [session, setSession] = useState(undefined);
   const [user, setUser] = useState(undefined);
   const [hostSessionName, setHostSessionName] = useState(roomNumber);
-  const tmp = email.split('@')[0];
+  const tmp = roomNumber;
+  console.log(roomNumber);
+  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+  console.log(tmp);
+  console.log('##############################');
+
   // const [mySessionId, setMySessionId] = useState(
   //   role === 'HOST' ? tmp : hostSessionName,
   // );

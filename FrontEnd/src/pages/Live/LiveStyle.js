@@ -5,8 +5,9 @@ export const LiveListContainer = styled.div`
   flex-direction: column;
 `;
 
-export const LiveItemContainer = styled.div`
+export const LiveItemContainer = styled.button`
   display: flex;
+  margin-bottom: 2rem;
   /* margin-left: 0.1%; */
   /* margin-right: 0.1%; */
   /* margin-bottom: 5%; */
@@ -46,6 +47,20 @@ export const LiveTitle = styled.div`
   margin-left: 5%;
 `;
 
+export const JoinContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-left: 5%;
+`;
+
 export const ShelterName = styled.div`
   text-align: right;
+`;
+
+export const JoinButton = styled.div`
+  border: none;
+  background-color: #9c27b0;
+  color: white;
+  padding: 5%;
+  border-radius: 10%;
 `;
