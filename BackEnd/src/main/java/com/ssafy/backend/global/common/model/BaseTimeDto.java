@@ -2,6 +2,7 @@ package com.ssafy.backend.global.common.model;
 
 import java.time.LocalDateTime;
 
+import io.swagger.annotations.ApiParam;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +17,9 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 public class BaseTimeDto {
 
+	@ApiParam(name = "생성일")
 	private LocalDateTime createdDate;
+
+	@ApiParam(name = "수정일")
 	private LocalDateTime updatedDate;
 }

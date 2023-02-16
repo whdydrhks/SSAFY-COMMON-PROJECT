@@ -2,6 +2,7 @@ package com.ssafy.backend.domain.animal.model.request;
 
 import com.ssafy.backend.domain.animal.entity.AnimalEntity;
 
+import io.swagger.annotations.ApiParam;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,13 +18,21 @@ import lombok.Setter;
 public class AnimalUpdateDto {
 
 	// animal
+	@ApiParam(name = "이름")
 	private String name;
+	@ApiParam(name = "품종")
 	private String breed;
+	@ApiParam(name = "나이")
 	private int age;
+	@ApiParam(name = "체중")
 	private int weight;
+	@ApiParam(name = "성별 [F/M]")
 	private String gender;
+	@ApiParam(name = "중성화 여부 [Y/N]")
 	private String neuter;
+	@ApiParam(name = "입양 완료 여부")
 	private String adoption;
+	@ApiParam(name = "상세 정보 메모")
 	private String note;
 
 	public AnimalEntity toEntity() {

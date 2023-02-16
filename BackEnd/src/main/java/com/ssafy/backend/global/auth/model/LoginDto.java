@@ -5,6 +5,8 @@ import javax.validation.constraints.NotNull;
 
 import com.ssafy.backend.domain.member.entity.UserEntity;
 
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,9 +22,13 @@ import lombok.Setter;
 public class LoginDto {
 
 	@Email
+	@ApiParam(name = "사용자 이메일")
+	@ApiModelProperty(example = "user1@example.com")
 	private String email;
 
 	@NotNull
+	@ApiParam(name = "사용자 비밀번호")
+	@ApiModelProperty(example = "user1")
 	private String password;
 
 	public static LoginDto of(UserEntity user) {
