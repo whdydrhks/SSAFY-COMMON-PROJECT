@@ -22,7 +22,7 @@ import {
   dayTimeAtom,
   scheduleAtom,
 } from '../../recoilState';
-import "../../styles/fonts.css"
+import '../../styles/fonts.css';
 
 const SImpossibleTitle = styled.div`
   font-size: 2rem;
@@ -74,7 +74,7 @@ const SClickButton = styled.button`
   background-color: ${props => props.bgColor};
 `;
 
-function CreateSchedule() {
+function CreateSchedule(props) {
   const settings = {
     arrows: false,
     autoplay: false,
@@ -256,7 +256,9 @@ function CreateSchedule() {
     setTwoWeeks(weeks);
 
     axios
-      .get(`${API_URL}/shelter/${timetableShelterId}/timetable`)
+      .get(`${API_URL}/shelter/${timetableShelterId}/timetable`, {
+        shelterId: timetableShelterId,
+      })
       .then(res =>
         setDayTime([
           res.data.data.sun,
