@@ -78,7 +78,12 @@ const SButton = styled.button`
   padding: 0 1rem;
 `;
 
-const SNoAlarm = styled.div``;
+const SNoAlarm = styled.div`
+  font-size: 2.5rem;
+  font-family: mainFont;
+  text-align: center;
+  margin-top: 5rem;
+`;
 
 function Alarm() {
   const navigate = useNavigate();
@@ -114,7 +119,7 @@ function Alarm() {
         <SHr>알람</SHr>
       </SAlarmHeader>
       {alarmList.length === 0 ? (
-        <SNoAlarm>알람업ㅆddd~다</SNoAlarm>
+        <SNoAlarm>알람을 기다리는 중입니다.</SNoAlarm>
       ) : (
         <SContainer>
           {alarmList.map((alarm, index) => (

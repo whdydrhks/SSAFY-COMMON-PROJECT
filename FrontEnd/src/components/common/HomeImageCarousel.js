@@ -80,7 +80,7 @@ function HomeImageCarousel() {
   useEffect(() => {
     setLiveImgArr([live_1, live_2, live_3, live_4, live_5, live_6]);
     axios.get(`${API_URL}/live/all`).then(res => setLiveList(res.data.data));
-  });
+  }, []);
 
   return (
     <div>
