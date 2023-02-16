@@ -303,7 +303,7 @@ function Live() {
   const deleteSubscriber = streamManager => {};
 
   const joinSession = () => {
-    if (!preview) {
+    if (!preview && role === 'HOST') {
       alert('파일을 입력해 주세요.');
       return false;
     }
