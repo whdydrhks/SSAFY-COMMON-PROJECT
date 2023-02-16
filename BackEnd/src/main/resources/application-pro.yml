@@ -20,8 +20,6 @@ server:
     key-store: classpath:ssl/keystore.p12
     key-store-type: PKCS12
     key-store-password: ssafy
-    enabled: true
-
 
 OPENVIDU_URL: https://i8b209.p.ssafy.io:8445
 OPENVIDU_SECRET: ssafy
