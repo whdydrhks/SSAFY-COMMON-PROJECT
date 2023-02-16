@@ -25,6 +25,7 @@ import {
 import API_URL from '../../api/api';
 import { userAtom } from '../../recoilState';
 import { getCookie } from '../Account/cookie';
+import '../../styles/fonts.css';
 
 const style = {
   position: 'absolute',
@@ -40,14 +41,14 @@ const style = {
 const STitle = styled.div`
   font-size: 2rem;
   /* margin-top: 2rem; */
-  margin-bottom: 1.5rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
+  padding: 1.5rem;
+  font-family: mainFont;
 `;
 
 const SLine = styled.div`
   display: flex;
   margin-bottom: 2rem;
+  font-family: mainFont;
 `;
 
 const SGrayLineBox = styled.div`
@@ -59,12 +60,14 @@ const SGrayLineBox = styled.div`
 
 const SGrayLine = styled.div`
   height: 1px;
-  background-color: #d9d9d9;
+  background-color: #000000;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
   opacity: 0.4;
 `;
 
 const SDetailInformation = styled.div`
-  font-size: 24;
+  font-size: 1.5rem;
   width: 30%;
   text-align: center;
 `;
@@ -84,6 +87,7 @@ const SInformationImg = styled.img`
   height: 2rem;
   margin-top: 0.2rem;
   margin-bottom: 0.5rem;
+  font-family: mainFont;
 `;
 
 const SInformationText = styled.div`
@@ -95,6 +99,7 @@ const SInformationText = styled.div`
   border: 1px solid #1f2247;
   border-radius: 40px;
   padding: 10px;
+  font-family: mainFont;
 `;
 
 const SNoteBox = styled.div`
@@ -129,6 +134,7 @@ const SInformationNote = styled.div`
   border: 1px solid #1f2247;
   border-radius: 40px;
   padding: 10px;
+  font-family: mainFont;
 `;
 
 const SButtonBox = styled.div`
@@ -140,19 +146,33 @@ const SButtonBox = styled.div`
 const SModifyButton = styled(Button)`
   border-radius: 10px;
   margin-right: 1rem;
-  box-shadow: 2px 2px 2px 2px gray;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  font-family: mainFont;
+`;
+
+const SLikeButton = styled(Button)`
+  background-color: #9c27b0 !important;
+  border-radius: 10px;
+  margin-right: 1rem;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  font-family: mainFont;
 `;
 
 const SDeleteButton = styled(Button)`
   background-color: red !important;
   border-radius: 10px;
-  box-shadow: 2px 2px 2px 2px gray;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  font-family: mainFont;
 `;
 
 const SModalDiv = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  font-family: mainFont;
 `;
 
 const SNicknameDiv = styled.div`
@@ -160,6 +180,7 @@ const SNicknameDiv = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+  font-family: mainFont;
 `;
 
 const SNickname = styled.button`
@@ -167,6 +188,7 @@ const SNickname = styled.button`
   border-radius: 10px 10px 10px 10px;
   padding: 0.8rem;
   margin: 1rem;
+  font-family: mainFont;
   &:hover {
     color: blue;
   }
@@ -327,13 +349,9 @@ function AnimalDetail() {
 
         {userInfo.role === 'HOST' ? (
           <div>
-            <SModifyButton
-              variant="contained"
-              size="medium"
-              onClick={handleOpen}
-            >
+            <SLikeButton variant="contained" size="medium" onClick={handleOpen}>
               관심동물 등록
-            </SModifyButton>
+            </SLikeButton>
 
             <Modal
               open={open}
