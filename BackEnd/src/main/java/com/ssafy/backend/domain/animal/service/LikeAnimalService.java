@@ -2,6 +2,7 @@ package com.ssafy.backend.domain.animal.service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -15,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.backend.domain.animal.entity.AnimalEntity;
 import com.ssafy.backend.domain.animal.entity.LikeAnimalEntity;
-import com.ssafy.backend.domain.animal.model.response.AnimalInfoDto;
+import com.ssafy.backend.domain.animal.model.response.LikeAnimalInfoDto;
 import com.ssafy.backend.domain.animal.repository.AnimalRepository;
 import com.ssafy.backend.domain.animal.repository.LikeAnimalRepository;
 import com.ssafy.backend.domain.member.entity.UserEntity;
@@ -133,9 +134,11 @@ public class LikeAnimalService {
 
 		System.out.println(likeAnimals.toString());
 
-		List<AnimalInfoDto> animalInfos = likeAnimals
+		List<LikeAnimalInfoDto> animalInfos = likeAnimals
 			.stream()
-			.map(likeAnimal -> AnimalInfoDto.of(likeAnimal.getAnimal()))
+			.filter(likeAnimal -> likeAnimal.getAnimal().getExpired().equals("F"))
+			.map(likeAnimal -> LikeAnimalInfoDto.of(likeAnimal))
+			.sorted(Comparator.comparing(LikeAnimalInfoDto::getExpiredDate))
 			.collect(Collectors.toList());
 
 		return responseUtil.buildSuccessResponse(animalInfos);
