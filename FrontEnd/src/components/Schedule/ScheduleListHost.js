@@ -156,7 +156,6 @@ function ScheduleListHost() {
     slidesToScroll: 2,
   };
 
-  const dateRef = useRef();
   const timeRef = useRef([]);
   const navigate = useNavigate();
   const today = new Date();
@@ -171,14 +170,11 @@ function ScheduleListHost() {
   const [isClickDate, setIsClickDate] = useRecoilState(todayAtom);
 
   const handleDateClick = (event, index) => {
-    console.log(typeof event.target.value);
+    console.log(event.target.value);
     setIsClickDate(() => event.target.value);
     setTodaySchedule(() =>
       scheduleHost.filter(schedule => schedule.day === event.target.value),
     );
-    // dareRef.current = index;
-    // dateRef.current.style =
-    //   'color : green'
   };
 
   const handleVideoChatClick = () => {
@@ -224,6 +220,12 @@ function ScheduleListHost() {
     });
   }, []);
 
+  useEffect(() => {
+    setTodaySchedule(() =>
+      scheduleHost.filter(schedule => schedule.day === isClickDate),
+    );
+  }, [scheduleHost]);
+
   return (
     <>
       <SSlider {...settings}>
@@ -233,7 +235,6 @@ function ScheduleListHost() {
               type="button"
               value={date.month.padStart(2, '0') + date.day.padStart(2, '0')}
               onClick={e => handleDateClick(e, index)}
-              // ref={dateRef}
             >
               {date.month}월 {date.day}일
             </SButton>

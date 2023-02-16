@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/require-default-props */
@@ -6,7 +7,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 
 import axios from 'axios';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
@@ -15,9 +16,9 @@ import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 import {
   liveListAtom,
-  timetableShelterIdAtom,
   roomNumberAtom,
   userAtom,
+  urlAtom,
 } from '../../recoilState';
 import '../../styles/fonts.css';
 import CreateLive from '../../images/Video/CreateLive.png';
@@ -47,35 +48,87 @@ const SLink = styled(Link)`
 function Live() {
   const today = new Date();
   const payloadRoomNumber = today.getTime();
-
   const user = useRecoilValue(userAtom);
+  const [urlArr, setUrlArr] = useRecoilState(urlAtom);
   const [liveList, setLiveList] = useRecoilState(liveListAtom);
-  const [timetableShelterId, setTimetableShelterId] = useRecoilState(
-    timetableShelterIdAtom,
-  );
   const [roomNumberInfo, setRoomNumberInfo] = useRecoilState(roomNumberAtom);
+  const [loading, setLoading] = useState(true);
 
-  const handleClickLive = id => {
-    setTimetableShelterId(id);
-  };
-  // console.log(liveList);
-  useEffect(async () => {
-    await axios.get(`${API_URL}/live/all`).then(res => {
-      setLiveList(res.data.data);
-      console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-      console.log(res.data.data);
-    });
+  useEffect(() => {
+    const axiosFn = async () => {
+      await axios.get(`${API_URL}/live/all`).then(res => {
+        setLiveList(res.data.data);
+      });
+    };
+
+    axiosFn();
   }, []);
+
+  // const tmp = live => {
+  //   axios({
+  //     method: 'GET',
+  //     url: live.thumnailImage,
+  //     responseType: 'blob',
+  //   }).then(
+  //     res =>
+  //       console.log(
+  //         window.URL.createObjectURL(
+  //           new Blob([res.data], { type: res.headers['content-type'] }),
+  //         ),
+  //       ),
+
+  // dfsdfadsfas
+  // setUrlArr([
+  //   ...urlArr,
+  //   window.URL.createObjectURL(
+  //     new Blob([res.data], { type: res.headers['content-type'] }),
+  //   ),
+  // ]);
+  //   );
+  // };
+
+  useEffect(() => {
+    if (liveList.length === 0) return;
+    const loopFn = async () => {
+      console.log(liveList.length);
+      for (let i = 0; i < liveList.length; i += 1) {
+        console.log(`${i}: ${liveList[0].thumnailImage}`);
+        await axios({
+          method: 'GET',
+          url: liveList[i].thumnailImage,
+          responseType: 'blob',
+        }).then(res => {
+          console.log(res.data);
+          console.log(
+            window.URL.createObjectURL(
+              new Blob([res.data], { type: res.headers['content-type'] }),
+            ),
+          );
+          setUrlArr([
+            ...urlArr,
+            window.URL.createObjectURL(
+              new Blob([res.data], { type: res.headers['content-type'] }),
+            ),
+          ]);
+          console.log(urlArr.length);
+        });
+      }
+      setLoading(false);
+    };
+    loopFn();
+  }, [liveList]);
 
   const saveRoomNumber = l => {
     console.log(l.room);
     setRoomNumberInfo(l.room);
-    // setRoomNumberAtom
   };
+
+  // console.log(urlArr);
 
   return (
     <>
       <Header />
+
       <SLiveHeader>
         <STitle>라이브</STitle>
         {user.role === 'HOST' ? (
@@ -84,6 +137,7 @@ function Live() {
           </Link>
         ) : null}
       </SLiveHeader>
+
       <S.LiveListContainer>
         {liveList.map((live, index) => (
           <SLink to="/livechat" key={index} state={{ roomNumber: live.room }}>
@@ -91,8 +145,10 @@ function Live() {
               className={live.room}
               onClick={() => saveRoomNumber(live)}
             >
-              {/* 이미지 경로에 도메인이 한번 더 붙어서 나옵니다. */}
-              <S.LiveImage src={live.thumnailImage} alt="ThumbnailImage" />
+              {/* <Suspense fallback={<div>로딩중</div>}> */}
+              <S.LiveImage src={urlArr[index]} alt="ThumbnailImage" />
+              <div>{urlArr[index]}</div>
+              {/* </Suspense>{' '} */}
               <S.LiveInformationContainer>
                 <S.LiveTitle>{live.title}</S.LiveTitle>
                 <S.ShelterName>{live.shelterName}</S.ShelterName>

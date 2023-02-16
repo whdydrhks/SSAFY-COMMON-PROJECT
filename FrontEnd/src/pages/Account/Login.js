@@ -76,6 +76,7 @@ function Login() {
           const decodedToken = jwtDecode(accessToken);
           const role = decodedToken.userRole;
           const id = decodedToken.userId;
+          console.log(role);
           axios
             .get(
               `${API_URL}/user/${id}`,
@@ -91,8 +92,8 @@ function Login() {
               const { name, nickname, phoneNumber, profileImage, shelterId } =
                 info.data.data;
               setUser({
-                userId: id,
                 role,
+                userId: id,
                 email,
                 name,
                 nickname,
