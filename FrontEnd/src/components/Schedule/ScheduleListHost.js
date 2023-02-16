@@ -40,21 +40,26 @@ import profileImg8 from '../../images/profile/profileImg8.png';
 import profileImg9 from '../../images/profile/profileImg9.png';
 import profileImg10 from '../../images/profile/profileImg10.png';
 
+const SSlider = styled(Slider)`
+  margin-left: 1rem;
+  margin-right: 1rem;
+`;
+
 const SButtonDiv = styled.div`
   text-align: center;
-  margin-bottom: 1.5rem;
   border-radius: 10px;
-  font-family: mainFont;
 `;
 
 const SButton = styled.button`
   width: 100%;
+  height: 4vh;
   background-color: white;
   border: none;
   font-size: 1.2rem;
   font-family: mainFont;
   /* border: 1px solid gray; */
   color: black;
+  align-items: center;
   border-radius: 40px;
   &:active,
   &:hover {
@@ -73,7 +78,7 @@ const SContainer = styled.div`
   /* border-top: 1px solid grey; */
   /* border-bottom: 1px solid grey; */
   background-color: rgba(242, 244, 246, 1);
-  margin-bottom: 5%;
+  margin-top: 5%;
   border-radius: 30px;
   font-family: mainFont;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
@@ -141,7 +146,7 @@ const SImg = styled.img`
 
 function ScheduleListHost() {
   const settings = {
-    arrows: false,
+    arrows: true,
     autoplay: false,
     centerPadding: '10px',
     dots: false,
@@ -166,6 +171,7 @@ function ScheduleListHost() {
   const [isClickDate, setIsClickDate] = useRecoilState(todayAtom);
 
   const handleDateClick = (event, index) => {
+    console.log(typeof event.target.value);
     setIsClickDate(() => event.target.value);
     setTodaySchedule(() =>
       scheduleHost.filter(schedule => schedule.day === event.target.value),
@@ -220,7 +226,7 @@ function ScheduleListHost() {
 
   return (
     <>
-      <Slider {...settings}>
+      <SSlider {...settings}>
         {twoWeeks.map((date, index) => (
           <SButtonDiv key={index}>
             <SButton
@@ -233,7 +239,7 @@ function ScheduleListHost() {
             </SButton>
           </SButtonDiv>
         ))}
-      </Slider>
+      </SSlider>
       <STimeList>
         {todaySchedule.map((schedule, index) => (
           <STimeBox key={index}>
