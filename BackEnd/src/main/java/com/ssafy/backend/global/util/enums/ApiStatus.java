@@ -38,7 +38,7 @@ public enum ApiStatus {
 	NOT_CREATE_DIRECTORY(HttpStatus.INTERNAL_SERVER_ERROR, "파일 디렉토리를 생성하지 못했습니다.", false),
 	FILE_INVALID_PATH(HttpStatus.BAD_REQUEST, "파일 경로가 올바르지 않습니다.", false),
 	FILE_NOT_UPLOAD(HttpStatus.BAD_REQUEST, "파일 업로드에 실패했습니다.", false),
-	FILE_NOT_DOWNLOAD(HttpStatus.BAD_REQUEST, "파일 다운로에 실패했습니다.", false),
+	FILE_NOT_DOWNLOAD(HttpStatus.BAD_REQUEST, "파일 다운로드에 실패했습니다.", false),
 
 	// Server Error 5xx
 	INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "알 수 없는 에러입니다.", false);

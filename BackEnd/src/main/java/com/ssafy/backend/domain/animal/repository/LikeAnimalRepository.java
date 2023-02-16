@@ -18,4 +18,7 @@ public interface LikeAnimalRepository extends JpaRepository<LikeAnimalEntity, Lo
     List<LikeAnimalEntity> findAll(Sort sort);
 
     Optional<LikeAnimalEntity> findByUser(UserEntity user);
+
+    LikeAnimalEntity findByUserAndAnimal(UserEntity user, AnimalEntity animal);
+
 }
