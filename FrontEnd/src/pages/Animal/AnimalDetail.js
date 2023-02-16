@@ -4,8 +4,8 @@
 /* eslint-disable prefer-destructuring */
 import React, { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-// import Modal from 'react-modal';
 import { Button, Box, Typography, TextField } from '@mui/material';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import Modal from '@mui/material/Modal';
 import axios from 'axios';
 import styled from 'styled-components';
@@ -38,11 +38,17 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-const STitle = styled.div`
-  font-size: 2rem;
-  /* margin-top: 2rem; */
-  padding: 1.5rem;
-  font-family: mainFont;
+
+const SDetailHeader = styled.div`
+  display: flex;
+  justify-content: left;
+  align-items: center;
+`;
+
+const SSButton = styled.div`
+  border: 0;
+  background-color: transparent;
+  padding: 0 1rem;
 `;
 
 const SLine = styled.div`
@@ -65,7 +71,12 @@ const SGrayLine = styled.div`
   margin-right: 0.5rem;
   opacity: 0.4;
 `;
-
+const SHr = styled.div`
+  font-size: 2rem;
+  margin-top: 1rem;
+  font-family: mainFont;
+  margin-bottom: 1.4rem;
+`;
 const SDetailInformation = styled.div`
   font-size: 1.5rem;
   width: 30%;
@@ -259,6 +270,10 @@ function AnimalDetail() {
     // navigate(`/animal/${animalId}`);
   };
 
+  const handleHistory = () => {
+    navigate(-1);
+  };
+
   const handleSearchNickname = async () => {
     await axios
       .get(`${API_URL}/user`, { params: { keyword: searchNicknameKeyword } })
@@ -305,7 +320,12 @@ function AnimalDetail() {
   return (
     <>
       <Header />
-      <STitle>동물 정보</STitle>
+      <SDetailHeader>
+        <SSButton onClick={handleHistory}>
+          <ChevronLeftIcon fontSize="large" />
+        </SSButton>
+        <SHr>동물상세</SHr>
+      </SDetailHeader>
       {animalImages ? (
         <ImageCarousel page="AnimalDetail" animalImages={animalImages} />
       ) : null}

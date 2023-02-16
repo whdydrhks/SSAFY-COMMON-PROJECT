@@ -23,6 +23,7 @@ const SContainer = styled.div``;
 const SAlarmHeader = styled.div`
   display: flex;
   justify-content: left;
+  align-items: center;
 `;
 const SHr = styled.div`
   font-size: 2rem;
@@ -113,7 +114,7 @@ function Alarm() {
         <SHr>알람</SHr>
       </SAlarmHeader>
       {alarmList.length === 0 ? (
-        <SNoAlarm>알람업ㅆ~다</SNoAlarm>
+        <SNoAlarm>알람업ㅆddd~다</SNoAlarm>
       ) : (
         <SContainer>
           {alarmList.map((alarm, index) => (
