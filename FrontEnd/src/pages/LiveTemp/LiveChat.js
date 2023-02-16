@@ -744,7 +744,9 @@ function Live() {
           </S.ChatForm> */}
         </S.ChatBox>
       ) : null}
-      {nickname !== 'anonymous' && role === 'USER' ? <CreateSchedule /> : null}
+      {nickname !== 'anonymous' && role === 'USER' && session ? (
+        <CreateSchedule />
+      ) : null}
       <Nav />
     </S.VideoChatRoot>
   );
