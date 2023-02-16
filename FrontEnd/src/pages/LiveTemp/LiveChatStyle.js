@@ -166,43 +166,52 @@ export const Data = styled.span`
 
 export const LeaveBox = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-top: 5%;
+  margin-left: 15vw;
+  margin-right: 15vw;
   /* background-color: #d9d9f3; */
 `;
 
 export const ExitSign = styled.img`
-  width: 10vw;
+  width: 7vw;
+  margin-top: 1.5vh;
 `;
 
 export const MicOff = styled.img`
-  width: 10vw;
-  height: 5vh;
+  width: 7vw;
+  height: 3vh;
+  margin-top: 1.5vh;
 `;
 
 export const MicOn = styled.img`
-  width: 10vw;
-  height: 5vh;
+  width: 7vw;
+  height: 3vh;
+  margin-top: 1.5vh;
 `;
 
 export const CamOff = styled.img`
-  width: 10vw;
-  height: 5vh;
+  width: 5vw;
+  height: 2.5vh;
+  margin-top: 1.5vh;
 `;
 
 export const CamOn = styled.img`
-  width: 10vw;
-  height: 5vh;
+  width: 5vw;
+  height: 2.5vh;
+  margin-top: 1.5vh;
 `;
 
 export const VolumeOff = styled.img`
-  width: 10vw;
-  height: 5vh;
+  width: 5vw;
+  height: 2.5vh;
+  margin-top: 1.5vh;
 `;
 
 export const VolumeOn = styled.img`
-  width: 10vw;
-  height: 5vh;
+  width: 5vw;
+  height: 2.5vh;
+  margin-top: 1.5vh;
 `;
 
 export const LeaveButton = styled.button`

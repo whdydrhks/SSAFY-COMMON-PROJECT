@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable camelcase */
 /* eslint-disable prefer-template */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-vars */
@@ -26,6 +28,7 @@ import API_URL from '../../api/api';
 import { userAtom } from '../../recoilState';
 import { getCookie } from '../Account/cookie';
 import '../../styles/fonts.css';
+import dog_1 from '../../images/dogDetail/dog_1.png';
 
 const style = {
   position: 'absolute',
@@ -230,6 +233,14 @@ const SSearchButton = styled.button`
   height: 4vh;
 `;
 
+const SI = styled.div`
+  width: 100%;
+`;
+
+const SIG = styled.img`
+  width: 100%;
+`;
+
 const SAdoptionButton = styled.button`
   border-radius: 10px;
 `;
@@ -354,9 +365,9 @@ function AnimalDetail() {
         </SSButton>
         <SHr>동물상세</SHr>
       </SDetailHeader>
-      {animalImages ? (
-        <ImageCarousel page="AnimalDetail" animalImages={animalImages} />
-      ) : null}
+      <SI>
+        <SIG src={dog_1} />
+      </SI>
       <SLine>
         <SGrayLineBox>
           <SGrayLine />
