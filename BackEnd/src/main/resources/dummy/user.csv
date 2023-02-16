@@ -1,51 +1,21 @@
-id,email,password,role,name,phone_number,nickname
-1,admin@ssafy.io,admin,ADMIN,Vonni Laugharne,955-593-8518,vlaugharne0
-2,user2@gmail.com,user2,HOST,동물 보호소,329-569-6524,loveanimal01
-3,bstorror2@europa.eu,password,HOST,Ber Storror,543-648-8278,bstorror2
-4,mguichard3@chron.com,password,HOST,Murielle Guichard,103-635-7007,mguichard3
-5,ssafy@gmail.com,password,USER,김싸피,419-256-9731,ssafyple
-6,asherar5@miitbeian.gov.cn,password,USER,Atlante Sherar,757-463-7483,asherar5
-7,sduncklee6@google.it,password,USER,Sofie Duncklee,277-923-4584,sduncklee6
-8,hleither7@google.co.uk,password,USER,Heinrick Leither,173-389-1028,hleither7
-9,pocorrigane8@printfriendly.com,password,USER,Port O'Corrigane,905-306-2832,pocorrigane8
-10,user10@gmail.com,user10,USER,이진혁,309-482-4274,구해조
-11,cedmundsona@youtu.be,password,USER,Clarance Edmundson,794-103-0638,cedmundsona
-12,cfishleyb@hc360.com,password,USER,Cleveland Fishley,968-797-4881,cfishleyb
-13,wsherwync@jimdo.com,password,USER,Weber Sherwyn,881-882-7588,wsherwync
-14,ghoulworthd@dailymail.co.uk,password,USER,Garrik Houlworth,925-994-8906,ghoulworthd
-15,gmacluree@aboutads.info,password,USER,Gavin MacLure,532-819-8092,gmacluree
-16,ccossentinef@msn.com,password,USER,Candie Cossentine,348-908-2482,ccossentinef
-17,ppenticostg@chron.com,password,USER,Philippe Penticost,254-514-5561,ppenticostg
-18,lgallieh@latimes.com,password,USER,Lesley Gallie,468-459-2437,lgallieh
-19,mpetchi@cmu.edu,password,USER,Marya Petch,970-154-3614,mpetchi
-20,rmacmillanj@biglobe.ne.jp,password,USER,Rollins MacMillan,699-711-7549,rmacmillanj
-21,hgaltonk@people.com.cn,password,USER,Hali Galton,724-706-2290,hgaltonk
-22,jcourceyl@trellian.com,password,USER,Jane Courcey,782-560-8970,jcourceyl
-23,gtwitchingsm@admin.ch,password,USER,Garrott Twitchings,731-943-4068,gtwitchingsm
-24,egarfittn@loc.gov,password,USER,Edgar Garfitt,187-650-4901,egarfittn
-25,fgarratto@issuu.com,password,USER,Forrest Garratt,728-496-2253,fgarratto
-26,cmatlockp@arstechnica.com,password,USER,Courtney Matlock,448-753-4563,cmatlockp
-27,dbeiningq@kickstarter.com,password,USER,Doralyn Beining,495-604-6193,dbeiningq
-28,rdurdanr@com.com,password,USER,Roi Durdan,127-805-6632,rdurdanr
-29,fonges@desdev.cn,password,USER,Flinn Onge,387-729-6377,fonges
-30,mprimmert@google.com.hk,password,USER,Molly Primmer,286-816-9429,mprimmert
-31,dvibertu@berkeley.edu,password,USER,Dennison Vibert,723-879-8946,dvibertu
-32,gbahlv@ca.gov,password,USER,Gunther Bahl,105-289-3111,gbahlv
-33,dhurlestonew@nytimes.com,password,USER,Den Hurlestone,524-317-4660,dhurlestonew
-34,cknottonx@deliciousdays.com,password,USER,Charis Knotton,335-195-3102,cknottonx
-35,medelstony@illinois.edu,password,USER,Marney Edelston,459-737-0942,medelstony
-36,clivseyz@examiner.com,password,USER,Camille Livsey,431-144-6365,clivseyz
-37,jclemence10@whitehouse.gov,password,USER,Jarid Clemence,849-625-3942,jclemence10
-38,aloveredge11@shutterfly.com,password,USER,Aleta Loveredge,683-958-7087,aloveredge11
-39,qkohring12@xing.com,password,USER,Quincey Kohring,258-438-0654,qkohring12
-40,wdenisevich13@bloomberg.com,password,USER,Wyatan Denisevich,434-543-8197,wdenisevich13
-41,bhinchshaw14@ifeng.com,password,USER,Bill Hinchshaw,585-172-8737,bhinchshaw14
-42,jlawford15@networksolutions.com,password,USER,Jorrie Lawford,135-277-1425,jlawford15
-43,fslafford16@ihg.com,password,USER,Floria Slafford,111-493-8149,fslafford16
-44,ejacklings17@exblog.jp,password,USER,Easter Jacklings,810-216-1161,ejacklings17
-45,rmueller18@bbb.org,password,USER,Renato Mueller,483-767-1703,rmueller18
-46,bprofit19@example.com,password,USER,Branden Profit,235-226-6456,bprofit19
-47,cpickover1a@about.me,password,USER,Cathie Pickover,992-804-8084,cpickover1a
-48,ckibble1b@arstechnica.com,password,USER,Catharina Kibble,517-807-4642,ckibble1b
-49,ryeates1c@patch.com,password,USER,Rozele Yeates,520-472-9435,ryeates1c
-50,jventura1d@nbcnews.com,password,USER,Joceline Ventura,152-370-1889,jventura1d
+id,email,password,role,name,phone_number,nickname,profileImage
+1,admin@ssafy.io,admin,ADMIN,관리자,955-593-8518,ADMIN,1
+2,user2@gmail.com,user2,HOST,대전 광역시 동물 보호소,329-569-6524,대전 광역시 동물 보호소,5
+3,bstorror2@europa.com,password,HOST,천사의 집,543-648-8278,천사의 집,3
+4,mguichard3@chron.com,password,HOST,도그마루,103-635-7007,도그마루,7
+5,ssafy@gmail.com,password,USER,김싸피,419-256-9731,ssafyple,8
+6,asherar5@miitbeian.com,password,USER,임규영,757-463-7483,해군은배고픈불족발,9
+7,sduncklee6@google.it,password,USER,성한결,277-923-4584,파란야채튀김,8
+8,hleither7@google.com,password,USER,안아롱,173-389-1028,hleither7,10
+9,pocorrigane8@printfriendly.com,password,USER,박우리,905-306-2832,pocorrigane8,4
+10,user10@gmail.com,user10,USER,이진혁,309-482-4274,구해조,2
+11,cedmundsona@youtoo.com,password,USER,이혁,794-103-0638,cedmundsona,1
+12,cfishleyb@hc360.com,password,USER,제갈병헌,968-797-4881,비실이,9
+13,wsherwync@jimdo.com,password,USER,심한길,881-882-7588,wsherwync,6
+14,ghoulworthd@dailymail.co.uk,password,USER,봉미연,925-994-8906,냐앙사이,3
+15,gmacluree@aboutads.info,password,USER,이경택,532-819-8092,gmacluree,4
+16,ccossentinef@msn.com,password,USER,백미란,348-908-2482,카페라떼,5
+17,ppenticostg@chron.com,password,USER,정여진,254-514-5561,firefly,6
+18,lgallieh@latimes.com,password,USER,성재인,468-459-2437,lovedog,8
+19,mpetchi@cmu.edu,password,USER,신동건,970-154-3614,빅맘,10
+20,rmacmillanj@biglobe.ne.jp,password,USER,서현,699-711-7549,카나오,7
