@@ -93,14 +93,20 @@ export const ChatBox = styled.div`
   justify-content: center;
 `;
 
-export const ChattingListBox = styled.ul`
-  height: 45vh;
-  border: 1px solid black;
+export const ChattingListBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: #d9d9f3;
+  height: 30vh;
+  /* border: 20px solid #d9d9f3; */
   border-radius: 10px;
   overflow: scroll;
   &::-webkit-scrollbar {
     display: none;
   }
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  margin: 5%;
 `;
 
 export const ChatForm = styled.div`
@@ -111,16 +117,22 @@ export const ChatForm = styled.div`
 
 export const ChatInput = styled.input`
   border-radius: 10px;
+  border: none;
   height: 5vh;
-  width: 80vw;
+  width: 78vw;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  margin: 0;
 `;
 
 export const ChatButton = styled.button`
-  background-color: #9500ae;
-  color: white;
-  border: 1px solid #9500ae;
+  background-color: #d9d9f3;
+  color: black;
+  font-weight: bold;
+  border: none;
+  /* border: 1px solid #9500ae; */
   border-radius: 10px;
-  height: 5vh;
+  height: 6vh;
   width: 15vw;
 `;
 
@@ -129,14 +141,34 @@ export const Controller = styled.div`
   justify-content: space-around;
 `;
 
-export const Chat = styled.li`
-  font-size: 1.5rem;
-  margin: 3%;
+export const ChatInline = styled.div`
+  max-width: 100%;
+  margin: 2%;
+`;
+
+export const Chat = styled.p`
+  display: inline-block;
+  position: relative;
+  /* background-color: white; */
+  border-radius: 10px;
+  font-size: 1rem;
+  padding: 1%;
+  font-weight: bold;
+`;
+
+export const NickName = styled.span``;
+
+export const Data = styled.span`
+  background-color: white;
+  border-radius: 10px;
+  /* padding: 1%; */
 `;
 
 export const LeaveBox = styled.div`
   display: flex;
   justify-content: space-around;
+  margin-top: 5%;
+  /* background-color: #d9d9f3; */
 `;
 
 export const ExitSign = styled.img`
@@ -199,33 +231,10 @@ export const ImgCenter = styled.div`
 export const ThumbnailImage = styled.img`
   width: 30vw;
 `;
-// export const File = styled.div`
-//   display: flex;
-//   justify-content: space-around;
-//   margin-top: 2rem;
-// `;
-
-// export const FileUpload = styled.div`
-//   width: 150px;
-//   height: 30px;
-//   background: #fff;
-//   border: 1px solid rgb(77, 77, 77);
-//   border-radius: 10px;
-//   font-weight: 500;
-//   cursor: pointer;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-// `;
-
-// export const FileInput = styled.input`
-//   display: none;
-// `;
 
 export const FileUploadButton = styled(Button)`
   font-size: 1rem;
   font-family: mainFont;
-  /* background-color: secondary; */
   margin-top: 5% !important;
   margin-left: 30% !important;
   margin-right: 30% !important;
