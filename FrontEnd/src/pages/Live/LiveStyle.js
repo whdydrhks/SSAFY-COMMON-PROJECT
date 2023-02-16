@@ -7,12 +7,14 @@ export const LiveListContainer = styled.div`
 
 export const LiveItemContainer = styled.button`
   display: flex;
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
+  background-color: white;
   /* margin-left: 0.1%; */
   /* margin-right: 0.1%; */
   /* margin-bottom: 5%; */
   /* padding: 5%; */
   border-radius: 5%;
+  border: none;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 `;
@@ -38,13 +40,16 @@ export const LiveInformationContainer = styled.div`
   flex-direction: column;
   font-family: mainFont;
   text-decoration-line: none;
-  justify-content: space-around;
-  width: 50%;
+  justify-content: space-between;
+  width: 100%;
 `;
 
 export const LiveTitle = styled.div`
+  margin-top: 15%;
   font-size: 2rem;
   margin-left: 5%;
+  text-align: left;
+  margin-bottom: 20%;
 `;
 
 export const JoinContainer = styled.div`
@@ -55,6 +60,8 @@ export const JoinContainer = styled.div`
 
 export const ShelterName = styled.div`
   text-align: right;
+  margin-right: 5%;
+  font-size: 1rem;
 `;
 
 export const JoinButton = styled.div`

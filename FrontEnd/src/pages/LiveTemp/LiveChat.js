@@ -597,12 +597,12 @@ function Live() {
                   case 'USER':
                     return (
                       <>
-                        <S.SmallCamera>
+                        {/* <S.SmallCamera>
                           <UserVideoComponent
                             streamManager={user}
                             style={{ height: '25vh' }}
                           />
-                        </S.SmallCamera>
+                        </S.SmallCamera> */}
                         <S.WaitingMessageBox>
                           <S.WaitingMessage>
                             상대방의 입장을 기다리는 중입니다.
