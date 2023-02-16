@@ -80,7 +80,7 @@ const dateListAtom = atom({
 
 const todayAtom = atom({
   key: 'todayAtom',
-  default: '',
+  default: '0216',
 });
 
 const reviewListState = atom({
