@@ -1,3 +1,4 @@
+/* eslint-disable react/button-has-type */
 /* eslint-disable no-return-assign */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-vars */
@@ -200,7 +201,6 @@ function Alarm() {
               {alarm.alarmType === 5 ? (
                 <SAlarmcontainer bgColor="#d9d9f3">
                   <SImg src={animal}>이미지</SImg>
-
                   <SContent>
                     <SType>입양이 종료되었습니다.</SType>
                     <SText>
