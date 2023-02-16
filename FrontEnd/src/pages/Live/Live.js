@@ -140,7 +140,11 @@ function Live() {
 
       <S.LiveListContainer>
         {liveList.map((live, index) => (
-          <SLink to="/livechat" key={index} state={{ roomNumber: live.room }}>
+          <SLink
+            to="/livechat"
+            key={index}
+            state={{ roomNumber: live.room, shelterId: live.shelterId }}
+          >
             <S.LiveItemContainer
               className={live.room}
               onClick={() => saveRoomNumber(live)}
