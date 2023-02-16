@@ -59,7 +59,7 @@
 <br />
 
 ### 🎫 ERD
-#### ![ERD 이미지](https:// 링크)
+#### ![ERD](/uploads/9e7613a51c8742b12eee0b585d740bf7/ERD.PNG)
 
 <br />
 
