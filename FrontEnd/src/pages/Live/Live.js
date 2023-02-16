@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-await-in-loop */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-vars */
@@ -23,6 +24,12 @@ import {
 import '../../styles/fonts.css';
 import CreateLive from '../../images/Video/CreateLive.png';
 import * as S from './LiveStyle';
+import live_1 from '../../images/live_dummy/live_1.png';
+import live_2 from '../../images/live_dummy/live_2.png';
+import live_3 from '../../images/live_dummy/live_3.png';
+import live_4 from '../../images/live_dummy/live_4.png';
+import live_5 from '../../images/live_dummy/live_5.png';
+import live_6 from '../../images/live_dummy/live_6.png';
 
 const SLiveHeader = styled.div`
   display: flex;
@@ -53,8 +60,10 @@ function Live() {
   const [liveList, setLiveList] = useRecoilState(liveListAtom);
   const [roomNumberInfo, setRoomNumberInfo] = useRecoilState(roomNumberAtom);
   const [loading, setLoading] = useState(true);
+  const [liveImgArr, setLiveImgArr] = useState([]);
 
   useEffect(() => {
+    setLiveImgArr([live_1, live_2, live_3, live_4, live_5, live_6]);
     const axiosFn = async () => {
       await axios.get(`${API_URL}/live/all`).then(res => {
         setLiveList(res.data.data);
@@ -149,10 +158,8 @@ function Live() {
               className={live.room}
               onClick={() => saveRoomNumber(live)}
             >
-              {/* <Suspense fallback={<div>로딩중</div>}> */}
-              <S.LiveImage src={urlArr[index]} alt="ThumbnailImage" />
-              <div>{urlArr[index]}</div>
-              {/* </Suspense>{' '} */}
+              <S.LiveImage src={liveImgArr[index % 6]} alt="ThumbnailImage" />
+
               <S.LiveInformationContainer>
                 <S.LiveTitle>{live.title}</S.LiveTitle>
                 <S.ShelterName>{live.shelterName}</S.ShelterName>
