@@ -122,10 +122,10 @@ function Home() {
       <Header />
       <STitleBox>
         <STitle>라이브</STitle>
+        <SMoreLink to="/live">더 보기 &gt;</SMoreLink>
       </STitleBox>
       {/* <SMoreLink to="/live">더 보기 &gt;</SMoreLink> */}
 
-      <SMoreLink to="/live">더 보기 &gt;</SMoreLink>
       {/* <SLiveItem> */}
       <SLiveContainer>
         <HomeImageCarousel page="Home" />
