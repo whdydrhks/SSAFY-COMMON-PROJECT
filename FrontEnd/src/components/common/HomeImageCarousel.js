@@ -47,7 +47,7 @@ const SLiveTitleBox = styled.div`
   text-align: center;
   display: flex;
   align-items: flex-start;
-  width: 5rem;
+  width: 20rem;
 `;
 
 const SShelterNicknameBox = styled.div`
@@ -72,12 +72,12 @@ function HomeImageCarousel() {
 
   const images = [cat1, gaejookee, dogYawn, dog1];
   const roomTitle = [
-    'cat1Title',
-    'gaejookeeTitle',
-    'dogYawnTitle',
-    'dog1Title',
+    '믹스견 사료 먹방',
+    '한성깔 하지만 하찮은 솜뭉치',
+    '서로 입질하고 노는 인절미들',
+    '귀여운 개들 한번에 몰아보기',
   ];
-  const ShelterName = ['대전동물보호소', '시온쉼터', '댕블리네', '천사의집'];
+  const ShelterName = ['도그마루', '도그마루', '천사의집', '천사의집'];
 
   const indexNum = [0, 1, 2, 3];
 
