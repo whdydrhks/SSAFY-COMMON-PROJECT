@@ -52,6 +52,7 @@ function Live() {
   const [urlArr, setUrlArr] = useRecoilState(urlAtom);
   const [liveList, setLiveList] = useRecoilState(liveListAtom);
   const [roomNumberInfo, setRoomNumberInfo] = useRecoilState(roomNumberAtom);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const axiosFn = async () => {
@@ -87,28 +88,35 @@ function Live() {
   // };
 
   useEffect(() => {
+    if (liveList.length === 0) return;
     const loopFn = async () => {
+      console.log(liveList.length);
       for (let i = 0; i < liveList.length; i += 1) {
+        console.log(`${i}: ${liveList[0].thumnailImage}`);
         await axios({
           method: 'GET',
           url: liveList[i].thumnailImage,
           responseType: 'blob',
         }).then(res => {
-          // console.log(res);
+          console.log(res.data);
+          console.log(
+            window.URL.createObjectURL(
+              new Blob([res.data], { type: res.headers['content-type'] }),
+            ),
+          );
           setUrlArr([
             ...urlArr,
             window.URL.createObjectURL(
               new Blob([res.data], { type: res.headers['content-type'] }),
             ),
           ]);
+          console.log(urlArr.length);
         });
       }
+      setLoading(false);
     };
-
     loopFn();
   }, [liveList]);
-
-  console.log(urlArr);
 
   const saveRoomNumber = l => {
     console.log(l.room);
@@ -129,6 +137,7 @@ function Live() {
           </Link>
         ) : null}
       </SLiveHeader>
+
       <S.LiveListContainer>
         {liveList.map((live, index) => (
           <SLink to="/livechat" key={index} state={{ roomNumber: live.room }}>
@@ -137,11 +146,7 @@ function Live() {
               onClick={() => saveRoomNumber(live)}
             >
               {/* <Suspense fallback={<div>로딩중</div>}> */}
-              <S.LiveImage
-                src={urlArr[index]}
-                alt="ThumbnailImage"
-                loading="lazy"
-              />
+              <S.LiveImage src={urlArr[index]} alt="ThumbnailImage" />
               <div>{urlArr[index]}</div>
               {/* </Suspense>{' '} */}
               <S.LiveInformationContainer>

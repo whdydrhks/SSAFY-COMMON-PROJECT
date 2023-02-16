@@ -186,7 +186,7 @@ const likeAnimalAtom = atom({
 const urlAtom = atom({
   key: 'urlAtom',
   default: [],
-  effects_UNSTABLE: [persistAtom],
+  // effects_UNSTABLE: [persistAtom],
 });
 
 export {
