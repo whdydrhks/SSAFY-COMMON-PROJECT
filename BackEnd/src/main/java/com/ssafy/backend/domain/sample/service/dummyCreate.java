@@ -2,7 +2,6 @@ package com.ssafy.backend.domain.sample.service;
 
 import java.time.LocalDateTime;
 
-import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,7 +45,7 @@ public class dummyCreate {
 
 	// 테스트용 더미 데이터 생성용
 	@Transactional
-	@PostConstruct
+	//	@PostConstruct
 	public void testInitializing() {
 
 		// 기본 유저 이미지 생성
