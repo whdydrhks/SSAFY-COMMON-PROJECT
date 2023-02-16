@@ -23,6 +23,7 @@ const SContainer = styled.div``;
 const SAlarmHeader = styled.div`
   display: flex;
   justify-content: left;
+  align-items: center;
 `;
 const SHr = styled.div`
   font-size: 2rem;
