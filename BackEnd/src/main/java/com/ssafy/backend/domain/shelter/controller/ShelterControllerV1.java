@@ -19,6 +19,7 @@ import com.ssafy.backend.domain.shelter.service.ShelterService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,18 +33,15 @@ public class ShelterControllerV1 {
 	private final ShelterService shelterService;
 
 	@GetMapping
-	@ApiOperation(value = "보호소 조회")
+	@ApiOperation(value = "보호소 조회. 키워드가 없으면 모든 보호소 전체 조회")
 	public ResponseEntity<?> searchShelter(
-		@RequestParam(value = "keyword", required = true) String keyword,
-		@RequestParam(value = "pageNo", defaultValue = "1", required = false) int page,
-		@RequestParam(value = "sort", required = false) String sort,
-		@RequestParam(value = "limit", required = false) String limit,
+		@ApiParam(value = "검색어") @RequestParam(value = "keyword", required = false) String keyword,
 		HttpServletRequest request) {
 
-		//		if (keyword == null || keyword.isEmpty()) {
-		//			return ResponseEntity
-		//				.ok(shelterService.getInfoAll());
-		//		}
+		if (keyword == null || keyword.isEmpty()) {
+			return ResponseEntity
+				.ok(shelterService.getInfoAll());
+		}
 
 		return ResponseEntity
 			.ok(shelterService.searchInfoByName(keyword));
@@ -62,7 +60,7 @@ public class ShelterControllerV1 {
 	@GetMapping("/{shelterId}")
 	@ApiOperation(value = "보호소 정보 조회")
 	public ResponseEntity<?> getShelterInfo(
-		@PathVariable(name = "shelterId") Long shelterId,
+		@ApiParam(value = "보호소 식별 번호") @PathVariable(name = "shelterId") Long shelterId,
 		HttpServletRequest request) {
 
 		return ResponseEntity
@@ -72,7 +70,7 @@ public class ShelterControllerV1 {
 	@PutMapping("/{shelterId}")
 	@ApiOperation(value = "보호소 정보 수정")
 	public ResponseEntity<?> updateShelter(
-		@PathVariable(name = "shelterId") Long shelterId,
+		@ApiParam(value = "보호소 식별 번호") @PathVariable(name = "shelterId") Long shelterId,
 		@RequestBody ShelterUpdateDto updateDto,
 		HttpServletRequest request) {
 
@@ -83,7 +81,7 @@ public class ShelterControllerV1 {
 	@DeleteMapping("/{shelterId}")
 	@ApiOperation(value = "보호소 정보 삭제")
 	public ResponseEntity<?> deleteShelter(
-		@PathVariable(name = "shelterId") Long shelterId,
+		@ApiParam(value = "보호소 식별 번호") @PathVariable(name = "shelterId") Long shelterId,
 		HttpServletRequest request) {
 
 		return ResponseEntity

@@ -1,6 +1,6 @@
 id,email,password,role,name,phone_number,nickname
 1,admin@ssafy.io,admin,ADMIN,Vonni Laugharne,955-593-8518,vlaugharne0
-2,saveanimal@gmail.com,password,HOST,동물 보호소,329-569-6524,loveanimal01
+2,user2@gmail.com,user2,HOST,동물 보호소,329-569-6524,loveanimal01
 3,bstorror2@europa.eu,password,HOST,Ber Storror,543-648-8278,bstorror2
 4,mguichard3@chron.com,password,HOST,Murielle Guichard,103-635-7007,mguichard3
 5,ssafy@gmail.com,password,USER,김싸피,419-256-9731,ssafyple
@@ -8,7 +8,7 @@ id,email,password,role,name,phone_number,nickname
 7,sduncklee6@google.it,password,USER,Sofie Duncklee,277-923-4584,sduncklee6
 8,hleither7@google.co.uk,password,USER,Heinrick Leither,173-389-1028,hleither7
 9,pocorrigane8@printfriendly.com,password,USER,Port O'Corrigane,905-306-2832,pocorrigane8
-10,ssimonassi9@auda.org.au,password,USER,Sarajane Simonassi,309-482-4274,ssimonassi9
+10,user10@gmail.com,user10,USER,이진혁,309-482-4274,구해조
 11,cedmundsona@youtu.be,password,USER,Clarance Edmundson,794-103-0638,cedmundsona
 12,cfishleyb@hc360.com,password,USER,Cleveland Fishley,968-797-4881,cfishleyb
 13,wsherwync@jimdo.com,password,USER,Weber Sherwyn,881-882-7588,wsherwync

@@ -10,6 +10,7 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -397,8 +398,10 @@ public class FileService {
 			findFiles = Arrays.asList(fileRepository.findByStoreName("default_animal").get());
 		}
 
-		List<?> fileDownloadUriList = findFiles
+		List<String> fileDownloadUriList = findFiles
 			.stream()
+			.filter(findFile -> findFile.getExpired().equals("F"))
+			.sorted(Comparator.comparing(FileEntity::getId))
 			.map(findFile -> createDownloadUri(ANIMAL_SUB_PATH, findFile))
 			.collect(Collectors.toList());
 

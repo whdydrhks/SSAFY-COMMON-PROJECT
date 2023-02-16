@@ -31,8 +31,9 @@ public class SwaggerConfig {
 
 	@Bean
 	public Docket allApi() {
+		String version = "v1";
 		return buildDocket("_전체_", Predicates
-			.or(PathSelectors.regex("/*.*")));
+			.or(PathSelectors.ant("/" + version + "/**")));
 	}
 
 	@Bean
@@ -60,11 +61,45 @@ public class SwaggerConfig {
 				PathSelectors.ant("/" + version + "/**/animal/**")));
 	}
 
+	@Bean
+	public Docket reservationApi() {
+		String version = "v1";
+		return buildDocket("예약 " + version, Predicates
+			.or(PathSelectors.ant("/" + version + "/schedule/**"),
+				PathSelectors.ant("/" + version + "/**/timetable")));
+	}
+
+	@Bean
+	public Docket alarmApi() {
+		String version = "v1";
+		return buildDocket("알람 " + version, Predicates
+			.or(PathSelectors.ant("/" + version + "/alarm"),
+				PathSelectors.ant("/" + version + "/alarm/**")));
+	}
+
+	@Bean
+	public Docket liveApi() {
+		String version = "v1";
+		return buildDocket("라이브 " + version, Predicates
+			.or(PathSelectors.ant("/" + version + "/live"),
+				PathSelectors.ant("/" + version + "/live/**")));
+	}
+
+	@Bean
+	public Docket otherApi() {
+		String version = "v1";
+		return buildDocket("기타 " + version, Predicates
+			.or(PathSelectors.ant("/error/**"),
+				PathSelectors.ant("/" + version + "/file/**"),
+				PathSelectors.ant("/" + version + "/openvidu/**")));
+	}
+
 	public Docket buildDocket(String groupName, Predicate<String> predicates) {
 		return new Docket(DocumentationType.SWAGGER_2)
 			.apiInfo(apiInfo()) // API 문서에 대한 설명
 			.securityContexts(Arrays.asList(securityContext())) // swagger에서 jwt 토큰값 넣기위한 설정 1
 			.securitySchemes(Arrays.asList(apiKey())) // swagger에서 jwt 토큰값 넣기위한 설정 2
+			.useDefaultResponseMessages(false)
 			.groupName(groupName)
 			.select()
 			.paths(predicates)

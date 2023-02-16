@@ -3,6 +3,8 @@ package com.ssafy.backend.domain.timetable.model.request;
 import com.ssafy.backend.domain.shelter.entity.ShelterEntity;
 import com.ssafy.backend.domain.timetable.entity.TimetableEntity;
 
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,6 +19,15 @@ import lombok.Setter;
 @AllArgsConstructor
 public class TimetableRegisterDto {
 
+	@ApiParam(name = "타임 테이블")
+	@ApiModelProperty(example = "["
+		+ "\"0000000000000000000000000\", "
+		+ "\"0000000000000000000000001\", "
+		+ "\"0000000000000000000000002\", "
+		+ "\"0000000000000000000000003\", "
+		+ "\"0000000000000000000000004\", "
+		+ "\"0000000000000000000000005\", "
+		+ "\"0000000000000000000000006\", ]")
 	private String[] dayString;
 
 	public TimetableEntity toEntity(ShelterEntity shelter) {

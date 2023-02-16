@@ -15,6 +15,7 @@ import com.ssafy.backend.domain.timetable.service.TimetableService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,7 +31,7 @@ public class TimetableControllerV1 {
 	@GetMapping("/timetable")
 	@ApiOperation(value = "보호소 시간 검색")
 	public ResponseEntity<?> getShelterInfo(
-		@PathVariable(name = "shelterId") Long shelterId,
+		@ApiParam(value = "보호소 식별 번호") @PathVariable(name = "shelterId") Long shelterId,
 		HttpServletRequest request) {
 
 		return ResponseEntity
@@ -40,7 +41,7 @@ public class TimetableControllerV1 {
 	@PutMapping("/timetable")
 	@ApiOperation(value = "보호소 시간 수정")
 	public ResponseEntity<?> updateTimetableInfo(
-		@PathVariable(name = "shelterId") Long shelterId,
+		@ApiParam(value = "보호소 식별 번호") @PathVariable(name = "shelterId") Long shelterId,
 		@RequestBody TimetableUpdateDto updateDto,
 		HttpServletRequest request) {
 

@@ -22,6 +22,7 @@ import com.ssafy.backend.global.file.service.FileService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,10 +39,7 @@ public class UserControllerV1 {
 	@GetMapping
 	@ApiOperation(value = "사용자 조회. 키워드가 없으면 모든 사용자 전체 조회")
 	public ResponseEntity<?> userShelter(
-		@RequestParam(value = "keyword", required = false) String keyword,
-		@RequestParam(value = "pageNo", defaultValue = "1", required = false) int page,
-		@RequestParam(value = "sort", required = false) String sort,
-		@RequestParam(value = "limit", required = false) String limit,
+		@ApiParam(value = "검색어") @RequestParam(value = "keyword", required = false) String keyword,
 		HttpServletRequest request) {
 
 		if (keyword == null || keyword.isEmpty()) {
@@ -66,7 +64,7 @@ public class UserControllerV1 {
 	@GetMapping("/{userId}")
 	@ApiOperation(value = "사용자 정보 조회")
 	public ResponseEntity<?> getInfoUser(
-		@PathVariable(name = "userId") Long userId,
+		@ApiParam(value = "사용자 식별 번호") @PathVariable(name = "userId") Long userId,
 		HttpServletRequest request) {
 
 		return ResponseEntity
@@ -76,7 +74,7 @@ public class UserControllerV1 {
 	@PutMapping("/{userId}")
 	@ApiOperation(value = "사용자 정보 수정")
 	public ResponseEntity<?> updateUser(
-		@PathVariable(name = "userId") Long userId,
+		@ApiParam(value = "사용자 식별 번호") @PathVariable(name = "userId") Long userId,
 		@RequestBody UserUpdateDto updateDto,
 		HttpServletRequest request) {
 
@@ -87,7 +85,7 @@ public class UserControllerV1 {
 	@DeleteMapping("/{userId}")
 	@ApiOperation(value = "사용자 정보 삭제")
 	public ResponseEntity<?> deleteUser(
-		@PathVariable(name = "userId") Long userId,
+		@ApiParam(value = "사용자 식별 번호") @PathVariable(name = "userId") Long userId,
 		HttpServletRequest request) {
 
 		return ResponseEntity
@@ -107,7 +105,7 @@ public class UserControllerV1 {
 	@PostMapping("/{userId}/password")
 	@ApiOperation(value = "비밀번호 검사")
 	public ResponseEntity<?> checkPassword(
-		@PathVariable(name = "userId") Long userId,
+		@ApiParam(value = "사용자 식별 번호") @PathVariable(name = "userId") Long userId,
 		@RequestBody UserMatchPasswordDto matchPasswordDto,
 		HttpServletRequest request) {
 
@@ -118,7 +116,7 @@ public class UserControllerV1 {
 	@PutMapping("/{userId}/password")
 	@ApiOperation(value = "비밀번호 수정")
 	public ResponseEntity<?> updatePassword(
-		@PathVariable(name = "userId") Long userId,
+		@ApiParam(value = "사용자 식별 번호") @PathVariable(name = "userId") Long userId,
 		@RequestBody UserUpdatePasswordDto updatePasswordDto,
 		HttpServletRequest request) {
 
@@ -130,7 +128,7 @@ public class UserControllerV1 {
 	//	@GetMapping("/{userId}/image")
 	//	@ApiOperation(value = "사용자 이미지 조회")
 	//	public ResponseEntity<?> getFilesByUser(
-	//		@PathVariable("userId") Long userId,
+	//		@ApiParam(value = "사용자 식별 번호") @PathVariable("userId") Long userId,
 	//		HttpServletRequest request) {
 	//
 	//		return ResponseEntity
@@ -140,7 +138,7 @@ public class UserControllerV1 {
 	//	@PostMapping("/{userId}/image")
 	//	@ApiOperation(value = "사용자 이미지 등록")
 	//	public ResponseEntity<?> uploadFilesByUser(
-	//		@PathVariable("userId") Long userId,
+	//		@ApiParam(value = "사용자 식별 번호") @PathVariable("userId") Long userId,
 	//		@RequestParam("file") MultipartFile image,
 	//		HttpServletRequest request) {
 	//

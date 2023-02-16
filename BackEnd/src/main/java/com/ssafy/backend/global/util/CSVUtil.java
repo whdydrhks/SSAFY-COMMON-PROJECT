@@ -1,5 +1,9 @@
 package com.ssafy.backend.global.util;
 
+import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -74,11 +78,15 @@ public class CSVUtil {
 
 		// CSV 파서 세팅
 		try {
-			Resource resource = new ClassPathResource(dir + "/" + filename);
-
+			Resource resource = new ClassPathResource(dir + File.separator + filename);
 			log.info(resource.getURI().getPath());
 
-			CSVParser parser = CSVParser.parse(resource.getFile(), Charset.forName("euc-kr"), format);
+			InputStream inputStream = resource.getInputStream();
+
+			Reader reader = new InputStreamReader(inputStream, "euc-kr"); //utf-8, euc-kr
+			CSVParser parser = CSVParser.parse(reader, format);
+
+			//			CSVParser parser = CSVParser.parse(resource.getFile(), Charset.forName("euc-kr"), format);
 
 			records = parser.getRecords();
 
