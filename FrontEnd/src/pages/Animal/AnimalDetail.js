@@ -453,7 +453,63 @@ function AnimalDetail() {
             삭제하기
           </SDeleteButton>
         ) : (
-          <SAdoptionButton>입양하기</SAdoptionButton>
+          <div>
+            <SLikeButton variant="contained" size="medium" onClick={handleOpen}>
+              입양하기
+            </SLikeButton>
+
+            <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                  {/* <SModalDiv> */}
+                  <Typography
+                    id="modal-modal-title"
+                    variant="h4"
+                    component="h2"
+                  >
+                    천사의 집
+                  </Typography>
+                  <br />
+                  <Typography
+                    id="modal-modal-title"
+                    variant="h6"
+                    component="h2"
+                  >
+                    대전광역시 갈마동 [35227]
+                  </Typography>
+                  <Typography
+                    id="modal-modal-title"
+                    variant="h6"
+                    component="h2"
+                  >
+                    입양문의 : 042-488-0246
+                  </Typography>
+                  {/* </SModalDiv> */}
+                </Typography>
+                <SNicknameDiv>
+                  {users.map((user, i) => (
+                    <SNickname
+                      key={i}
+                      onClick={onStayClick}
+                      value={user.nickname}
+                    >
+                      {user.nickname}
+                    </SNickname>
+                  ))}
+                </SNicknameDiv>
+                <SModalDiv>
+                  <SLikeRegistButton onClick={handleClose}>
+                    닫기
+                  </SLikeRegistButton>
+                </SModalDiv>
+              </Box>
+            </Modal>
+          </div>
         )}
       </SButtonBox>
 

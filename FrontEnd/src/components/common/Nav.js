@@ -17,10 +17,10 @@ import { userAtom, navAtom } from '../../recoilState';
 
 const SBottomNavigationAction = styled(BottomNavigationAction)`
   color: black;
-  background-color: #f5f7fa;
+  background-color: #f5f7fa !important;
 
   &.Mui-selected {
-    color: #9c27b0;
+    color: #9c27b0 !important;
   }
 `;
 
@@ -30,7 +30,7 @@ const SBox = styled(Box)`
   right: 0;
   bottom: 0;
   height: 4rem;
-  background-color: #f5f7fa;
+  background-color: #f5f7fa !important;
   box-shadow: 0px -5px 3px -3px lightgray;
 `;
 

@@ -1,11 +1,12 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-no-useless-fragment */
 
-import React from 'react';
-// import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 // import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import '../../styles/slick-theme.css';
@@ -15,10 +16,13 @@ import cat1 from '../../images/dummy/cat1.png';
 import gaejookee from '../../images/dummy/gaejookee.png';
 import dog1 from '../../images/dummy/dog1.jpg';
 import dogYawn from '../../images/dummy/dogYawn.jpg';
-
-const SBox = styled.div`
-  display: flex;
-`;
+import live_1 from '../../images/live_dummy/live_1.png';
+import live_2 from '../../images/live_dummy/live_2.png';
+import live_3 from '../../images/live_dummy/live_3.png';
+import live_4 from '../../images/live_dummy/live_4.png';
+import live_5 from '../../images/live_dummy/live_5.png';
+import live_6 from '../../images/live_dummy/live_6.png';
+import API_URL from '../../api/api';
 
 const SImage = styled.img`
   // 기존
@@ -26,6 +30,7 @@ const SImage = styled.img`
   min-width: 25rem;
   max-height: 14.4rem;
   border: 1px solid black;
+  margin: auto;
 `;
 
 const SSlider = styled(Slider)`
@@ -69,39 +74,29 @@ function HomeImageCarousel() {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+  const [liveImgArr, setLiveImgArr] = useState([]);
+  const [liveList, setLiveList] = useState([]);
 
-  const images = [cat1, gaejookee, dogYawn, dog1];
-  const roomTitle = [
-    '믹스견 사료 먹방',
-    '한성깔 하지만 하찮은 솜뭉치',
-    '서로 입질하고 노는 인절미들',
-    '귀여운 개들 한번에 몰아보기',
-  ];
-  const ShelterName = ['도그마루', '도그마루', '천사의집', '천사의집'];
-
-  const indexNum = [0, 1, 2, 3];
+  useEffect(() => {
+    setLiveImgArr([live_1, live_2, live_3, live_4, live_5, live_6]);
+    axios.get(`${API_URL}/live/all`).then(res => setLiveList(res.data.data));
+  });
 
   return (
     <div>
-      {images !== undefined ? (
-        <>
-          <SSlider {...settings}>
-            {indexNum.map((item, index) => (
-              <>
-                <SLiveInfoBox>
-                  <SLiveTitleBox>{roomTitle[index]}</SLiveTitleBox>
-                </SLiveInfoBox>
-                <SLiveInfoBox>
-                  <SShelterNicknameBox>
-                    {ShelterName[index]}
-                  </SShelterNicknameBox>
-                </SLiveInfoBox>
-                <SImage src={images[index]} alt="준비중입니다" />
-              </>
-            ))}
-          </SSlider>
-        </>
-      ) : null}
+      <SSlider {...settings}>
+        {liveList.map((live, index) => (
+          <>
+            <SLiveInfoBox>
+              <SLiveTitleBox>{live.title}</SLiveTitleBox>
+            </SLiveInfoBox>
+            <SLiveInfoBox>
+              <SShelterNicknameBox>{live.shelterName}</SShelterNicknameBox>
+            </SLiveInfoBox>
+            <SImage src={liveImgArr[index % 6]} />
+          </>
+        ))}
+      </SSlider>
     </div>
   );
 }

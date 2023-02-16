@@ -1,10 +1,11 @@
+/* eslint-disable import/order */
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/no-named-as-default */
 /* eslint-disable import/no-named-as-default-member */
 /* eslint-disable import/no-unresolved */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
@@ -13,7 +14,8 @@ import Header from '../components/common/Header';
 import Nav from '../components/common/Nav';
 import HomeImageCarousel from '../components/common/HomeImageCarousel';
 import ReviewList from '../components/Review/ReviewList';
-// import '../../styles/fonts.css';
+import axios from 'axios';
+import API_URL from '../api/api';
 
 // 1976d2
 const SLiveContainer = styled.div`
@@ -28,30 +30,11 @@ const SLiveContainer = styled.div`
   font-family: mainFont;
 `;
 
-const SLiveVideoBox = styled.div`
-  height: 100%;
-  width: 100%;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid black;
-  border-radius: 0 0 15px 15px;
-`;
-
 const STitleBox = styled.div`
   display: flex;
   justify-content: space-between;
-  /* margin-top: 5rem; */
   margin-bottom: 2rem;
   margin-left: 1rem;
-  margin-right: 1rem;
-`;
-
-const SShelterNicknameBox = styled.div`
-  /* width: 50%; */
-  /* text-align: center; */
-  align-items: flex-end;
   margin-right: 1rem;
 `;
 
@@ -65,18 +48,6 @@ const SDivideLine = styled.div`
 
 const SReviewItem = styled.div`
   background-color: white;
-  /* border: 1px solid lightgray; */
-  /* border-left: none; */
-  /* border-right: none; */
-`;
-
-const SLiveTitleBox = styled.div`
-  font-size: 1.5rem;
-  margin-left: 1rem;
-  text-align: center;
-  display: flex;
-  align-items: flex-start;
-  width: 5rem;
 `;
 
 const SLiveInfoBox = styled.div`
@@ -124,16 +95,9 @@ function Home() {
         <STitle>라이브</STitle>
         <SMoreLink to="/live">더 보기 &gt;</SMoreLink>
       </STitleBox>
-      {/* <SMoreLink to="/live">더 보기 &gt;</SMoreLink> */}
-
-      {/* <SLiveItem> */}
       <SLiveContainer>
         <HomeImageCarousel page="Home" />
       </SLiveContainer>
-      {/* </SLiveItem> */}
-      {/* <SLine /> */}
-
-      {/* SDivideLine은 회색 구분선 */}
       <SDivideLine>
         <STitleBox>
           <STitle>입양 후기</STitle>

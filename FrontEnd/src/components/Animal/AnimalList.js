@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-undef */
@@ -73,10 +74,6 @@ const SButtton = styled.button`
 `;
 
 function AnimalList(props) {
-  // const animalList = useRecoilValue(animalListState);
-  // console.log(animalList);
-  // console.log(props, 'here');
-  // console.log(props);
   const expired = props.expired;
 
   const [animalList, setAnimalList] = useState([]);
@@ -140,8 +137,6 @@ function AnimalList(props) {
   const getAnimalList = async () => {
     await axios.get(`${API_URL}/shelter/${shelterId}/animal`).then(res => {
       const allList = res.data.data;
-      // console.log(allList);
-      // console.log(expired);
       console.log(allList);
       const filteredData = allList.filter(item => item.adoption === expired);
       console.log(filteredData);
@@ -152,13 +147,6 @@ function AnimalList(props) {
   useEffect(() => {
     getAnimalList();
   }, []);
-  // axios
-  //   .get(`${API_URL}/shelter/1/animal?pageNo=1`, {
-  //     params: { status: props.status },
-  //   })
-  //   .then(res => {
-  //     console.log(res);
-  //   });
 
   return (
     <div>
@@ -213,13 +201,13 @@ function AnimalList(props) {
       </SSearchBar>
       {animalList ? (
         <>
-          {animalList.map(animalItem => (
+          {animalList.map((animalItem, index) => (
             <SLink
               to={`/animal/${animalItem.animalId}`}
               key={animalItem.animalId}
               state={{ animal: animalItem }}
             >
-              <AnimalItem item={animalItem} />
+              <AnimalItem item={animalItem} idx={index} />
             </SLink>
           ))}
         </>

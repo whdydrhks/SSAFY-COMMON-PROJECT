@@ -1,4 +1,7 @@
-import React from 'react';
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
+/* eslint-disable camelcase */
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
@@ -9,6 +12,17 @@ import nameIcon from '../../images/AnimalDetail/name.png';
 import manageCodeIcon from '../../images/AnimalDetail/manageCode.png';
 import breedIcon from '../../images/AnimalDetail/breed.png';
 import '../../styles/fonts.css';
+import dog_1 from '../../images/dogDetail/dog_1.png';
+import dog_2 from '../../images/dogDetail/dog_2.png';
+import dog_3 from '../../images/dogDetail/dog_3.png';
+import dog_4 from '../../images/dogDetail/dog_4.png';
+import dog_5 from '../../images/dogDetail/dog_5.png';
+import dog_6 from '../../images/dogDetail/dog_6.png';
+import dog_7 from '../../images/dogDetail/dog_7.png';
+import dog_8 from '../../images/dogDetail/dog_8.png';
+import dog_9 from '../../images/dogDetail/dog_9.png';
+import dog_10 from '../../images/dogDetail/dog_10.png';
+import dog_11 from '../../images/dogDetail/dog_11.png';
 
 const SDetail = styled.div`
   display: flex;
@@ -78,7 +92,27 @@ const SNoteImg = styled.img`
   margin-right: 1rem; */
 `;
 
-function AnimalItem({ item }) {
+function AnimalItem({ item, idx }) {
+  const [dogImgArr, setDogImgArr] = useState([]);
+
+  useEffect(() => {
+    setDogImgArr([
+      dog_1,
+      dog_2,
+      dog_3,
+      dog_4,
+      dog_5,
+      dog_6,
+      dog_7,
+      dog_8,
+      dog_9,
+      dog_10,
+      dog_11,
+    ]);
+  }, []);
+
+  console.log(dogImgArr);
+
   return (
     <motion.div
       className="swiper-slide"
@@ -86,7 +120,11 @@ function AnimalItem({ item }) {
       transition={{ type: 'spring', stiffness: 45 }}
     >
       <SDetail>
-        <SAnimalImage src={cat1} alt="준비중" onError={helloIcon} />
+        <SAnimalImage
+          src={dogImgArr[idx % 11]}
+          alt="준비중"
+          onError={helloIcon}
+        />
         <SItemContainer>
           <SAnimalItem>
             <SNoteImg src={manageCodeIcon} />
