@@ -111,6 +111,7 @@ const SLink = styled(Link)`
   padding: 3% 5% 3% 5%;
   color: black;
   text-decoration: none;
+  text-decoration-color: black !important;
 `;
 
 function Live() {

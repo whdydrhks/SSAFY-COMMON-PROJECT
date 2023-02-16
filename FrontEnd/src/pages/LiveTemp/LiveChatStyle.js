@@ -50,14 +50,14 @@ export const JoinButton = styled(Button)`
   font-size: 1rem;
   font-family: mainFont;
   /* background-color: secondary; */
-  margin-left: 30%;
-  margin-right: 30%;
-  margin-bottom: 5%;
+  margin-left: 30% !important;
+  margin-right: 30% !important;
+  margin-bottom: 5% !important;
   /* color: white; */
   border: none;
-  width: 40%;
+  width: 40% !important;
+  height: 5vh !important;
   border-radius: 10px;
-  height: 5vh;
   /* border: none; */
   /* width: 40%; */
   /* height: 8vh; */
@@ -226,10 +226,10 @@ export const FileUploadButton = styled(Button)`
   font-size: 1rem;
   font-family: mainFont;
   /* background-color: secondary; */
-  margin-top: 5%;
-  margin-left: 30%;
-  margin-right: 30%;
-  margin-bottom: 5%;
+  margin-top: 5% !important;
+  margin-left: 30% !important;
+  margin-right: 30% !important;
+  margin-bottom: 5% !important;
   color: white;
   border: none;
   border-radius: 10px;
