@@ -141,6 +141,8 @@ function Live() {
   useEffect(async () => {
     await axios.get(`${API_URL}/live/all`).then(res => {
       setLiveList(res.data.data);
+      console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+      console.log(res.data.data);
     });
   }, []);
 
@@ -168,7 +170,7 @@ function Live() {
               className={live.room}
               onClick={() => saveRoomNumber(live)}
             >
-              <S.LiveImage src={cat1} alt="ThumbnailImage" />
+              <S.LiveImage src={live.thumnailImage} alt="ThumbnailImage" />
               <S.LiveInformationContainer>
                 <S.LiveTitle>{live.title}</S.LiveTitle>
                 <S.ShelterName>{live.shelterName}</S.ShelterName>
