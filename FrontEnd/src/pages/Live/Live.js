@@ -139,7 +139,7 @@ function Live() {
       console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@');
     });
   }, []);
-
+  console.log(liveList);
   return (
     <>
       <Header />

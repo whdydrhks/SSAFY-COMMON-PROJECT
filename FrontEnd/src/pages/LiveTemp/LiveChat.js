@@ -88,7 +88,12 @@ function Live() {
 
   const location = useLocation();
   // console.log(location);
-  const roomNumber = location.state.roomNumber;
+  const tempRoomNumber = location.state.roomNumber;
+  const temp2 = tempRoomNumber.toString();
+  const roomNumber = temp2.substring(10, 14);
+  if (roomNumber) {
+    console.log(roomNumber);
+  }
   // console.log(roomNumber);
   const chatRef = useRef();
   // 유저 정보, 이메일, role 불러와야함
@@ -105,11 +110,12 @@ function Live() {
 
   const [session, setSession] = useState(undefined);
   const [user, setUser] = useState(undefined);
-  const [hostSessionName, setHostSessionName] = useState('ssafy1');
-  const tmp = 'ssafy1';
-  const [mySessionId, setMySessionId] = useState(
-    role === 'HOST' ? tmp : hostSessionName,
-  );
+  const [hostSessionName, setHostSessionName] = useState(roomNumber);
+  const tmp = email.split('@')[0];
+  // const [mySessionId, setMySessionId] = useState(
+  //   role === 'HOST' ? tmp : hostSessionName,
+  // );
+  const [mySessionId, setMySessionId] = useState(roomNumber);
 
   const [myUserName, setMyUserName] = useState(nickname);
 
@@ -405,6 +411,8 @@ function Live() {
           },
         })
         .then(response => {
+          console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+
           resolve(response.data);
         })
         .catch(response => {
@@ -504,6 +512,7 @@ function Live() {
                         variant="contained"
                         component="label"
                         color="secondary"
+                        style={{ width: '40%' }}
                       >
                         썸네일 업로드
                         <input
@@ -540,19 +549,6 @@ function Live() {
                     >
                       방 입장하기
                     </S.JoinButton>
-                    {/* <S.JoinForm className="form-group" onSubmit={joinSession}> */}
-                    {/* <p className="text-center">
-                      <S.JoinDiv>
-                        <S.JoinButton
-                          type="button"
-                          onClick={joinSession}
-                          color="secondary"
-                        >
-                          방 입장하기
-                        </S.JoinButton>
-                      </S.JoinDiv>
-                    </p> */}
-                    {/* </S.JoinForm> */}
                   </>
                 );
               default:
@@ -574,86 +570,9 @@ function Live() {
         </div>
       ) : null}
 
-      {/* {session === undefined ? (
-        <S.WaitingDiv>
-          <S.Header>Live 생성</S.Header>
-          <S.FileUploadButton variant="contained" component="label">
-            파일 업로드
-            <input
-              type="file"
-              hidden
-              onChange={handleImages}
-              multiple="multiple"
-              accept="image/*"
-            />
-          </S.FileUploadButton>
-          {preview ? <img src={preview} alt="Thumbnail" /> : null}
-          <S.Title2></S.Title2>
-          <div>
-            <p>방 제목</p>
-            <S.RoomName type="text" onChange={handleRoomName} />
-          </div>
-          <S.Category>
-            <S.CategoryHeader>카테고리 선택</S.CategoryHeader>
-            <input
-              type="radio"
-              id="dog"
-              name="category"
-              value={category}
-              onChange={handleCategory}
-            />
-            <label htmlFor="강아지">강아지</label>
-            <input
-              type="radio"
-              id="cat"
-              name="category"
-              value={category}
-              onChange={handleCategory}
-            />
-            <label htmlFor="고양이">고양이</label>
-          </S.Category>
-          <S.JoinForm className="form-group" onSubmit={joinSession}>
-            <p className="text-center">
-              <S.JoinDiv>
-                <S.JoinButton type="button" onClick={joinSession}>
-                  방 입장하기
-                </S.JoinButton>
-              </S.JoinDiv>
-            </p>
-          </S.JoinForm>
-        </S.WaitingDiv>
-      ) : null} */}
-
       {session !== undefined ? (
         <div id="session">
-          {/* 메인 화면 제목 */}
-          {/* <h1 id="session-title">방 번호 : {roomNumber}</h1> */}
-
           {host !== undefined ? (
-            // <S.div id="main-video" className="col-md-6">
-            //   {(() => {
-            //     switch (role) {
-            //       case 'HOST':
-            //         return (
-            //           <>
-            //             <UserVideoComponent streamManager={host} />
-            //           </>
-            //         );
-            //       case 'USER':
-            //         return (
-            //           <>
-            //             <UserVideoComponent streamManager={host} />
-            //           </>
-            //         );
-            //       default:
-            //         return (
-            //           <>
-            //             <UserVideoComponent streamManager={host} />
-            //           </>
-            //         );
-            //     }
-            //   })()}
-
             <UserVideoComponent streamManager={host} />
           ) : (
             // 세션 있고 호스트가 없는 경우
@@ -675,35 +594,14 @@ function Live() {
                     );
                 }
               })()}
-
-              {/* <input
-                className="btn btn-large btn-success"
-                type="button"
-                id="buttonSwitchCamera"
-                onClick={switchCamera}
-                value="카메라 전환"
-              /> */}
             </S.div>
           )}
-
-          {/* <S.ControlDiv> */}
-          {/* <div onClick={leaveSession}>
-            <img
-              src={CallDisconnected}
-              alt="disconnected"
-              style={{ width: '10vw' }}
-            />
-          </div> */}
-          {/* </S.ControlDiv> */}
         </div>
       ) : null}
 
       {session ? (
         <S.ChatBox>
           <S.LeaveBox>
-            {/* <S.LeaveButton type="button" onClick={leaveSession}>
-              나가기
-            </S.LeaveButton> */}
             <div onClick={leaveSession}>
               <S.ExitSign src={ExitSign} alt="ExitSign" />
             </div>
@@ -769,19 +667,6 @@ function Live() {
                     </form>
                   </S.ChatForm>
                 );
-              // case 'USER':
-              //   return (
-              //     <S.ChatForm>
-              //       <form onSubmit={sendMessage}>
-              //         <S.ChatInput
-              //           type="text"
-              //           onChange={handleMsg}
-              //           value={sendMsg}
-              //         />
-              //         <S.ChatButton type="submit">전송</S.ChatButton>
-              //       </form>
-              //     </S.ChatForm>
-              //   );
               default:
                 return (
                   <S.ChatForm>
