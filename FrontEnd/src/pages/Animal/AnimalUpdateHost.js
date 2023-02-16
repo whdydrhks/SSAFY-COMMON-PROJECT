@@ -456,47 +456,10 @@ function AnimalUpdateHost() {
                         </SBasicButton>
                       </SPreviewCard>
                     ))}
-                    {/* </SPreviewContainer> */}
-                    {/* {imgPreview.map((image, imageId) => (
-                      <SPreviewCard item xs={6}>
-                        <img
-                          src={image}
-                          alt={`${image}-${imageId}`}
-                          style={{ width: '10rem' }}
-                        />
-                        <Button
-                          type="button"
-                          onClick={handlePreviewList}
-                          name={`${imageId}`}
-                          variant="contained"
-                          color="error"
-                        >
-                          삭제
-                        </Button>
-                      </SPreviewCard>
-                    ))} */}
                   </Grid>
                 </Box>
               </Grid>
             </Grid>
-
-            {/* 사진 업로드 */}
-            {/* <Grid item xs={12}>
-              <STemp>
-                <SFileUploadButton variant="contained" component="label">
-                  파일 업로드
-                  <input
-                    type="file"
-                    hidden
-                    onChange={handleImages}
-                    multiple="multiple"
-                    accept="image/*"
-                  />
-                </SFileUploadButton>
-              </STemp>
-            </Grid> */}
-
-            {/* 추가되는 파일 미리보기 */}
             <Grid item xs={12}>
               <STypography component="h6" variant="body2">
                 추가될 사진
