@@ -64,7 +64,9 @@
 <br />
 
 ### 🍏 API
-#### [API 명세서 링크](https:// url 링크)
+#### ![API1](/uploads/ffd39feabb80762ce34ccfc8a6b310ce/API1.png)
+#### ![API2](/uploads/7368c4c90727f8f984f562ea7715c27d/API2.png)
+#### ![API3](/uploads/12218981323b03ff92ed3874513c959b/API3.png)
 
 <br />
 

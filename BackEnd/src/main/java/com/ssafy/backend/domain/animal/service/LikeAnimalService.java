@@ -69,6 +69,7 @@ public class LikeAnimalService {
 		AnimalEntity findAnimal = animalRepository.findByIdAndExpiredLike(animalId, "F")
 			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
+
 		// 보호소가 보호하고 있는 동물만 등록 가능
 		if (findAnimal.getShelter().getId() != findShelter.getId()) {
 			throw new ApiErrorException(ApiStatus.UNAUTHORIZED);
@@ -76,6 +77,11 @@ public class LikeAnimalService {
 
 		UserEntity findUser = userRepository.findByIdAndExpiredLike(userId, "F")
 			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
+
+		// 이미 등록된 관심동물은 등록 하지않는다.
+		if(likeAnimalRepository.findByUserAndAnimal(findUser, findAnimal) != null){
+			throw new ApiErrorException(ApiStatus.DUPLICATION);
+		}
 
 		LikeAnimalEntity likeAnimal = LikeAnimalEntity.builder()
 			.user(findUser)
@@ -131,8 +137,6 @@ public class LikeAnimalService {
 			.orElseThrow(() -> new ApiErrorException(ApiStatus.RESOURCE_NOT_FOUND));
 
 		Set<LikeAnimalEntity> likeAnimals = findUser.getLikeAnimals();
-
-		System.out.println(likeAnimals.toString());
 
 		List<LikeAnimalInfoDto> animalInfos = likeAnimals
 			.stream()

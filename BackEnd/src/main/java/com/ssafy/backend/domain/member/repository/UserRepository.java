@@ -26,7 +26,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 	@Override
 	Optional<UserEntity> findById(Long id);
 
-	Optional<UserEntity> findByIdAndExpiredLike(Long id, String expired);
+	Optional<UserEntity> findByIdAndExpiredLike(Long Id, String expired);
 
 	Optional<UserEntity> findByEmail(String email);
 

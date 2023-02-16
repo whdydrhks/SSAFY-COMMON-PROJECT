@@ -76,6 +76,7 @@ function Login() {
           const decodedToken = jwtDecode(accessToken);
           const role = decodedToken.userRole;
           const id = decodedToken.userId;
+          console.log(role);
           axios
             .get(
               `${API_URL}/user/${id}`,
@@ -91,8 +92,8 @@ function Login() {
               const { name, nickname, phoneNumber, profileImage, shelterId } =
                 info.data.data;
               setUser({
-                userId: id,
                 role,
+                userId: id,
                 email,
                 name,
                 nickname,
@@ -137,6 +138,7 @@ function Login() {
           </Typography>
           {/* <form onSubmit={handleOnKeyPress}> */}
           <TextField
+            color="secondary"
             margin="normal"
             label="이메일"
             required
@@ -148,6 +150,7 @@ function Login() {
             onChange={onChangeUserEmail}
           />
           <TextField
+            color="secondary"
             margin="normal"
             label="비밀번호"
             required
@@ -172,18 +175,19 @@ function Login() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             onClick={handleLogin}
+            color="secondary"
           >
             로그인
           </Button>
           <Grid container>
             <Grid item xs>
               <SFindLink to="/findpassword">
-                <Button>비밀번호 찾기</Button>
+                <Button color="secondary"> 비밀번호 찾기</Button>
               </SFindLink>
             </Grid>
             <Grid item>
               <SignupLink to="/signup">
-                <Button>회원가입</Button>
+                <Button color="secondary">회원가입</Button>
               </SignupLink>
             </Grid>
           </Grid>

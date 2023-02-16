@@ -41,6 +41,7 @@ import { userAtom } from '../../recoilState';
 import API_URL from '../../api/api';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
+import Animal from '../Animal/Animal';
 import ExitSign from '../../images/Video/ExitSign.png';
 import MicOff from '../../images/Video/MicOff.png';
 import MicOn from '../../images/Video/MicOn.png';
@@ -388,30 +389,6 @@ function VideoChat() {
             <h1>화상채팅 참여하기</h1>
           </S.Title>
           <S.JoinForm className="form-group" onSubmit={joinSession}>
-            {/* <S.NameDiv>
-              <label>참가자 이름</label>
-              <input
-                className="form-control"
-                type="text"
-                id="userName"
-                value={myUserName}
-                onChange={handleChangeUserName}
-                required
-                disabled
-              />
-            </S.NameDiv>
-            <S.RoomNameDiv>
-              <label>방 제목</label>
-              <input
-                className="form-control"
-                type="text"
-                id="sessionId"
-                value={roomNumber}
-                onChange={handleChangeSessionId}
-                required
-                disabled
-              />
-            </S.RoomNameDiv> */}
             <p className="text-center">
               <S.JoinDiv>
                 <S.JoinButton type="button" onClick={joinSession}>
@@ -427,9 +404,6 @@ function VideoChat() {
 
       {session !== undefined ? (
         <div id="session">
-          {/* 메인 화면 제목 */}
-          {/* <h1 id="session-title">방 번호 : {roomNumber}</h1> */}
-
           {host !== undefined ? (
             <S.div id="main-video" className="col-md-6">
               {(() => {
@@ -476,84 +450,74 @@ function VideoChat() {
               /> */}
             </S.div>
           ) : null}
-
-          {/* <div id="session-header"> */}
-          {/* 메인 화면 제목 */}
-          {/* <h1 id="session-title">{mySessionId}</h1> */}
-          {/* <input
-              className="btn btn-large btn-danger"
-              type="button"
-              id="buttonLeaveSession"
-              onClick={leaveSession}
-              value="화상채팅 나가기"
-            /> */}
-          {/* </div> */}
         </div>
       ) : null}
 
       {session ? (
-        <S.ChatBox>
-          <S.LeaveBox>
-            {/* <S.LeaveButton type="button" onClick={leaveSession}>
-              나가기
-            </S.LeaveButton> */}
-            <div onClick={leaveSession}>
-              <S.ExitSign src={ExitSign} alt="ExitSign" />
-            </div>
-            <div
-              onClick={() => {
-                publisher.publishAudio(!isMic);
-                setIsMic(!isMic);
-              }}
-            >
-              {isMic ? (
-                <S.MicOff src={MicOff} alt="MicOff" />
-              ) : (
-                <S.MicOn src={MicOn} alt="MicOn" />
-              )}
-            </div>
-            <div
-              onClick={() => {
-                subscriber.publishVideo(!isCam);
-                setIsCam(!isCam);
-              }}
-            >
-              {isCam ? (
-                <S.CamOff src={CamOff} alt="CamOff" />
-              ) : (
-                <S.CamOn src={CamOn} alt="CamOn" />
-              )}
-            </div>
-            <div
-              onClick={() => {
-                subscriber.publishAudio(!isVolume);
-                setIsAudio(!isVolume);
-              }}
-            >
-              {isVolume ? (
-                <S.VolumeOff src={VolumeOff} alt="VolumeOff" />
-              ) : (
-                <S.VolumeOn src={VolumeOn} alt="VolumeOn" />
-              )}
-            </div>
-          </S.LeaveBox>
-          <S.ChattingListBox ref={chatRef}>
-            {receiveMsg.map((data, index) => (
-              <S.Chat key={index}>
-                {data.name} : {data.data}
-              </S.Chat>
-            ))}
-          </S.ChattingListBox>
+        <>
+          <S.ChatBox>
+            <S.LeaveBox>
+              <div onClick={leaveSession}>
+                <S.ExitSign src={ExitSign} alt="ExitSign" />
+              </div>
+              <div
+                onClick={() => {
+                  publisher.publishAudio(!isMic);
+                  setIsMic(!isMic);
+                }}
+              >
+                {isMic ? (
+                  <S.MicOff src={MicOff} alt="MicOff" />
+                ) : (
+                  <S.MicOn src={MicOn} alt="MicOn" />
+                )}
+              </div>
+              <div
+                onClick={() => {
+                  subscriber.publishVideo(!isCam);
+                  setIsCam(!isCam);
+                }}
+              >
+                {isCam ? (
+                  <S.CamOff src={CamOff} alt="CamOff" />
+                ) : (
+                  <S.CamOn src={CamOn} alt="CamOn" />
+                )}
+              </div>
+              <div
+                onClick={() => {
+                  subscriber.publishAudio(!isVolume);
+                  setIsAudio(!isVolume);
+                }}
+              >
+                {isVolume ? (
+                  <S.VolumeOff src={VolumeOff} alt="VolumeOff" />
+                ) : (
+                  <S.VolumeOn src={VolumeOn} alt="VolumeOn" />
+                )}
+              </div>
+            </S.LeaveBox>
+            <S.ChattingListBox ref={chatRef}>
+              {receiveMsg.map((data, index) => (
+                <S.Chat key={index}>
+                  {data.name} : {data.data}
+                </S.Chat>
+              ))}
+            </S.ChattingListBox>
 
-          {/* 채팅창 */}
-          <S.ChatForm>
-            <form onSubmit={sendMessage}>
-              <S.ChatInput type="text" onChange={handleMsg} value={sendMsg} />
-              <S.ChatButton type="submit">전송</S.ChatButton>
-            </form>
-          </S.ChatForm>
-        </S.ChatBox>
+            {/* 채팅창 */}
+            <S.ChatForm>
+              <form onSubmit={sendMessage}>
+                <S.ChatInput type="text" onChange={handleMsg} value={sendMsg} />
+                <S.ChatButton type="submit">전송</S.ChatButton>
+              </form>
+            </S.ChatForm>
+          </S.ChatBox>
+          {role === 'HOST' ? <Animal /> : null}
+        </>
       ) : null}
+
+      {/* <Animal /> */}
       <Nav />
     </S.VideoChatRoot>
   );

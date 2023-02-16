@@ -2,6 +2,12 @@ import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom } = recoilPersist();
+
+const navAtom = atom({
+  key: 'navAtom',
+  default: 0,
+});
+
 const authStateAtom = atom({
   key: 'authStateAtom',
   default: false,
@@ -101,9 +107,9 @@ const reviewListState = atom({
     // },
     {
       reviewId: 0,
-      title: '우리집 상추 자랑1',
+      title: '우리집 깻잎(강아지 이름) 자랑',
       content:
-        '입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...',
+        '입양한 지 벌써 1주일이 됐네요..! 우리 깻잎 너무너무 귀엽죠 근데 진짜 말썽쟁이예요. 아, 참 깻잎향을 유독 따라다녀서 깻잎이라고 이름을 지었답니다 ㅎㅎ. 처음에는 조금 어색해 하는 것 같더니 지금은 많이 적응해서 집 안 곳곳을 누비고 다니네요 ㅎㅎ.',
       userId: 1,
       contentId: 1,
       viewCount: 10,
@@ -113,9 +119,9 @@ const reviewListState = atom({
     },
     {
       reviewId: 1,
-      title: '우리집 상추 자랑2',
+      title: '귀요미 두두둥장',
       content:
-        '입양한 지 벌써 1주일이 됐네요..! 우리 상추 너무너무 귀엽죠 근데 진짜 말썽쟁이...',
+        '강아지 이름을 요미로 지었어요. 귀요미에서 발음하기 편하게 귀 빼고 발음하기로 했네요. 진짜 하는 짓마다 얼마나 귀여운지 집안 분위기가 너무 밝아졌어요!! 처음에는 많이 망설였었는데, 제 눈으로 직접 확인하고 보호센터 직원분한테 직접 설명을 들으니 입양에 대한 확신이 섰어요. 행복하게 잘 살겠습니다~~',
       userId: 2,
       contentId: 2,
       viewCount: 7,
@@ -168,7 +174,7 @@ const liveListAtom = atom({
 
 const timetableShelterIdAtom = atom({
   key: 'timetableShelterIdAtom',
-  default: '',
+  default: 0,
   effects_UNSTABLE: [persistAtom],
 });
 
@@ -177,7 +183,15 @@ const likeAnimalAtom = atom({
   default: [],
 });
 
+const urlAtom = atom({
+  key: 'urlAtom',
+  default: [],
+  // effects_UNSTABLE: [persistAtom],
+});
+
 export {
+  urlAtom,
+  navAtom,
   animalState,
   authStateAtom,
   userAtom,

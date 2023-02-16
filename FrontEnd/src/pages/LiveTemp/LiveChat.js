@@ -36,13 +36,17 @@ import { OpenVidu } from 'openvidu-browser';
 import axios from 'axios';
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { TextField } from '@mui/material';
 import * as S from './LiveChatStyle';
 import UserVideoComponent from './UserVideoComponent';
 import CreateSchedule from '../../components/Schedule/CreateSchedule';
-import { userAtom, roomNumberAtom } from '../../recoilState';
+import {
+  userAtom,
+  roomNumberAtom,
+  timetableShelterIdAtom,
+} from '../../recoilState';
 // import TextChat from './TextChat';
 import API_URL from '../../api/api';
 import Header from '../../components/common/Header';
@@ -120,7 +124,11 @@ function Live() {
 
   const [session, setSession] = useState(undefined);
   const [user, setUser] = useState(undefined);
+  const sUser = useRecoilValue(userAtom);
   const [hostSessionName, setHostSessionName] = useState(roomNumber);
+  const [timetableShelterId, setTimetableShelterId] = useRecoilState(
+    timetableShelterIdAtom,
+  );
   const tmp = roomNumber;
   console.log(roomNumber);
   console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
@@ -155,6 +163,8 @@ function Live() {
   const [roomName, setRoomName] = useState('');
 
   useEffect(() => {
+    console.log(location);
+    setTimetableShelterId(location.state.shelterId);
     window.addEventListener('beforeunload', onbeforeunload);
     return () => {
       window.removeEventListener('beforeunload', onbeforeunload);
@@ -303,7 +313,7 @@ function Live() {
   const deleteSubscriber = streamManager => {};
 
   const joinSession = () => {
-    if (!preview) {
+    if (!preview && role === 'HOST') {
       alert('파일을 입력해 주세요.');
       return false;
     }
@@ -734,7 +744,9 @@ function Live() {
           </S.ChatForm> */}
         </S.ChatBox>
       ) : null}
-      {nickname !== 'anonymous' && role === 'USER' ? <CreateSchedule /> : null}
+      {nickname !== 'anonymous' && role === 'USER' && session ? (
+        <CreateSchedule />
+      ) : null}
       <Nav />
     </S.VideoChatRoot>
   );
