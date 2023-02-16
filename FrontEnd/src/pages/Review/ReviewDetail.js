@@ -6,7 +6,6 @@ import { Button } from '@mui/material';
 import axios from 'axios';
 import styled from 'styled-components';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 import { getCookie } from '../../pages/Account/cookie';
@@ -15,9 +14,13 @@ import { getCookie } from '../../pages/Account/cookie';
 import { title, content } from '../../images/index';
 import API_URL from '../../api/api';
 import ReviewComment from '../../components/Review/ReviewComment';
-import { userAtom } from '../../recoilState';
+
+const STitleBox = styled.div`
+  margin-top: 1rem;
+`;
 
 const STitle = styled.div`
+  font-family: mainFont;
   font-size: 2rem;
   margin-bottom: 2rem;
   margin-left: 1rem;
@@ -43,12 +46,14 @@ const SGrayLine = styled.div`
 `;
 
 const SDetailInformation = styled.div`
-  font-size: 24;
+  font-family: mainFont;
+  font-size: 1.5rem;
   width: 30%;
   text-align: center;
 `;
 
 const SInformationBox = styled.div`
+  font-family: mainFont;
   height: 2.5rem;
   display: flex;
   justify-content: space-around;
@@ -77,6 +82,7 @@ const SInformationText = styled.div`
 `;
 
 const SNoteBox = styled.div`
+  font-family: mainFont;
   display: flex;
   justify-content: space-evenly;
   margin-left: 1rem;
@@ -115,20 +121,24 @@ const SInformationNote = styled.div`
 `;
 
 const SButtonBox = styled.div`
+  margin-bottom: 1rem;
   display: flex;
   justify-content: center;
   justify-content: space-evenly;
 `;
 
 const SModifyButton = styled(Button)`
+  font-family: mainFont;
+  background-color: #9500ae;
   border-radius: 10px;
   margin-right: 1rem;
   box-shadow: 2px 2px 2px 2px gray;
 `;
 
 const SDeleteButton = styled(Button)`
-  font-family: 'cafe24';
-  background-color: red;
+  font-family: mainFont;
+  background-color: #9500ae;
+  /* background-color: red; */
   border-radius: 10px;
   box-shadow: 2px 2px 2px 2px gray;
 `;
@@ -161,14 +171,14 @@ const SModalMessage = styled.div`
 `;
 
 const SCommentTitleBox = styled.h1`
-  font-size: large;
+  font-family: mainFont;
+  font-size: 2rem;
+  margin: 1rem;
 `;
 
 function ReviewDetail() {
   const accessToken = getCookie('accessToken');
   // Review 작성자의 nickname 불러오기
-  const userInfo = useRecoilValue(userAtom);
-  const commentNickname = userInfo.nickname;
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -216,7 +226,9 @@ function ReviewDetail() {
     <>
       <Header />
 
-      <STitle>입양 후기</STitle>
+      <STitleBox>
+        <STitle>입양 후기</STitle>
+      </STitleBox>
       {/* <ImageCarousel page="ReviewDetail" /> */}
       <SLine>
         <SGrayLineBox>
@@ -259,7 +271,6 @@ function ReviewDetail() {
           삭제하기
         </SDeleteButton>
       </SButtonBox>
-      <div>{commentNickname}</div>
 
       <Modal
         isOpen={isModal}

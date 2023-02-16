@@ -51,7 +51,7 @@ const SButton = styled.button`
   width: 100%;
   background-color: white;
   border: none;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-family: mainFont;
   /* border: 1px solid gray; */
   color: black;
@@ -73,6 +73,7 @@ const SContainer = styled.div`
   /* border-top: 1px solid grey; */
   /* border-bottom: 1px solid grey; */
   background-color: rgba(242, 244, 246, 1);
+  margin-bottom: 5%;
   border-radius: 30px;
   font-family: mainFont;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
@@ -81,12 +82,22 @@ const SContainer = styled.div`
 const SSContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   /* border-top: 1px solid grey; */
   /* border-bottom: 1px solid grey; */
   /* background-color: yellow; */
   /* border-radius: 50px; */
   font-family: mainFont;
+`;
+const SSSContainer = styled.div`
+  width: 100%;
+  display: flex;
+`;
+const SSSButtonDiv = styled.div`
+  display: flex;
+  justify-content: end;
+  /* width: 100%; */
+  margin-right: 1rem;
 `;
 const STimeList = styled.div``;
 const STimeBox = styled.div`
@@ -104,19 +115,28 @@ const STime = styled.div`
 const SNickName = styled.div`
   font-size: 1rem;
   font-family: mainFont;
-  margin-bottom: 0.3rem;
+  margin-left: 0.7rem;
+  margin-top: 0.3rem;
+  margin-bottom: 0.5rem;
 `;
 
 const SClickButton = styled.button`
-  width: 40%;
-  height: 3.5vh;
+  width: 6rem;
+  height: 4vh;
   border: none;
   font-size: 1.4rem;
   font-family: mainFont;
   color: white;
-  margin-left: 4rem;
   border-radius: 45px;
+  margin-bottom: 0.5rem;
   background-color: ${props => props.bgColor};
+`;
+
+const SImg = styled.img`
+  margin-left: 1.2rem;
+  width: 15%;
+  border-radius: 100%;
+  margin-bottom: 0.5rem;
 `;
 
 function ScheduleListHost() {
@@ -226,41 +246,43 @@ function ScheduleListHost() {
                 </STime>
               </div>
               <SSContainer>
-                {schedule.userProfileImage === 0 ? (
-                  <img src={profileImgDefault} />
-                ) : null}
-                {schedule.userProfileImage === 1 ? (
-                  <img src={profileImg1} />
-                ) : null}
-                {schedule.userProfileImage === 2 ? (
-                  <img src={profileImg2} />
-                ) : null}
-                {schedule.userProfileImage === 3 ? (
-                  <img src={profileImg3} />
-                ) : null}
-                {schedule.userProfileImage === 4 ? (
-                  <img src={profileImg4} />
-                ) : null}
-                {schedule.userProfileImage === 5 ? (
-                  <img src={profileImg5} />
-                ) : null}
-                {schedule.userProfileImage === 6 ? (
-                  <img src={profileImg6} />
-                ) : null}
-                {schedule.userProfileImage === 7 ? (
-                  <img src={profileImg7} />
-                ) : null}
-                {schedule.userProfileImage === 8 ? (
-                  <img src={profileImg8} />
-                ) : null}
-                {schedule.userProfileImage === 9 ? (
-                  <img src={profileImg9} />
-                ) : null}
-                {schedule.userProfileImage === 10 ? (
-                  <img src={profileImg10} />
-                ) : null}
-                <SNickName>{schedule.userNickname}</SNickName>
-                <div>
+                <SSSContainer>
+                  {schedule.userProfileImage === 0 ? (
+                    <SImg src={profileImgDefault} />
+                  ) : null}
+                  {schedule.userProfileImage === 1 ? (
+                    <SImg src={profileImg1} />
+                  ) : null}
+                  {schedule.userProfileImage === 2 ? (
+                    <SImg src={profileImg2} />
+                  ) : null}
+                  {schedule.userProfileImage === 3 ? (
+                    <SImg src={profileImg3} />
+                  ) : null}
+                  {schedule.userProfileImage === 4 ? (
+                    <SImg src={profileImg4} />
+                  ) : null}
+                  {schedule.userProfileImage === 5 ? (
+                    <SImg src={profileImg5} />
+                  ) : null}
+                  {schedule.userProfileImage === 6 ? (
+                    <SImg src={profileImg6} />
+                  ) : null}
+                  {schedule.userProfileImage === 7 ? (
+                    <SImg src={profileImg7} />
+                  ) : null}
+                  {schedule.userProfileImage === 8 ? (
+                    <SImg src={profileImg8} />
+                  ) : null}
+                  {schedule.userProfileImage === 9 ? (
+                    <SImg src={profileImg9} />
+                  ) : null}
+                  {schedule.userProfileImage === 10 ? (
+                    <SImg src={profileImg10} />
+                  ) : null}
+                  <SNickName>{schedule.userNickname}</SNickName>
+                </SSSContainer>
+                <SSSButtonDiv>
                   {/* 클릭한 날이 오늘이면서 시간이 동일하다면 Live */}
                   {todayDate === isClickDate &&
                   today.getHours() === schedule.time ? (
@@ -274,7 +296,7 @@ function ScheduleListHost() {
                         bgColor="green"
                         onClick={handleVideoChatClick}
                       >
-                        L&nbsp;i&nbsp;v&nbsp;e
+                        라&nbsp;이&nbsp;브
                       </SClickButton>
                     </Link>
                   ) : null}
@@ -310,7 +332,7 @@ function ScheduleListHost() {
                       취&nbsp;&nbsp;소
                     </SClickButton>
                   ) : null}
-                </div>
+                </SSSButtonDiv>
               </SSContainer>
             </SContainer>
           </STimeBox>

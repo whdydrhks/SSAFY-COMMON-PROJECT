@@ -153,7 +153,7 @@ public class dummyCreate {
 		scheduleRepository.save(schedule);
 
 		ScheduleEntity schedule1 = ScheduleEntity.builder()
-			.day("0214")
+			.day("0216")
 			.time(11)
 			.room("2")
 			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
@@ -162,8 +162,8 @@ public class dummyCreate {
 		scheduleRepository.save(schedule1);
 
 		ScheduleEntity schedule2 = ScheduleEntity.builder()
-			.day("0214")
-			.time(8)
+			.day("0216")
+			.time(1)
 			.room("3")
 			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
 			.user(userRepository.findByIdAndExpiredLike(10L, "F").get())
@@ -171,8 +171,8 @@ public class dummyCreate {
 		scheduleRepository.save(schedule2);
 
 		ScheduleEntity schedule3 = ScheduleEntity.builder()
-			.day("0214")
-			.time(5)
+			.day("0216")
+			.time(2)
 			.room("4")
 			.shelter(shelterRepository.findByIdAndExpiredLike(1L, "F").get())
 			.user(userRepository.findByIdAndExpiredLike(10L, "F").get())

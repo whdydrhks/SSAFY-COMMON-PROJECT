@@ -15,7 +15,7 @@ import { useRecoilValue } from 'recoil';
 import { animalListState, userAtom } from '../../recoilState';
 import AnimalItem from './AnimalItem';
 import API_URL from '../../api/api';
-import "../../styles/fonts.css"
+import '../../styles/fonts.css';
 
 const SLink = styled(Link)`
   margin: 0 auto;
@@ -25,8 +25,7 @@ const SLink = styled(Link)`
 
 const SForm = styled.form`
   width: 100%;
-  margin-left:0.5rem;
-  
+  margin-left: 0.5rem;
 `;
 
 const SSearchBar = styled.div`
@@ -43,7 +42,7 @@ const SSearchCategory = styled.select`
   height: 2.2rem;
   border: 1px solid gray;
   border-radius: 5px;
-  width:25%;
+  width: 25%;
   font-family: mainFont;
   font-size: 0.9rem;
 `;
@@ -62,15 +61,15 @@ const SInput = styled.input`
 `;
 
 const SButtton = styled.button`
-   border-radius: 5px;
-   outline: none;
-   border: 0px solid ;
-   background-color: #9500ae;
-   color: white;
-   width: 20%;
-   height: 2.15rem;
-   font-family: mainFont;
-   font-size: 0.9rem;
+  border-radius: 5px;
+  outline: none;
+  border: 0px solid;
+  background-color: #9500ae;
+  color: white;
+  width: 20%;
+  height: 2.15rem;
+  font-family: mainFont;
+  font-size: 0.9rem;
 `;
 
 function AnimalList(props) {
@@ -143,17 +142,11 @@ function AnimalList(props) {
       const allList = res.data.data;
       // console.log(allList);
       // console.log(expired);
+      console.log(allList);
       const filteredData = allList.filter(item => item.adoption === expired);
-      // console.log(filteredData);
+      console.log(filteredData);
       setAnimalList(filteredData);
     });
-    // console.log('###################');
-    // const filteredAnimalList = await axios.get(
-    //   `${API_URL}/shelter/${shelterId}/animal?pageNo=1`,
-    // );
-    // setTemp(filteredAnimalList.data.data.filter((item.expired = false)));
-    // console.log(temp);
-    // console.log('@@@@@@@@@@@@@@@@@@@@');
   };
   // console.log(temp);
   useEffect(() => {
@@ -172,7 +165,7 @@ function AnimalList(props) {
       {/* 검색 카테고리 */}
       <SSearchBar>
         <SForm onSubmit={search}>
-        {/* <form onSubmit={search}> */}
+          {/* <form onSubmit={search}> */}
           <SSearchCategory onChange={handleSearchCategory}>
             <option value="searchManageNumber">관리 번호</option>
             <option value="searchName">이름</option>
@@ -214,9 +207,9 @@ function AnimalList(props) {
                 );
             }
           })()}
-          <SButtton type='submit'>검색</SButtton> 
+          <SButtton type="submit">검색</SButtton>
           {/* </form> */}
-          </SForm>
+        </SForm>
       </SSearchBar>
       {animalList ? (
         <>
