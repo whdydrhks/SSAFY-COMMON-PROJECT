@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable no-unused-vars */
 
 import React, { useState } from 'react';
 import {
@@ -11,7 +12,7 @@ import {
   Button,
 } from '@mui/material';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { reviewListState } from '../../recoilState';
@@ -19,24 +20,40 @@ import Nav from '../../components/common/Nav';
 import Header from '../../components/common/Header';
 import API_URL from '../../api/api';
 
-const SH1 = styled.h1`
-  font-size: 2rem;
-  margin-left: 1rem;
-  margin-bottom: 2rem;
+const STitleBox = styled.div`
+  margin-top: 1rem;
 `;
 
-// const STemp = styled.div`
-//   display: flex;
-//   justify-content: center;
-// `;
-// const SFileUploadButton = styled(Button)`
-//   font-family: 'cafe24';
-// `;
+const SH1 = styled.h1`
+  font-size: 2rem;
+  margin-left: 2rem;
+  margin-bottom: 2rem;
+  font-family: mainFont;
+`;
 
-// const SPreviewCard = styled(Grid)`
-//   display: flex;
-//   justify-content: center;
-// `;
+const SButtton = styled(Button)`
+  border-radius: 5px;
+  outline: none;
+  border: 0px solid;
+  background-color: #9500ae;
+  color: white;
+  width: 40%;
+  height: 2.15rem;
+  font-family: mainFont;
+  font-size: 0.9rem;
+`;
+
+const STypography = styled(Typography)`
+  font-size: 1.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-family: mainFont;
+`;
+
+const STextField = styled(TextField)`
+  font-family: mainFont;
+`;
+
 function ReviewCreate() {
   const navigate = useNavigate();
   const reviewList = useRecoilValue(reviewListState);
@@ -135,7 +152,9 @@ function ReviewCreate() {
   return (
     <>
       <Header />
-      <SH1>후기 등록</SH1>
+      <STitleBox>
+        <SH1>후기 등록</SH1>
+      </STitleBox>
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
@@ -148,10 +167,10 @@ function ReviewCreate() {
             <Grid container spacing={2}>
               {/* 제목 */}
               <Grid item xs={12}>
-                <Typography component="h6" variant="body2">
+                <STypography component="h6" variant="body2">
                   제목
-                </Typography>
-                <TextField
+                </STypography>
+                <STextField
                   type="text"
                   onChange={handleTitle}
                   placeholder="제목을 입력해 주세요."
@@ -163,10 +182,10 @@ function ReviewCreate() {
 
               {/* 내용 */}
               <Grid item xs={12}>
-                <Typography component="h6" variant="body2">
+                <STypography component="h6" variant="body2">
                   내용
-                </Typography>
-                <TextField
+                </STypography>
+                <STextField
                   onChange={handleContent}
                   multiline
                   rows={20}
@@ -223,7 +242,11 @@ function ReviewCreate() {
               </Grid> */}
             </Grid>
 
-            <Button type="submit">후기 등록하기</Button>
+            <Link to="/review">
+              <SButtton variant="contained" type="submit">
+                후기 등록하기
+              </SButtton>
+            </Link>
           </form>
         </Box>
       </Container>

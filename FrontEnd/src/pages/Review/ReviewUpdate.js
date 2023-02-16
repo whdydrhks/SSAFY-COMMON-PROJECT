@@ -12,7 +12,7 @@ import {
   // MenuItem,
 } from '@mui/material';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { reviewListState } from '../../recoilState';
@@ -22,8 +22,28 @@ import API_URL from '../../api/api';
 
 const SH1 = styled.h1`
   font-size: 2rem;
-  margin-left: 1rem;
+  margin-left: 2rem;
   margin-bottom: 2rem;
+  font-family: mainFont;
+`;
+
+const STypography = styled(Typography)`
+  font-size: 1.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-family: mainFont;
+`;
+
+const SButtton = styled(Button)`
+  border-radius: 5px;
+  outline: none;
+  border: 0px solid;
+  background-color: #9500ae;
+  color: white;
+  width: 40%;
+  height: 2.15rem;
+  font-family: mainFont;
+  font-size: 0.9rem;
 `;
 
 // const STemp = styled.div`
@@ -39,17 +59,10 @@ const SH1 = styled.h1`
 //   justify-content: center;
 // `;
 function ReviewUpdate() {
-  const navigate = useNavigate;
+  const navigate = useNavigate();
   const reviewIdForUpdate = useParams();
   const tempReviewList = useRecoilValue(reviewListState);
   const review = tempReviewList[reviewIdForUpdate.reviewId];
-
-  console.log('review : ', review);
-
-  // 확인용
-  console.log('reviewIdForUpdate.reviewId : ', reviewIdForUpdate);
-  // console.log('review : ', review);
-  console.log('tempReviewList', tempReviewList[reviewIdForUpdate.reviewId]);
 
   const [title, setTitle] = useState(review.title);
   // 확인용
@@ -142,9 +155,9 @@ function ReviewUpdate() {
             <Grid container spacing={2}>
               {/* 제목 */}
               <Grid item xs={12}>
-                <Typography component="h6" variant="body2">
+                <STypography component="h6" variant="body2">
                   제목
-                </Typography>
+                </STypography>
                 <TextField
                   disabled
                   type="text"
@@ -159,9 +172,9 @@ function ReviewUpdate() {
 
               {/* 내용 */}
               <Grid item xs={12}>
-                <Typography component="h6" variant="body2">
+                <STypography component="h6" variant="body2">
                   내용
-                </Typography>
+                </STypography>
                 <TextField
                   onChange={handleContent}
                   multiline
@@ -220,7 +233,12 @@ function ReviewUpdate() {
               </Grid> */}
             </Grid>
 
-            <Button type="submit">후기 수정하기</Button>
+            <Link to="/review">
+              {/* <Link to={`/review/`}> */}
+              <SButtton variant="contained" type="submit">
+                후기 등록하기
+              </SButtton>
+            </Link>
           </form>
         </Box>
       </Container>
