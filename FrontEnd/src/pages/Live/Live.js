@@ -166,97 +166,16 @@ function Live() {
               className={live.room}
               onClick={() => saveRoomNumber(live)}
             >
-              {/* <S.LiveImage src={live.thumnailImage} alt="ThumbnailImage" /> */}
               <S.LiveImage src={cat1} alt="ThumbnailImage" />
               <S.LiveInformationContainer>
                 <S.LiveTitle>{live.title}</S.LiveTitle>
-                {/* <S.JoinContainer> */}
                 <S.ShelterName>{live.shelterName}</S.ShelterName>
-                {/* <S.JoinButton>입장</S.JoinButton> */}
-                {/* </S.JoinContainer> */}
               </S.LiveInformationContainer>
             </S.LiveItemContainer>
           </SLink>
         ))}
       </S.LiveListContainer>
-      {/* <motion.div
-        className="swiper-slide"
-        whileHover={{ slice: 1.12 }}
-        transition={{ type: 'spring', stiffness: 45 }}
-      >
-        <SDetail>
-          <SLiveImage src
-        </SDetail>
-      </motion.div> */}
-      {/* <SLiveContainer>
-        {liveList.map((live, index) => (
-          <Link to="/livechat" key={index} state={{ roomNumber: live.room }}>
-            <SLiveItem onClick={() => handleClickLive(live.shelterId)}>
-              <SLiveImgBox>
-                <div>{live.thumbnailImage}</div>
-                <img
-                  src={live.thumnailImage}
-                  alt="liveThumbnail"
-                  style={{ width: '100%', height: '100%' }}
-                />
-              </SLiveImgBox>
-              <SLiveContentBox>
-                <SLiveTitle>{live.title}</SLiveTitle>
-                <SLiveShelter>{live.shelterName}</SLiveShelter>
-              </SLiveContentBox>
-            </SLiveItem>
-          </Link>
-        ))}
-      </SLiveContainer> */}
-      {/* <SContainer>
-        <ImageList sx={{ width: 0.9, height: 0.9 }}>
-          <ImageListItem key="Subheader" cols={2}>
-          <STitle>라이브</STitle>
-          </ImageListItem>
-          {liveList.map((item, index) => (
-            <Link to="/livechat" key={index} state={{ roomNumber: item.room }}>
-              <ImageListItem key={item.img} style={{ width: '40vw' }}>
-                <img
-                  src={item.thumnailImage}
-                  srcSet={item.thumnailImage}
-                  alt={item.title}
-                  loading="lazy"
-                  style={{ width: '40vw', height: '20vh' }}
-                />
-                <ImageListItemBar
-                  title={item.title}
-                  subtitle={item.shelterName}
-                  actionIcon={
-                    <IconButton
-                      sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                      aria-label={`info about ${item.title}`}
-                    >
-                      <InfoIcon />
-                    </IconButton>
-                  }
-                />
-              </ImageListItem>
-            </Link>
-          ))}
-        </ImageList>
-      </SContainer> */}
-      {/* <ImageList sx={{ width: 1, height: 1 }}>
-        {liveList.map(item => (
-          <ImageListItem key={item.thumnail}>
-            <img
-              src={item.thumnailImage}
-              srcSet={item.thumnailImage}
-              alt="temp"
-              loading="lazy"
-            />
-            <ImageListItemBar
-              title={item.title}
-              subtitle={<span>by: {item.shelterName}</span>}
-              position="below"
-            />
-          </ImageListItem>
-        ))}
-      </ImageList> */}
+
       <Nav />
     </>
   );
