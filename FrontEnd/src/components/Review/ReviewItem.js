@@ -3,7 +3,17 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 const SDetail = styled.div`
-  font-family: 'cafe24';
+  /* overflow: hidden; */
+  /* display: center; */
+  flex-direction: row;
+  flex-grow: 1;
+  margin-left: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  flex-basis: 270px;
+  font-size: 1.2rem;
+  width: 100%;
+  font-family: mainFont;
 `;
 
 function ReviewItem({ item }) {

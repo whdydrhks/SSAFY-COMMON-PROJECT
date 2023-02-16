@@ -1,5 +1,6 @@
 package com.ssafy.backend.domain.animal.service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -145,7 +146,9 @@ public class AnimalService {
 
 		List<AnimalInfoDto> animalInfos = findShelter.getAnimals()
 			.stream()
+			.filter(animal -> animal.getExpired().equals("F"))
 			.map(AnimalInfoDto::of)
+			.sorted(Comparator.comparing(AnimalInfoDto::getAnimalId))
 			.collect(Collectors.toList());
 
 		return responseUtil.buildSuccessResponse(animalInfos);

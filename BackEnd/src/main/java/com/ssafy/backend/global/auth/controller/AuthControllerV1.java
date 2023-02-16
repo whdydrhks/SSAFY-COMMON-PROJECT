@@ -26,7 +26,7 @@ public class AuthControllerV1 {
 	private final AuthService authService;
 
 	@PostMapping("/login")
-	@ApiOperation(value = "로그인")
+	@ApiOperation(value = "로그인", notes = "로그인과 비밀번호 정보를 받아 로그인 결과를 jwt로 반환한다.")
 	public ResponseEntity<?> login(
 		@RequestBody LoginDto loginDto) {
 		log.info("[Api Call] " + this.getClass().getName() + " - login");
@@ -35,7 +35,7 @@ public class AuthControllerV1 {
 	}
 
 	@PostMapping("/logout")
-	@ApiOperation(value = "로그아웃")
+	@ApiOperation(value = "로그아웃", notes = "로그인된 사용자의 정보를 받아 서버에서 로그아웃을 수행한다.")
 	public ResponseEntity<?> logout(
 		HttpServletRequest request) {
 		log.info("[Api Call] " + this.getClass().getName() + " - logout");

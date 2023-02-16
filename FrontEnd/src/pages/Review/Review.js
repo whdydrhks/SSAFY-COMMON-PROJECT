@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import Icon from '@mui/material/Icon';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 // import ReviewList from '../../components/Review/ReviewList';
@@ -9,6 +10,8 @@ import ReviewCategory from '../../components/Review/ReviewCategory';
 
 const Sh1 = styled.h1`
   font-size: 2rem;
+  margin-top: 1rem;
+  font-family: mainFont;
   /* margin-left: 1rem; */
 `;
 
@@ -21,8 +24,9 @@ const STitle = styled.div`
 `;
 
 const SCreateButton = styled(Button)`
-  font-family: 'cafe24';
-  border-radius: 10px;
+  border-radius: 100%;
+  width: 100%;
+  margin-top: 0.7rem;
   /* margin-right: 1rem; */
 `;
 function Review() {
@@ -33,8 +37,13 @@ function Review() {
         <Sh1>입양 후기</Sh1>
         {/* <Link to="/review/create" style={{ textDecoration: 'none' }}> */}
         <Link to="/review/create" style={{ textDecoration: 'none' }}>
-          <SCreateButton variant="contained" size="medium">
-            입양 후기 등록
+          <SCreateButton size="small">
+            <Icon
+              color="secondary"
+              sx={{ fontSize: 30, alignContent: 'center' }}
+            >
+              add_circle
+            </Icon>
           </SCreateButton>
         </Link>
       </STitle>
