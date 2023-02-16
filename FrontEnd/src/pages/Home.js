@@ -2,16 +2,18 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/no-named-as-default */
 /* eslint-disable import/no-named-as-default-member */
+/* eslint-disable import/no-unresolved */
 
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { userAtom } from '../recoilState';
+import { userAtom, liveListAtom } from '../recoilState';
 import Header from '../components/common/Header';
 import Nav from '../components/common/Nav';
-import ImageCarousel from '../components/common/ImageCarousel';
+import HomeImageCarousel from '../components/common/HomeImageCarousel';
 import ReviewList from '../components/Review/ReviewList';
+// import '../../styles/fonts.css';
 
 // 1976d2
 const SLiveContainer = styled.div`
@@ -23,6 +25,7 @@ const SLiveContainer = styled.div`
   text-align: right;
   border: 1px solid black;
   border-radius: 15px;
+  font-family: mainFont;
 `;
 
 const SLiveVideoBox = styled.div`
@@ -39,9 +42,10 @@ const SLiveVideoBox = styled.div`
 const STitleBox = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  color: #195190;
-  margin-top: 1rem;
+  /* margin-top: 5rem; */
+  margin-bottom: 2rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
 `;
 
 const SShelterNicknameBox = styled.div`
@@ -79,6 +83,9 @@ const SLiveInfoBox = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 15px 15px 0 0;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-family: mainFont;
 `;
 
 const SReviewBox = styled.div`
@@ -88,24 +95,15 @@ const SReviewBox = styled.div`
   margin-bottom: 2rem;
 `;
 
-const STitle = styled.div`
-  width: 30%;
-  font-size: 1.6rem;
-  margin: auto;
-  margin-left: 1rem;
-  border-radius: 15px 15px 15px 0;
-  /* border-bottom: 1px solid #b9c4c4;  */
-  padding: 1rem 2.5rem;
-  /* background: #cedada; */
-  background-color: white;
+const STitle = styled.h1`
+  font-size: 2rem;
   margin-top: 1rem;
-  margin-bottom: 1rem;
-  text-align: center;
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
-    rgba(17, 17, 26, 0.05) 0px 8px 32px;
+  font-family: mainFont;
+  color: black;
 `;
 
 const SMoreLink = styled(Link)`
+  font-family: mainFont;
   display: flex;
   justify-content: flex-end;
   align-items: right;
@@ -113,11 +111,12 @@ const SMoreLink = styled(Link)`
   margin-bottom: 2.5rem;
   font-size: 1.2rem;
   text-decoration: none;
-  color: #195190;
+  color: black;
   cursor: pointer;
 `;
 
 function Home() {
+  // const
   return (
     <>
       <Header />
@@ -129,12 +128,7 @@ function Home() {
       <SMoreLink to="/live">더 보기 &gt;</SMoreLink>
       {/* <SLiveItem> */}
       <SLiveContainer>
-        <ImageCarousel page="Home" />
-        <SLiveInfoBox>
-          <SLiveTitleBox>방제목</SLiveTitleBox>
-          <SShelterNicknameBox>Shelter Nickname</SShelterNicknameBox>
-        </SLiveInfoBox>
-        <SLiveVideoBox>동영상 들어갈 곳</SLiveVideoBox>
+        <HomeImageCarousel page="Home" />
       </SLiveContainer>
       {/* </SLiveItem> */}
       {/* <SLine /> */}
