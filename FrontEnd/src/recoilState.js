@@ -183,7 +183,14 @@ const likeAnimalAtom = atom({
   default: [],
 });
 
+const urlAtom = atom({
+  key: 'urlAtom',
+  default: [],
+  effects_UNSTABLE: [persistAtom],
+});
+
 export {
+  urlAtom,
   navAtom,
   animalState,
   authStateAtom,
