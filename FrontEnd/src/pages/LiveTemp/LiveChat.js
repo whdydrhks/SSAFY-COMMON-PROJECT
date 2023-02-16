@@ -598,7 +598,10 @@ function Live() {
                     return (
                       <>
                         <S.SmallCamera>
-                          <UserVideoComponent streamManager={user} />
+                          <UserVideoComponent
+                            streamManager={user}
+                            style={{ height: '25vh' }}
+                          />
                         </S.SmallCamera>
                         <S.WaitingMessageBox>
                           <S.WaitingMessage>
