@@ -13,18 +13,18 @@ import Slider from 'react-slick';
 const SImage = styled.img`
   width: 240px;
   height: 200px;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 `;
 
 const SSlider = styled(Slider)`
-  margin-bottom: 5rem;
+  margin-bottom: 2rem;
 `;
 
 function ImageCarousel(props) {
   const images = props.animalImages;
 
   const settings = {
-    arrows: false,
+    arrows: true,
     autoplay: true,
     centerPadding: '0px',
     dots: true,

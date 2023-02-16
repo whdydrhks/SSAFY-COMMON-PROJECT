@@ -36,13 +36,13 @@ const SContainer = styled.div`
 
 const SLiveHeader = styled.div`
   display: flex;
-  padding: 2rem;
+  padding: 1.5rem;
   justify-content: space-between;
   font-family: mainFont;
 `;
 
 const STitle = styled.div`
-  font-size: 2rem;
+  font-size: 2.4rem;
   /* width: 30%;
   font-size: 1.6rem;
   margin: auto;
@@ -56,6 +56,7 @@ const STitle = styled.div`
 `;
 const SLiveCreateImg = styled.img`
   height: 2rem;
+  color: red;
   /* background-color: green;
   height: 2.5rem;
   border: 1px solid green;
@@ -144,7 +145,7 @@ function Live() {
     <>
       <Header />
       <SLiveHeader>
-        <STitle>Live</STitle>
+        <STitle>라이브</STitle>
         {user.role === 'HOST' ? (
           <Link to="/livechat" state={{ roomNumber: payloadRoomNumber }}>
             <SLiveCreateImg src={CreateLive} alt="CreateLive" />
