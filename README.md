@@ -82,11 +82,11 @@
 <br />
 
 ### 회원가입
-
+![image](https://user-images.githubusercontent.com/94176133/219501430-d1d24409-60d4-4b88-b9a4-9d6b2a4ee39c.png)
 <br />
 
 ### 로그인
-
+![image](https://user-images.githubusercontent.com/94176133/219501304-c30b217c-e2a9-42cb-af9a-e79a5c5bb7c0.png)
 <br />
 
 ### 라이브
@@ -98,7 +98,7 @@
 <br />
 
 ### 입양후기
-
+![image](https://user-images.githubusercontent.com/94176133/219501528-450620f4-7bab-4398-9398-70dfe8465ef5.png)
 <br />
 
 ### 관심동물
@@ -106,6 +106,7 @@
 <br />
 
 ### 마이페이지
+![image](https://user-images.githubusercontent.com/94176133/219501154-763e2046-7a74-4f8c-aa8e-e306495db2bb.png)
 
 <br />
 
