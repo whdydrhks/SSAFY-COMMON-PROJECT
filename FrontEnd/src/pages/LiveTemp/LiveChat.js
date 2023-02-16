@@ -685,6 +685,19 @@ function Live() {
                     </form>
                   </S.ChatForm>
                 );
+              case 'USER':
+                return (
+                  <S.ChatForm>
+                    <form onSubmit={sendMessage}>
+                      <S.ChatInput
+                        type="text"
+                        onChange={handleMsg}
+                        value={sendMsg}
+                      />
+                      <S.ChatButton type="submit">전송</S.ChatButton>
+                    </form>
+                  </S.ChatForm>
+                );
               default:
                 return (
                   <S.ChatForm>
