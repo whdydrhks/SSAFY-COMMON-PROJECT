@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
+/* eslint-disable react/jsx-no-useless-fragment */
 
 import React from 'react';
 // import axios from 'axios';
@@ -22,8 +23,8 @@ const SBox = styled.div`
 const SImage = styled.img`
   // 기존
   /* width: 240px; */
-  /* max-width: 75%; */
-  max-height: 14rem;
+  min-width: 25rem;
+  max-height: 14.4rem;
   border: 1px solid black;
 `;
 
@@ -78,30 +79,25 @@ function HomeImageCarousel() {
   ];
   const ShelterName = ['대전동물보호소', '시온쉼터', '댕블리네', '천사의집'];
 
+  const indexNum = [0, 1, 2, 3];
+
   return (
     <div>
       {images !== undefined ? (
         <>
           <SSlider {...settings}>
-            {roomTitle.map(title => (
-              // <SImage src={image} />
-              <SLiveInfoBox>
-                <SLiveTitleBox>{title}</SLiveTitleBox>
-              </SLiveInfoBox>
-            ))}
-          </SSlider>
-          <SSlider {...settings}>
-            {ShelterName.map(name => (
-              // <SImage src={image} />
-              <SLiveInfoBox>
-                <SShelterNicknameBox>{name}</SShelterNicknameBox>
-              </SLiveInfoBox>
-            ))}
-          </SSlider>
-          <SSlider {...settings}>
-            {images.map(image => (
-              // <SImage src={image} />
-              <SImage src={image} alt="준비중입니다" />
+            {indexNum.map((item, index) => (
+              <>
+                <SLiveInfoBox>
+                  <SLiveTitleBox>{roomTitle[index]}</SLiveTitleBox>
+                </SLiveInfoBox>
+                <SLiveInfoBox>
+                  <SShelterNicknameBox>
+                    {ShelterName[index]}
+                  </SShelterNicknameBox>
+                </SLiveInfoBox>
+                <SImage src={images[index]} alt="준비중입니다" />
+              </>
             ))}
           </SSlider>
         </>
