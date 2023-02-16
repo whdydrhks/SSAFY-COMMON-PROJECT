@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.ssafy.backend.domain.animal.entity.AnimalEntity;
 import com.ssafy.backend.domain.animal.repository.AnimalRepository;
 import com.ssafy.backend.domain.animal.repository.LikeAnimalRepository;
+import com.ssafy.backend.domain.live.entity.LiveEntity;
 import com.ssafy.backend.domain.live.repository.LiveRepository;
 import com.ssafy.backend.domain.member.entity.UserEntity;
 import com.ssafy.backend.domain.member.repository.UserRepository;
@@ -98,6 +99,7 @@ public class dummyCreate_csv {
 				.name(rec.get(4))
 				.phoneNumber(rec.get(5))
 				.nickname(rec.get(6))
+				.profileImage(Integer.valueOf(rec.get(7)))
 				.build();
 			userRepository.save(user);
 		}
@@ -166,6 +168,20 @@ public class dummyCreate_csv {
 				.room(rec.get(5))
 				.build();
 			scheduleRepository.save(schedule);
+		}
+
+		// 라이브 생성
+		List<CSVRecord> liveRecords = csvUtil.readClasspathCSV(DUMMY_DIR, "live.csv");
+		for (int i = 0; i < liveRecords.size(); i++) {
+			CSVRecord rec = liveRecords.get(i);
+			LiveEntity live = LiveEntity.builder()
+				.id(Long.valueOf(rec.get(0)))
+				.shelter(shelterRepository.findByIdAndExpiredLike(Long.valueOf(rec.get(1)), "F").get())
+				.title(rec.get(2))
+				.category(rec.get(3))
+				.room(rec.get(4))
+				.build();
+			liveRepository.save(live);
 		}
 	}
 

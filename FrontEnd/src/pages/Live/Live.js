@@ -22,7 +22,6 @@ import {
 } from '../../recoilState';
 import '../../styles/fonts.css';
 import CreateLive from '../../images/Video/CreateLive.png';
-import cat1 from '../../images/dummy/cat1.png';
 import * as S from './LiveStyle';
 
 const SLiveHeader = styled.div`
@@ -39,7 +38,6 @@ const SLiveCreateImg = styled.img`
   height: 2rem;
   color: red;
 `;
-
 const SLink = styled(Link)`
   padding: 3% 5% 3% 5%;
   color: black;

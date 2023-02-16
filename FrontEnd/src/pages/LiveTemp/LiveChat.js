@@ -303,6 +303,10 @@ function Live() {
   const deleteSubscriber = streamManager => {};
 
   const joinSession = () => {
+    if (!preview && role === 'HOST') {
+      alert('파일을 입력해 주세요.');
+      return false;
+    }
     const liveData = {
       category: 'none',
       room: roomNumber.toString(),
@@ -588,7 +592,10 @@ function Live() {
       {session !== undefined ? (
         <div id="session">
           {host !== undefined ? (
-            <UserVideoComponent streamManager={host} />
+            <UserVideoComponent
+              streamManager={host}
+              style={{ height: '80vh' }}
+            />
           ) : (
             // 세션 있고 호스트가 없는 경우
             <S.div id="main-video" className="col-md-6">
@@ -663,9 +670,13 @@ function Live() {
 
           <S.ChattingListBox ref={chatRef}>
             {receiveMsg.map((data, index) => (
-              <S.Chat key={index}>
-                {data.name} : {data.data}
-              </S.Chat>
+              <S.ChatInline>
+                <S.Chat key={index}>
+                  <S.NickName>{data.name}</S.NickName> :
+                  <S.Data> {data.data}</S.Data>
+                  {/* {data.name} : {data.data} */}
+                </S.Chat>
+              </S.ChatInline>
             ))}
           </S.ChattingListBox>
 

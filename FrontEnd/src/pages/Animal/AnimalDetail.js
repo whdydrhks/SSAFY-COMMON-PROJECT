@@ -32,7 +32,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: 300,
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -181,28 +181,53 @@ const SDeleteButton = styled(Button)`
 
 const SModalDiv = styled.div`
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  /* justify-content: space-around; */
   font-family: mainFont;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
 `;
 
 const SNicknameDiv = styled.div`
   display: flex;
-  justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   font-family: mainFont;
 `;
 
 const SNickname = styled.button`
-  border: 1px solid black;
+  border: solid 1px black;
+  background-color: white;
   border-radius: 10px 10px 10px 10px;
   padding: 0.8rem;
   margin: 1rem;
+  font-size: 1.7rem;
   font-family: mainFont;
   &:hover {
-    color: blue;
+    color: white;
+    background-color: #1976d2;
   }
+`;
+
+const SLikeRegistButton = styled.button`
+  border: none;
+  border-radius: 10px;
+  font-family: mainFont;
+  width: 100%;
+  font-size: 1.3rem;
+  margin-top: 5%;
+  height: 4vh;
+  background-color: #d9d9f3;
+`;
+
+const SSearchButton = styled.button`
+  border: none;
+  border-radius: 10px;
+  width: 25%;
+  background-color: #d9d9f3;
+  font-family: mainFont;
+  font-size: 1.1rem;
+  height: 4vh;
 `;
 
 const SButton = styled.button``;
@@ -236,6 +261,7 @@ function AnimalDetail() {
   const [animalImages, setAnimalImages] = useState([]);
 
   const handleAdoptButton = () => {
+    setOpen(false);
     let userId;
     users.forEach(user => {
       if (user.nickname === clickNickname) {
@@ -388,7 +414,9 @@ function AnimalDetail() {
                       variant="standard"
                       onChange={handleKeyword}
                     />
-                    <Button onClick={handleSearchNickname}>검색</Button>
+                    <SSearchButton onClick={handleSearchNickname}>
+                      검색
+                    </SSearchButton>
                   </SModalDiv>
                 </Typography>
                 <SNicknameDiv>
@@ -402,7 +430,11 @@ function AnimalDetail() {
                     </SNickname>
                   ))}
                 </SNicknameDiv>
-                <SButton onClick={handleAdoptButton}>등록</SButton>
+                <SModalDiv>
+                  <SLikeRegistButton onClick={handleAdoptButton}>
+                    등록
+                  </SLikeRegistButton>
+                </SModalDiv>
               </Box>
             </Modal>
           </div>
