@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.backend.domain.animal.model.request.LikeAnimalRegistDto;
@@ -32,10 +31,7 @@ public class LikeAnimalControllerV1 {
 	@GetMapping("/user/{userId}/like/animal")
 	@ApiOperation(value = "관심동물 조회")
 	public ResponseEntity<?> getLikeAnimal(
-		@PathVariable(name = "userId") Long userId,
-		@RequestParam(value = "pageNo", defaultValue = "1", required = false) int page,
-		@RequestParam(value = "sort", required = false) String sort,
-		@RequestParam(value = "limit", required = false) String limit,
+		@PathVariable(value = "userId") Long userId,
 		HttpServletRequest request) {
 
 		return ResponseEntity
@@ -45,9 +41,9 @@ public class LikeAnimalControllerV1 {
 	@PostMapping("/user/{userId}/like/animal/{animalId}")
 	@ApiOperation(value = "관심동물 등록(보호소 -> 유저)")
 	public ResponseEntity<?> registerLikeAnimal(
-		@PathVariable(name = "userId") Long userId,
-		@PathVariable(name = "animalId") Long animalId,
-//		@RequestParam(value = "expiredDate") String expiredDate,
+		@PathVariable(value = "userId") Long userId,
+		@PathVariable(value = "animalId") Long animalId,
+		//		@RequestParam(value = "expiredDate") String expiredDate,
 		@RequestBody LikeAnimalRegistDto registDto,
 		HttpServletRequest request) {
 
@@ -69,8 +65,8 @@ public class LikeAnimalControllerV1 {
 	@DeleteMapping("/shelter/{shelterId}/like/animal/{animalId}")
 	@ApiOperation(value = "관심동물 모두 제거(보호소 -> 유저)")
 	public ResponseEntity<?> deleteShelterLikeAnimal(
-		@PathVariable(name = "shelterId") Long shelterId,
-		@PathVariable(name = "animalId") Long animalId,
+		@PathVariable(value = "shelterId") Long shelterId,
+		@PathVariable(value = "animalId") Long animalId,
 		HttpServletRequest request) {
 
 		return ResponseEntity

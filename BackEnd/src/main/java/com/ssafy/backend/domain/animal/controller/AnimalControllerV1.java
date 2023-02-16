@@ -42,8 +42,7 @@ public class AnimalControllerV1 {
 	@GetMapping("/animal")
 	@ApiOperation(value = "보호소내 동물 전체 조회")
 	public ResponseEntity<?> getAnimalInfoByShelter(
-		@ApiParam(name = "보호소 식별 번호") @PathVariable(name = "shelterId") Long shelterId,
-		@ApiParam(name = "페이지 번호") @RequestParam(value = "pageNo", required = false) int page,
+		@ApiParam(value = "보호소 식별 번호") @PathVariable(name = "shelterId") Long shelterId,
 		HttpServletRequest request) {
 
 		return ResponseEntity
@@ -53,7 +52,7 @@ public class AnimalControllerV1 {
 	@PostMapping("/animal")
 	@ApiOperation(value = "동물 등록")
 	public ResponseEntity<?> registerShelter(
-		@ApiParam(name = "보호소 식별 번호") @PathVariable(name = "shelterId") Long shelterId,
+		@ApiParam(value = "보호소 식별 번호") @PathVariable(name = "shelterId") Long shelterId,
 		@RequestBody AnimalRegisterDto registerDto,
 		HttpServletRequest request) {
 
@@ -64,8 +63,8 @@ public class AnimalControllerV1 {
 	@GetMapping("/animal/{animalId}")
 	@ApiOperation(value = "동물 정보 조회")
 	public ResponseEntity<?> getShelterInfo(
-		@ApiParam(name = "보호소 식별 번호") @PathVariable(name = "shelterId") Long shelterId,
-		@ApiParam(name = "동물 식별 번호") @PathVariable(name = "animalId") Long animalId,
+		@ApiParam(value = "보호소 식별 번호") @PathVariable(name = "shelterId") Long shelterId,
+		@ApiParam(value = "동물 식별 번호") @PathVariable(name = "animalId") Long animalId,
 		HttpServletRequest request) {
 
 		return ResponseEntity
@@ -75,8 +74,8 @@ public class AnimalControllerV1 {
 	@PutMapping("/animal/{animalId}")
 	@ApiOperation(value = "동물 정보 수정")
 	public ResponseEntity<?> updateShelter(
-		@ApiParam(name = "보호소 식별 번호") @PathVariable(name = "shelterId") Long shelterId,
-		@ApiParam(name = "동물 식별 번호") @PathVariable(name = "animalId") Long animalId,
+		@ApiParam(value = "보호소 식별 번호") @PathVariable(name = "shelterId") Long shelterId,
+		@ApiParam(value = "동물 식별 번호") @PathVariable(name = "animalId") Long animalId,
 		@RequestBody AnimalUpdateDto updateDto,
 		HttpServletRequest request) {
 
@@ -87,8 +86,8 @@ public class AnimalControllerV1 {
 	@DeleteMapping("/animal/{animalId}")
 	@ApiOperation(value = "동물 정보 삭제")
 	public ResponseEntity<?> deleteShelter(
-		@ApiParam(name = "보호소 식별 번호") @PathVariable(name = "shelterId") Long shelterId,
-		@ApiParam(name = "동물 식별 번호") @PathVariable(name = "animalId") Long animalId,
+		@ApiParam(value = "보호소 식별 번호") @PathVariable(name = "shelterId") Long shelterId,
+		@ApiParam(value = "동물 식별 번호") @PathVariable(name = "animalId") Long animalId,
 		HttpServletRequest request) {
 
 		return ResponseEntity
@@ -98,8 +97,8 @@ public class AnimalControllerV1 {
 	@GetMapping("/animal/{animalId}/image")
 	@ApiOperation(value = "동물 이미지 조회")
 	public ResponseEntity<?> getFilesByUser(
-		@ApiParam(name = "보호소 식별 번호") @PathVariable("shelterId") Long shelterId,
-		@ApiParam(name = "동물 식별 번호") @PathVariable("animalId") Long animalId,
+		@ApiParam(value = "보호소 식별 번호") @PathVariable("shelterId") Long shelterId,
+		@ApiParam(value = "동물 식별 번호") @PathVariable("animalId") Long animalId,
 		HttpServletRequest request) {
 
 		return ResponseEntity
@@ -109,8 +108,8 @@ public class AnimalControllerV1 {
 	@PostMapping("/animal/{animalId}/image")
 	@ApiOperation(value = "동물 이미지 등록")
 	public ResponseEntity<?> uploadFilesByUser(
-		@ApiParam(name = "보호소 식별 번호") @PathVariable("shelterId") Long shelterId,
-		@ApiParam(name = "동물 식별 번호") @PathVariable("animalId") Long animalId,
+		@ApiParam(value = "보호소 식별 번호") @PathVariable("shelterId") Long shelterId,
+		@ApiParam(value = "동물 식별 번호") @PathVariable("animalId") Long animalId,
 		@RequestParam("files") List<MultipartFile> images,
 		HttpServletRequest request) {
 
@@ -121,11 +120,8 @@ public class AnimalControllerV1 {
 	@GetMapping("/search/manage-code")
 	@ApiOperation(value = "관리 번호로 동물 검색")
 	public ResponseEntity<?> searchByManageCode(
-		@ApiParam(name = "보호소 식별 번호") @PathVariable(name = "shelterId") Long shelterId,
-		@ApiParam(name = "동물 관리 번호") @RequestParam(value = "keyword", required = true) String keyword,
-		@ApiParam(name = "페이지 번호") @RequestParam(value = "pageNo", required = false) int page,
-		@ApiParam(name = "정렬 기준") @RequestParam(value = "sort", required = false) String sort,
-		@ApiParam(name = "표시 개수") @RequestParam(value = "limit", required = false) String limit,
+		@ApiParam(value = "보호소 식별 번호") @PathVariable(name = "shelterId") Long shelterId,
+		@ApiParam(value = "검색어") @RequestParam(value = "keyword", required = true) String keyword,
 		HttpServletRequest request) {
 
 		return ResponseEntity
@@ -135,11 +131,8 @@ public class AnimalControllerV1 {
 	@GetMapping("/search/name")
 	@ApiOperation(value = "이름으로 동물 검색")
 	public ResponseEntity<?> searchByName(
-		@ApiParam(name = "보호소 식별 번호") @PathVariable(name = "shelterId") Long shelterId,
-		@ApiParam(name = "동물 이름") @RequestParam(value = "keyword", required = true) String keyword,
-		@ApiParam(name = "페이지 번호") @RequestParam(value = "pageNo", required = false) int page,
-		@ApiParam(name = "정렬 기준") @RequestParam(value = "sort", required = false) String sort,
-		@ApiParam(name = "표시 개수") @RequestParam(value = "limit", required = false) String limit,
+		@ApiParam(value = "보호소 식별 번호") @PathVariable(name = "shelterId") Long shelterId,
+		@ApiParam(value = "검색어") @RequestParam(value = "keyword", required = true) String keyword,
 		HttpServletRequest request) {
 
 		return ResponseEntity
@@ -149,11 +142,8 @@ public class AnimalControllerV1 {
 	@GetMapping("/search/breed")
 	@ApiOperation(value = "품종으로 동물 검색")
 	public ResponseEntity<?> searchByBreed(
-		@ApiParam(name = "보호소 식별 번호") @PathVariable(name = "shelterId") Long shelterId,
-		@ApiParam(name = "동물 품종") @RequestParam(value = "keyword", required = true) String keyword,
-		@ApiParam(name = "페이지 번호") @RequestParam(value = "pageNo", required = false) int page,
-		@ApiParam(name = "정렬 기준") @RequestParam(value = "sort", required = false) String sort,
-		@ApiParam(name = "표시 개수") @RequestParam(value = "limit", required = false) String limit,
+		@ApiParam(value = "보호소 식별 번호") @PathVariable(name = "shelterId") Long shelterId,
+		@ApiParam(value = "검색어") @RequestParam(value = "keyword", required = true) String keyword,
 		HttpServletRequest request) {
 
 		return ResponseEntity

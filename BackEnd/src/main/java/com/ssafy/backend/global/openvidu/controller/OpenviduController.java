@@ -64,7 +64,7 @@ public class OpenviduController {
 	@PostMapping("/sessions/{sessionId}/connections")
 	@ApiOperation(value = "openvidu 세션 접속", notes = "openvidu 세션 아이디로 해당 세션의 접속 정보를 담고 있는 connection token을 반환한다.")
 	public ResponseEntity<String> createConnection(
-		@ApiParam(name = "세션 아이디") @PathVariable("sessionId") String sessionId,
+		@ApiParam(value = "세션 아이디") @PathVariable("sessionId") String sessionId,
 		@RequestBody(required = false) Map<String, Object> params)
 		throws OpenViduJavaClientException, OpenViduHttpException {
 		Session session = openvidu.getActiveSession(sessionId);
