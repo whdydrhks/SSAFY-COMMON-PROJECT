@@ -41,13 +41,30 @@ export const JoinDiv = styled.div`
 `;
 
 export const JoinButton = styled.button`
-  background-color: #3f51b5;
+  /* background-color: #3f51b5;
   border-radius: 5px;
   border: 1px solid #3f51b5;
   text-decoration: none;
   color: white;
   width: 40%;
-  height: 8vh;
+  height: 8vh; */
+  /* font-size: 32px; */
+  // 위 주석이었음
+  font-size: 1rem;
+  font-family: mainFont;
+  /* background-color: secondary; */
+  margin-left: 30% !important;
+  margin-right: 30% !important;
+  margin-bottom: 5% !important;
+  /* color: white; */
+  border: none;
+  width: 40% !important;
+  height: 5vh !important;
+  border-radius: 10px;
+  /* border: none; */
+  /* width: 40%; */
+  /* height: 8vh; */
+  font-family: mainFont;
   /* font-size: 32px; */
 `;
 
@@ -102,12 +119,12 @@ export const ChatInput = styled.input`
 `;
 
 export const ChatButton = styled.button`
-  background-color: #1976d2;
+  background-color: #9500ae;
   color: white;
-  border: 1px solid #1976d2;
+  border: 1px solid #9500ae;
   border-radius: 10px;
   height: 5vh;
-  width: 5vw;
+  width: 15vw;
 `;
 
 export const Chat = styled.li`

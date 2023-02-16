@@ -65,8 +65,8 @@ function VideoChat() {
   const { nickname, email, role } = useRecoilValue(userAtom);
   const [session, setSession] = useState(undefined);
   const [user, setUser] = useState(undefined);
-  const [hostSessionName, setHostSessionName] = useState('ssafy1');
-  const tmp = 'ssafy1';
+  const [hostSessionName, setHostSessionName] = useState(roomNumber);
+  const tmp = roomNumber;
   const [mySessionId, setMySessionId] = useState(
     role === 'HOST' ? tmp : hostSessionName,
   );
@@ -549,7 +549,7 @@ function VideoChat() {
           <S.ChatForm>
             <form onSubmit={sendMessage}>
               <S.ChatInput type="text" onChange={handleMsg} value={sendMsg} />
-              <S.ChatButton type="submit">메시지 보내기</S.ChatButton>
+              <S.ChatButton type="submit">전송</S.ChatButton>
             </form>
           </S.ChatForm>
         </S.ChatBox>
