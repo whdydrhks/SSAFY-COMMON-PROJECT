@@ -103,7 +103,7 @@
 <br />
 
 ### 관심동물
-
+![image](https://user-images.githubusercontent.com/94176133/219521610-062a28a8-bc73-4bfa-82b6-21bf87fd4826.png)
 <br />
 
 ### 마이페이지
