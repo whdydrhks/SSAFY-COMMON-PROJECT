@@ -22,6 +22,7 @@ import nameIcon from '../../images/AnimalDetail/name.png';
 import genderIcon from '../../images/AnimalDetail/gender.png';
 import breedIcon from '../../images/AnimalDetail/breed.png';
 import '../../styles/fonts.css';
+import dog_1 from '../../images/dogDetail/dog_1.png';
 
 const SAll = styled.div`
   display: flex;
@@ -141,7 +142,7 @@ function LikeAnimal() {
             >
               <SDetail>
                 <SAnimalImage
-                  src={gaejookee}
+                  src={dog_1}
                   alt="준비중"
                   onError={helloIcon}
                 />
