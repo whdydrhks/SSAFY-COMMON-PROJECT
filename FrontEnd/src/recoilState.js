@@ -1,5 +1,8 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable camelcase */
 import { atom } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
+import dog_1 from './images/dogDetail/dog_1.png';
 
 const { persistAtom } = recoilPersist();
 
@@ -180,7 +183,13 @@ const timetableShelterIdAtom = atom({
 
 const likeAnimalAtom = atom({
   key: 'likeAnimalAtom',
-  default: [],
+  default: {
+    animalId: 3,
+    name: '초코',
+    age: 12,
+    breed: '골드리트리버',
+    gender: '남자',
+  },
 });
 
 const urlAtom = atom({

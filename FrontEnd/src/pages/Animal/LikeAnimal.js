@@ -15,7 +15,7 @@ import API_URL from '../../api/api';
 import Header from '../../components/common/Header';
 import Nav from '../../components/common/Nav';
 
-import { userAtom } from '../../recoilState';
+import { likeAnimalAtom, userAtom } from '../../recoilState';
 import { getCookie } from '../Account/cookie';
 import helloIcon from '../../images/logo/helloIcon.png';
 import gaejookee from '../../images/dummy/gaejookee.png';
@@ -112,16 +112,16 @@ const SNoteImg = styled.img`
 function LikeAnimal() {
   const accessToken = getCookie('accessToken');
   const user = useRecoilValue(userAtom);
-  const [likeAnimal, setLikeAnimal] = useState([]);
+  const [likeAnimal, setLikeAnimal] = useRecoilState(likeAnimalAtom);
 
-  useEffect(() => {
-    axios
-      .get(`${API_URL}/user/${user.userId}/like/animal`, {
-        headers: { Authorization: accessToken },
-      })
-      .then(res => setLikeAnimal(res.data.data));
-  }, []);
-  console.log('likeAnimal : ', likeAnimal);
+  // useEffect(() => {
+  //   axios
+  //     .get(`${API_URL}/user/${user.userId}/like/animal`, {
+  //       headers: { Authorization: accessToken },
+  //     })
+  //     .then(res => setLikeAnimal(res.data.data));
+  // }, []);
+  // console.log('likeAnimal : ', likeAnimal);
 
   return (
     <>
@@ -130,41 +130,41 @@ function LikeAnimal() {
 
       {/* 파일 수정 */}
       <SAll>
-        {likeAnimal.map(item => (
-          <SLink
-            to={`/animal/${item.animalId}`}
-            key={item.animalId}
-            state={{ animal: item }}
+        {/* {likeAnimal.map(item => ( */}
+        <SLink
+          to={`/animal/${likeAnimal.animalId}`}
+          key={likeAnimal.animalId}
+          state={{ animal: likeAnimal }}
+        >
+          <motion.div
+            className="swiper-slide"
+            whileHover={{ scale: 1.12 }}
+            transition={{ type: 'spring', stiffness: 45 }}
           >
-            <motion.div
-              className="swiper-slide"
-              whileHover={{ scale: 1.12 }}
-              transition={{ type: 'spring', stiffness: 45 }}
-            >
-              <SDetail>
-                <SAnimalImage src={dog_1} alt="준비중" onError={helloIcon} />
-                <SItemContainer>
-                  <SAnimalItem>
-                    <SNoteImg src={nameIcon} />
-                    {item.name} [{item.age}살]
-                  </SAnimalItem>
+            <SDetail>
+              <SAnimalImage src={dog_1} alt="준비중" onError={helloIcon} />
+              <SItemContainer>
+                <SAnimalItem>
+                  <SNoteImg src={nameIcon} />
+                  {likeAnimal.name} [{likeAnimal.age}살]
+                </SAnimalItem>
 
-                  <SAnimalItem>
-                    <SNoteImg src={breedIcon} />
-                    {item.breed}
-                  </SAnimalItem>
+                <SAnimalItem>
+                  <SNoteImg src={breedIcon} />
+                  {likeAnimal.breed}
+                </SAnimalItem>
 
-                  <SAnimalItem>
-                    <SNoteImg src={genderIcon} />
-                    {item.gender === 'M' ? <>수컷</> : <>암컷</>}
-                  </SAnimalItem>
-                  {/* <SAnimalItem key={index}>특징{item.note}</SAnimalItem> */}
-                  {/* <SAnimalItem key={index}>중성화{item.neuter}</SAnimalItem> */}
-                </SItemContainer>
-              </SDetail>
-            </motion.div>
-          </SLink>
-        ))}
+                <SAnimalItem>
+                  <SNoteImg src={genderIcon} />
+                  {likeAnimal.gender === 'M' ? <>수컷</> : <>암컷</>}
+                </SAnimalItem>
+                {/* <SAnimalItem key={index}>특징{item.note}</SAnimalItem> */}
+                {/* <SAnimalItem key={index}>중성화{item.neuter}</SAnimalItem> */}
+              </SItemContainer>
+            </SDetail>
+          </motion.div>
+        </SLink>
+        {/* ))} */}
       </SAll>
       <Nav />
     </>
