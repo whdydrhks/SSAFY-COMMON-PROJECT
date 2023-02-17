@@ -1,0 +1,21 @@
+id,email,password,role,name,phone_number,nickname,profileImage
+1,admin@ssafy.io,admin,ADMIN,관리자,955-593-8518,ADMIN,1
+2,host1@gmail.com,host1,HOST,대전 광역시 동물 보호소,329-569-6524,대전 광역시 동물 보호소,5
+3,host2@gmail.com,host2,HOST,천사의 집,543-648-8278,천사의 집,3
+4,mujiguichanda3@civary.com,q1w2e3r4!,HOST,도그마루,103-635-7007,도그마루,7
+5,ssafy@gmail.com,password,USER,김싸피,419-256-9731,ssafyple,8
+6,user1@gmail.com,user1,USER,임규영,757-463-7483,해군은배고픈불족발,9
+7,user2@gmail.com,user2,USER,성한결,277-923-4584,파란야채튀김,8
+8,hleither7@google.com,password,USER,안아롱,173-389-1028,hleither7,10
+9,pocorrigane8@printfriendly.com,password,USER,박우리,905-306-2832,pocorrigane8,4
+10,user10@gmail.com,user10,USER,김진혁,309-482-4274,구해조,2
+11,cedmundsona@youtoo.com,password,USER,이혁,794-103-0638,cedmundsona,1
+12,cfishleyb@hc360.com,password,USER,제갈병헌,968-797-4881,비실이,9
+13,wsherwync@jimdo.com,password,USER,심한길,881-882-7588,wsherwync,6
+14,ghoulworthd@dailymail.co.uk,password,USER,봉미연,925-994-8906,냐앙사이,3
+15,gmacluree@aboutads.info,password,USER,이경택,532-819-8092,gmacluree,4
+16,ccossentinef@msn.com,password,USER,백미란,348-908-2482,카페라떼,5
+17,ppenticostg@chron.com,password,USER,정여진,254-514-5561,firefly,6
+18,lgallieh@latimes.com,password,USER,성재인,468-459-2437,lovedog,8
+19,mpetchi@cmu.edu,password,USER,신동건,970-154-3614,빅맘,10
+20,rmacmillanj@biglobe.ne.jp,password,USER,서현,699-711-7549,카나오,7

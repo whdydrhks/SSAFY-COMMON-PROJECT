@@ -1,0 +1,61 @@
+id,shelter_id,manage_code,name,breed,age,weight,gender,neuter,adoption,note
+1,3,2023-02-Y-835,코코,골드리트리버,10,32,M,Y,F,donec pharetra magna vestibulum aliquet ultrices erat tortor sollicitudin mi sit
+2,1,2023-02-S-021,보리,푸들,1,3,M,N,F,faucibus orci luctus et ultrices posuere cubilia curae mauris viverra diam vitae
+3,2,2023-02-W-366,초코,골드리트리버,12,44,M,Y,F,앞발이 길다. 낮을 가린다.
+4,1,2023-02-K-604,초코,푸들,7,5,F,N,F,sem mauris laoreet ut rhoncus aliquet pulvinar sed nisl nunc rhoncus dui vel sem
+5,1,2023-02-G-716,별이,웰시코기,12,12,M,Y,F,nullam porttitor lacus at turpis donec posuere metus vitae ipsum aliquam non mauris morbi non lectus aliquam sit
+6,3,2023-02-A-905,까미,푸들,9,6,F,Y,F,mauris ullamcorper purus sit amet nulla quisque arcu libero rutrum ac
+7,3,2023-02-W-514,달이,포메라니안,8,2,M,N,F,nisl nunc rhoncus dui vel sem sed sagittis nam congue risus semper porta volutpat quam pede lobortis ligula
+8,2,2023-02-B-194,태양이,믹스,12,6,M,Y,F,"동그란 눈망울, 처진 갈색 귀, 뒷발을 저림, 온순함"
+9,1,2023-02-L-836,콩이,진돗개,7,19,F,Y,F,purus sit amet nulla quisque arcu libero rutrum ac lobortis vel
+10,1,2023-02-Z-092,똘이,진돗개,11,20,F,Y,F,sagittis dui vel nisl duis ac nibh fusce lacus purus aliquet at feugiat non pretium quis
+11,1,2023-02-U-380,모모,말라뮤트,1,28,F,Y,F,sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae
+12,1,2023-02-V-397,몽이,골드리트리버,1,27,M,N,F,vel nulla eget eros elementum pellentesque quisque porta volutpat erat quisque erat eros viverra eget congue eget semper
+13,3,2023-02-B-050,몽실이,말티즈,5,4,F,Y,F,posuere nonummy integer non velit donec diam neque vestibulum eget
+14,3,2023-02-D-355,뭉치,진돗개,2,22,M,N,F,diam in magna bibendum imperdiet nullam orci pede venenatis non sodales sed tincidunt eu felis fusce
+15,2,2023-02-H-201,레온,믹스,6,20,F,N,F,"곱슬털, 눈꼽이 많이 낌. 겁이 많음"
+16,1,2023-02-E-782,하양이,푸들,1,5,F,Y,F,eros suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis mattis egestas
+17,3,2023-02-A-250,노랑이,시추,7,5,F,N,F,est congue elementum in hac habitasse platea dictumst morbi vestibulum velit id pretium iaculis diam erat fermentum
+18,1,2023-02-A-763,행복이,포메라니안,4,3,F,Y,F,pretium iaculis justo in hac habitasse platea dictumst etiam faucibus
+19,1,2023-02-B-111,상추,말라뮤트,4,33,M,N,F,sapien placerat ante nulla justo aliquam quis turpis eget elit sodales scelerisque mauris sit
+20,1,2023-02-V-620,배추,골드리트리버,12,34,F,N,F,mauris non ligula pellentesque ultrices phasellus id sapien in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit
+21,2,2023-02-N-850,감자,말티즈,1,28,M,Y,F,"강렬한 눈매, 삐쭉 솟은 귀, 커다란 코와 짧은 꼬리"
+22,2,2023-02-D-266,울프,믹스,5,26,M,Y,F,"대퇴골 골절. 수염이 비대칭으로 잘려 있음, 내성 발톱"
+23,1,2023-02-V-130,초원이,치와와,3,1,M,N,F,mauris enim leo rhoncus sed vestibulum sit amet cursus id turpis integer aliquet massa id lobortis convallis tortor
+24,3,2023-02-R-980,조지아,말티즈,6,5,M,Y,F,in quam fringilla rhoncus mauris enim leo rhoncus sed vestibulum sit amet cursus id turpis integer aliquet
+25,2,2023-02-V-979,지아,믹스,3,22,M,N,F,"경도비만, 작은 눈, 코가 귀여움"
+26,3,2023-02-F-344,정우리,말라뮤트,12,43,M,Y,F,donec ut mauris eget massa tempor convallis nulla neque libero convallis eget eleifend luctus ultricies eu nibh
+27,1,2023-02-L-312,사랑이,허스키,0,18,M,Y,F,at turpis donec posuere metus vitae ipsum aliquam non mauris morbi non lectus aliquam sit
+28,3,2023-02-A-591,카페,웰시코기,2,12,F,Y,F,lobortis est phasellus sit amet erat nulla tempus vivamus in felis eu sapien cursus vestibulum proin eu mi
+29,1,2023-02-X-662,커피,믹스,5,29,F,Y,F,auctor gravida sem praesent id massa id nisl venenatis lacinia aenean sit amet justo morbi ut odio cras
+30,1,2023-02-L-001,모카,진돗개,3,24,F,Y,F,cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum rutrum
+31,1,2023-02-R-233,라떼,허스키,2,17,F,N,F,vulputate ut ultrices vel augue vestibulum ante ipsum primis in faucibus orci luctus et ultrices
+32,3,2023-02-B-670,아지,말라뮤트,6,40,M,Y,F,interdum in ante vestibulum ante ipsum primis in faucibus orci luctus
+33,3,2023-02-F-267,보들이,말티즈,4,5,M,Y,F,sapien cursus vestibulum proin eu mi nulla ac enim in tempor turpis nec euismod scelerisque quam
+34,3,2023-02-T-404,해피,말티즈,0,1,F,N,F,tellus nisi eu orci mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula
+35,3,2023-02-D-352,럭키,시추,1,4,F,Y,F,in congue etiam justo etiam pretium iaculis justo in hac
+36,3,2023-02-P-641,별이,골드리트리버,11,33,M,N,F,aliquam augue quam sollicitudin vitae consectetuer eget rutrum at lorem integer tincidunt ante vel ipsum praesent blandit lacinia erat vestibulum
+37,1,2023-02-X-465,까미,포메라니안,8,4,M,Y,F,volutpat erat quisque erat eros viverra eget congue eget semper rutrum nulla nunc purus phasellus in felis donec semper sapien
+38,2,2023-02-B-643,달이,믹스,4,14,M,Y,F,"멋진 눈, 얼룩, 다스훈트 믹스, 백안"
+39,2,2023-02-F-075,태양이,시추,0,1,M,Y,F,"악성 직모, 생후 1개월 추정, 시추 믹스, 결막염, 심장 사상충 음성"
+40,3,2023-02-W-594,콩이,말라뮤트,1,30,F,Y,F,sapien cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus etiam vel augue vestibulum
+41,3,2023-02-N-773,똘이,말티즈,8,4,M,N,F,suspendisse accumsan tortor quis turpis sed ante vivamus tortor duis
+42,1,2023-02-P-824,모모,시추,10,7,M,N,F,cubilia curae duis faucibus accumsan odio curabitur convallis duis consequat dui nec nisi
+43,2,2023-02-C-445,몽이,믹스,2,29,M,Y,F,"왼쪽 눈 안구 파열, 구개염, 잘린 꼬리"
+44,3,2023-02-L-178,몽실이,치와와,6,2,F,N,F,sed justo pellentesque viverra pede ac diam cras pellentesque volutpat dui maecenas tristique est et
+45,1,2023-02-S-227,뭉치,포메라니안,10,3,F,Y,F,consequat metus sapien ut nunc vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae mauris viverra
+46,2,2023-02-J-552,레온,허스키,4,37,M,Y,F,판다눈. 짝귀. 앞발이 넓음
+47,1,2023-02-K-134,하양이,포메라니안,1,2,M,Y,F,diam erat fermentum justo nec condimentum neque sapien placerat ante nulla justo aliquam quis turpis eget
+48,3,2023-02-N-525,노랑이,시추,11,5,F,Y,F,vestibulum sed magna at nunc commodo placerat praesent blandit nam nulla integer pede justo
+49,3,2023-02-C-480,행복이,말티즈,7,4,F,N,F,varius nulla facilisi cras non velit nec nisi vulputate nonummy maecenas tincidunt lacus at
+50,3,2023-02-N-480,상추,푸들,2,4,M,Y,F,purus phasellus in felis donec semper sapien a libero nam dui
+51,1,2023-02-W-395,배추,골드리트리버,2,30,M,N,F,quisque id justo sit amet sapien dignissim vestibulum vestibulum ante ipsum
+52,1,2023-02-L-087,감자,허스키,4,27,M,Y,F,sapien in sapien iaculis congue vivamus metus arcu adipiscing molestie hendrerit at vulputate vitae nisl aenean lectus
+53,3,2023-02-P-332,울프,진돗개,4,21,F,N,F,libero convallis eget eleifend luctus ultricies eu nibh quisque id justo sit amet sapien dignissim vestibulum vestibulum ante ipsum
+54,3,2023-02-G-798,초원이,푸들,4,6,F,Y,F,risus semper porta volutpat quam pede lobortis ligula sit amet eleifend pede libero quis orci
+55,3,2023-02-R-101,조지,치와와,10,2,M,Y,F,felis ut at dolor quis odio consequat varius integer ac leo pellentesque ultrices mattis odio
+56,3,2023-02-V-937,지아,말라뮤트,6,41,M,N,F,enim lorem ipsum dolor sit amet consectetuer adipiscing elit proin interdum mauris
+57,3,2023-02-I-358,세이,포메라니안,5,3,M,N,F,lacus curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus sit amet nulla quisque arcu
+58,1,2023-02-C-287,사랑이,골드리트리버,6,31,M,N,F,quisque porta volutpat erat quisque erat eros viverra eget congue eget semper rutrum nulla nunc purus phasellus in felis
+59,3,2023-02-X-360,카페,골드리트리버,12,35,M,Y,F,volutpat dui maecenas tristique est et tempus semper est quam pharetra magna ac consequat metus sapien ut
+60,3,2023-02-B-491,커피,웰시코기,8,15,M,N,F,iaculis diam erat fermentum justo nec condimentum neque sapien placerat ante nulla justo aliquam

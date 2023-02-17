@@ -1,0 +1,84 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '2.7.8'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id 'com.diffplug.eclipse.apt' version '3.26.0' // eclipse setting
+}
+
+group = 'com.ssafy'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'	
+
+	compileOnly 'org.projectlombok:lombok'
+    
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	
+	annotationProcessor 'org.projectlombok:lombok'
+	
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+	
+	testAnnotationProcessor 'org.projectlombok:lombok'
+    
+	// Mail Send
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+	// JDBC
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	runtimeOnly 'com.mysql:mysql-connector-j'
+	
+	// JPA
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	
+	// Redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	
+	// JWT
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.5'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.5'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
+	
+	// OAuth
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	
+	// Swagger
+	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+	
+	// Javassist
+	implementation group: 'org.javassist', name: 'javassist', version: '3.27.0-GA'
+
+	// openvidu
+	implementation 'io.openvidu:openvidu-java-client:2.25.0'
+	
+	// Thumbnailator
+	implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.8'
+	
+	// Apache Commons
+	implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
+	implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
+	implementation group: 'org.apache.commons', name: 'commons-csv', version: '1.9.0'
+	
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
