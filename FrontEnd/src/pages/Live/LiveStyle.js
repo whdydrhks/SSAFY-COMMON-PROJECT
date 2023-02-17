@@ -33,6 +33,7 @@ export const LiveImage = styled.img`
   border-radius: 100%;
   /* border: 1px solid black; */
   box-shadow: 0 4px 5px rgba(0, 0, 0, 0.6);
+  margin-top: 1.5rem;
 `;
 
 export const LiveInformationContainer = styled.div`
