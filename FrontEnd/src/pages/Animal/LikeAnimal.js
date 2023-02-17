@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/require-default-props */
@@ -22,6 +23,7 @@ import nameIcon from '../../images/AnimalDetail/name.png';
 import genderIcon from '../../images/AnimalDetail/gender.png';
 import breedIcon from '../../images/AnimalDetail/breed.png';
 import '../../styles/fonts.css';
+import dog_1 from '../../images/dogDetail/dog_1.png';
 
 const SAll = styled.div`
   display: flex;
@@ -140,11 +142,7 @@ function LikeAnimal() {
               transition={{ type: 'spring', stiffness: 45 }}
             >
               <SDetail>
-                <SAnimalImage
-                  src={gaejookee}
-                  alt="준비중"
-                  onError={helloIcon}
-                />
+                <SAnimalImage src={dog_1} alt="준비중" onError={helloIcon} />
                 <SItemContainer>
                   <SAnimalItem>
                     <SNoteImg src={nameIcon} />
