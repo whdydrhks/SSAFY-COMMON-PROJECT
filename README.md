@@ -90,11 +90,12 @@
 <br />
 
 ### 라이브
+![image](https://user-images.githubusercontent.com/94176133/219515221-768d13b5-7532-4017-a187-99aca0b2425e.png)
 
 <br />
 
 ### 예약 현황
-
+![image](https://user-images.githubusercontent.com/94176133/219515302-ea0545a8-a5f5-4dbe-8573-df8880cf0ec6.png)
 <br />
 
 ### 입양후기
