@@ -59,19 +59,21 @@
 <br />
 
 ### 🎫 ERD
-#### ![ERD](/uploads/9e7613a51c8742b12eee0b585d740bf7/ERD.PNG)
+![ERD](https://github.com/whdydrhks/SSAFY-COMMON-PROJECT/assets/109534450/755e7c62-d089-446d-bada-19f27327b72e)
+
 
 <br />
 
 ### 🍏 API
-#### ![API1](/uploads/ffd39feabb80762ce34ccfc8a6b310ce/API1.png)
-#### ![API2](/uploads/7368c4c90727f8f984f562ea7715c27d/API2.png)
-#### ![API3](/uploads/12218981323b03ff92ed3874513c959b/API3.png)
+![API1](https://github.com/whdydrhks/SSAFY-COMMON-PROJECT/assets/109534450/da7bb3a6-c653-4bbd-9a24-d17dd61dfba3)
+![API2](https://github.com/whdydrhks/SSAFY-COMMON-PROJECT/assets/109534450/f5a2eb75-baf5-45c3-a69d-8002dd8c884a)
+![API3](https://github.com/whdydrhks/SSAFY-COMMON-PROJECT/assets/109534450/71aa6ec2-94f1-406b-8fe5-24d54c40732b)
 
 <br />
 
 ### 🎇 서비스 아키텍쳐
-#### ![아키텍쳐.drawio](/uploads/e39fd49710a389942dcb72233b4471b3/아키텍쳐.drawio.png)
+![아키텍쳐 drawio](https://github.com/whdydrhks/SSAFY-COMMON-PROJECT/assets/109534450/642f556b-df2f-4710-a797-b76c3371af4b)
+
 
 <br />
 
