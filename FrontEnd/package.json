@@ -16,7 +16,6 @@
     "jquery": "^3.6.3",
     "jwt-decode": "^3.1.2",
     "openvidu-browser": "^2.25.0",
-    "package-lock.json": "^1.0.0",
     "prop-types": "^15.8.1",
     "react": "^17.0.0",
     "react-cookie": "^4.1.1",
